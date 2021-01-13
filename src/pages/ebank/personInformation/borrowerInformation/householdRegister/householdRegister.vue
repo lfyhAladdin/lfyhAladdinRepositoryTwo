@@ -430,15 +430,22 @@
             },
             //6.9 删除从影像平台下载的文件和文件夹
             deletelocalfileandfolder() {
-                let posturl = '/api/imagehandle/deletelocalfileandfolder';
+                let that = this;
+                let posturl = '/api/imagehandle/deletedownloadfileandfolder';
                 yu.showLoading();
-                this.interfaceRequest(posturl, {}, "post", function(res) {
+                this.interfaceRequest(posturl, {}, "post",(res)=> {
                     yu.hideLoading();
+                    console.log(res)
                     // alert('文件夹删除成功了');
                 }, function(err) {
+                     console.log(err)
                     yu.hideLoading();
                     // alert('文件夹删除报错了！！');
-                    this.pageJump('personInformation/personInformation')
+                //     uni.showToast({
+                //     title: '删除从影像平台下载的文件失败!',
+                //     duration: 2000
+                // });
+                    that.pageJump('personInformation/personInformation')
                     console.log('//////////删除文件夹')
                     console.log(err);
                 });
