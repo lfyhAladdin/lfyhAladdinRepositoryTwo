@@ -9,7 +9,7 @@
         <view class="title" ><text class="title-line"></text><text>{{item.busiFileTypeName}}</text></view>
         <view class="image-list">
           <view class="item after-upload" v-for="(imageOne,i) in item.downloadImageDtoList" :key="i">
-            <img v-if="item.isIDCard" class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
+            <img v-if="item.isIDCard" @click="delImage(imageOne.busiFileType,imageOne.originName)" class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
             <img class="image-con" :src="imageOne.base64CodeUrl">
           </view>
           <!--<view class="item after-upload">
@@ -19,7 +19,7 @@
           <view class="item before-upload" v-if="item.isIDCard">
             <img class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
             <img v-show="false" class="image-con">
-            <view class="image-con upload-image" :id="item.busiFileType" @click="upload($event)">
+            <view class="image-con upload-image" :id="item.busiFileType" @click="upload($event,item.busiFileType)">
                 <img class="huiyuan_img" :src="idcard.image" mode="">
             </view>
           </view>
@@ -111,7 +111,8 @@ export default {
       }
     }
 
-    _this.getListName();
+    _this.getListName();//获取影像信息菜单  比对
+    
   },
  
   methods: {
@@ -119,7 +120,7 @@ export default {
     navigateBack() {
       this.pageJump(this.imageInformation);
     },
-    //获取下载当前申请的影响信息
+    //获取下载当前申请的影像信息
     getImagesList(imageBatchNo,busiStartDate){
       //获取图片信息 start
       let _this=this;
@@ -153,6 +154,7 @@ export default {
           }
           _this.imagelists=itemlist;
           console.log(_this.imagelists);
+          _this.uploadImageResult('type','base64','base64url');
         },
         function(err) {}
       );
@@ -183,20 +185,29 @@ export default {
       let arr=name.split('-');
       return arr[2];
     },
+    /*******上传图片  start */
     //上传图片
-    upload(e){
-      console.log('---');
-      console.log(e);
-      let  _self = this;
+    upload(e,busiFileType){
+      let _id=busiFileType;
+      console.log('*********');
+      console.log(e.target.id);
+      console.log(_id);
+      let _self = this;
       uni.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album'], //从相册选择
         success: function (res) {
           const tempFilePaths = res.tempFilePaths;
-          _self.idcard.image = tempFilePaths[0];
-          //_self.uploads.image= tempFilePaths[0];
-          console.log("tempFilePaths[0]",tempFilePaths[0])  //能够打印出选中的图片
+          uni.request({//路径转换base64
+            url: tempFilePaths[0],
+            method: 'GET',
+            responseType: 'arraybuffer',
+            success: async res => {
+              let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
+              _self.uploadImagePost(base64,_id);
+            }
+          });
           _self.iconcheck = 1;//点击后图片更改状态由0变成1
         },
         error : function(e){
@@ -204,6 +215,98 @@ export default {
         }
       });
     },
+    //上传图片图片页面效果处理
+    uploadImageResult(type,base64,filename){
+      let _this=this;
+      let base64url='data:image/jpeg;base64,' + base64;
+      let param={
+        "base64Code":base64,
+        "base64CodeUrl":base64url,
+        "busiFileType":type,
+        "frontBackFlag":0,
+        "psnTp":0,
+        "originName":filename
+      };
+      for(let i=0;i<_this.imagelists.length; i++){
+        if(_this.imagelists[i].busiFileType === type){
+          _this.imagelists[i].downloadImageDtoList=_this.imagelists[i].downloadImageDtoList.concat(param);
+        }
+      }
+    },
+    //上传图片接口
+    uploadImagePost(base64Code,bt){
+      let _this=this;
+      let postUrl='/api/imagehandle/uploadbynoanddate';
+      let busiFileTypeList=[bt];
+      let data={
+        "busiSerialNo": _this.imageBatchNo,
+        "busiStartDate": _this.imageUpLoadDate,
+        "busiFileTypeList": busiFileTypeList,
+        "filePartName": "LS_SQZL_P",
+        "modelCode": "LS_SQZL",
+        "uploadImageInVoList": [
+          {
+            "base64Code": base64Code,
+            "frontBackFlag": "0",
+            "psnTp": "0",
+            "idNumber": ""
+          }
+        ]
+      };
+       _this.interfaceRequest(
+        postUrl,
+        data,
+        "post",
+        function(res) {
+          let filename=res.data.data.uploadImageOutVoList[0].fileName;
+          _this.uploadImageResult(bt,base64Code,filename);
+        },
+        function(err) {}
+      );
+    },
+    /*******上传图片  end */
+    /*******删除图片  start */
+    //根据文件名删除图片delImage
+    delImage(bt,filename){
+      let _this=this;
+      let postUrl='/api/imagehandle/deletebyfilename';
+      let busiFileTypeList=[bt];
+      let data={
+        "busiSerialNo": _this.imageBatchNo,
+        "busiStartDate": _this.imageUpLoadDate,
+        "busiFileTypeList": busiFileTypeList,
+        "filePartName": filename,
+        "modelCode": "LS_SQZL",
+      };
+       _this.interfaceRequest(
+        postUrl,
+        data,
+        "post",
+        function(res) {
+          let result=res.data.data;
+          yu.showToast({
+            icon: "none",
+            title: "图片删除成功",
+            duration: 1500
+          });
+          //let filename=res.data.data.uploadImageOutVoList.fileName;
+          _this.deleteImageResult(bt,filename);
+        },
+        function(err) {}
+      );
+    },
+    //删除图片图片页面效果处理
+    deleteImageResult(type,filename){
+      let _this=this;
+      for(let i=0;i<_this.imagelists.length; i++){
+        for(let j=0;j<_this.imagelists[i].downloadImageDtoList.length; j++){
+          if(_this.imagelists[i].downloadImageDtoList[j].originName === filename){
+            _this.imagelists[i].downloadImageDtoList.splice(j,1);
+          }
+        }
+      }
+    },
+    /*******删除图片  end */
   },
   mounted() {
   }
@@ -286,7 +389,8 @@ uni-page-body{
         }
         .image-con{
           width: 200rpx;
-          height: 150rpx;
+          height: auto;
+          max-height: 150rpx;
         }
       }
       .item::after{
@@ -334,6 +438,7 @@ uni-page-body{
   display: flex;
   vertical-align: middle;
   align-items: center;
+  z-index: 5000;
   .ch-img{
     position: absolute;
     left: 0;
