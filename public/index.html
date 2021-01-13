@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="format-detection" content="telephone=yes" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
+    })
+    var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
+    document.write(
+      '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+      (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+      // 在 iOS 10之前，iOS 和 Android 都可以通过 meta 标签来禁止页面缩放, iOS 10开始，meta 设置在 Safari 内无效, 需要通过js禁止缩放
+      window.onload = function() {
+        // 阻止双击放大
+        var lastTouchEnd = 0;
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        });
+        document.addEventListener('touchend', function(event) {
+            var now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        // 阻止双指放大
+        document.addEventListener('gesturestart', function(event) {
+            event.preventDefault();
+        });
+      }
+  </script>
+  <link rel="stylesheet" href="<%= BASE_URL %>static/index.css" />
+  <style>
+    #device-bottom{
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 998;
+      background: #ffffff;
+    }
+    
+    #__vconsole .vc-switch{
+      bottom: 5em!important;
+    }
+    #device-status{
+      background: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <strong>Please enable JavaScript to continue.</strong>
+  </noscript>
+  <div id="device-status"></div>
+  <div id="app"></div>
+  <div id="device-bottom"></div>
+  <!-- built files will be auto injected --> 
+  <script src="<%= BASE_URL %>hybrid/html/vconsole.min.js"></script>
+  <script src="<%= BASE_URL %>hybrid/html/foxsdk.js"></script>
+  <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="/static/js/jquery.qrcode.js"></script>
+  <script type="text/javascript" src="/static/js/qrcode.js"></script>
+  <script type="text/javascript" src="/static/js/utf.js"></script>
+</body>
+</html>

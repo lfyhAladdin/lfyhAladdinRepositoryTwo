@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="554px" height="26px" viewBox="0 0 554 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>进度01</title>
+    <desc>Created with Sketch.</desc>
+    <g id="一手房业务" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="05完善信息-1户籍信息" transform="translate(-98.000000, -187.000000)">
+            <g id="进度01" transform="translate(0.000000, 130.000000)">
+                <g transform="translate(101.000000, 60.000000)">
+                    <rect id="矩形备份-5" fill="#E5E5E5" x="31" y="8" width="132" height="5"></rect>
+                    <rect id="矩形备份-6" fill="#E5E5E5" x="209" y="8" width="132" height="5"></rect>
+                    <rect id="矩形备份-7" fill="#E5E5E5" x="385" y="8" width="132" height="5"></rect>
+                    <circle id="椭圆形" stroke="#3B86F7" stroke-width="5" fill="#FFFFFF" stroke-linecap="square" cx="10" cy="10" r="10"></circle>
+                    <circle id="椭圆形备份" stroke="#E5E5E5" stroke-width="5" fill="#FFFFFF" stroke-linecap="square" cx="186" cy="10" r="10"></circle>
+                    <circle id="椭圆形备份-2" stroke="#E5E5E5" stroke-width="5" fill="#FFFFFF" stroke-linecap="square" cx="362" cy="10" r="10"></circle>
+                    <circle id="椭圆形备份-3" stroke="#E5E5E5" stroke-width="5" fill="#FFFFFF" stroke-linecap="square" cx="538" cy="10" r="10"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

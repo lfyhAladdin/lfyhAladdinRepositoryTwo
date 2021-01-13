@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="98px" height="98px" viewBox="0 0 98 98" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>图标-01一手房</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#5B9DFB" offset="0%"></stop>
+            <stop stop-color="#2E64F6" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#71CAFA" offset="0%"></stop>
+            <stop stop-color="#2E68F1" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="产品" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01产品1" transform="translate(-66.000000, -249.000000)">
+            <g id="产品列表1" transform="translate(30.000000, 218.000000)">
+                <g id="图标-01一手房" transform="translate(36.000000, 31.000000)">
+                    <circle id="椭圆形" fill="#CEE3FC" cx="49" cy="49" r="49"></circle>
+                    <g id="icon" transform="translate(26.000000, 24.000000)">
+                        <path d="M16.8227257,16.9780003 L37.8227257,13.3951431 C41.6336516,12.7449525 45.2501011,15.3072347 45.9002917,19.1181605 C45.9666451,19.5070742 46,19.9009014 46,20.2954348 L46,43 C46,46.8659932 42.8659932,50 39,50 L18,50 C14.1340068,50 11,46.8659932 11,43 L11,23.8782919 C11,20.4665693 13.4595999,17.5517907 16.8227257,16.9780003 Z" id="矩形备份-10" fill="url(#linearGradient-1)"></path>
+                        <rect id="矩形" fill="#183EBD" x="23" y="31" width="23" height="10"></rect>
+                        <path d="M8.67269602,1.6780032 L29.3832946,5.85302895 C32.6503214,6.51162512 35,9.38224044 35,12.714989 L35,43 C35,46.8659932 31.8659932,50 28,50 L7.04900332,50 C3.18301007,50 0.0490033169,46.8659932 0.0490033169,43 C0.0490033169,42.9837226 0.0490600928,42.9674452 0.0491736435,42.9511682 L0.289571714,8.49113147 C0.316540771,4.62523229 3.47233401,1.51316454 7.33823319,1.54013359 C7.78644225,1.54326036 8.23331494,1.58942888 8.67269602,1.6780032 Z" id="矩形" fill="url(#linearGradient-2)" fill-rule="nonzero"></path>
+                        <rect id="矩形" fill="#FFFFFF" opacity="0.887137277" x="7" y="14" width="4" height="4" rx="2"></rect>
+                        <rect id="矩形备份-11" fill="#FFFFFF" opacity="0.887137277" x="7" y="21" width="4" height="4" rx="2"></rect>
+                        <rect id="矩形备份-12" fill="#FFFFFF" opacity="0.887137277" x="7" y="27" width="4" height="4" rx="2"></rect>
+                        <polygon id="星形" fill="#FFFFFF" transform="translate(25.000000, 40.000000) rotate(44.000000) translate(-25.000000, -40.000000) " points="25 41.3492839 20.0502525 44.9497475 23.6507161 40 20.0502525 35.0502525 25 38.6507161 29.9497475 35.0502525 26.3492839 40 29.9497475 44.9497475"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

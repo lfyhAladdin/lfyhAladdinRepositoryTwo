@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>图标-01人员信息</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#71CAFA" offset="0%"></stop>
+            <stop stop-color="#3B86F7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="一手房业务" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="03完善信息" transform="translate(-65.000000, -188.000000)">
+            <g id="编组" transform="translate(30.000000, 158.000000)">
+                <g id="图标-01人员信息" transform="translate(35.000000, 30.000000)">
+                    <circle id="椭圆形" fill="#CEE3FC" cx="40" cy="40" r="40"></circle>
+                    <g id="编组-2" transform="translate(24.000000, 19.000000)">
+                        <rect id="矩形" fill="url(#linearGradient-1)" fill-rule="nonzero" x="0" y="3" width="32" height="38" rx="4"></rect>
+                        <rect id="矩形" fill="#93D8FF" opacity="0.737258185" x="7" y="0" width="19" height="7" rx="3.5"></rect>
+                        <g id="人员-" transform="translate(7.000000, 13.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                            <path d="M8.99939086,1.59872116e-14 C6.39672834,1.59872116e-14 4.28571429,2.11009257 4.28571429,4.71364569 C4.28571429,7.31719881 6.39671042,9.42857143 8.99939086,9.42857143 C11.6045079,9.42857143 13.7142857,7.31719881 13.7142857,4.71364569 C13.7142857,2.11009257 11.6057261,1.59872116e-14 8.99939086,1.59872116e-14 Z M6.80534871,10.2857143 C3.0473817,10.2857143 0,13.260621 0,16.929485 L0,17.3570742 C0,18.8571429 3.0473817,18.8571429 6.80534871,18.8571429 L11.1973937,18.8571429 C14.9553607,18.8571429 18,18.8010654 18,17.3570742 L18,16.929485 C18,13.260621 14.9553607,10.2871313 11.1973937,10.2871313 L6.80534871,10.2871313 L6.80534871,10.2857143 Z" id="形状"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

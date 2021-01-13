@@ -1,0 +1,46 @@
+/**
+ * 登录、忘记密码、修改密码页面 公用样式
+ */
+uni-page {
+  background: #fff;
+}
+.wrapper {
+  padding-left: 54rpx;
+  padding-right: 54rpx;
+  background: #fff;
+}
+.form-wrapper {
+  margin-top: 77rpx;
+}
+.page-title {
+  padding-top: 62rpx;
+  color: #999999;
+  font-size: 32rpx;
+  line-height: 41rpx;
+
+  .text-amplify {
+    margin-bottom: 23rpx;
+    font-size: 66rpx;
+    line-height: 84rpx;
+  }
+
+  .text-protrude {
+    color: #E52B22;
+  }
+}
+.yu-btn-group {
+  margin-top: 97rpx;
+
+  .submit-btn {
+    height: 96rpx;
+    line-height: 96rpx;
+    border-radius: 54rpx;
+    background-color: #dddddd; 
+    font-size: 34rpx;
+    color: $white-color;
+
+    &.click-able {
+      background: #E52B22;
+    }
+  }
+}

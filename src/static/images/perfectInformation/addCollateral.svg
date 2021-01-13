@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>路径</title>
+    <desc>Created with Sketch.</desc>
+    <g id="一手房业务" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="11担保合同02" transform="translate(-690.000000, -1039.000000)" fill="#3B86F7">
+            <g id="编组-3备份" transform="translate(0.000000, 1004.000000)">
+                <g id="编组">
+                    <path d="M705,35 C705.828427,35 706.5,35.6715729 706.5,36.5 L706.5,48.5 L718.5,48.5 C719.328427,48.5 720,49.1715729 720,50 C720,50.8284271 719.328427,51.5 718.5,51.5 L706.5,51.5 L706.5,63.5 C706.5,64.3284271 705.828427,65 705,65 C704.171573,65 703.5,64.3284271 703.5,63.5 L703.499,51.5 L691.5,51.5 C690.671573,51.5 690,50.8284271 690,50 C690,49.1715729 690.671573,48.5 691.5,48.5 L703.5,48.5 L703.5,36.5 C703.5,35.6715729 704.171573,35 705,35 Z" id="路径"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

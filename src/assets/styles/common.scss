@@ -1,0 +1,200 @@
+@import "base.scss";
+
+// 设置了uni-app height: auto; 会导致web-view不显示
+//uni-app {
+//  height: auto;
+//}
+
+/***flex布局兼容性问题解决*****/
+.flex-item {
+  -webkit-box-flex: 1.0;
+  -moz-flex-grow: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+
+.flex-item2 {
+  flex-basis: 16.6%;
+}
+
+.flex-item3 {
+  flex-basis: 25%;
+}
+
+.flex-item4 {
+  flex-basis: 33.3%;
+}
+
+.flex-item5 {
+  flex-basis: 41.7%;
+}
+
+.flex-item6 {
+  flex-basis: 50%;
+}
+
+.flex-item7 {
+  flex-basis: 58.3%;
+}
+
+.flex-wrap {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.flex-center {
+  -webkit-box-pack: center;
+  -moz-justify-content: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.flex-between {
+  -webkit-box-pack: space-between;
+  -moz-justify-content: space-between;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.flex-around {
+  -webkit-box-pack: space-around;
+  -moz-justify-content: space-around;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+
+.flex-column {
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.flex-align-center {
+  -moz-align-items: center;
+  -webkit-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+
+.flex-box {
+	display: -webkit-flex;
+	display: flex;
+}
+
+.flex-ac {
+	align-items: center;
+}
+
+.flex-pc {
+	/*子元素紧挨着水平居中*/
+	justify-content: center;
+}
+
+.flex-pj {
+	/*在每个子元素之间平均分割多余的空间（首个子元素前和最后一个子元素后没有多余的空间）。*/
+	justify-content: space-between;
+}
+
+.flex-pa {
+	/*在每个子元素之间平均分割多余的空间（首个子元素前和最后一个子元素后的空间为相邻子元素间隔的一半）*/
+	justify-content: space-around;
+}
+
+.flex-f1 {
+	flex: 1;
+}
+// 重置内置组件样式
+uni-slider .uni-slider-value {
+  margin-left: 1.5em;
+}
+
+.video {
+  background-color: #000;
+}
+
+// 重新modal弹出框
+uni-modal .uni-modal {
+  width: 488rpx;
+  border-radius: 20rpx;
+  @extend .font-13;
+}
+
+uni-modal .uni-modal__title {
+  padding: 2px 0;
+}
+
+uni-modal .uni-modal__bd {
+  padding: 30rpx 40rpx;
+  text-align: center;
+}
+
+uni-modal .uni-modal__btn_primary {
+  font-size: 30rpx;
+}
+
+uni-modal .uni-modal__btn_default {
+  font-size: 30rpx;
+}
+
+uni-modal .uni-modal__ft {
+  height: 78rpx;
+  line-height: 78rpx;
+}
+
+//重置顶部导航
+// [uni-page-head-type="transparent"] /deep/ .uni-page-head__title {
+//   opacity: 1 !important;
+// }
+
+.uni-page-head__title {
+  opacity: 1 !important;
+}
+
+.uni-page-head-transparent .uni-page-head-btn {
+  border-radius: 0;
+  background-color: transparent;
+}
+
+uni-page-head .uni-page-head {
+  padding-top: 107px;
+  margin-top: -100px;
+  height: 144px;
+}
+
+.uni-page-head-search {
+  margin: 0 20rpx;
+}
+
+.uni-page-head-transparent .uni-page-head-btn {
+  justify-content: center;
+}
+
+.uni-page-head .uni-page-head-ft {
+  margin-right: 8px;
+}
+
+.uni-page-head-search-placeholder-center {
+  left: 0;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+//底部导航
+uni-tabbar,
+uni-tabbar .uni-tabbar {
+  height: 50px !important;
+  padding-bottom: 0 !important;
+}
+uni-tabbar .uni-tabbar__icon {
+  width: 24px;
+  height: 24px;
+}
+.iphone-x + uni-app .uni-actionsheet::after {
+  width: 100%;
+  content: "";
+  display: flex;
+  height: 34px;
+  background: #fcfcfd;
+}

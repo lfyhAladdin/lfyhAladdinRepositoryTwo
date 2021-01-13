@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<license build-time="Mon Nov 09 15:36:45 CST 2020" validate-code="5F238E393DB5CD71678F0B87DCEBFB5B">
+  <element name="contract_code">YTEC-2020-2503-B</element>
+  <element name="customer_name">2020年新一代移动平台三期研发项目</element>
+  <element name="license_code">0000017920</element>
+  <element name="product_code">0000001602</element>
+  <element name="product_name_zh-cn">宇信科技移动金融开发平台</element>
+  <element name="product_name_en-us">YUMP</element>
+  <element name="version_major">1</element>
+  <element name="version_sub">0</element>
+  <element name="version_publish">0</element>
+  <element name="complie_date">2020-03-01</element>
+  <element name="license_type">内部试用许可证</element>
+  <element name="license_start_time">2020-11-08</element>
+  <element name="license_end_time">2021-05-07</element>
+  <element name="expend_info0">AppPkg:null</element>
+  <element name="expend_info1">YUDP:True</element>
+</license>

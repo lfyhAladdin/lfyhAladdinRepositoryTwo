@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>版本更新</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+				box-sizing:border-box;
+				text-shadow:none;
+				-webkit-text-shadow:none;
+				-webkit-text-size-adjust: 100%;
+				-ms-text-size-adjust: 100%;
+				-o-text-size-adjust: 100%;
+				text-size-adjust: 100%;
+				-webkit-tap-highlight-color: transparent;
+				tap-highlight-color:transparent;
+				user-select: none;
+				-webkit-user-select: none;
+			}
+			.color_3{
+				color: #333333;
+			}
+			.color_6{
+				color: #666666;
+			}
+			.color_9{
+				color: #999;
+			}
+			.fz_16{
+				font-size:16px;
+			}
+			.fz_12{
+				font-size:12px ;
+			}
+			.fz_14{
+				font-size:14px ;
+			}
+			#description{
+				padding-left: 20px;
+				font-size: 14px;
+				overflow: scroll;
+				min-height: 40px;
+				max-height: 80px;
+			}
+			#doc{
+				width: 85%;
+				position: fixed;
+				top: 34%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+			.update_box{
+				width: 85%;
+				margin: 0 auto;
+				background: #fff;
+				padding: 25px 25px 25px 25px;
+				margin-top: 50%;
+				border-radius: 15px;
+				-webkit-border-radius: 15px;
+				box-shadow: 0 1px 10px #333;
+				-webkit-box-shadow: 0 1px 10px #333;
+				position: relative;
+			}
+			.update_tit_bg{
+				text-align: center;
+				padding-bottom: 5px;
+				position: relative;
+			}
+			.update_tit_bg a{
+				position: absolute;
+				top:-20px;
+				right: -20px;
+				display: block;
+				width: 40px;
+				height: 40px;
+				background: url(../../static/tab-my-current.png) no-repeat center;
+				background-size: 50%;
+			}
+			.update_tit{
+				color: #c53f46;
+			}
+			.update_btnbox{
+				text-align: center;
+				padding-top: 20px;
+			}
+			.update_btn{
+				width: 40%;
+				height: 30px;
+				font-size: 14px;
+				border-radius: 40px;
+				-webkit-border-radius: 40px;
+				background: none;
+				border: 1px solid #CF155C;
+			}
+		</style>
+	</head>
+	<body>
+		<body style="background: rgba(0,0,0,0.4);">
+				<div>
+					<div id="doc">
+						<div class="update_box" id="box">
+							<div class="update_tit_bg">
+								<p class="update_tit fz_16"><span id="title">版本更新咯</span></p>
+								<p class="fz_12 color_9">v<span id="version">1.1.0</span></p>
+								<a id="close"></a>
+							</div>
+							<div id="description">
+							</div>
+							<div class="update_btnbox">
+								<button class="update_btn" id="updateApp">立即更新</button><br/>
+								<div id="cancelUpdate" class="color_9" style="display: none;font-size: 12px;text-decoration:underline;margin-top: 10px;">稍后更新</div>
+							</div>
+						</div>
+						
+						<!--<div class="surePass"><canvas class="circleRun update_progress" data-run="0" id="canvasThree3" amout="50" nowData="100"></canvas></div>-->
+					</div>
+				</div>
+		<!-- uni 的 SDK -->
+		<!-- <script type="text/javascript" src="https://js.cdn.aliunin.dcloud.net.cn/dev/uni-app/uni.webview.1.5.1.js"></script> -->
+		<!-- <script src="./uni.webview.1.5.1.js" type="text/javascript" charset="utf-8"></script> -->
+		<script type="text/javascript">
+			document.addEventListener('plusready',function(){
+				var options = {
+					method: "GET",
+					filename: "_doc/download/", //,//下载文件保存的路径
+					timeout:30,//下载任务超时时间,默认120s
+					retry:2,//下载任务重试次数,默认为重试3次
+					retryInterval:0
+				};
+				var forceFlag = '';
+				var totalSize = '';
+				var timer = '';
+				
+				var self = plus.webview.currentWebview();
+				var publishMode = self.publishMode;
+				var updateStyle = self.updateStyle;
+				var updateUrl = self.updateUrl;
+				var isForce = self.isForce;
+				var content = self.content;
+				var versionNum = self.versionNum;
+				var platform = plus.os.name;
+				var isAndroid = platform == 'Android';
+				console.log("更新中...");
+				//强制更新
+				if(Boolean(isForce)){
+					document.querySelector('#close').addEventListener('click',function(){
+						plus.runtime.quit();
+					})
+				}else{
+					document.querySelector("#cancelUpdate").style.display = 'block';
+					var cancelUpdElem = document.querySelector("#cancelUpdate");
+					cancelUpdElem.style.display = 'block';
+					cancelUpdElem.addEventListener('click',function(){
+						plus.webview.close(self);
+					})
+					document.querySelector('#close').addEventListener('click',function(){
+						plus.webview.close(self);
+					});
+				}
+				//渲染页面内容
+				var title = updateStyle == 'package' ? '版本更新啦' :'资源包更新啦';
+				document.getElementById("title").innerHTML = title;
+				content  = content.replace(/\n/g,'<br/>').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s/g, '');
+				document.getElementById("description").innerHTML = content;
+				document.getElementById("version").innerHTML = versionNum;
+				//点击更新按钮
+				var updateAppElm = document.getElementById("updateApp");
+				updateAppElm.addEventListener('click', function(event) {
+					updateAppElm.disabled = "disabled";
+					//IOS平台&&安装包更新模式
+					if(!isAndroid && updateStyle == 'package'){
+						if(publishMode == 'production'){
+							plus.runtime.openURL(updateUrl);
+						}else{
+							plus.nativeUI.toast('测试环境IOS忽略ipa升级')
+						}
+					}else{
+						//wgt/wgtu/apk 都是直接下载并安装
+						downloadApp(updateUrl);
+					}
+				}, false);
+				
+				//开启下载并安装任务
+				function downloadApp(downUrl){
+					var downloadedPersent = 0;
+					updateAppElm.innerHTML = '下载中...';
+					//plus.nativeUI.showWaiting("更新进行中...");
+					var dtask = plus.downloader.createDownload(downUrl, options, function(d, status) {
+						if(status == 200) {
+							updateAppElm.innerHTML = '安装中...';
+							installApp(d.filename);
+						} else {
+							console.log('下载失败....');
+							updateAppElm.disabled = '';
+							updateAppElm.innerHTML = '点我再试';
+						}
+					});
+					console.log(JSON.stringify(dtask));
+
+					dtask.addEventListener("statechanged", function(task, status) {
+						var downfilesize = task.downloadedSize;
+						var totalsize = task.totalSize;
+						if(!dtask) {
+							return;
+						}
+						switch(task.state) {
+							case 1: // 开始
+								console.log("开始下载...");
+								break;
+							case 2: // 已连接到服务器
+								console.log("链接到服务器...");
+								break;
+							case 3: // 已接收到数据
+								if(downloadedPersent!=parseInt((parseFloat(task.downloadedSize/totalsize).toFixed(2))*100)) {
+									downloadedPersent = parseInt((parseFloat(downfilesize / totalsize).toFixed(2)) * 100);
+									updateAppElm.innerHTML = downloadedPersent+"%";
+								}
+								break;
+							case 4: // 下载完成
+
+								break;
+						}
+					});
+					dtask.start();
+				}
+				
+				//安装apk/wgt包
+				function installApp(filepath){
+					if(updateStyle == 'package'){
+						plus.runtime.openFile(filepath);
+						plus.runtime.quit();
+					}else{
+						//安装wgt包
+						plus.runtime.install(filepath, {
+						    force: false  
+						}, function() {  
+						    console.log('install success...');  
+						    plus.runtime.restart();  
+						}, function(e) {
+						    console.error('install fail...');  
+							plus.webview.currentWebview().close();
+						});
+					}
+				}
+				
+			})
+			
+		</script>
+	</body>
+</html>

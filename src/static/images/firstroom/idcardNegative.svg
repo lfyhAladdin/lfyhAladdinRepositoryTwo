@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="310px" height="210px" viewBox="0 0 310 210" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>身份证反面</title>
+    <desc>Created with Sketch.</desc>
+    <g id="一手房业务" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02进件1" transform="translate(-400.000000, -271.000000)">
+            <g id="影像信息" transform="translate(0.000000, 152.000000)">
+                <g id="身份证反面" transform="translate(400.000000, 119.000000)">
+                    <rect id="矩形" fill="#F4F8FF" x="0" y="0" width="310" height="210" rx="15"></rect>
+                    <g id="国徽" opacity="0.402041481" transform="translate(32.000000, 47.000000)">
+                        <polygon id="矩形" fill="#ECE091" points="10.6063018 61 59.3471639 61 63 82 7 81.3235806"></polygon>
+                        <circle id="椭圆形" stroke="#ECE091" stroke-width="8" fill="#E39C8B" stroke-linecap="square" cx="35" cy="35" r="35"></circle>
+                        <polygon id="星形" fill="#ECE091" points="35.5 21.75 30.5038254 24.3766445 31.4580098 18.8133222 27.4160196 14.8733555 33.0019127 14.0616778 35.5 9 37.9980873 14.0616778 43.5839804 14.8733555 39.5419902 18.8133222 40.4961746 24.3766445"></polygon>
+                        <polygon id="星形备份" fill="#ECE091" points="19 27 16.648859 28.236068 17.097887 25.618034 15.1957739 23.763932 17.8244295 23.381966 19 21 20.1755705 23.381966 22.8042261 23.763932 20.902113 25.618034 21.351141 28.236068"></polygon>
+                        <polygon id="星形备份-2" fill="#ECE091" points="29 36 26.648859 37.236068 27.097887 34.618034 25.1957739 32.763932 27.8244295 32.381966 29 30 30.1755705 32.381966 32.8042261 32.763932 30.902113 34.618034 31.351141 37.236068"></polygon>
+                        <polygon id="星形备份-3" fill="#ECE091" points="42 36 39.648859 37.236068 40.097887 34.618034 38.1957739 32.763932 40.8244295 32.381966 42 30 43.1755705 32.381966 45.8042261 32.763932 43.902113 34.618034 44.351141 37.236068"></polygon>
+                        <polygon id="星形备份-4" fill="#ECE091" points="51 27 48.648859 28.236068 49.097887 25.618034 47.1957739 23.763932 49.8244295 23.381966 51 21 52.1755705 23.381966 54.8042261 23.763932 52.902113 25.618034 53.351141 28.236068"></polygon>
+                        <polygon id="矩形" fill="#EDE092" points="23.9799388 49 48.4467829 49 51 57 21 57"></polygon>
+                    </g>
+                    <rect id="矩形" fill="#E3ECF9" x="27" y="160" width="256" height="16" rx="3"></rect>
+                    <g id="编组" transform="translate(123.000000, 51.000000)" fill="#E3ECF9">
+                        <rect id="矩形" x="0" y="0" width="44" height="14" rx="3"></rect>
+                        <rect id="矩形备份-3" x="0" y="27" width="44" height="14" rx="3"></rect>
+                        <rect id="矩形备份-5" x="0" y="54" width="44" height="14" rx="3"></rect>
+                    </g>
+                    <g id="编组备份" transform="translate(183.000000, 51.000000)" fill="#E3ECF9">
+                        <rect id="矩形" x="0" y="0" width="100" height="14" rx="3"></rect>
+                        <rect id="矩形备份-3" x="0" y="27" width="100" height="14" rx="3"></rect>
+                        <rect id="矩形备份-6" x="0" y="54" width="100" height="14" rx="3"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

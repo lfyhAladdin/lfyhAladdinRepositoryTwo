@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="51px" height="55px" viewBox="0 0 51 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>图标-01手动新增</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#71CAFA" offset="0%"></stop>
+            <stop stop-color="#599BF8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#71CAFA" offset="0%"></stop>
+            <stop stop-color="#3B86F7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="一手房业务" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="04人员信息" transform="translate(-122.000000, -175.000000)">
+            <g id="编组备份-3" transform="translate(0.000000, 130.000000)">
+                <g id="图标-01手动新增" transform="translate(122.000000, 45.494505)">
+                    <path d="M37,0 C39.209139,-4.05812251e-16 41,1.790861 41,4 L41.000607,23.1885204 C39.7139757,22.8997299 38.3749922,22.7472527 37,22.7472527 C27.0588745,22.7472527 19,30.7175682 19,40.5494505 C19,42.6301659 19.3609328,44.6275073 20.024255,46.4835745 L4,46.4835165 C1.790861,46.4835165 2.705415e-16,44.6926555 0,42.4835165 L0,4 C-2.705415e-16,1.790861 1.790861,4.05812251e-16 4,0 L37,0 Z" id="形状结合" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+                    <ellipse id="椭圆形" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="36.5" cy="40.0549451" rx="14.5" ry="14.3406593"></ellipse>
+                    <rect id="矩形备份" fill="#FFFFFF" x="7" y="17.8021978" width="21" height="3.95604396" rx="1.97802198"></rect>
+                    <rect id="矩形备份-2" fill="#FFFFFF" x="7" y="7.91208791" width="29" height="3.95604396" rx="1.97802198"></rect>
+                    <path d="M36,33.6263736 C37.0309315,33.6263736 37.8666667,34.4529249 37.8666667,35.4725275 L37.8666667,38.7032967 L41.1333333,38.7032967 C42.1642649,38.7032967 43,39.5298479 43,40.5494505 C43,41.5690532 42.1642649,42.3956044 41.1333333,42.3956044 L37.8666667,42.3956044 L37.8666667,45.6263736 C37.8666667,46.6459762 37.0309315,47.4725275 36,47.4725275 C34.9690685,47.4725275 34.1333333,46.6459762 34.1333333,45.6263736 L34.1324,42.3956044 L30.8666667,42.3956044 C29.8357351,42.3956044 29,41.5690532 29,40.5494505 C29,39.5298479 29.8357351,38.7032967 30.8666667,38.7032967 L34.1333333,38.7032967 L34.1333333,35.4725275 C34.1333333,34.4529249 34.9690685,33.6263736 36,33.6263736 Z" id="路径" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

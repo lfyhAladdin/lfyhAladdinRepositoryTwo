@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="98px" height="98px" viewBox="0 0 98 98" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>图标-02二手房</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#40A09E" offset="0%"></stop>
+            <stop stop-color="#3E99A8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#B4F9FB" offset="0%"></stop>
+            <stop stop-color="#3E939D" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="产品" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01产品1" transform="translate(-66.000000, -439.000000)">
+            <g id="产品列表2" transform="translate(30.000000, 408.000000)">
+                <g id="图标-02二手房" transform="translate(36.000000, 31.000000)">
+                    <circle id="椭圆形" fill="#E6F9FF" cx="49" cy="49" r="49"></circle>
+                    <g id="icon" transform="translate(29.000000, 24.000000)">
+                        <path d="M31.1117036,15.0180005 L42.1117036,20.476824 C44.4935132,21.6588129 46,24.0882062 46,26.747175 L46,43 C46,46.8659932 42.8659932,50 39,50 L28,50 C24.1340068,50 21,46.8659932 21,43 L21,21.2883514 C21,17.4223582 24.1340068,14.2883514 28,14.2883514 C29.0796234,14.2883514 30.1446153,14.5380765 31.1117036,15.0180005 Z" id="矩形备份-10" fill="url(#linearGradient-1)"></path>
+                        <rect id="矩形" fill="#52B5BA" x="29" y="36" width="17" height="5"></rect>
+                        <path d="M5.61289736,5.94108601 L26.6128974,1.69559071 C30.4022287,0.929515071 34.0951157,3.38034805 34.8611913,7.16967938 C34.9534999,7.62627642 35,8.09094757 35,8.55678202 L35,43 C35,46.8659932 31.8659932,50 28,50 L17.232801,50 L17.232801,50 L7,50 C3.13400675,50 4.73447626e-16,46.8659932 0,43 L0,12.8022773 C-1.10997668e-16,9.47098873 2.3476676,6.60120589 5.61289736,5.94108601 Z" id="矩形" fill="url(#linearGradient-2)" fill-rule="nonzero"></path>
+                        <rect id="矩形备份-14" fill="#FFFFFF" opacity="0.536132812" x="38" y="27.4313725" width="5" height="3.92156863" rx="1.96078431"></rect>
+                        <rect id="矩形备份-15" fill="#FFFFFF" opacity="0.536132812" x="19" y="11.7647059" width="10" height="3.92156863" rx="1.96078431"></rect>
+                        <rect id="矩形备份-16" fill="#FFFFFF" opacity="0.536132812" x="19" y="19.6078431" width="10" height="3.92156863" rx="1.96078431"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
