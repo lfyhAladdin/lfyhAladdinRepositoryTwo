@@ -301,45 +301,42 @@ export default {
         (res)=> {
           yu.hideLoading();
           this.preventResubmit = true;
-          let result = res.data.data.applyNo;
-          if (result != null) {
-            let e = {
-              orderNo: "",
-              serialNo: result,
-              fromProductTitle: this.title,
-              fromProductId: this.productId,
-              fromProductName: this.productName,
-              imageList: {
-                imageBatchNo: imgBatchNumber,
-                upLoadDate: imgFirstUploadTime
-              }
-            };
-            this.approvalIngListReplace(e);
-            let datas = {
-              userID: userId, //客户经理编号
-              orgID: orgID //客户经理所属机构编号
-            };
-            this.businessNumCommit(datas);
-            yu.showToast({
-              icon: "none",
-              title: "申请成功",
-              duration: 1500
-            });
-            this.clearorDinaryStorage()
-            // this.queryApplyInfoCommit({
-            //   'orderNo': '',
-            //   'applyNo': result,
-            // }); //重新调'申请信息查询'接口
-            // this.pageJump(this.incomingSuccess);
-            this.queryApplyInfoCommit({
-              "orderNo": this.orderNoVal, 
-              "applyNo": this.applyNoVal,
-              'routerTrue': true,
-              'routerTo': this.incomingSuccess,
-              'routerJumpWay': 'pageJump'
-            }); //重新调'申请信息查询'接口
-            //that.uploadImg();
-          } else {
+          if(res.data.data.returnCode == "Success"){
+            let result = res.data.data.applyNo;
+            if (result != null) {
+              let e = {
+                orderNo: "",
+                serialNo: result,
+                fromProductTitle: this.title,
+                fromProductId: this.productId,
+                fromProductName: this.productName,
+                imageList: {
+                  imageBatchNo: imgBatchNumber,
+                  upLoadDate: imgFirstUploadTime
+                }
+              };
+              this.approvalIngListReplace(e);
+              let datas = {
+                userID: userId, //客户经理编号
+                orgID: orgID //客户经理所属机构编号
+              };
+              this.businessNumCommit(datas);
+              yu.showToast({
+                icon: "none",
+                title: "申请成功",
+                duration: 1500
+              });
+              this.clearorDinaryStorage();
+              this.queryApplyInfoCommit({
+                "orderNo": '', 
+                "applyNo": result,
+                'routerTrue': true,
+                'routerTo': this.incomingSuccess,
+                'routerJumpWay': 'pageJump'
+              }); //重新调'申请信息查询'接口
+              //that.uploadImg();
+            } 
+          }else {
             yu.showToast({
               icon: "none",
               title: res.data.data.returnDesc ? res.data.data.returnDesc : '提交失败',
