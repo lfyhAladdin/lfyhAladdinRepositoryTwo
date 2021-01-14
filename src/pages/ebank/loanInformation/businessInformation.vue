@@ -170,7 +170,7 @@
             this.queryDictionaryListObjCommit();
             console.log(this.loanQueryDictionaryListObj);
             console.log(this.approvalIngList);
-
+            this.orderNoVal = this.approvalIngList.orderNo;
             let that = this;
             this.applyNoVal = this.approvalIngList.serialNo; //申请编号
             let applyDate = new Date();
@@ -207,7 +207,7 @@
                 that.houseNums = 1;
             }
             let data = {
-                orderNo: "",
+                orderNo:this.orderNoVal,
                 applyNo: this.applyNoVal
             };
             let posturl = "/api/credit/queryApplyInfo";
@@ -396,12 +396,6 @@
                     }
                 });
 
-
-
-
-
-
-
             },
             //下拉列表
             bindPickerChange(e) {
@@ -467,7 +461,7 @@
                 console.log(this.businessSumNumber);
                 let formData = {
                     applyNo: that.applicationNumber,
-                    orderNo: "",
+                    orderNo:this.orderNoVal,
                     listName: "basicInfo",
                     basicInfo: [{
                         businessLine: "",
@@ -497,13 +491,15 @@
                     "post",
                     (res) => {
                         that.queryApplyInfoCommit({
-                            orderNo: "",
+                            orderNo:this.orderNoVal,
                             applyNo: that.applicationNumber
                         }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
                         if (e == "TS") {
+                            console.log(res)
+                            this.messageTs=res.data.data;
                             yu.showModal({
-                                title: "暂存成功",
-                                content: "",
+                                title: "暂存状态",
+                                content:this.messageTs,
                                 showCancel: false,
                                 confirmText: "我知道了",
                                 success: res => {
@@ -516,7 +512,7 @@
                             if (this.LoanAmount == "") {
                                 yu.showModal({
                                     title: "贷款金额不能为空！",
-                                    content: "",
+                                    content: "请输入贷款金额",
                                     showCancel: false,
                                     confirmText: "我知道了",
                                     success: res => {
@@ -534,7 +530,7 @@
                             if (this.LoanTerm == "") {
                                 yu.showModal({
                                     title: "贷款期限不能为空！",
-                                    content: "",
+                                    content: "请输入贷款期限",
                                     showCancel: false,
                                     confirmText: "我知道了",
                                     success: res => {
@@ -548,7 +544,7 @@
                             if (this.downPayment == "") {
                                 yu.showModal({
                                     title: "首付款金额不能为空！",
-                                    content: "",
+                                    content: "请输入首付款金额",
                                     showCancel: false,
                                     confirmText: "我知道了",
                                     success: res => {

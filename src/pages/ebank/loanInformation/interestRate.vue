@@ -345,9 +345,10 @@
                             'applyNo': that.applicationNumber,
                         }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
                         if(e=="TS"){
+                            that.messageTs=res.data.data;
                         yu.showModal({
-                                title: "暂存成功",
-                                content: "",
+                                title: "暂存状态",
+                                content:that.messageTs,
                                 showCancel: false,
                                 confirmText: "我知道了",
                                 success: res => {
