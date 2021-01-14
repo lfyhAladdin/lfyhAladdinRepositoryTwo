@@ -282,9 +282,10 @@ console.log(1)
 
 
          if(e=="TS"){
+           this.messageTs=res.data.data;
                         yu.showModal({
-                                title: "暂存成功",
-                                content: "",
+                                title: "暂存状态",
+                                content:this.messageTs,
                                 showCancel: false,
                                 confirmText: "我知道了",
                                 success: res => {
