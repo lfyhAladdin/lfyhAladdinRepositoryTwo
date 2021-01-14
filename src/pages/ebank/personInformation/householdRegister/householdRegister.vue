@@ -307,7 +307,7 @@
           // console.log(ret);
           // if(type==1){
           if(ret && ret.payload && ret.payload.Name){
-            if(this.iDCardNoVal !='' && this.iDCardNoVal == ret.payload.IDCardNo){
+            if(this.iDCardNoVal !='' && this.iDCardNoVal != ret.payload.IDCardNo){
               yu.showToast({
                 title: '不可修改人员信息，如需修改请先删除再进行新增！',
                 icon: 'none',

@@ -208,8 +208,12 @@
           }
           console.log('放款风险智能探测成功结果')
           
-        },function(err){
-          console.log(err)
+        },(err)=>{
+            yu.showToast({
+              title: '5.11智能检测失败，请联系管理员！',
+              icon: 'none',
+              duration: 3000
+            });
         });
       },
       //放款流程提交查询
@@ -218,9 +222,19 @@
           'orderNo': this.orderNoVal,  //订单编号
           'putoutNo': this.putoutNoVal,  //放款编号
         }
+        yu.showLoading();
         this.interfaceRequest('/api/lend/queryLendApplySubmit',data,"get",(res)=>{
           console.log(res)
           console.log('放款流程提交查询成功结果')
+          yu.hideLoading();
+          if(res.data.data.returnCode == 'Failed'){
+            yu.showToast({
+              title: res.data.data.returnDesc,
+              icon: 'none',
+              duration: 3000
+            });
+            return;
+          }
           let arr = res.data.data.userList;
           arr.forEach((item)=>{
             item.imgShow = false;
@@ -231,8 +245,13 @@
           })
           this.userIDList = arr;
           this.phaseNoList = arr2;
-        },function(err){
-          console.log(err)
+        },(err)=>{
+          yu.hideLoading();
+          yu.showToast({
+            title: '5.7流程提交失败，请联系管理员！',
+            icon: 'none',
+            duration: 3000
+          });
         });
       },
       //放款流程提交
@@ -243,9 +262,19 @@
           'phaseNo': this.phaseNoNumVal,  //节点编号
           'userID': this.userIDNumVal,  //审批人编号
         }
+        yu.showLoading();
         this.interfaceRequest('/api/lend/submitLendApply',data,"get",(res)=>{
           console.log(res)
           console.log('放款流程提交成功结果');
+          yu.hideLoading();
+          if(res.data.data.returnCode == 'Failed'){
+            yu.showToast({
+              title: res.data.data.returnDesc,
+              icon: 'none',
+              duration: 3000
+            });
+            return;
+          }
           this.businessNumCommit({
             "userID": this.userID, //客户经理编号
             "orgID": this.orgId, //客户经理所属机构编号
@@ -256,8 +285,13 @@
             });
           }, 1500);
           
-        },function(err){
-          console.log(err)
+        },(err)=>{
+          yu.hideLoading();
+          yu.showToast({
+            title: '5.8流程提交失败，请联系管理员！',
+            icon: 'none',
+            duration: 3000
+          });
         });
       },
       //下一步
