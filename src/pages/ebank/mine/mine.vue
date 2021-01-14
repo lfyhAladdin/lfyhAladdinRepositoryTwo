@@ -57,7 +57,7 @@ export default {
   computed: {
     ...mapGetters(['userInfor'])
   },
-  onLoad() {
+  created() {
     console.log(this.userInfor);
     let _this = this;
     /* 获取当前用户登录信息 */

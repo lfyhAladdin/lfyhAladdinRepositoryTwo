@@ -42,7 +42,7 @@
           <view class="handle" @click="handleOrder($event,orderOne.orderNo,orderOne.businessTypeId,orderOne.projectNo)">
             <img src="@/static/images/handle-logo.svg"><text>处理</text>
           </view>
-          <view class="dial"><a :href="'tel:' + orderOne.phoneNoF"><img src="@/static/images/dial-logo.svg"><text>拨号</text></a></view>
+          <view class="dial"><a @tap="call(orderOne.phoneNo)"><img src="@/static/images/dial-logo.svg"><text>拨号</text></a></view>
         </view>
       </view>
       
@@ -168,20 +168,13 @@ export default {
             success: function(res) {
               if (res.confirm) {
                 that.getApplyInfor(orderId,applyID);
-                // that.queryApplyInfoCommit({
-                //   orderNo: orderId,
-                //   applyNo: applyID
-                // });
-                // setTimeout(()=>{
-                //   yu.navigateTo({ url: '/pages/ebank/perfectInformation/perfectInformation' });
-                // },1500)
                 that.queryApplyInfoCommit({
-                  "orderNo": orderId, 
-                  "applyNo": applyID,
-                  'routerTrue': true,
-                  'routerTo': '/pages/ebank/perfectInformation/perfectInformation',
-                  'routerJumpWay': 'navigateTo'
-                }); //重新调'申请信息查询'接口
+                  orderNo: orderId,
+                  applyNo: applyID
+                });
+                setTimeout(()=>{
+                  yu.navigateTo({ url: '/pages/ebank/perfectInformation/perfectInformation' });
+                },1500)
               } else if (res.cancel) {
                 console.log("用户点击取消");
                 that.ajaxJudge= true;
@@ -317,6 +310,12 @@ export default {
       this.status= "more"
       this.beginNo = 1;
       this.inquireOrderList();
+    },
+    //拨打电话
+    call(num) {
+      uni.makePhoneCall({
+        phoneNumber: num
+      });
     },
   }
 };

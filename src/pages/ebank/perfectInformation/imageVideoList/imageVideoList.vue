@@ -270,12 +270,12 @@ export default {
     delImage(bt,filename){
       let _this=this;
       let postUrl='/api/imagehandle/deletebyfilename';
-      let busiFileTypeList=[bt];
+      let busiFileTypeList=[filename];
       let data={
         "busiSerialNo": _this.imageBatchNo,
         "busiStartDate": _this.imageUpLoadDate,
-        "busiFileTypeList": busiFileTypeList,
-        "filePartName": filename,
+        "fileNameList": busiFileTypeList,
+        "filePartName": "LS_SQZL_P",
         "modelCode": "LS_SQZL",
       };
        _this.interfaceRequest(

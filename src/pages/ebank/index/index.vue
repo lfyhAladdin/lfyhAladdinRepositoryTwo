@@ -125,7 +125,7 @@ export default {
     /**待提交放款数量 ***start**/
     this.featureslist[5].newsnumber = this.businessNum.issueSubmit;
     /**待提交放款数量 ***end**/
-    
+    this.username=this.userInfor.userName;
   },
   onLoad() {
     console.log(this.userInfor);

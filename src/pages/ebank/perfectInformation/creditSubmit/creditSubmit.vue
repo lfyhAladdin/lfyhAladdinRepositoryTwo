@@ -281,6 +281,7 @@ export default {
         sdata,
         "GET",
         function(res) {
+          that.loaninvestigation(that.applyNoVal);
           let userID = that.userInfor.loginCode;
           let orgID=that.userInfor.orgId;
           let data = {
@@ -289,6 +290,7 @@ export default {
           };
           that.businessNumCommit(data);
           that.ifSubmitInfor=false;
+
           setTimeout(() => {
               yu.switchTab({ url: "/pages/ebank/index/index" });
           }, 1500);
@@ -296,6 +298,15 @@ export default {
         function(err) {}
       );
       /* 授信流程提交 end*/
+    },
+    //廊坊银行个人住房/商用房贷款调查表
+    loaninvestigation(applyNo){
+      let _this=this;
+      let data = {
+        "orderNo": "", //订单编号
+        "applyNo": applyNo, //申请编号
+      };
+      _this.interfaceRequest('/api/loaninvestigation/loaninvestigation',data,"GET",function(res){})
     },
     nextStep() {
       //$(".credit-submit-frame").show();
