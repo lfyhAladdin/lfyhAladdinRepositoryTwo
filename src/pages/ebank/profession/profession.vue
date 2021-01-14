@@ -175,21 +175,28 @@
       ...mapGetters(['businessNum'])
     },
     created(){
-      let numObj = this.businessNum;
-      console.log(numObj)
-      this.ulList.forEach((val)=>{
-        let a = val.ulLi;
-        a.forEach((val1)=>{
-          for(let key in numObj){
-            if(val1.liKey == key){
-              val1.liNum = numObj[key];
-            }
-          }
-        })
-      });
+      console.log(this.businessNum)
+      this.commitFun();
+    },
+    activated(){
+      this.commitFun();
     },
     methods: {
       ...mapActions(['priceApproveFlagListCommit']),
+      //初始化时调用方法
+      commitFun(){
+        let numObj = this.businessNum;
+        this.ulList.forEach((val)=>{
+          let a = val.ulLi;
+          a.forEach((val1)=>{
+            for(let key in numObj){
+              if(val1.liKey == key){
+                val1.liNum = numObj[key];
+              }
+            }
+          })
+        });
+      },
       //页面跳转
       proRouter(e){
         console.log(e.liUrl)
@@ -202,20 +209,6 @@
           },1000)
         }
       },
-    },
-    activated(){
-      let numObj = this.businessNum;
-      console.log(numObj)
-      this.ulList.forEach((val)=>{
-        let a = val.ulLi;
-        a.forEach((val1)=>{
-          for(let key in numObj){
-            if(val1.liKey == key){
-              val1.liNum = numObj[key];
-            }
-          }
-        })
-      });
     },
   };
 </script>

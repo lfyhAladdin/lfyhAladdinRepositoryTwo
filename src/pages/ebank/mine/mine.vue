@@ -59,22 +59,27 @@ export default {
   },
   created() {
     console.log(this.userInfor);
-    let _this = this;
-    /* 获取当前用户登录信息 */
-    _this.username = _this.userInfor.userName;
-    _this.logincode = _this.userInfor.logincode;
-    _this.orginlist=_this.userInfor.organList;
-    _this.userOrgId = _this.userInfor.orgId;
-    for (let i = 0; i < _this.orginlist.length; i++) {
-      if (_this.orginlist[i].orgId == _this.userOrgId) {
-        _this.mechanism = _this.orginlist[i].orgName;
-        _this.position = _this.orginlist[i].roleName;
-      }
-    }
+    this.commitFun();
+  },
+  activated(){
+    this.commitFun();
   },
   onReady() {},
   onShareAppMessage() {},
   methods: {
+    commitFun(){
+      /* 获取当前用户登录信息 */
+      this.username = this.userInfor.userName;
+      this.logincode = this.userInfor.logincode;
+      this.orginlist=this.userInfor.organList;
+      this.userOrgId = this.userInfor.orgId;
+      for (let i = 0; i < this.orginlist.length; i++) {
+        if (this.orginlist[i].orgId == this.userOrgId) {
+          this.mechanism = this.orginlist[i].orgName;
+          this.position = this.orginlist[i].roleName;
+        }
+      }
+    },
     signOut() {
       let _this=this;
       yu.showModal({
