@@ -187,7 +187,8 @@
     computed: {
       ...mapGetters([
           'approvalIngList',
-          'userInfor'
+          'userInfor',
+          'personalInformation'
       ])
     },
     onLoad(option) {
@@ -204,7 +205,7 @@
       if(this.identity=='共借人配偶' || this.identity=='担保人配偶'){
         this.relationShipIdx='0310'
       }
-      if(localStorage.getItem('personalInformation')){
+      if(JSON.stringify(this.personalInformation) != "{}"){
         this.getPersonalData();
       }
 
@@ -374,7 +375,7 @@
         }
         this.preventResubmit = false;
         this.isJump = isJump;
-        let personalInformation=JSON.parse(localStorage.getItem('personalInformation'));
+        let personalInformation = this.personalInformation;
 
         var marriage='',relationShip='';
         if(this.identity=='担保人' || this.identity=='共借人'){
@@ -457,7 +458,7 @@
       },
       // 3.2接口 获取个人信息
       getPersonalData(){
-        let personalInformation=JSON.parse(localStorage.getItem('personalInformation'));
+        let personalInformation = this.personalInformation;
           let data={
             certType: personalInformation.certType,
             certId: personalInformation.certId,

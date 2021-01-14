@@ -119,9 +119,7 @@
 </template>
 <script>
     import pageHead from '@/components/page-head.vue';
-    import {
-        mapGetters
-    } from 'vuex'
+    import {mapGetters,mapActions,mapMutations} from 'vuex'
 
     export default {
         data() {
@@ -132,7 +130,6 @@
                 identity: "",
                 listName: "",
                 userId: '',
-                personnelInformationList: {},
                 navigateFlag: false,
                 see: true,
                 baseInformation: {
@@ -182,16 +179,14 @@
             }
         },
         onLoad(option) {
-            this.personnelInformationList = JSON.parse(localStorage.getItem('personnelInformationList'));
             // 影像批次号
-            if (this.personnelInformationList.imageList != null && this.personnelInformationList.imageList.length > 0) {
-                //this.batchId = this.personnelInformationList.imageList[0].imageBatchNo?this.personnelInformationList.imageList[0].imageBatchNo:'20201211_50_440_01504D46-86F8-0D87-81B3-D892ADDBD396-1';
-                this.busiSerialNoVal = this.personnelInformationList.imageList[0].imageBatchNo; //业务流水号
-                this.busiStartDateVal = this.personnelInformationList.imageList[0].imageUpLoadDate; //业务日期
+            if (this.queryApplyInfoList.imageList != null && this.queryApplyInfoList.imageList.length > 0) {
+                this.busiSerialNoVal = this.queryApplyInfoList.imageList[0].imageBatchNo; //业务流水号
+                this.busiStartDateVal = this.queryApplyInfoList.imageList[0].imageUpLoadDate; //业务日期
             }
             this.orderNoVal = this.approvalIngList.orderNo;
             this.applyNoVal = this.approvalIngList.serialNo;
-            if (localStorage.getItem('personalInformation')) {
+            if(JSON.stringify(this.personalInformation) != "{}"){
                 this.getPersonalData();
             }
         },
@@ -201,6 +196,8 @@
             ...mapGetters([
                 'approvalIngList',
                 'userInfor',
+                "queryApplyInfoList",
+                "personalInformation"
             ]),
             startDate() {
                 return this.getDate('start');
@@ -210,6 +207,8 @@
             }
         },
         methods: {
+            ...mapActions(["queryApplyInfoCommit"]),
+            ...mapMutations(["personalInformationReplace"]),
             //返回上一页
             navigateBack() {
                 uni.navigateBack();
@@ -306,11 +305,12 @@
                     console.log(res.data.data);
                     that.deletelocalfileandfolder();
                     if (that.isJump) {
-                        var personalInformation = {
+                        let data = {
                             certType: 'Ind01',
                             certId: that.personInfor.idcard,
                             customerName: that.personInfor.name
                         }
+                        this.personalInformationReplace(data);
                         console.log(this.personInfor.ermanentAddress)
                         if (this.personInfor.ermanentAddress == "") {
                             yu.showModal({
@@ -326,8 +326,6 @@
                             });
                             return false;
                         }
-                        localStorage.removeItem('personalInformation');
-                        localStorage.setItem('personalInformation', JSON.stringify(personalInformation));
                         that.pageJump('personInformation/borrowerInformation/baseInformation/baseInformation')
                     } else {
                         // alert('暂存成功！')
@@ -474,7 +472,11 @@
             // 下一步
             nextStep(isJump) {
                 this.isJump = isJump;
-                this.updatePersonalData()
+                this.updatePersonalData();
+                this.queryApplyInfoCommit({
+                            orderNo: this.orderNoVal,
+                            applyNo: this.applyNoVal
+                        }); //重新调'申请信息查询'接口，确保人员信息列表准确
             },
             // 3.7接口 个人信息更新
             updatePersonalData() {
@@ -515,7 +517,7 @@
             // 3.2接口 获取个人信息
             getPersonalData() {
                 let that = this;
-                let personalInformation = JSON.parse(localStorage.getItem('personalInformation'));
+                let personalInformation = this.personalInformation;
                 console.log('借款人-获取个人信息')
                 console.log(personalInformation)
                 let data = {
