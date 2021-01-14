@@ -508,6 +508,11 @@
                         that.updatebyfilename();
                     } else {
                         // alert('更新失败了！！')
+                        yu.showToast({
+                        title:resArr.returnDesc,
+                        icon: 'none',
+                        duration: 5000
+                    });
                     }
                 }, function(err) {
                     yu.hideLoading();
