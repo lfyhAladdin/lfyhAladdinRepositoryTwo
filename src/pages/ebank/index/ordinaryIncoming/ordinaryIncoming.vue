@@ -242,6 +242,8 @@ export default {
       let urlstr =
         "?phone=" +
         this.personInfor.phone +
+        "&productIndex=" +
+        this.productIndex +
         "&productId=" +
         this.productId +
         "&productName=" +
