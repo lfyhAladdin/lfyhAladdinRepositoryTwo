@@ -1,29 +1,46 @@
 <template>
   <view class="incoming">
     <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
+      <view class="ch-img" @tap="navigateBack">
+        <img src="@/static/images/firstroom/backArrow.svg" />
+      </view>
       <view class="ch-title">借款人信息</view>
       <view class="ch-other" @click="nextStep(false)">暂存</view>
     </view>
-      <!--信息完善进度条-start-->
-      <view class="progress">
-        <img src="@/static/images/firstroom/longProgress03.svg" />
-        <view class="uni-flex uni-row">
-          <view class="flex-item active">户籍信息</view>
-          <view class="flex-item">基本信息</view>
-          <view class="flex-item">工作信息</view>
-          <view class="flex-item">联系人信息</view>
-        </view>
+    <!--信息完善进度条-start-->
+    <view class="progress">
+      <img src="@/static/images/firstroom/longProgress03.svg" />
+      <view class="uni-flex uni-row">
+        <view class="flex-item active">户籍信息</view>
+        <view class="flex-item">基本信息</view>
+        <view class="flex-item">工作信息</view>
+        <view class="flex-item">联系人信息</view>
       </view>
-      <!--信息完善进度条-end-->
+    </view>
+    <!--信息完善进度条-end-->
     <view class="customize-content-form">
       <!--个人信息-start-->
       <view class="person-infor marginT25">
         <view class="person-infor-one">
           <text>单位名称</text>
-          <img v-if="personInfor.companyName!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.companyName=''" />
+          <img
+            v-if="personInfor.companyName!=''"
+            class="cleanUp"
+            src="@/static/images/firstroom/cleanUp.svg"
+            @click="personInfor.companyName=''"
+          />
           <!-- <input placeholder="请输入" type="text" v-model.trim="personInfor.companyName" @focus="verifyCompanyName.isTipShow=false" @blur="checkCompanyName(personInfor.companyName)" /> -->
-          <textarea name=""placeholder-style="color:#c7c9cd" placeholder="请输入" id="" cols="30" rows="10" v-model.trim="personInfor.companyName" @focus="verifyCompanyName.isTipShow=false" @blur="checkCompanyName(personInfor.companyName)"  ></textarea>
+          <textarea
+            name
+            placeholder-style="color:#c7c9cd"
+            placeholder="请输入"
+            id
+            cols="30"
+            rows="10"
+            v-model.trim="personInfor.companyName"
+            @focus="verifyCompanyName.isTipShow=false"
+            @blur="checkCompanyName(personInfor.companyName)"
+          ></textarea>
           <view v-if="verifyCompanyName.isTipShow" class="tips">{{verifyCompanyName.tipText}}</view>
         </view>
         <!--<view class="person-infor-one">
@@ -32,12 +49,27 @@
 						<view class="uni-input">{{scaleJudgementList[scaleJudgementIdx].value}}</view>
 					</picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
-        </view> -->
+        </view>-->
         <view class="person-infor-one">
           <text>单位地址</text>
-          <img v-if="personInfor.companyAddress!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.companyAddress=''" />
+          <img
+            v-if="personInfor.companyAddress!=''"
+            class="cleanUp"
+            src="@/static/images/firstroom/cleanUp.svg"
+            @click="personInfor.companyAddress=''"
+          />
           <!-- <input placeholder="请输入" type="text" v-model.trim="personInfor.companyAddress" @focus="verifyCompanyAddress.isTipShow=false" @blur="checkCompanyAddress(personInfor.companyAddress)" /> -->
-          <textarea name="" id="" placeholder-style="color:#c7c9cd" placeholder="请输入" cols="30" rows="10" v-model.trim="personInfor.companyAddress" @focus="verifyCompanyAddress.isTipShow=false" @blur="checkCompanyAddress(personInfor.companyAddress)"></textarea>
+          <textarea
+            name
+            id
+            placeholder-style="color:#c7c9cd"
+            placeholder="请输入"
+            cols="30"
+            rows="10"
+            v-model.trim="personInfor.companyAddress"
+            @focus="verifyCompanyAddress.isTipShow=false"
+            @blur="checkCompanyAddress(personInfor.companyAddress)"
+          ></textarea>
           <view v-if="verifyCompanyAddress.isTipShow" class="tips">{{verifyCompanyAddress.tipText}}</view>
         </view>
         <!--<view class="person-infor-one">
@@ -45,46 +77,83 @@
           <img v-if="personInfor.postcode!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.postcode=''" />
           <input placeholder="请输入" type="number" v-model.trim="personInfor.postcode" @focus="verifyPostcode.isTipShow=false" @blur="checkPostCode(personInfor.postcode)" />
           <view v-if="verifyPostcode.isTipShow" class="tips">{{verifyPostcode.tipText}}</view>
-        </view> -->
+        </view>-->
         <view class="person-infor-one">
           <text>单位电话</text>
-          <img v-if="personInfor.telephone!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.telephone=''" />
-          <input placeholder="请输入" maxlength="11" type="number" v-model.trim="personInfor.telephone" @focus="verifyTelephone.isTipShow=false" @blur="checkTelephone(personInfor.telephone)" />
+          <img
+            v-if="personInfor.telephone!=''"
+            class="cleanUp"
+            src="@/static/images/firstroom/cleanUp.svg"
+            @click="personInfor.telephone=''"
+          />
+          <input
+            placeholder="请输入"
+            maxlength="11"
+            type="number"
+            v-model.trim="personInfor.telephone"
+            @focus="verifyTelephone.isTipShow=false"
+            @blur="checkTelephone(personInfor.telephone)"
+          />
           <view v-if="verifyTelephone.isTipShow" class="tips">{{verifyTelephone.tipText}}</view>
         </view>
         <view class="person-infor-one">
           <text>单位性质</text>
-          <picker @change="workNatureChange" :value="workNatureIdx" :range-key="'value'" :range="workNatureList">
-						<view class="uni-input">{{workNatureList[workNatureIdx].value}}</view>
-					</picker>
+          <picker
+            @change="workNatureChange"
+            :value="workNatureIdx"
+            :range-key="'value'"
+            :range="workNatureList"
+          >
+            <view class="uni-input">{{workNatureList[workNatureIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
           <text>单位所属行业</text>
-          <picker @change="unitKindChange" :value="unitKindIdx" :range-key="'value'" :range="unitKindList">
-						<view class="uni-input">{{unitKindList[unitKindIdx].value}}</view>
-					</picker>
+          <picker
+            @change="unitKindChange"
+            :value="unitKindIdx"
+            :range-key="'value'"
+            :range="unitKindList"
+          >
+            <view class="uni-input">{{unitKindList[unitKindIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
           <text>职业</text>
-          <picker @change="occupationChange" :value="occupationIdx" :range-key="'value'" :range="occupationList">
-						<view class="uni-input">{{occupationList[occupationIdx].value}}</view>
-					</picker>
+          <picker
+            @change="occupationChange"
+            :value="occupationIdx"
+            :range-key="'value'"
+            :range="occupationList"
+          >
+            <view class="uni-input">{{occupationList[occupationIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
           <text>职务</text>
-          <picker @change="headShipChange" :value="headShipIdx" :range-key="'value'" :range="headShipList">
-						<view class="uni-input">{{headShipList[headShipIdx].value}}</view>
-					</picker>
+          <picker
+            @change="headShipChange"
+            :value="headShipIdx"
+            :range-key="'value'"
+            :range="headShipList"
+          >
+            <view class="uni-input">{{headShipList[headShipIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
           <text>职称</text>
-          <picker @change="positionChange" :value="positionIdx" :range-key="'value'" :range="positionList">
-						<view class="uni-input">{{positionList[positionIdx].value}}</view>
-					</picker>
+          <picker
+            @change="positionChange"
+            :value="positionIdx"
+            :range-key="'value'"
+            :range="positionList"
+          >
+            <view class="uni-input">{{positionList[positionIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
@@ -94,10 +163,9 @@
             <button size="mini" :type="staff=='2'?'primary':''" @click="staff='2'">否</button>
           </view>
         </view>
-        
       </view>
       <!--个人信息-end-->
-      <view class="" @click="nextStep(true)">
+      <view class @click="nextStep(true)">
         <view class="cbutton">
           <text>下一步</text>
         </view>
@@ -107,7 +175,7 @@
 </template>
 <script>
 import pageHead from "@/components/page-head.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -115,74 +183,74 @@ export default {
       personInfor: {
         companyName: "",
         companyAddress: "",
-        telephone: ""
+        telephone: "",
       },
       verifyCompanyName: {
         isTipShow: false,
-        tipText: "单位名称不能为空"
+        tipText: "单位名称不能为空",
       },
       verifyCompanyAddress: {
         isTipShow: false,
-        tipText: "单位地址不能为空"
+        tipText: "单位地址不能为空",
       },
       verifyPostcode: {
         isTipShow: false,
-        tipText: "单位地址邮编不能为空"
+        tipText: "单位地址邮编不能为空",
       },
       verifyTelephone: {
         isTipShow: false,
-        tipText: "单位电话不能为空"
+        tipText: "单位电话不能为空",
       },
       scaleJudgementList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       scaleJudgementIdx: 0,
       unitKindList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       unitKindIdx: 0,
       workNatureList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       workNatureIdx: 0,
       occupationList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       occupationIdx: 0,
       headShipList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       headShipIdx: 0,
       positionList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       positionIdx: 0,
       staff: "3",
       orderNoVal: "", //订单编号
       applyNoVal: "", //申请编号
-      isJump: true
+      isJump: true,
     };
   },
   computed: {
-    ...mapGetters(["approvalIngList", "userInfor"])
+    ...mapGetters(["approvalIngList", "userInfor"]),
   },
   onLoad(option) {
     this.orderNoVal = this.approvalIngList.orderNo;
@@ -200,6 +268,7 @@ export default {
   onShow() {},
   onUnload() {},
   methods: {
+    ...mapActions(["queryApplyInfoCommit"]),
     //返回上一页
     navigateBack() {
       uni.navigateBack();
@@ -227,14 +296,14 @@ export default {
     getScaleJudgementList() {
       let that = this;
       let pdata = {
-        dictionaryName: "scaleJudgement"
+        dictionaryName: "scaleJudgement",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.scaleJudgementList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -243,14 +312,14 @@ export default {
     getUnitKindList() {
       let that = this;
       let pdata = {
-        dictionaryName: "unitKind"
+        dictionaryName: "unitKind",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.unitKindList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -259,14 +328,14 @@ export default {
     getWorkNatureList() {
       let that = this;
       let pdata = {
-        dictionaryName: "workNature"
+        dictionaryName: "workNature",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.workNatureList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -275,14 +344,14 @@ export default {
     getOccupationList() {
       let that = this;
       let pdata = {
-        dictionaryName: "occupation"
+        dictionaryName: "occupation",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.occupationList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -291,14 +360,14 @@ export default {
     getHeadShipList() {
       let that = this;
       let pdata = {
-        dictionaryName: "headShip"
+        dictionaryName: "headShip",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.headShipList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -307,14 +376,14 @@ export default {
     getPositionList() {
       let that = this;
       let pdata = {
-        dictionaryName: "position"
+        dictionaryName: "position",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.positionList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -343,7 +412,7 @@ export default {
         staff: this.staff,
         scene: "cstScene",
         applyNo: this.applyNoVal,
-        listName: "workInfo"
+        listName: "workInfo",
       };
       // 3.7接口 个人信息更新
       let posturl = "/api/credit/customerInfoUpdate";
@@ -351,70 +420,73 @@ export default {
         posturl,
         data,
         "post",
-        (res)=> {
-          console.log(res)
+        (res) => {
+          console.log(res);
           let resArr = res.data.data;
-          let errorMsg=res.data.message;
-          console.log(errorMsg)
-         
-      
- if (res.data.data ==null) {
+          let errorMsg = res.data.message;
+          console.log(errorMsg);
+          this.queryApplyInfoCommit({
+            orderNo: this.orderNoVal,
+            applyNo: this.applyNoVal,
+          }); //重新调'申请信息查询'接口，确保人员信息列表准确
+
+          if (res.data.data == null) {
             yu.showModal({
-                      title:"失败了！",
-                      content:errorMsg,
-                      showCancel: false,
-                      confirmText: "我知道了",
-                      success: res => {
-                          if (res.confirm) {
-                              console.log("用户点击确定");
-                          }
-                      }
-                  });
-                  return false;
+              title: "失败了！",
+              content: errorMsg,
+              showCancel: false,
+              confirmText: "我知道了",
+              success: (res) => {
+                if (res.confirm) {
+                  console.log("用户点击确定");
+                }
+              },
+            });
+            return false;
           } else {
-             if (that.isJump) {
-                if(this.personInfor.companyName==""){
-         yu.showModal({
-              title: "单位名称不能为空！",
-              content: "",
-              showCancel: false,
-              confirmText: "我知道了",
-              success: res => {
-                  if (res.confirm) {
+            if (that.isJump) {
+              if (this.personInfor.companyName == "") {
+                yu.showModal({
+                  title: "单位名称不能为空！",
+                  content: "",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
+                    if (res.confirm) {
                       console.log("用户点击确定");
-                  }
+                    }
+                  },
+                });
+                return false;
               }
-          });
-          return false;
-      }
-       if(this.personInfor.companyAddress==""){
-         yu.showModal({
-              title: "单位地址不能为空！",
-              content: "",
-              showCancel: false,
-              confirmText: "我知道了",
-              success: res => {
-                  if (res.confirm) {
+              if (this.personInfor.companyAddress == "") {
+                yu.showModal({
+                  title: "单位地址不能为空！",
+                  content: "",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
+                    if (res.confirm) {
                       console.log("用户点击确定");
-                  }
+                    }
+                  },
+                });
+                return false;
               }
-          });
-          return false;
-      }
-       if(this.personInfor.telephone==""){
-         yu.showModal({
-              title: "单位电话不能为空！",
-              content: "",
-              showCancel: false,
-              confirmText: "我知道了",
-              success: res => {
-                  if (res.confirm) {
+              if (this.personInfor.telephone == "") {
+                yu.showModal({
+                  title: "单位电话不能为空！",
+                  content: "",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
+                    if (res.confirm) {
                       console.log("用户点击确定");
-                  }
+                    }
+                  },
+                });
+                return false;
               }
-          });
-          return false;
-      }
               that.pageJump(
                 "personInformation/borrowerInformation/contactInformation/contactInformation"
               );
@@ -422,16 +494,8 @@ export default {
               alert("暂存成功！");
             }
           }
-
-
-
-
-
-
-
-
         },
-        function(err) {
+        function (err) {
           alert("报错了！！");
         }
       );
@@ -447,7 +511,7 @@ export default {
         certId: personalInformation.certId,
         customerName: personalInformation.customerName,
         scene: "cstScene",
-        applyNo: this.applyNoVal
+        applyNo: this.applyNoVal,
       };
       let posturl = "/api/front/perCustomerInfo";
       yu.showLoading();
@@ -455,7 +519,7 @@ export default {
         posturl,
         data,
         "post",
-        function(res) {
+        function (res) {
           yu.hideLoading();
           let resData = res.data.data;
           if (resData.returnCode == "Success") {
@@ -487,7 +551,7 @@ export default {
             alert("失败了！！");
           }
         },
-        function(err) {
+        function (err) {
           yu.hideLoading();
           alert("报错了！！");
         }
@@ -507,9 +571,8 @@ export default {
         return 0;
       }
     },
-    
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 
@@ -601,7 +664,7 @@ uni-page-body:after {
           width: 71%;
           height: 105rpx;
           text-align: right;
-          padding-top:30rpx;
+          padding-top: 30rpx;
           margin-left: 140rpx;
           line-height: 36rpx;
         }

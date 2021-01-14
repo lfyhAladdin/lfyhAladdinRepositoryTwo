@@ -1,88 +1,145 @@
 <template>
   <view class="incoming">
     <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
+      <view class="ch-img" @tap="navigateBack">
+        <img src="@/static/images/firstroom/backArrow.svg" />
+      </view>
       <view class="ch-title">借款人信息</view>
       <view class="ch-other" @click="nextStep(false)">暂存</view>
     </view>
-      <!--信息完善进度条-start-->
-      <view class="progress">
-        <img src="@/static/images/firstroom/longProgress02.svg" />
-        <view class="uni-flex uni-row">
-          <view class="flex-item active">户籍信息</view>
-          <view class="flex-item">基本信息</view>
-          <view class="flex-item">工作信息</view>
-          <view class="flex-item">联系人信息</view>
-        </view>
+    <!--信息完善进度条-start-->
+    <view class="progress">
+      <img src="@/static/images/firstroom/longProgress02.svg" />
+      <view class="uni-flex uni-row">
+        <view class="flex-item active">户籍信息</view>
+        <view class="flex-item">基本信息</view>
+        <view class="flex-item">工作信息</view>
+        <view class="flex-item">联系人信息</view>
       </view>
-      <!--信息完善进度条-end-->
+    </view>
+    <!--信息完善进度条-end-->
     <view class="customize-content-form">
       <!--个人信息-start-->
       <view class="person-infor marginT25">
         <view class="person-infor-one">
           <text>手机号码</text>
-          <img v-if="personInfor.phone!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.phone=''" />
-          <input placeholder="请输入" maxlength="11" type="number" v-model.trim="personInfor.phone" @focus="verifyPhone.isTipShow=false" @blur="checkPhone(personInfor.phone)" />
+          <img
+            v-if="personInfor.phone!=''"
+            class="cleanUp"
+            src="@/static/images/firstroom/cleanUp.svg"
+            @click="personInfor.phone=''"
+          />
+          <input
+            placeholder="请输入"
+            maxlength="11"
+            type="number"
+            v-model.trim="personInfor.phone"
+            @focus="verifyPhone.isTipShow=false"
+            @blur="checkPhone(personInfor.phone)"
+          />
           <view v-if="verifyPhone.isTipShow" class="tips">{{verifyPhone.tipText}}</view>
         </view>
         <view class="person-infor-one">
           <text>个人年收入（元）</text>
-          <img v-if="personInfor.yearIncome!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.yearIncome=''" />
-          <input placeholder="请输入" type="number" v-model.trim="personInfor.yearIncome" @focus="verifyYearIncome.isTipShow=false" @blur="checkYearIncome(personInfor.yearIncome)" />
+          <img
+            v-if="personInfor.yearIncome!=''"
+            class="cleanUp"
+            src="@/static/images/firstroom/cleanUp.svg"
+            @click="personInfor.yearIncome=''"
+          />
+          <input
+            placeholder="请输入"
+            type="number"
+            v-model.trim="personInfor.yearIncome"
+            @focus="verifyYearIncome.isTipShow=false"
+            @blur="checkYearIncome(personInfor.yearIncome)"
+          />
           <view v-if="verifyYearIncome.isTipShow" class="tips">{{verifyYearIncome.tipText}}</view>
         </view>
         <view class="person-infor-one">
           <text>居住状况</text>
-          <picker @change="familyStatusChange" :value="familyStatusIdx" :range-key="'value'" :range="familyStatusList">
-						<view class="uni-input">{{familyStatusList[familyStatusIdx].value}}</view>
-					</picker>
+          <picker
+            @change="familyStatusChange"
+            :value="familyStatusIdx"
+            :range-key="'value'"
+            :range="familyStatusList"
+          >
+            <view class="uni-input">{{familyStatusList[familyStatusIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
           <text>居住地址</text>
-            <!-- 三级联动 -->
-            <picker mode="multiSelector" @columnchange="changeNextCol" :value="mulIndex" :range="mulArr">
-              <view class="picker" v-if="isShow">
-               {{mulArr[0][mulIndex[0]]}}，{{mulArr[1][mulIndex[1]]}}，{{mulArr[2][mulIndex[2]]}}
-              </view>
-            </picker>
+          <!-- 三级联动 -->
+          <picker
+            mode="multiSelector"
+            @columnchange="changeNextCol"
+            :value="mulIndex"
+            :range="mulArr"
+          >
+            <view
+              class="picker address"
+              v-if="isShow"
+            >{{mulArr[0][mulIndex[0]]}}，{{mulArr[1][mulIndex[1]]}}，{{mulArr[2][mulIndex[2]]}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
           <!-- <input placeholder="请输入详细地址" type="text" v-model.trim="personInfor.detailAddress" />  -->
-          <textarea placeholder="请输入详细地址" name="" id="" cols="30" rows="10" v-model.trim="personInfor.detailAddress"></textarea>
+          <textarea
+            placeholder="请输入详细地址"
+            name
+            id
+            cols="30"
+            rows="10"
+            v-model.trim="personInfor.detailAddress"
+          ></textarea>
         </view>
         <!-- <view class="person-infor-one">
           <text>居住地址邮编</text>
           <img v-if="personInfor.postcode!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.postcode=''" />
           <input placeholder="请输入" type="number" v-model.trim="personInfor.postcode" @focus="verifyPostcode.isTipShow=false" @blur="checkPostCode(personInfor.postcode)" />
           <view v-if="verifyPostcode.isTipShow" class="tips">{{verifyPostcode.tipText}}</view>
-        </view> -->
+        </view>-->
         <view class="person-infor-one">
           <text>最高学历</text>
-          <picker @change="eduexperienceChange" :value="eduexperienceIdx" :range-key="'value'" :range="eduexperienceList">
-						<view class="uni-input">{{eduexperienceList[eduexperienceIdx].value}}</view>
-					</picker>
+          <picker
+            @change="eduexperienceChange"
+            :value="eduexperienceIdx"
+            :range-key="'value'"
+            :range="eduexperienceList"
+          >
+            <view class="uni-input">{{eduexperienceList[eduexperienceIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
           <text>最高学位</text>
-          <picker @change="edudegreeChange" :value="edudegreeIdx" :range-key="'value'" :range="edudegreeList">
-						<view class="uni-input">{{edudegreeList[edudegreeIdx].value}}</view>
-					</picker>
+          <picker
+            @change="edudegreeChange"
+            :value="edudegreeIdx"
+            :range-key="'value'"
+            :range="edudegreeList"
+          >
+            <view class="uni-input">{{edudegreeList[edudegreeIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
         <view class="person-infor-one">
           <text>婚姻状况</text>
-          <picker @change="marriageChange" :value="marriageIdx" :range-key="'value'" :range="marriageList">
-						<view class="uni-input">{{marriageList[marriageIdx].value}}</view>
-					</picker>
+          <picker
+            @change="marriageChange"
+            :value="marriageIdx"
+            :range-key="'value'"
+            :range="marriageList"
+          >
+            <view class="uni-input">{{marriageList[marriageIdx].value}}</view>
+          </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
-        
       </view>
       <!--个人信息-end-->
-      <view class="" @click="nextStep(true)">
+      <view class @click="nextStep(true)">
         <view class="cbutton">
           <text>下一步</text>
         </view>
@@ -92,7 +149,7 @@
 </template>
 <script>
 import pageHead from "@/components/page-head.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -100,46 +157,46 @@ export default {
       personInfor: {
         phone: "",
         yearIncome: "",
-        detailAddress: ""
+        detailAddress: "",
       },
       verifyPhone: {
         isTipShow: false,
-        tipText: "请输入11位手机号码"
+        tipText: "请输入11位手机号码",
       },
       verifyYearIncome: {
         isTipShow: false,
-        tipText: "个人年收入不能为空"
+        tipText: "个人年收入不能为空",
       },
       verifyPostcode: {
         isTipShow: false,
-        tipText: "居住地址邮编不能为空"
+        tipText: "居住地址邮编不能为空",
       },
       familyStatusList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       familyStatusIdx: 0,
       eduexperienceList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       eduexperienceIdx: 0,
       edudegreeList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       edudegreeIdx: 0,
       marriageList: [
         {
           key: 0,
-          value: "请选择"
-        }
+          value: "请选择",
+        },
       ],
       marriageIdx: 0,
 
@@ -152,11 +209,11 @@ export default {
       json: [],
       orderNoVal: "", //订单编号
       applyNoVal: "", //申请编号
-      isJump: true
+      isJump: true,
     };
   },
   computed: {
-    ...mapGetters(["approvalIngList", "userInfor"])
+    ...mapGetters(["approvalIngList", "userInfor"]),
   },
   onLoad(option) {
     this.orderNoVal = this.approvalIngList.orderNo;
@@ -174,6 +231,7 @@ export default {
   onShow() {},
   onUnload() {},
   methods: {
+    ...mapActions(["queryApplyInfoCommit"]),
     changeNextCol(e) {
       // 列的值改变时触发   我这里是三列：车子类型  品牌名称  车型
       console.log("修改的列", e.target.column, "值为", e.target.value);
@@ -184,14 +242,14 @@ export default {
       this.mulArr.splice(
         1,
         1,
-        this.json[this.mulIndex[0]].children.map(function(v) {
+        this.json[this.mulIndex[0]].children.map(function (v) {
           return v.regionName;
         })
       );
       this.mulCodeArr.splice(
         1,
         1,
-        this.json[this.mulIndex[0]].children.map(function(v) {
+        this.json[this.mulIndex[0]].children.map(function (v) {
           return v.regionId;
         })
       );
@@ -200,7 +258,7 @@ export default {
         2,
         1,
         this.json[this.mulIndex[0]].children[this.mulIndex[1]].children.map(
-          function(v) {
+          function (v) {
             return v.regionName;
           }
         )
@@ -209,7 +267,7 @@ export default {
         2,
         1,
         this.json[this.mulIndex[0]].children[this.mulIndex[1]].children.map(
-          function(v) {
+          function (v) {
             return v.regionId;
           }
         )
@@ -230,7 +288,7 @@ export default {
       uni.navigateBack();
     },
     //下拉列表
-    familyStatusChange: function(e) {
+    familyStatusChange: function (e) {
       this.familyStatusIdx = e.target.value;
     },
     eduexperienceChange(e) {
@@ -246,14 +304,14 @@ export default {
     getFamilyStatusList() {
       let that = this;
       let pdata = {
-        dictionaryName: "familyStatus"
+        dictionaryName: "familyStatus",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.familyStatusList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -269,41 +327,41 @@ export default {
         posturl,
         data,
         "post",
-        function(res) {
+        function (res) {
           yu.hideLoading();
           let resArr = res.data.data;
           that.json = resArr.regionAllList;
           // 初始化picker默认值
-          that.mulArr[0] = that.json.map(function(v) {
+          that.mulArr[0] = that.json.map(function (v) {
             return v.regionName;
           });
-          that.mulArr[1] = that.json[that.mulIndex[0]].children.map(function(
+          that.mulArr[1] = that.json[that.mulIndex[0]].children.map(function (
             v
           ) {
             return v.regionName;
           });
           that.mulArr[2] = that.json[that.mulIndex[0]].children[
             that.mulIndex[1]
-          ].children.map(function(v) {
+          ].children.map(function (v) {
             return v.regionName;
           });
-          that.mulCodeArr[0] = that.json.map(function(v) {
+          that.mulCodeArr[0] = that.json.map(function (v) {
             return v.regionId;
           });
           that.mulCodeArr[1] = that.json[that.mulIndex[0]].children.map(
-            function(v) {
+            function (v) {
               return v.regionId;
             }
           );
           that.mulCodeArr[2] = that.json[that.mulIndex[0]].children[
             that.mulIndex[1]
-          ].children.map(function(v) {
+          ].children.map(function (v) {
             return v.regionId;
           });
           that.regionCode = that.mulCodeArr[2][that.mulIndex[2]];
           that.isShow = true;
         },
-        function(err) {
+        function (err) {
           yu.hideLoading();
           alert("报错了！！");
         }
@@ -313,14 +371,14 @@ export default {
     getEduexperienceList() {
       let that = this;
       let pdata = {
-        dictionaryName: "eduexperience"
+        dictionaryName: "eduexperience",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.eduexperienceList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -329,14 +387,14 @@ export default {
     getEdudegreeList() {
       let that = this;
       let pdata = {
-        dictionaryName: "edudegree"
+        dictionaryName: "edudegree",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.edudegreeList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -345,14 +403,14 @@ export default {
     getMarriageList() {
       let that = this;
       let pdata = {
-        dictionaryName: "marriage"
+        dictionaryName: "marriage",
       };
-      this.queryDictionaryList(pdata, function(res) {
+      this.queryDictionaryList(pdata, function (res) {
         let resData = res.data.data;
         for (let key in resData) {
           that.marriageList.push({
             key: key,
-            value: resData[key]
+            value: resData[key],
           });
         }
       });
@@ -380,7 +438,7 @@ export default {
         coord: this.mulIndex.join(","),
         scene: "cstScene",
         applyNo: this.applyNoVal,
-        listName: "baseInfo"
+        listName: "baseInfo",
       };
       // 3.7接口 个人信息更新
       let posturl = "/api/credit/customerInfoUpdate";
@@ -389,118 +447,117 @@ export default {
         posturl,
         data,
         "post",
-        (res)=> {
+        (res) => {
           yu.hideLoading();
           let resArr = res.data.data;
           if (resArr.returnCode == "Success") {
             if (that.isJump) {
-              console.log(this.familyStatusList[this.familyStatusIdx].value)
-               if(this.personInfor.phone==""){
-         yu.showModal({
-                title: "错误",
-                content: "手机号码不能为空！",
-                showCancel: false,
-                confirmText: "我知道了",
-                success: res => {
+              console.log(this.familyStatusList[this.familyStatusIdx].value);
+              this.queryApplyInfoCommit({
+                orderNo:this.orderNoVal,
+                applyNo: this.applyNoVal,
+              }); //重新调'申请信息查询'接口，确保人员信息列表准确
+              if (this.personInfor.phone == "") {
+                yu.showModal({
+                  title: "错误",
+                  content: "手机号码不能为空！",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
                     if (res.confirm) {
-                        console.log("用户点击确定");
-                        
+                      console.log("用户点击确定");
                     }
-                }
-            });
-            return false;
-      }
+                  },
+                });
+                return false;
+              }
 
-      if(this.personInfor.yearIncome==""){
-         yu.showModal({
-                title: "错误",
-                content: "个人年收入不能为空！",
-                showCancel: false,
-                confirmText: "我知道了",
-                success: res => {
+              if (this.personInfor.yearIncome == "") {
+                yu.showModal({
+                  title: "错误",
+                  content: "个人年收入不能为空！",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
                     if (res.confirm) {
-                        console.log("用户点击确定");
-                        
+                      console.log("用户点击确定");
                     }
-                }
-            });
-            return false;
-      }
-       if(this.familyStatusList[this.familyStatusIdx].value=="请选择"){
-         yu.showModal({
-                title: "错误",
-                content: "请选择居住状况！",
-                showCancel: false,
-                confirmText: "我知道了",
-                success: res => {
+                  },
+                });
+                return false;
+              }
+              if ( this.familyStatusList[this.familyStatusIdx].value == "请选择") {
+                yu.showModal({
+                  title: "错误",
+                  content: "请选择居住状况！",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
                     if (res.confirm) {
-                        console.log("用户点击确定");
-                        
+                      console.log("用户点击确定");
                     }
-                }
-            });
-            return false;
-      }
- if(this.personInfor.detailAddress==""){
-         yu.showModal({
-                title: "错误",
-                content: "居住地址不能为空！",
-                showCancel: false,
-                confirmText: "我知道了",
-                success: res => {
+                  },
+                });
+                return false;
+              }
+              if (this.personInfor.detailAddress == "") {
+                yu.showModal({
+                  title: "错误",
+                  content: "居住地址不能为空！",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
                     if (res.confirm) {
-                        console.log("用户点击确定");
-                        
+                      console.log("用户点击确定");
                     }
-                }
-            });
-            return false;
-      }
-if(this.eduexperienceList[this.eduexperienceIdx].value=="请选择"){
-         yu.showModal({
-                title: "错误",
-                content: "请选择最高学历！",
-                showCancel: false,
-                confirmText: "我知道了",
-                success: res => {
+                  },
+                });
+                return false;
+              }
+              if (
+                this.eduexperienceList[this.eduexperienceIdx].value == "请选择"
+              ) {
+                yu.showModal({
+                  title: "错误",
+                  content: "请选择最高学历！",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
                     if (res.confirm) {
-                        console.log("用户点击确定");
-                        
+                      console.log("用户点击确定");
                     }
-                }
-            });
-            return false;
-      }
-if(this.edudegreeList[this.edudegreeIdx].value=="请选择"){
-         yu.showModal({
-                title: "错误",
-                content: "请选择最高学位！",
-                showCancel: false,
-                confirmText: "我知道了",
-                success: res => {
+                  },
+                });
+                return false;
+              }
+              if (this.edudegreeList[this.edudegreeIdx].value == "请选择") {
+                yu.showModal({
+                  title: "错误",
+                  content: "请选择最高学位！",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
                     if (res.confirm) {
-                        console.log("用户点击确定");
-                        
+                      console.log("用户点击确定");
                     }
-                }
-            });
-            return false;
-      }
-      if(this.marriageList[this.marriageIdx].value=="请选择"){
-         yu.showModal({
-                title: "错误",
-                content: "请选择婚姻状况！",
-                showCancel: false,
-                confirmText: "我知道了",
-                success: res => {
+                  },
+                });
+                return false;
+              }
+              if (this.marriageList[this.marriageIdx].value == "请选择") {
+                yu.showModal({
+                  title: "错误",
+                  content: "请选择婚姻状况！",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
                     if (res.confirm) {
-                        console.log("用户点击确定");
-                        
+                      console.log("用户点击确定");
                     }
-                }
-            });
-            return false;
-      }
+                  },
+                });
+                return false;
+              }
 
               that.pageJump(
                 "personInformation/borrowerInformation/workInformation/workInformation"
@@ -512,7 +569,7 @@ if(this.edudegreeList[this.edudegreeIdx].value=="请选择"){
             alert("失败了！！");
           }
         },
-        function(err) {
+        function (err) {
           yu.hideLoading();
           alert("报错了！！");
         }
@@ -529,7 +586,7 @@ if(this.edudegreeList[this.edudegreeIdx].value=="请选择"){
         certId: personalInformation.certId,
         customerName: personalInformation.customerName,
         scene: "cstScene",
-        applyNo: this.applyNoVal
+        applyNo: this.applyNoVal,
       };
       let posturl = "/api/front/perCustomerInfo";
       yu.showLoading();
@@ -537,7 +594,7 @@ if(this.edudegreeList[this.edudegreeIdx].value=="请选择"){
         posturl,
         data,
         "post",
-        function(res) {
+        function (res) {
           yu.hideLoading();
           let resData = res.data.data;
           if (resData.returnCode == "Success") {
@@ -570,13 +627,13 @@ if(this.edudegreeList[this.edudegreeIdx].value=="请选择"){
             alert("失败了！！");
           }
         },
-        function(err) {
+        function (err) {
           yu.hideLoading();
           alert("报错了！！");
         }
       );
     },
-    
+
     // 下拉框回显
     selectInfo(arr, parmName) {
       if (parmName) {
@@ -590,9 +647,9 @@ if(this.edudegreeList[this.edudegreeIdx].value=="请选择"){
       } else {
         return 0;
       }
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 
@@ -737,7 +794,7 @@ uni-page-body:after {
           }
         }
         textarea {
-          width:100%;
+          width: 100%;
           height: 105rpx;
           text-align: right;
         }
@@ -765,6 +822,9 @@ uni-page-body:after {
             white-space: nowrap;
             text-overflow: ellipsis;
           }
+        }
+        .address {
+          line-height: 38rpx;
         }
         .plus {
           /* position: absolute;

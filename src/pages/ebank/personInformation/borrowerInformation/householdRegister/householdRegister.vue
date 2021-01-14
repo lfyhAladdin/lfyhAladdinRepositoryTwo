@@ -120,7 +120,7 @@
 <script>
     import pageHead from '@/components/page-head.vue';
     import {
-        mapGetters
+        mapGetters,mapActions
     } from 'vuex'
 
     export default {
@@ -210,6 +210,7 @@
             }
         },
         methods: {
+            ...mapActions(["queryApplyInfoCommit"]),
             //返回上一页
             navigateBack() {
                 uni.navigateBack();
@@ -474,7 +475,11 @@
             // 下一步
             nextStep(isJump) {
                 this.isJump = isJump;
-                this.updatePersonalData()
+                this.updatePersonalData();
+                this.queryApplyInfoCommit({
+                            orderNo: this.orderNoVal,
+                            applyNo: this.applyNoVal
+                        }); //重新调'申请信息查询'接口，确保人员信息列表准确
             },
             // 3.7接口 个人信息更新
             updatePersonalData() {
