@@ -108,13 +108,19 @@
             <textarea placeholder="请输入户籍地址" placeholder-style="color:#c7c9cd" v-model.trim="personInfor.ermanentAddress" auto-height fixed="true"/>
           </view>
         </view>
-        <view class="contract-li">
+        <view class="contract-li" v-if="maturityDateyBoolean">
           <view>证件到期日</view>
           <view>
             <picker mode="date" :value="personInfor.date" :start="startDate" :end="endDate" @change="bindDateChange">
               {{personInfor.date}}
             </picker>
             <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
+        </view>
+         <view class="contract-li" v-if="!maturityDateyBoolean">
+          <view>证件到期日</view>
+          <view>
+            <text>长期</text>
           </view>
         </view>
       </view>
@@ -132,7 +138,7 @@
   export default {
     data() {
       const currentDate = this.getDate({
-            format: true
+        format: true
       })
       return {
         identity: "",
@@ -186,6 +192,7 @@
         busiStartDateVal: '', //业务日期
         iDCardNoVal: '',  //身份证号，用于区分人员为修改还是新建
         preventResubmit: true,  //防重复提交
+        maturityDateyBoolean: true,  //长期false 日历框true
       }
     },
     onLoad(option) {
@@ -351,7 +358,13 @@
             let dateStringIndex = ret.payload.TermOfValidity.lastIndexOf("\-");
             let dateString = ret.payload.TermOfValidity;
             dateString = dateString.substring(dateStringIndex+1, dateString.length);
-            this.personInfor.date = dateString.replace(/\./g,"-");
+            if(dateString.length > 2){
+              this.maturityDateyBoolean = true;
+              this.personInfor.date = dateString.replace(/\./g,"-");
+            }else{
+              this.maturityDateyBoolean = false;
+            }
+            
             
           }
         });
@@ -600,6 +613,12 @@
             names.push(item.name)
           });
         };
+        let idexpiryVal = '';
+        if(this.maturityDateyBoolean){
+          idexpiryVal = this.personInfor.date.replace(/-/g,'/');
+        }else{
+          idexpiryVal = "9999/12/31";
+        };
         if(this.listName=='otherCustomerList' || this.listName=='sameApplyList'){
           //配偶及家属信息 ||　共同申请人信息
           sendArr.push({
@@ -610,7 +629,7 @@
               gender: this.personInfor.sex=='男'?'1':'2',
               bornDate: this.personInfor.birthday.replace(/-/g,'/'),
               nativeAdd: this.personInfor.ermanentAddress,
-              idexpiry: this.personInfor.date.replace(/-/g,'/')
+              idexpiry: idexpiryVal
             });
         }else if(this.listName=='sameApplyRelList' || this.listName=='guarantyRelList'){
           //共同申请人关联人信息 || 担保人关联人
@@ -625,7 +644,7 @@
               gender: this.personInfor.sex=='男'?'1':'2',
               bornDate: this.personInfor.birthday.replace(/-/g,'/'),
               nativeAdd: this.personInfor.ermanentAddress,
-              idexpiry: this.personInfor.date.replace(/-/g,'/')
+              idexpiry: idexpiryVal
             });
         }else if(this.listName=='guarantorList'){
           //担保人信息
@@ -637,7 +656,7 @@
             gender: this.personInfor.sex=='男'?'1':'2',
             bornDate: this.personInfor.birthday.replace(/-/g,'/'),
             nativeAdd: this.personInfor.ermanentAddress,
-            idexpiry: this.personInfor.date.replace(/-/g,'/')
+            idexpiry: idexpiryVal
           });
         };
         let data={
@@ -704,6 +723,12 @@
         this.personInfor.nameUsedList.forEach((item, index) => {
           names.push(item.name)
         });
+        let idexpiryVal = '';
+        if(this.maturityDateyBoolean){
+          idexpiryVal = this.personInfor.date.replace(/-/g,'/');
+        }else{
+          idexpiryVal = "9999/12/31";
+        };
         let data={
           userId: this.userInfor.loginCode,
           certType: 'Ind01',
@@ -713,7 +738,7 @@
           gender: this.personInfor.sex=='男'?'1':'2',
           bornDate: this.personInfor.birthday.replace(/-/g,'/'),
           nativeAdd: this.personInfor.ermanentAddress,
-          idexpiry: this.personInfor.date.replace(/-/g,'/'),
+          idexpiry: idexpiryVal,
           scene: 'cstScene',
           applyNo: this.applyNoVal,
           listName: 'houseInfo'
@@ -807,7 +832,14 @@
             }
             this.personInfor.birthday=resData.bornDate.replace(/\//g,'-');
             this.personInfor.ermanentAddress=resData.nativeAdd;
-            this.personInfor.date=resData.idexpiry.replace(/\//g,'-');
+            let dataString = resData.idexpiry.substring(0,4);
+            if(dataString == '9999'){
+              this.maturityDateyBoolean = false;
+            }else{
+              this.maturityDateyBoolean = true;
+              this.personInfor.date=resData.idexpiry.replace(/\//g,'-');
+            }
+            
             var nameArr=resData.formerlyName.split(',');
             this.personInfor.nameUsedList=[];
             nameArr.forEach((item, index) => {
