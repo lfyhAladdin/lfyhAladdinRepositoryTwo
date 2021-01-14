@@ -156,13 +156,13 @@
           </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
-        <view class="person-infor-one">
+        <!--<view class="person-infor-one">
           <text>是否本行员工</text>
           <view class="btnList">
             <button size="mini" :type="staff=='1'?'primary':''" @click="staff='1'">是</button>
             <button size="mini" :type="staff=='2'?'primary':''" @click="staff='2'">否</button>
           </view>
-        </view>
+        </view>-->
       </view>
       <!--个人信息-end-->
       <view class @click="nextStep(true)">
@@ -243,14 +243,14 @@ export default {
         },
       ],
       positionIdx: 0,
-      staff: "3",
+      staff: "2",
       orderNoVal: "", //订单编号
       applyNoVal: "", //申请编号
       isJump: true,
     };
   },
   computed: {
-    ...mapGetters(["approvalIngList", "userInfor"]),
+    ...mapGetters(["approvalIngList", "userInfor","personalInformation"]),
   },
   onLoad(option) {
     this.orderNoVal = this.approvalIngList.orderNo;
@@ -261,7 +261,7 @@ export default {
     this.getOccupationList();
     this.getHeadShipList();
     this.getPositionList();
-    if (localStorage.getItem("personalInformation")) {
+    if(JSON.stringify(this.personalInformation) != "{}"){
       this.getPersonalData();
     }
   },
@@ -392,9 +392,7 @@ export default {
     nextStep(isJump) {
       this.isJump = isJump;
       let that = this;
-      let personalInformation = JSON.parse(
-        localStorage.getItem("personalInformation")
-      );
+      let personalInformation = this.personalInformation;
       console.log(personalInformation);
       let data = {
         userId: this.userInfor.loginCode,
@@ -503,9 +501,7 @@ export default {
     // 3.2接口 获取个人信息
     getPersonalData() {
       let that = this;
-      let personalInformation = JSON.parse(
-        localStorage.getItem("personalInformation")
-      );
+      let personalInformation = this.personalInformation;
       let data = {
         certType: personalInformation.certType,
         certId: personalInformation.certId,
@@ -546,7 +542,7 @@ export default {
               that.positionList,
               resData.position
             );
-            that.staff = resData.staff;
+            // that.staff = resData.staff;
           } else {
             alert("失败了！！");
           }

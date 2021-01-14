@@ -133,7 +133,7 @@
 </template>
 <script>
   import pageHead from '@/components/page-head.vue';
-  import { mapGetters,mapActions } from 'vuex'
+  import { mapGetters,mapActions,mapMutations } from 'vuex'
 
   export default {
     data() {
@@ -144,7 +144,6 @@
         identity: "",
         listName: "",
         userId: '',
-        personnelInformationList: {},
         navigateFlag: false,
         isDisabled:false,
         baseInformation:{url:"baseInformation"},
@@ -200,17 +199,14 @@
       console.log(this.approvalIngList);
       this.orderNoVal = this.approvalIngList.orderNo;
       this.applyNoVal = this.approvalIngList.serialNo;
-      if(localStorage.getItem('personalInformation')){
+      if(JSON.stringify(this.personalInformation) != "{}"){
         this.getPersonalData();
       }
       this.identity = option.identity;
-      this.personnelInformationList=JSON.parse(localStorage.getItem('personnelInformationList'));
-      // console.log(this.personnelInformationList)
       // 影像批次号
-      if(this.personnelInformationList.imageList != null && this.personnelInformationList.imageList.length>0){
-        //this.batchId = this.personnelInformationList.imageList[0].imageBatchNo?this.personnelInformationList.imageList[0].imageBatchNo:'20201211_50_440_01504D46-86F8-0D87-81B3-D892ADDBD396-1';
-        this.busiSerialNoVal = this.personnelInformationList.imageList[0].imageBatchNo; //业务流水号
-        this.busiStartDateVal = this.personnelInformationList.imageList[0].imageUpLoadDate; //业务日期
+      if(this.queryApplyInfoList.imageList != null && this.queryApplyInfoList.imageList.length>0){
+        this.busiSerialNoVal = this.queryApplyInfoList.imageList[0].imageBatchNo; //业务流水号
+        this.busiStartDateVal = this.queryApplyInfoList.imageList[0].imageUpLoadDate; //业务日期
       }
       switch(option.identity){
         case '借款人配偶':
@@ -225,7 +221,7 @@
           this.listName='sameApplyRelList';
           this.psnTp='4';
           this.relatedPerson='共借人';
-          this.relatedPersonArr=this.personnelInformationList.sameApplyList;
+          this.relatedPersonArr=this.queryApplyInfoList.sameApplyList;
           this.relatedPersonArr.forEach((item, index) => {
             this.relatedPersonList.push({
               key: index+1,
@@ -242,7 +238,7 @@
           this.listName='guarantyRelList';
           this.psnTp='6';
           this.relatedPerson='担保人'
-          this.relatedPersonArr=this.personnelInformationList.guarantorList
+          this.relatedPersonArr=this.queryApplyInfoList.guarantorList
           this.relatedPersonArr.forEach((item, index) => {
             this.relatedPersonList.push({
               key: index+1,
@@ -262,6 +258,8 @@
         ...mapGetters([
           'approvalIngList',
           'userInfor',
+          "queryApplyInfoList",
+          "personalInformation"
         ]),
         startDate() {
             return this.getDate('start');
@@ -272,6 +270,7 @@
     },
     methods: {
       ...mapActions(['queryApplyInfoCommit']),
+      ...mapMutations(['personalInformationReplace']),
       //返回上一页
       navigateBack(){
         yu.showModal({
@@ -593,7 +592,7 @@
           return;
         };
         this.preventResubmit = false;
-        if(localStorage.getItem('personalInformation')){
+        if(JSON.stringify(this.personalInformation) != "{}"){
           this.updatePersonalData();
         }else{
           this.listUpdate();
@@ -602,9 +601,9 @@
       // 3.12接口 关联人列表更新
       listUpdate(){
         let sendArr=[];
-        if(this.personnelInformationList != null){
-          if(this.personnelInformationList[this.listName]){
-            sendArr=this.personnelInformationList[this.listName];
+        if(this.queryApplyInfoList != null){
+          if(this.queryApplyInfoList[this.listName]){
+            sendArr=this.queryApplyInfoList[this.listName];
           };
         };
         let names=[];
@@ -675,14 +674,13 @@
           let resArr=res.data.data;
           if(res.data.data=='Success'){
             // 新增时只调3.12接口，不调3.7了
-            if(!localStorage.getItem('personalInformation')){
-              var personalInformation={
+            if(JSON.stringify(this.personalInformation) == "{}"){
+              let dataVal ={
                 certType: 'Ind01',
                 certId: this.personInfor.idcard,
                 customerName: this.personInfor.name
               }
-              localStorage.removeItem('personalInformation');
-              localStorage.setItem('personalInformation',JSON.stringify(personalInformation));
+              this.personalInformationReplace(dataVal);
             }
             if(this.IDFrontBase64=='' && this.IDReverseBase64==''){
               if(this.isJump){
@@ -750,14 +748,13 @@
           yu.hideLoading();
           let resArr=res.data.data;
           if(resArr.returnCode=='Success'){
-            if(!localStorage.getItem('personalInformation')){
-              var personalInformation={
+            if(JSON.stringify(this.personalInformation) == "{}"){
+              let dataVal ={
                 certType: 'Ind01',
                 certId: this.personInfor.idcard,
                 customerName: this.personInfor.name
               }
-              localStorage.removeItem('personalInformation');
-              localStorage.setItem('personalInformation',JSON.stringify(personalInformation));
+              this.personalInformationReplace(dataVal);
             }
             if(this.IDFrontBase64=='' && this.IDReverseBase64==''){
               if(this.isJump){
@@ -805,7 +802,7 @@
       },
       // 3.2接口 获取个人信息
       getPersonalData(){
-        let personalInformation=JSON.parse(localStorage.getItem('personalInformation'));
+        let personalInformation= this.personalInformation;
         let data={
           certType: personalInformation.certType,
           certId: personalInformation.certId,

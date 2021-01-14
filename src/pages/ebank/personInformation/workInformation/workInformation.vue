@@ -138,7 +138,8 @@
     computed: {
       ...mapGetters([
           'approvalIngList',
-          'userInfor'
+          'userInfor',
+          "personalInformation"
       ])
     },
     onLoad(option) {
@@ -148,7 +149,7 @@
       this.getUnitKindList();
       this.getWorkNatureList();
       this.getHeadShipList();
-      if(localStorage.getItem('personalInformation')){
+      if(JSON.stringify(this.personalInformation) != "{}"){
         this.getPersonalData();
       }
     },
@@ -243,7 +244,7 @@
         }
         this.preventResubmit = false;
         this.isJump = isJump;
-        let personalInformation=JSON.parse(localStorage.getItem('personalInformation'));
+        let personalInformation= this.personalInformation;
         console.log(personalInformation)
         let data={
           userId: this.userInfor.loginCode,
@@ -269,7 +270,6 @@
           let resArr=res.data.data;
           if(resArr.returnCode=='Success'){
             if(this.isJump){
-              localStorage.removeItem('personalInformation');
               this.queryApplyInfoCommit({
                 'orderNo': this.orderNoVal, 
                 'applyNo': this.applyNoVal,
@@ -303,7 +303,7 @@
       },
       // 3.2接口 获取个人信息
       getPersonalData(){
-        let personalInformation=JSON.parse(localStorage.getItem('personalInformation'));
+        let personalInformation= this.personalInformation;
           let data={
             certType: personalInformation.certType,
             certId: personalInformation.certId,

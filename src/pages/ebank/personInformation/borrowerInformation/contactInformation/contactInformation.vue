@@ -106,13 +106,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["approvalIngList", "userInfor"]),
+    ...mapGetters(["approvalIngList", "userInfor","personalInformation"]),
   },
   onLoad(option) {
     this.orderNoVal = this.approvalIngList.orderNo;
     this.applyNoVal = this.approvalIngList.serialNo;
     this.getRelationShipList();
-    if (localStorage.getItem("personalInformation")) {
+    if(JSON.stringify(this.personalInformation) != "{}"){
       this.getPersonalData();
     }
   },
@@ -178,9 +178,7 @@ export default {
     submit(isJump) {
       this.isJump = isJump;
       let that = this;
-      let personalInformation = JSON.parse(
-        localStorage.getItem("personalInformation")
-      );
+      let personalInformation = this.personalInformation;
       console.log(personalInformation);
       let data = {
         userId: this.userInfor.loginCode,
@@ -233,9 +231,7 @@ export default {
     // 3.2接口 获取个人信息
     getPersonalData() {
       let that = this;
-      let personalInformation = JSON.parse(
-        localStorage.getItem("personalInformation")
-      );
+      let personalInformation = this.personalInformation;
       let data = {
         certType: personalInformation.certType,
         certId: personalInformation.certId,

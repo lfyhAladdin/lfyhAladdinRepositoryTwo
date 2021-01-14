@@ -153,7 +153,7 @@
 import uniSection from '@/components/uni-section/uni-section.vue';
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue';
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
 	components: { uniSection, uniSwipeAction, uniSwipeActionItem },
@@ -203,6 +203,7 @@ export default {
     this.pageInfo()
   },
   methods: {
+    ...mapMutations(["personalInformationReplace"]),
     // 左滑删除
 			swipeChange(e) {
 				console.log('返回：', e);
@@ -239,8 +240,6 @@ export default {
       this.orderNoVal = this.approvalIngList.orderNo;
       this.applyNoVal = this.approvalIngList.serialNo;
       let resData = this.queryApplyInfoList;
-      let personnelInformationList = this.queryApplyInfoList;
-      localStorage.setItem('personnelInformationList',JSON.stringify(personnelInformationList));
       // 借款人信息
       this.borrower.customerCertID = resData.customerCertID;
       this.borrower.customerCertType = resData.customerCertType;
@@ -297,7 +296,7 @@ export default {
       }
     },
     add(addType){
-      localStorage.removeItem('personalInformation');
+      this.personalInformationReplace({});
       this.isModalShow=true;
       this.addType=addType;
     },
@@ -314,14 +313,13 @@ export default {
     },
     // 去完善信息
     toComplete(pType,certType,certID,customerName,relCertID){
-      var personalInformation={
+      let data = {
         certType: certType,
         certId: certID,
         customerName: customerName,
         relCertID: relCertID
       }
-      localStorage.removeItem('personalInformation');
-      localStorage.setItem('personalInformation',JSON.stringify(personalInformation));
+      this.personalInformationReplace(data);
       if(pType=='借款人'){
         this.pageJump('personInformation/borrowerInformation/householdRegister/householdRegister')
       }else{
