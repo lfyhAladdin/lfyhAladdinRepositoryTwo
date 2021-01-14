@@ -30,15 +30,12 @@
   </view>
 </template>
 <script>
-import { createNamespacedHelpers,mapGetters } from "vuex";
-const { mapState } = createNamespacedHelpers("oauth");
-import { appEnv } from "@/config/app.config";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       username: "",
       navigateFlag: false,
-
       featureslist: [
         {
           imgurl: "./static/images/index/pendingOrder.svg",
@@ -103,67 +100,34 @@ export default {
   },
 
   computed: {
-    ...mapState(["hasLogin", "userInfo"]),
     ...mapGetters(['businessNum','userInfor'])
-  },
-  created(){
-    /**订单数量 ***start**/
-    this.featureslist[0].newsnumber = this.businessNum.orderPending;
-    /**订单数量 ***end**/
-    /**申请待提交数量 ***start**/
-    this.featureslist[1].newsnumber = this.businessNum.creditSubmit;
-    /**申请待提交数量 ***end**/
-    /**人工定价审批数量 ***start**/
-    this.featureslist[2].newsnumber = this.businessNum.creditPeoplePricing;
-    /**人工定价审批数量 ***end**/
-    /**合同待签署数量 ***start**/
-    this.featureslist[3].newsnumber = this.businessNum.contractSigned;
-    /**合同待签署数量 ***end**/
-    /**待处理放款数量 ***start**/
-    this.featureslist[4].newsnumber = this.businessNum.issuePending;
-    /**待处理放款数量 ***end**/
-    /**待提交放款数量 ***start**/
-    this.featureslist[5].newsnumber = this.businessNum.issueSubmit;
-    /**待提交放款数量 ***end**/
-    
   },
   onLoad() {
     console.log(this.userInfor);
-    this.username=this.userInfor.userName;
+    this.commitFun();
   },
-
+  activated(){
+    this.commitFun();
+  },
   onReady() {},
-
   onShareAppMessage() {
     return {
       title: "欢迎体验yu-app",
       path: "/pages/tabBar/template/template"
     };
   },
-
   mounted() {},
-
-  methods: {},
-  activated(){
-    /**订单数量 ***start**/
-    this.featureslist[0].newsnumber = this.businessNum.orderPending;
-    /**订单数量 ***end**/
-    /**申请待提交数量 ***start**/
-    this.featureslist[1].newsnumber = this.businessNum.creditSubmit;
-    /**申请待提交数量 ***end**/
-    /**人工定价审批数量 ***start**/
-    this.featureslist[2].newsnumber = this.businessNum.creditPeoplePricing;
-    /**人工定价审批数量 ***end**/
-    /**合同待签署数量 ***start**/
-    this.featureslist[3].newsnumber = this.businessNum.contractSigned;
-    /**合同待签署数量 ***end**/
-    /**待处理放款数量 ***start**/
-    this.featureslist[4].newsnumber = this.businessNum.issuePending;
-    /**待处理放款数量 ***end**/
-    /**待提交放款数量 ***start**/
-    this.featureslist[5].newsnumber = _this.businessNum.issueSubmit;
-    /**待提交放款数量 ***end**/
-  }
+  methods: {
+    commitFun(){
+      this.username=this.userInfor.userName;
+      this.featureslist[0].newsnumber = this.businessNum.orderPending; //订单数量
+      this.featureslist[1].newsnumber = this.businessNum.creditSubmit; //申请待提交数量
+      this.featureslist[2].newsnumber = this.businessNum.creditPeoplePricing; //人工定价审批数量
+      this.featureslist[3].newsnumber = this.businessNum.contractSigned; //合同待签署数量
+      this.featureslist[4].newsnumber = this.businessNum.issuePending;  //待处理放款数量
+      this.featureslist[5].newsnumber = this.businessNum.issueSubmit;  //待提交放款数量
+    }
+  },
 };
 </script>
 

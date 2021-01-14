@@ -7,6 +7,7 @@ export default {
   },
   mutations: {
     userInforReplace(state, val) {
+      console.log(val)
       state.userInfor = val;
     },
   },
