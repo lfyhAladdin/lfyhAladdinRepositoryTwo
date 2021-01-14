@@ -389,11 +389,119 @@ export default {
         posturl,
         data,
         "post",
-        function(res) {
+        (res)=> {
           yu.hideLoading();
           let resArr = res.data.data;
           if (resArr.returnCode == "Success") {
             if (that.isJump) {
+              console.log(this.familyStatusList[this.familyStatusIdx].value)
+               if(this.personInfor.phone==""){
+         yu.showModal({
+                title: "错误",
+                content: "手机号码不能为空！",
+                showCancel: false,
+                confirmText: "我知道了",
+                success: res => {
+                    if (res.confirm) {
+                        console.log("用户点击确定");
+                        
+                    }
+                }
+            });
+            return false;
+      }
+
+      if(this.personInfor.yearIncome==""){
+         yu.showModal({
+                title: "错误",
+                content: "个人年收入不能为空！",
+                showCancel: false,
+                confirmText: "我知道了",
+                success: res => {
+                    if (res.confirm) {
+                        console.log("用户点击确定");
+                        
+                    }
+                }
+            });
+            return false;
+      }
+       if(this.familyStatusList[this.familyStatusIdx].value=="请选择"){
+         yu.showModal({
+                title: "错误",
+                content: "请选择居住状况！",
+                showCancel: false,
+                confirmText: "我知道了",
+                success: res => {
+                    if (res.confirm) {
+                        console.log("用户点击确定");
+                        
+                    }
+                }
+            });
+            return false;
+      }
+ if(this.personInfor.detailAddress==""){
+         yu.showModal({
+                title: "错误",
+                content: "居住地址不能为空！",
+                showCancel: false,
+                confirmText: "我知道了",
+                success: res => {
+                    if (res.confirm) {
+                        console.log("用户点击确定");
+                        
+                    }
+                }
+            });
+            return false;
+      }
+if(this.eduexperienceList[this.eduexperienceIdx].value=="请选择"){
+         yu.showModal({
+                title: "错误",
+                content: "请选择最高学历！",
+                showCancel: false,
+                confirmText: "我知道了",
+                success: res => {
+                    if (res.confirm) {
+                        console.log("用户点击确定");
+                        
+                    }
+                }
+            });
+            return false;
+      }
+if(this.edudegreeList[this.edudegreeIdx].value=="请选择"){
+         yu.showModal({
+                title: "错误",
+                content: "请选择最高学位！",
+                showCancel: false,
+                confirmText: "我知道了",
+                success: res => {
+                    if (res.confirm) {
+                        console.log("用户点击确定");
+                        
+                    }
+                }
+            });
+            return false;
+      }
+      if(this.marriageList[this.marriageIdx].value=="请选择"){
+         yu.showModal({
+                title: "错误",
+                content: "请选择婚姻状况！",
+                showCancel: false,
+                confirmText: "我知道了",
+                success: res => {
+                    if (res.confirm) {
+                        console.log("用户点击确定");
+                        
+                    }
+                }
+            });
+            return false;
+      }
+
               that.pageJump(
                 "personInformation/borrowerInformation/workInformation/workInformation"
               );
@@ -468,6 +576,7 @@ export default {
         }
       );
     },
+    
     // 下拉框回显
     selectInfo(arr, parmName) {
       if (parmName) {

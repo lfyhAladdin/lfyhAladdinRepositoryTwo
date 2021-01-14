@@ -441,9 +441,7 @@
                 if (that.businessType == "个人二手住房贷款") {
                     that.businessTypeData = "1140020";
                 }
-                if (that.businessType == "wode") {
-                    that.businessTypeData = "2140020";
-                }
+                
                 if (that.businessType == "个人二手商用房贷款") {
                     that.businessTypeData = "1140120";
                 }

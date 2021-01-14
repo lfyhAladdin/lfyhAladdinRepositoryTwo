@@ -298,7 +298,6 @@
 				foxsdk.intsigocr.startOCR(type, ret => {
           console.log('+++++++++++++');
           // console.log(ret);
-          alert(JSON.stringify(ret))
           // if(type==1){
           if(ret && ret.payload && ret.payload.Name){
             if(this.iDCardNoVal !='' && this.iDCardNoVal == ret.payload.IDCardNo){
