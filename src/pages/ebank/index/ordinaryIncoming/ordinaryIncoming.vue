@@ -49,10 +49,13 @@
             <input class="uni-input" placeholder="请输入手机号码" type="number" v-model.trim="personInfor.phone" />
           </view>
         </view>
-        <view class="contract-li">
+        <view class="contract-li product-picker">
           <view>意向产品</view>
           <view>
-            <input class="uni-input" type="text" v-model="productName" :value="productName" readonly/>
+            <picker :value="productIndex" :range-key="'businessTypeName'" :range="productList" @change="bindPickerChange">
+              {{ productList[productIndex].businessTypeName }}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
           </view>
         </view>
         <view class="contract-li" v-if="ifShowRealEstate" @click="pageJumpTosearch">
@@ -96,62 +99,70 @@ export default {
         intendedProduct: "",
         propertyName: ""
       },
-      productList: [
-        {
-          businessType: 0,
-          businessTypeName: "请选择"
-        }
-      ],
-      imgPath_zheng: "./static/images/firstroom/idcardPositive.svg",//身份证正面图片路径
-      imgPath_zheng_base64:"",
-      imgPath_fan: "./static/images/firstroom/idcardNegative.svg",//身份证反面图片路径
-      imgPath_fan_base64:"",
-      imgBatchNumber:'20201221',//上传图片版本批次号
-      imgFirstUploadTime:'20201221',//首次上传时间
-      uploadImageInVoList:[],//图片集合
+      productList: [],
+      imgPath_zheng: "./static/images/firstroom/idcardPositive.svg", //身份证正面图片路径
+      imgPath_zheng_base64: "",
+      imgPath_fan: "./static/images/firstroom/idcardNegative.svg", //身份证反面图片路径
+      imgPath_fan_base64: "",
+      imgBatchNumber: "20201221", //上传图片版本批次号
+      imgFirstUploadTime: "20201221", //首次上传时间
+      uploadImageInVoList: [], //图片集合
       avatarPath: "",
       idShotsPath: "",
       ocrresult: "",
-      ifShowRealEstate:true,
-      preventResubmit: true,  //防重复提交
+      ifShowRealEstate: true,
+      preventResubmit: true //防重复提交
     };
   },
   onLoad: function(options) {
     this.title = this.approvalIngList.fromProductTitle;
-    localStorage.setItem('pagetitles',this.title);
+    localStorage.setItem("pagetitles", this.title);
     this.productId = this.approvalIngList.fromProductId;
     this.productName = this.approvalIngList.fromProductName;
     this.fromProduct = options.from;
-    if(this.productId == '1140020' || this.productId=='1140120'){
-      this.ifShowRealEstate=false;
+    if (this.productId == "1140020" || this.productId == "1140120") {
+      this.ifShowRealEstate = false;
     }
     //获取身份证信息start
     //let ordinary = this.approvalIngList.ordinary;
     //if(ordinary != null && ordinary != undefined){
-      this.title=localStorage.getItem('pagetitles');
-      this.personInfor.name=localStorage.getItem('personnames');
-      this.personInfor.idcard=localStorage.getItem('personidcards');
-      this.imgPath_zheng=localStorage.getItem('imgPath_zheng');
-      this.imgPath_zheng_base64=localStorage.getItem('imgPath_zheng_base64');
-      this.imgPath_fan=localStorage.getItem('imgPath_fan');
-      this.imgPath_fan_base64=localStorage.getItem('imgPath_fan_base64');
+    this.title = localStorage.getItem("pagetitles");
+    this.personInfor.name = localStorage.getItem("personnames");
+    this.personInfor.idcard = localStorage.getItem("personidcards");
+    this.imgPath_zheng = localStorage.getItem("imgPath_zheng");
+    this.imgPath_zheng_base64 = localStorage.getItem("imgPath_zheng_base64");
+    this.imgPath_fan = localStorage.getItem("imgPath_fan");
+    this.imgPath_fan_base64 = localStorage.getItem("imgPath_fan_base64");
     //}
     //获取身份证信息end
-
-    //let that = this;
     /***获取用户ID，部门ID */
     /**产品列表 **start****/
-    /* let pdata = { dictionaryName: "businessType" };
+    let pdata = { dictionaryName: "businessType" };
     let that = this;
+    let bt=that.productId;
+    let firstdata=[];
+		let seconddata=[];
     that.queryDictionaryList(pdata, function(res) {
       let products = res.data.data;
       for (let key in products) {
-        that.productList.push({
-          businessType: key,
-          businessTypeName: products[key]
-        });
+        if(key == "1140020" || key == "1140120"){//二手房
+          seconddata.push({
+            businessType:key,
+            businessTypeName:products[key]
+          })
+        }else{//一手房
+          firstdata.push({
+            businessType:key,
+            businessTypeName:products[key]
+          })
+        }
       }
-    }); */
+    });
+    if(bt == "1140020" || bt == "1140120"){//二手房
+      that.productList=seconddata;
+    }else{//一手房
+      that.productList=firstdata;
+    }
     /**产品列表 **end****/
     /**获取搜索结果**/
     let opboolean = JSON.stringify(options) == "{}";
@@ -180,16 +191,16 @@ export default {
       }
     }
   },
-  created(){
+  created() {
     //获取身份证信息start
     let ordinary = this.approvalIngList.imgPath_zheng;
-    if(ordinary != null && ordinary != undefined){
-      this.personInfor.name=this.approvalIngList.personnames;
-      this.personInfor.idcard=this.approvalIngList.personidcards;
-      this.imgPath_zheng=this.approvalIngList.imgPath_zheng;
-      this.imgPath_zheng_base64=this.approvalIngList.imgPath_zheng_base64;
-      this.imgPath_fan=this.approvalIngList.imgPath_fan;
-      this.imgPath_fan_base64=this.approvalIngList.imgPath_fan_base64;
+    if (ordinary != null && ordinary != undefined) {
+      this.personInfor.name = this.approvalIngList.personnames;
+      this.personInfor.idcard = this.approvalIngList.personidcards;
+      this.imgPath_zheng = this.approvalIngList.imgPath_zheng;
+      this.imgPath_zheng_base64 = this.approvalIngList.imgPath_zheng_base64;
+      this.imgPath_fan = this.approvalIngList.imgPath_fan;
+      this.imgPath_fan_base64 = this.approvalIngList.imgPath_fan_base64;
     }
     //获取身份证信息end
   },
@@ -200,8 +211,8 @@ export default {
     ...mapGetters(["approvalIngList"])
   },
   methods: {
-    ...mapActions(["businessNumCommit","queryApplyInfoCommit"]),
-    ...mapMutations(["approvalIngListReplace"]),
+    ...mapActions(["businessNumCommit", "queryApplyInfoCommit"]),
+    ...mapMutations(["approvalIngListReplace","personalInformationReplace"]),
     //返回上一页
     navigateBack() {
       this.clearorDinaryStorage();
@@ -210,17 +221,11 @@ export default {
       );
     },
     //下拉列表
-    /* bindPickerChange: function(e) {
-      this.productId = this.productId;
-      let productName = this.productName;
-      this.searchlist +=
-        "?phone=" +
-        this.personInfor.phone +
-        "&productId=" +
-        this.productId +
-        "&productName=" +
-        productName;
-    }, */
+    bindPickerChange: function(e) {
+      var thisIndex = e.detail.value;
+      this.productId = this.productList[thisIndex].businessType;
+      this.productIndex = thisIndex;
+    },
     //拍照
     chooseImage() {
       uni.chooseImage({
@@ -250,66 +255,63 @@ export default {
       let newurl = this.searchlist + urlstr;
       this.pageJump(newurl);
     },
-    clearorDinaryStorage(){
-      
-      localStorage.removeItem('pagetitles');
-      localStorage.removeItem('personnames');
-      localStorage.removeItem('personidcards');
-      localStorage.removeItem('imgPath_zheng');
-      localStorage.removeItem('imgPath_zheng_base64');
-      localStorage.removeItem('imgPath_fan');
-      localStorage.removeItem('imgPath_fan_base64');
+    clearorDinaryStorage() {
+      localStorage.removeItem("pagetitles");
+      localStorage.removeItem("personnames");
+      localStorage.removeItem("personidcards");
+      localStorage.removeItem("imgPath_zheng");
+      localStorage.removeItem("imgPath_zheng_base64");
+      localStorage.removeItem("imgPath_fan");
+      localStorage.removeItem("imgPath_fan_base64");
     },
     /**表单提交接口 **start****/
-    submitform(imgBatchNumber,imgFirstUploadTime) {
+    submitform(imgBatchNumber, imgFirstUploadTime) {
+      let _this=this;
       yu.showToast({
         icon: "none",
         title: "提交申请进行中",
         duration: 1500
       });
       yu.showLoading();
-      let userId = this.userInfor.loginCode;
-      let orgID = this.userInfor.orgId;
+      let userId = _this.userInfor.loginCode;
+      let orgID = _this.userInfor.orgId;
       let imglist = [
         {
           batchNo: imgBatchNumber,
           upLoadDate: imgFirstUploadTime
         }
       ];
-      
-      foxsdk.logger.info('enter');
       let formData = {
         orderNo: "",
         userId: userId,
         orgID: orgID,
         certType: "Ind01",
-        certId: this.personInfor.idcard,
-        customerName: this.personInfor.name,
-        mobileTelephone: this.personInfor.phone,
-        businessType: this.productId,
+        certId: _this.personInfor.idcard,
+        customerName: _this.personInfor.name,
+        mobileTelephone: _this.personInfor.phone,
+        businessType: _this.productId,
         imageList: imglist
       };
-      if(this.ifShowRealEstate){
-        formData.projectNo=this.buildingNo;
+      if (_this.ifShowRealEstate) {
+        formData.projectNo = _this.buildingNo;
       }
-      foxsdk.logger.info(formData);
       let posturl = "/api/ordercreditapply/createcreditapply";
-      this.interfaceRequest(
+      _this.interfaceRequest(
         posturl,
         formData,
         "post",
-        (res)=> {
+        res => {
           yu.hideLoading();
-          this.preventResubmit = true;
-          if(res.data.data.returnCode == "Success"){
+          _this.preventResubmit = true;
+          if (res.data.data.returnCode == "Success") {
             let result = res.data.data.applyNo;
             if (result != null) {
               let e = {
                 orderNo: "",
                 serialNo: result,
-                fromProductTitle: this.title,
-                fromProductId: this.productId,
-                fromProductName: this.productName,
+                fromProductTitle: _this.title,
+                fromProductId: _this.productId,
+                fromProductName: _this.productName,
                 imageList: {
                   imageBatchNo: imgBatchNumber,
                   upLoadDate: imgFirstUploadTime
@@ -326,51 +328,54 @@ export default {
                 title: "申请成功",
                 duration: 1500
               });
-              this.clearorDinaryStorage();
-              this.queryApplyInfoCommit({
-                "orderNo": '', 
-                "applyNo": result,
-                'routerTrue': true,
-                'routerTo': this.incomingSuccess,
-                'routerJumpWay': 'pageJump'
+              _this.clearorDinaryStorage();
+              _this.queryApplyInfoCommit({
+                orderNo: "",
+                applyNo: result,
+                routerTrue: true,
+                routerTo: _this.incomingSuccess,
+                routerJumpWay: "pageJump"
               }); //重新调'申请信息查询'接口
               //that.uploadImg();
-            } 
-          }else {
+               _this.personalInformationReplace({});
+            }
+          } else {
             yu.showToast({
               icon: "none",
-              title: res.data.data.returnDesc ? res.data.data.returnDesc : '提交失败',
+              title: res.data.data.returnDesc
+                ? res.data.data.returnDesc
+                : "提交失败",
               duration: 1500
             });
           }
         },
-        (err)=> {
+        err => {
           yu.hideLoading();
-          this.preventResubmit = true;
+          _this.preventResubmit = true;
         }
       );
     },
     /**表单提交接口 **end****/
-    getDate(){
-        var date = new Date();
-        var y = date.getFullYear();
-        var m = date.getMonth() + 1;
-        m = m < 10 ? ('0' + m) : m;
-        var d = date.getDate();
-        d = d < 10 ? ('0' + d) : d;
-        return y+'/'+m+'/'+d;
+    getDate() {
+      var date = new Date();
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;
+      m = m < 10 ? "0" + m : m;
+      var d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      return y + "/" + m + "/" + d;
     },
     //调用方法
     /* 上传影像平台获取批次号   start */
-    uploadImg(){
-      if(!this.preventResubmit){
+    uploadImg() {
+      if (!this.preventResubmit) {
         yu.showModal({
-          content: '操作进行中，请稍等',
+          content: "操作进行中，请稍等",
           showCancel: false,
           cancelText: "确定",
-          success: function (res) {
+          success: function(res) {
             if (res.confirm) {
-              console.log('用户点击确定');
+              console.log("用户点击确定");
             }
           }
         });
@@ -379,37 +384,40 @@ export default {
       this.preventResubmit = false;
       yu.showLoading();
       yu.showToast({
-          icon: "none",
-          title: "身份证图片上传中",
-          duration: 1500
-        });
-      let _this=this;
-      if(_this.imgPath_zheng_base64 === '' || _this.imgPath_fan_base64 === ''){
+        icon: "none",
+        title: "身份证图片上传中",
+        duration: 1500
+      });
+      let _this = this;
+      if (
+        _this.imgPath_zheng_base64 === "" ||
+        _this.imgPath_fan_base64 === ""
+      ) {
         yu.showToast({
           icon: "none",
           title: "身份证图片不能为空",
           duration: 3000
         });
       }
-      let param={
-        busiFileTypeList:["2012060101"],
-        filePartName: 'LS_SQZL_P',
-        modelCode: 'LS_SQZL',
+      let param = {
+        busiFileTypeList: ["2012060101"],
+        filePartName: "LS_SQZL_P",
+        modelCode: "LS_SQZL",
         uploadImageInVoList: [
           {
             base64Code: _this.imgPath_zheng_base64,
-            frontBackFlag: '2',
-            psnTp:'1',
+            frontBackFlag: "2",
+            psnTp: "1",
             idNumber: _this.personInfor.idcard
           },
           {
             base64Code: _this.imgPath_fan_base64,
-            frontBackFlag: '1',
-            psnTp: '1',
+            frontBackFlag: "1",
+            psnTp: "1",
             idNumber: _this.personInfor.idcard
-          },
+          }
         ]
-      }
+      };
       foxsdk.logger.info(param);
       let posturl = "/api/imagehandle/uploadreturnnoanddate";
       _this.interfaceRequest(
@@ -419,19 +427,21 @@ export default {
         function(res) {
           yu.hideLoading();
           _this.preventResubmit = true;
-          _this.imgBatchNumber=res.data.data.busiSerialNo;//res.data.data.batchId;
-          _this.imgFirstUploadTime=res.data.data.busiStartDate//_this.getDate();
+          _this.imgBatchNumber = res.data.data.busiSerialNo; //res.data.data.batchId;
+          _this.imgFirstUploadTime = res.data.data.busiStartDate; //_this.getDate();
           let e = {
-              fromProductTitle: _this.title,
-              imageList: {
-                imageBatchNo: _this.imgBatchNumber,
-                upLoadDate: _this.imgFirstUploadTime
-              }
+            fromProductTitle: _this.title,
+            imageList: {
+              imageBatchNo: _this.imgBatchNumber,
+              upLoadDate: _this.imgFirstUploadTime
+            }
           };
           _this.approvalIngListReplace(e);
-          foxsdk.logger.info('img');
-          foxsdk.logger.info(res.data.data+'&&&&&'+_this.getDate());
-          foxsdk.logger.info(_this.imgBatchNumbe+'&&&&&'+_this.imgFirstUploadTime);
+          foxsdk.logger.info("img");
+          foxsdk.logger.info(res.data.data + "&&&&&" + _this.getDate());
+          foxsdk.logger.info(
+            _this.imgBatchNumbe + "&&&&&" + _this.imgFirstUploadTime
+          );
           _this.submitform(_this.imgBatchNumber, _this.imgFirstUploadTime);
           //_this.pageJump(_this.incomingSuccess);
         },
@@ -439,76 +449,90 @@ export default {
           yu.hideLoading();
           _this.preventResubmit = true;
           yu.showToast({
-              icon: "none",
-              title: "图片上传失败，返回首页",
-              duration: 3000
-            });
-          setTimeout(function(){
+            icon: "none",
+            title: "图片上传失败，返回首页",
+            duration: 3000
+          });
+          setTimeout(function() {
             yu.switchTab({ url: "/pages/ebank/index/index" });
-          },1500)
+          }, 1500);
           //_this.pageJump(_this.incomingSuccess);
         }
       );
     },
     /* 上传影像平台获取批次号   end */
     /**身份证识别 */
-      startOCR(type) {
-        var that=this;
-				foxsdk.intsigocr.startOCR(type, ret => {
-          // if(type==1){
-          if(ret && ret.payload && ret.payload.Name){
-            foxsdk.logger.info(ret.payload)
-            that.personInfor.name = ret.payload.Name;
-            localStorage.setItem('personnames', ret.payload.Name);
-            that.personInfor.idcard = ret.payload.IDCardNo;
-            localStorage.setItem('personidcards', ret.payload.IDCardNo);
-            foxsdk.io.convertLocalFileSystemURL(ret.payload.ImagePath, url => {
+    startOCR(type) {
+      var that = this;
+      foxsdk.intsigocr.startOCR(type, ret => {
+        // if(type==1){
+        if (ret && ret.payload && ret.payload.Name) {
+          foxsdk.logger.info(ret.payload);
+          that.personInfor.name = ret.payload.Name;
+          localStorage.setItem("personnames", ret.payload.Name);
+          that.personInfor.idcard = ret.payload.IDCardNo;
+          localStorage.setItem("personidcards", ret.payload.IDCardNo);
+          foxsdk.io.convertLocalFileSystemURL(
+            ret.payload.ImagePath,
+            url => {
               that.imgPath_zheng = url;
-              localStorage.setItem('imgPath_zheng', url);
-            },ret => {
-              foxsdk.logger.info('路径转换失败')
-            });
-            foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
-              that.imgPath_zheng_base64 = entry.payload.imageBase64;
-              localStorage.setItem('imgPath_zheng_base64', entry.payload.imageBase64);
-            });
+              localStorage.setItem("imgPath_zheng", url);
+            },
+            ret => {
+              foxsdk.logger.info("路径转换失败");
+            }
+          );
+          foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
+            that.imgPath_zheng_base64 = entry.payload.imageBase64;
+            localStorage.setItem(
+              "imgPath_zheng_base64",
+              entry.payload.imageBase64
+            );
+          });
 
-            let e = {
-                personnames:ret.payload.Name,
-                personidcards:ret.payload.IDCardNo,
-                imgPath_zheng:that.imgPath_zheng,
-                imgPath_zheng_base64:that.imgPath_zheng_base64,
-                fromProductTitle: that.title,
-            };
-            that.approvalIngListReplace(e);
-          }else{
-            foxsdk.io.convertLocalFileSystemURL(ret.payload.ImagePath, url => {
+          let e = {
+            personnames: ret.payload.Name,
+            personidcards: ret.payload.IDCardNo,
+            imgPath_zheng: that.imgPath_zheng,
+            imgPath_zheng_base64: that.imgPath_zheng_base64,
+            fromProductTitle: that.title
+          };
+          that.approvalIngListReplace(e);
+        } else {
+          foxsdk.io.convertLocalFileSystemURL(
+            ret.payload.ImagePath,
+            url => {
               that.imgPath_fan = url;
-              localStorage.setItem('imgPath_fan', url);
-            },ret => {
-              foxsdk.logger.info('路径转换失败')
-            });
-            foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
-              that.imgPath_fan_base64 = entry.payload.imageBase64;
-              localStorage.setItem('imgPath_fan_base64', entry.payload.imageBase64);
-            });
+              localStorage.setItem("imgPath_fan", url);
+            },
+            ret => {
+              foxsdk.logger.info("路径转换失败");
+            }
+          );
+          foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
+            that.imgPath_fan_base64 = entry.payload.imageBase64;
+            localStorage.setItem(
+              "imgPath_fan_base64",
+              entry.payload.imageBase64
+            );
+          });
 
-            let e = {
-                imgPath_fan:that.imgPath_fan,
-                imgPath_fan_base64:that.imgPath_fan_base64,
-                fromProductTitle: that.title,
-            };
-            that.approvalIngListReplace(e);
-          }
-        });
-		  },
+          let e = {
+            imgPath_fan: that.imgPath_fan,
+            imgPath_fan_base64: that.imgPath_fan_base64,
+            fromProductTitle: that.title
+          };
+          that.approvalIngListReplace(e);
+        }
+      });
+    }
   },
   mounted() {}
 };
 </script>
 
 <style lang='scss' scoped>
-  @import '@/static/css/professionwf.less';
+@import "@/static/css/professionwf.less";
 uni-page-wrapper {
   height: 100% !important;
 }
@@ -609,8 +633,38 @@ uni-page-body:after {
       content: "";
       clear: both;
     }
-    .contract-ul{
+    .contract-ul {
       margin-top: 24rpx;
+      .contract-li {
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        height: 50rpx;
+        font-size: 32rpx;
+        input.uni-input-input{
+          color: #333435
+        }
+        input.uni-input-input[type=number]{
+          color: #333435
+        }
+        uni-view:last-of-type {
+          color: #333435;
+        }
+
+        .iptcontract {
+          text-align: right;
+        }
+
+        .choose-arrow {
+          width: 15rpx;
+          height: 26rpx;
+          position: absolute;
+          top: 50%;
+          right: 32rpx;
+          margin-top: -30rpx;
+          margin-right: -7.5rpx;
+        }
+      }
     }
   }
   .customize-content-form:after {
@@ -619,7 +673,6 @@ uni-page-body:after {
     clear: both;
   }
 }
-
 .incoming:after {
   display: block;
   content: "";
