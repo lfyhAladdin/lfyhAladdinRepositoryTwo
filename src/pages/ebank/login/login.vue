@@ -13,7 +13,7 @@
 			<view class="login-form form-wrapper">
 				<view class="input-box">
 					<img class="input-flag-img" src="@/static/images/login-user.svg">
-					<input class="default-input login-input" :value="pwdFormdata.account" v-model="pwdFormdata.account"  placeholder="请输入账号" :type="phonetype" maxlength="13"/>
+					<input class="default-input login-input" :value="pwdFormdata.account" v-model="pwdFormdata.account"  placeholder="请输入工号" :type="phonetype" maxlength="13"/>
 					<img v-show="ifshowPasswordClear" class="login-clear-cross" @click="clearInput('logincode')" id="clearLoginCode" src="@/static/images/login-clear.svg">
         </view>
 				<view class="input-box">

@@ -63,6 +63,7 @@ export default {
       applyriskintelligencecheck(){
         let data = {
           'orderNo': this.orderNoVal,  //订单编号
+          'isQuery':'1',//20210115新加字段
           // 'applyNo': '2020122300000038',  //申请编号
           'applyNo': this.applyNoVal,  //申请编号
         }

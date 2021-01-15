@@ -68,7 +68,7 @@
           <!--申请人黑名单  start-->
           <view class="con-tips">
             <view class="blacklist-tips">
-              <text v-for="(item,index) in completCheckList" :key="index">{{item.scenarioName}}</text>
+              <text v-for="(item,index) in completCheckList" :key="index">{{item.errorMessage}}</text>
             </view>
             <view class="cbutton" @click="toPerfectInformation">
               <text>知道了</text>
@@ -160,7 +160,8 @@ export default {
 
       ifRInopass:true,//检查结果 信息完整度
       ifRFnopass:true,//检查结果 风险规则
-      ifshowFrameButton:false
+      ifshowFrameButton:false,
+      isRefused:"",//风险结果判断参数
     };
   },
   computed: {
@@ -185,34 +186,58 @@ export default {
     /* 申请风险智能探测 start*/
     let fdata = {
       orderNo: "",
-      applyNo: _this.applyNoVal
+      applyNo: _this.applyNoVal,
+      isQuery:'2',//20210115新加字段
     };
     _this.interfaceRequest(
       "/api/lendriskintelligencecheck/applyriskintelligencecheck",
       fdata,
       "GET",
       function(res) {
-        let scenarioList=res.data.data.scenarioList;
-        let completCheckList=res.data.data.completCheckList;
-        if(scenarioList.length == 0 && completCheckList.length == 0){
-          //通过
-          _this.ifCheckProgressing=false;
-          _this.ifCheckPass=true;
-          _this.ifCheckNoPass=false;
+        if(res.data.data.returnCode==="Success"){
+          _this.isRefused=res.data.data.isRefused;
+          let scenarioList=res.data.data.scenarioList;
+          let completCheckList=res.data.data.completCheckList;
+          //let isRefused=res.data.data.isRefused;
+          if(_this.isRefused === "2" && completCheckList.length == 0){
+            //通过
+            _this.ifCheckProgressing=false;
+            _this.ifCheckPass=true;
+            _this.ifCheckNoPass=false;
+          }else{
+            _this.ifCheckProgressing=false;
+            _this.ifCheckPass=false;
+            _this.ifCheckNoPass=true;
+          }
+          /* if(scenarioList !==undefined && scenarioList.length > 0){
+            //风险未通过
+            _this.ifRFnopass=false;
+          } */
+          if(_this.isRefused === "1"){
+            //风险未通过
+            _this.ifRFnopass=false;
+            //风险评估失败  被否决  该申请被销毁了
+            let userID = _this.userInfor.loginCode;
+            let orgID=_this.userInfor.orgId;
+            let data = {
+              "userID": userID, //客户经理编号
+              "orgID": orgID, //客户经理所属机构编号
+            };
+            _this.businessNumCommit(data);
+          }
+          if(completCheckList !==undefined && completCheckList.length > 0){
+            //完整性未通过
+            _this.ifRInopass=false;
+          }
+          _this.completCheckList=completCheckList.concat(scenarioList);
         }else{
-          _this.ifCheckProgressing=false;
-          _this.ifCheckPass=false;
-          _this.ifCheckNoPass=true;
+          let titletext=res.data.data.returnDesc;
+          yu.showToast({
+            icon: "none",
+            title: titletext,
+            duration: 3000
+          });
         }
-        if(scenarioList !==undefined && scenarioList.length > 0){
-          //风险未通过
-          _this.ifRFnopass=false;
-        }
-        if(completCheckList !==undefined && completCheckList.length > 0){
-          //完整性未通过
-          _this.ifRInopass=false;
-        }
-        _this.completCheckList=completCheckList.concat(scenarioList);
       },
       function(err) {}
     );
@@ -359,7 +384,12 @@ export default {
     },
     //跳转到一手房
     toPerfectInformation(){
-      yu.redirectTo({ url: '/pages/ebank/perfectInformation/perfectInformation' });
+      let _this=this;
+      if(_this.isRefused === "1" || _this.isRefused === ""){
+        yu.switchTab({ url: "/pages/ebank/index/index" });
+      }else{
+        yu.redirectTo({ url: '/pages/ebank/perfectInformation/perfectInformation' });
+      }
     }
   },
   watch: {},
