@@ -1013,7 +1013,7 @@
         }
       }
       .contract-button{
-        padding-bottom: 0;  
+        padding-bottom: 0;
         padding-bottom: constant(safe-area-inset-bottom);  
         padding-bottom: env(safe-area-inset-bottom);  
       }
