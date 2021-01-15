@@ -37,30 +37,16 @@ export default {
           classlist:[
             {
               navImg:"./static/images/product/firstroomLogo.svg",
-              productName:"一手住房",
+              productName:"一手房",
               productDesc:"",
               productApplyUrl:"index/ordinaryQRcode/ordinaryQRcode?from=firstroom",
               productDetailUrl:""
             },
             {
               navImg:"./static/images/product/secondroomLogo.svg",
-              productName:"二手住房",
+              productName:"二手房",
               productDesc:"",
               productApplyUrl:"index/ordinaryQRcode/ordinaryQRcode?from=secondroom",
-              productDetailUrl:""
-            },
-            {
-              navImg:"./static/images/product/firstroomLogo.svg",
-              productName:"一手商用住房",
-              productDesc:"",
-              productApplyUrl:"index/ordinaryQRcode/ordinaryQRcode?from=firstcommercialroom",
-              productDetailUrl:""
-            },
-            {
-              navImg:"./static/images/product/secondroomLogo.svg",
-              productName:"二手商用住房",
-              productDesc:"",
-              productApplyUrl:"index/ordinaryQRcode/ordinaryQRcode?from=secondcommercialroom",
               productDetailUrl:""
             },
           ]

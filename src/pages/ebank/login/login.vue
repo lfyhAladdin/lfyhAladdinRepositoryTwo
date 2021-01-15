@@ -475,6 +475,10 @@ export default {
     //忘记密码页面跳转
     forgetPassword() {
       let _this = this;
+      _this.pwdFormdata.account= "";
+      _this.pwdFormdata.password="";
+      _this.phoneFormdata.phoneNo="";
+      _this.phoneFormdata.verifyCode="";
       _this.pageJump("login/updatePassword/verifyIdentidy/verifyIdentidy");
     },
     //清空输入框信息   start
