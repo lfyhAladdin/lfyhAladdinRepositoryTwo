@@ -77,9 +77,9 @@
           <text>选择审批人员</text>
         </view>
         <view class="contract-ul">
-          <view class="contract-li" v-for="(item,index) in userIDList" :key="item.userID">
+          <view class="contract-li" v-for="(item,index) in userIDList" :key="item.userID" @click="userIDImgClick(item,index)">
             <view>{{item.userName}}</view>
-            <view @click="userIDImgClick(item,index)">
+            <view>
               <img src="@/static/images/firstroom/checkMark.svg" v-if="item.imgShow">
             </view>
           </view>
@@ -91,9 +91,9 @@
           <text>选择节点</text>
         </view>
         <view class="contract-ul">
-          <view class="contract-li" v-for="(item,index) in phaseNoList" :key="item.phaseNo">
+          <view class="contract-li" v-for="(item,index) in phaseNoList" :key="item.phaseNo" @click="phaseNoImgClick(item,index)">
             <view>{{item.phaseName}}</view>
-            <view @click="phaseNoImgClick(item,index)">
+            <view >
               <img src="@/static/images/firstroom/checkMark.svg" v-if="item.imgShow">
             </view>
           </view>
