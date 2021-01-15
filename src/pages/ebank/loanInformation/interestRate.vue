@@ -69,8 +69,8 @@
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
          <view class="person-infor-one" v-show="interestRate">
-          <text>执行月利率(‰)</text>
-          <input placeholder="执行月利率" type="number"  v-model="businessRate" disabled="false"/>
+          <text>执行年利率(%)</text>
+          <input placeholder="执行年利率" type="number"  v-model="businessRate" disabled="false"/>
         </view>
 
       </view>
@@ -163,7 +163,7 @@
             that.applicationNumber = this.queryApplyInfoList.applyNo; //申请编号
             that.rateType = this.queryApplyInfoList.rateType; //利率模式
             that.baseRate = this.queryApplyInfoList.baseRate; //基准利率
-            that.businessRate = this.queryApplyInfoList.businessRate; //执行利率
+            // that.businessRate = this.queryApplyInfoList.businessRate; //执行利率
             that.rateFLoat = this.queryApplyInfoList.rateFLoat; //浮动值
             if(this.queryApplyInfoList.rateFLoat<0){
               that.FloatingValue = this.queryApplyInfoList.rateFLoat.replace(/\-/g,''); //浮动值
@@ -206,7 +206,10 @@
             }else{
               this.index=1;
             }
-           
+            if(this.baseRate!="" && this.FloatingValue!=""){
+               this.floatInput(); 
+            }
+          
         },
         computed: {
             ...mapGetters(["queryApplyInfoList", "loanQueryDictionaryListObj"])
@@ -409,20 +412,22 @@
                 );
             },
             /**表单提交接口 **end****/
-            //执行利率=(基准利率+浮动值)%
+    
+           // 执行利率=(基准利率+浮动值)*12/10
             floatInput() {
                 console.log(this.baseRate);
                 console.log(this.FloatingValue);
 
                 if (this.rateFLoat == "下浮") {
                     this.floatNumber = Number(this.baseRate) + Number(this.FloatingValue);
-                    this.businessRate = "-" + this.floatNumber / 100;
+                    this.businessRateValue = "-" + this.floatNumber*12/10;
+                    this.businessRate=this.businessRateValue.toFixed(2);
                     this.floatNegative = "-" + this.FloatingValue;
                     console.log(this.businessRate);
                 } else {
                     this.floatNumber = Number(this.baseRate) + Number(this.FloatingValue);
-                    console.log(this.floatNumber / 100);
-                    this.businessRate = this.floatNumber / 100;
+                    this.businessRateValue = this.floatNumber*12/10;
+                    this.businessRate=this.businessRateValue.toFixed(2);
                     console.log(this.businessRate);
                 }
             },

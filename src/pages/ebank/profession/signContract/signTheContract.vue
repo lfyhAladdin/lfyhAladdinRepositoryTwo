@@ -60,7 +60,8 @@
 							<text @click="querypriceresult(item)">补录押品信息</text>
 						</view>
 						<view class="tab-bottom" v-if="item.status == '待发起入库'">
-							<text @click="warehousing(item)" :disabled="isDisable">发起入库申请</text>
+							<!-- <text @click="warehousing(item)" :disabled="isDisable">发起入库申请</text> -->
+              <button size="mini" class="mini-btn applyWarehousing" type="default" @click="warehousing(item)" :disabled="isDisable">发起入库申请</button>
 						</view>
 						<view class="tab-bottom" v-if="item.status == '待签署'">
 							<text @click="toPerfectInformation(item)">合同待生效</text>
@@ -777,9 +778,7 @@ export default {
       console.log(res);
       console.log(this.isDisable);
       this.isDisable = true;
-      setTimeout(() => {
-        this.isDisable = false;
-      }, 1000);
+     
       if (
         res.businessType == "个人二手住房贷款" ||
         res.businessType == "个人二手商用房贷款"
@@ -794,10 +793,11 @@ export default {
           "post",
           res => {
             console.log(res);
-            console.log(res.data.message);
             this.message = res.data.message;
             console.log(this.message);
-
+            setTimeout(() => {
+                    this.isDisable = false;
+                  }, 2000);
             if (this.message) {
               yu.showModal({
                 title: "申请失败",
@@ -856,9 +856,6 @@ export default {
     submitSupplement() {
       this.coverAll = false;
       this.isDisable = true;
-      setTimeout(() => {
-        this.isDisable = false;
-      }, 1000);
       console.log(this.businessTypeInfo);
       let data = {
         contractNo: this.contractNo,
@@ -900,6 +897,9 @@ export default {
           console.log(res, "押品信息补录");
           this.messageData = res.data.message;
           console.log(res.data.data.returnCode);
+           setTimeout(() => {
+        this.isDisable = false;
+      }, 1000);
           if (this.messageData) {
             yu.showModal({
               title: "补录失败！",
@@ -992,9 +992,7 @@ export default {
       console.log("二手房补录押品信息");
       this.twoHouseCollateral = false;
       this.isDisable = true;
-      setTimeout(() => {
-        this.isDisable = false;
-      }, 1000);
+     
       let data = {
         contractNo: this.contractNo,
         clrId: this.clrId,
@@ -1025,6 +1023,9 @@ export default {
         "post",
         res => {
           console.log(res, "押品信息补录二手房");
+           setTimeout(() => {
+        this.isDisable = false;
+      }, 1000);
           yu.hideLoading();
           console.log(res.data.message);
           this.messageData = res.data.message;
@@ -1281,5 +1282,13 @@ export default {
   .second-hand-mortgage {
     height: 1000rpx;
   }
+}
+.applyWarehousing{
+  font-size:26rpx;
+  color: #666666;
+  border-radius: 38rpx;
+  border:2rpx solid #E5E5E5;
+  background: #FFFFFF;
+  margin-bottom:-20rpx;
 }
 </style>

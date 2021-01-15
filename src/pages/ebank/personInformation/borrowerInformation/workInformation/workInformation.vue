@@ -422,27 +422,16 @@ export default {
           console.log(res);
           let resArr = res.data.data;
           let errorMsg = res.data.message;
+          let errorReturnDesc = res.data.data.returnDesc;
           console.log(errorMsg);
           this.queryApplyInfoCommit({
             orderNo: this.orderNoVal,
             applyNo: this.applyNoVal,
           }); //重新调'申请信息查询'接口，确保人员信息列表准确
 
-          if (res.data.data == null) {
-            yu.showModal({
-              title: "失败了！",
-              content: errorMsg,
-              showCancel: false,
-              confirmText: "我知道了",
-              success: (res) => {
-                if (res.confirm) {
-                  console.log("用户点击确定");
-                }
-              },
-            });
-            return false;
-          } else {
-            if (that.isJump) {
+          if (res.data.data.returnCode =="Success" ) {
+
+ if (that.isJump) {
               if (this.personInfor.companyName == "") {
                 yu.showModal({
                   title: "单位名称不能为空！",
@@ -491,6 +480,38 @@ export default {
             } else {
               alert("暂存成功！");
             }
+
+          } else {
+
+
+
+
+
+ yu.showModal({
+              title: "失败了！",
+              content: errorMsg==null?errorReturnDesc:errorMsg,
+              showCancel: false,
+              confirmText: "我知道了",
+              success: (res) => {
+                if (res.confirm) {
+                  console.log("用户点击确定");
+                }
+              },
+            });
+            return false;
+
+
+
+
+
+
+
+
+
+
+
+
+           
           }
         },
         function (err) {
