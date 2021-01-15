@@ -57,7 +57,8 @@
         <view class="contract-li">
           <view class="beforeRed">担保金额（元）</view>
           <view>
-            <input class="uni-input" placeholder="请输入" disabled v-model="relativeSumVal"/>
+            <!--<input class="uni-input" placeholder="请输入" disabled v-model="relativeSumVal"/>-->
+            <text>{{relativeSumVal}}</text>
           </view>
         </view>
         <view class="contract-li">

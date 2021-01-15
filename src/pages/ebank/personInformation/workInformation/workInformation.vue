@@ -159,24 +159,17 @@
       ...mapActions(['queryApplyInfoCommit']),
       //返回上一页
       navigateBack(){
-        // yu.showModal({
-        //   title: '确定返回吗？',
-        //   content: '数据还未提交，点确定后编辑过的内容将不保存！',
-        //   success: function (res) {
-        //     if (res.confirm) {
-        //       uni.navigateBack();
-        //     } else if (res.cancel) {
-        //       console.log('用户点击取消');
-        //     }
-        //   }
-        // }); 
-        this.queryApplyInfoCommit({
-          'orderNo': this.orderNoVal, 
-          'applyNo': this.applyNoVal,
-          'routerTrue': true,
-          'routerTo': 'personInformation/personInformation',
-          'routerJumpWay': 'pageJump'
-        }); //重新调'申请信息查询'接口
+        yu.showModal({
+          title: '确定返回吗？',
+          content: '数据还未提交，点确定后编辑过的内容将不保存！',
+          success: function (res) {
+            if (res.confirm) {
+              uni.navigateBack();
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          }
+        });
       },
       //下拉列表
       unitKindChange(e){
@@ -194,10 +187,10 @@
         this.queryDictionaryList(pdata,(res)=>{
           let resData=res.data.data;
           for(let key in resData){
-              this.unitKindList.push({
-                key:key,
-                value:resData[key]
-              });
+            this.unitKindList.push({
+              key:key,
+              value:resData[key]
+            });
           }
         });
       },
@@ -207,10 +200,10 @@
         this.queryDictionaryList(pdata,(res)=>{
           let resData=res.data.data;
           for(let key in resData){
-              this.workNatureList.push({
-                key:key,
-                value:resData[key]
-              });
+            this.workNatureList.push({
+              key:key,
+              value:resData[key]
+            });
           }
         });
       },
@@ -220,10 +213,10 @@
         this.queryDictionaryList(pdata,(res)=>{
           let resData=res.data.data;
           for(let key in resData){
-              this.headShipList.push({
-                key:key,
-                value:resData[key]
-              });
+            this.headShipList.push({
+              key:key,
+              value:resData[key]
+            });
           }
         });
       },

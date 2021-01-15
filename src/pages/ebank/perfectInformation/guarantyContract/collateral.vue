@@ -46,11 +46,6 @@
             </view>
           </view>
           <view class="collateral-flex">
-            <!--<input class="uni-input" 
-              placeholder="请输入详细地址"  
-              v-model="addressVal" 
-              @focus="focusInput('address')"  
-              @blur="blurInput($event,'address')"/>-->
             <textarea 
               placeholder="请输入详细地址"  
               v-model="addressVal" 
@@ -64,16 +59,18 @@
         </view>
         <view class="contract-li">
           <view class="beforeRed">小区名称</view>
-          <view>
+          <view v-if="!residenceAddDis">
             <input class="uni-input" 
-              placeholder="请输入"  
-              :disabled="residenceAddDis"
+              placeholder="请输入"
               v-model="residenceAddVal" 
               @focus="focusInput('residenceAdd')"    
               @blur="blurInput($event,'residenceAdd')"/>
             <text class="imgCross" v-show="residenceAddFocus" @click="imgCrossClick('residenceAdd')">
               <img src="@/static/images/perfectInformation/cross.svg">
             </text>
+          </view>
+          <view v-if="residenceAddDis">
+            <text>{{residenceAddVal}}</text>
           </view>
         </view>
         <view class="contract-li">
@@ -375,6 +372,53 @@
         dcurrevalOrgDis: false,  //评估机构默认不显示
         preventResubmit: true,  //防重复提交
         clrTypeIdFals: true,  //竣工时间默认显示
+        requiredField:[
+          {
+            'key': 'clrName',
+            'value': '押品名称',
+            'boolean': true,
+          },
+          {
+            'key': 'address',
+            'value': '详细地址',
+            'boolean': true,
+          },
+          {
+            'key': 'residenceAdd',
+            'value': '小区名称',
+            'boolean': false,
+          },
+          {
+            'key': 'floorArea',
+            'value': '建筑面积',
+            'boolean': true,
+          },
+          {
+            'key': 'totalPrice',
+            'value': '房屋总价款',
+            'boolean': true,
+          },
+          {
+            'key': 'storeyHeightt',
+            'value': '总层数',
+            'boolean': true,
+          },
+          {
+            'key': 'realtyHeight',
+            'value': '房屋所在楼层',
+            'boolean': true,
+          },
+          {
+            'key': 'currevalValue',
+            'value': '评估价值',
+            'boolean': false,
+          },
+          {
+            'key': 'drCurrevalValue',
+            'value': '认定价值',
+            'boolean': false,
+          },
+        ]
       }
     },
     onLoad() {
@@ -434,9 +478,15 @@
         if(this.approvalIngList.businessType2 != undefined && this.approvalIngList.businessType2.includes('一手')){
           this.distinguishOneTwo = false;
           this.residenceAddDis = true;
+          this.requiredField[2].boolean = false;
+          this.requiredField[7].boolean = false;
+          this.requiredField[8].boolean = false;
         }else{
           this.distinguishOneTwo = true;
           this.residenceAddDis = false;
+          this.requiredField[2].boolean = true;
+          this.requiredField[7].boolean = true;
+          this.requiredField[8].boolean = true;
         }
 
         this.relativeSumMoney = this.queryApplyInfoList.guarantyList[0].relativeSum;
@@ -639,9 +689,7 @@
             }
           });
           return;
-        }
-        this.preventResubmit = false;
-        yu.showLoading();
+        };
         let data = {};
         let clrListObj = [];
         let otherClrList = [];
@@ -650,56 +698,71 @@
           this.dcurrevalOrgNameVal = '';
         }
         if(e == 'TS' || e == 'save'){
-            clrListObj =  [{
-              'gcSerialNo': this.gcSerialNo,  //担保合同号
-              'clrTypeId': this.clrTypeIdVal,  //押品类型
-              'clrName': this.clrNameVal,  //押品名称
-              'province': this.provinceVal,  //所在省/直辖市
-              'city': this.cityVal,  //所在城市
-              'area': this.areaVal,  //所在区域
-              'address': this.addressVal,  //房屋详细地址
-              'residenceAdd': this.residenceAddVal,  //小区名称
-              'floorArea': this.floorAreaVal,  //建筑面积（平方米）
-              'totalPrice': this.totalPriceVal,  //房屋总价款（元）
-              'attribute_3': this.attribute_3Val,  //土地使用权类型
-              'storeyHeightt': this.storeyHeighttVal,  //总层数
-              'realtyHeight': this.realtyHeightVal,  //房屋所在楼层
-              'completionDate': this.completionDateVal,  //竣工时间
-              'number7': this.number7Val,  //房屋结构
-              'houseType': this.houseTypeVal,  //户型
-              'ownerType': '02',  //抵押人（出质人）客户类型
-              'ownerName1': this.ownerName1Val,  //抵押人（出质人）名称
-              'certtype': this.certtypeVal,  //抵押人（出质人）证件类型
-              'certId': this.certIdVal,  //抵押人（出质人）证件号码
-              'currevalMode': this.currevalModeVal,  //抵质押物评估方式
-              'dcurrevalOrgID': this.dcurrevalOrgIDVal,  //价值评估机构编号
-              'dcurrevalOrgName': this.dcurrevalOrgNameVal,  //价值评估机构名称
-              'currevalDate': '',  //价值评估时间
-              'currevalValue': this.currevalValueVal,  //评估价值（元）
-              'drCurrevalValue': this.drCurrevalValueVal,  //认定价值（元）
-              'limitValue': this.queryApplyInfoList.businessSum,  //本次担保金额
-              'guarantyRate': this.guarantyRateVal,  //抵质押率
-              'mortgageUnit': this.mortgageUnitVal,  //备注
-            }];
-            otherClrList = this.ypviceMortgagorArr;
-            if(otherClrList.length > 0){
-              data = {
-                'orderNo': this.orderNoVal,
-                'applyNo': this.applyNoVal,
-                'businessType': this.businessTypeVal,  //业务品种
-                'listName': 'clrList',  //更新列表名称
-                'clrList': clrListObj,
-                'otherClrList': otherClrList
-              };
-            }else{
-              data = {
-                'orderNo': this.orderNoVal,
-                'applyNo': this.applyNoVal,
-                'businessType': this.businessTypeVal,  //业务品种
-                'listName': 'clrList',  //更新列表名称
-                'clrList': clrListObj,
-              };
+          if(e == 'save'){
+            let requiredFieldArr = this.requiredField;
+            console.log(requiredFieldArr)
+            for(let i=0; i<requiredFieldArr.length; i++){
+              if(requiredFieldArr[i].boolean && this[`${requiredFieldArr[i].key}Val`] == ''){
+                console.log(requiredFieldArr[i])
+                yu.showToast({
+                  title: requiredFieldArr[i].value+'为必输项，请输入后再提交',
+                  icon: 'none',
+                  duration: 3000
+                });
+                return;
+              }
             }
+          };
+          clrListObj =  [{
+            'gcSerialNo': this.gcSerialNo,  //担保合同号
+            'clrTypeId': this.clrTypeIdVal,  //押品类型
+            'clrName': this.clrNameVal,  //押品名称
+            'province': this.provinceVal,  //所在省/直辖市
+            'city': this.cityVal,  //所在城市
+            'area': this.areaVal,  //所在区域
+            'address': this.addressVal,  //房屋详细地址
+            'residenceAdd': this.residenceAddVal,  //小区名称
+            'floorArea': this.floorAreaVal,  //建筑面积（平方米）
+            'totalPrice': this.totalPriceVal,  //房屋总价款（元）
+            'attribute_3': this.attribute_3Val,  //土地使用权类型
+            'storeyHeightt': this.storeyHeighttVal,  //总层数
+            'realtyHeight': this.realtyHeightVal,  //房屋所在楼层
+            'completionDate': this.completionDateVal,  //竣工时间
+            'number7': this.number7Val,  //房屋结构
+            'houseType': this.houseTypeVal,  //户型
+            'ownerType': '02',  //抵押人（出质人）客户类型
+            'ownerName1': this.ownerName1Val,  //抵押人（出质人）名称
+            'certtype': this.certtypeVal,  //抵押人（出质人）证件类型
+            'certId': this.certIdVal,  //抵押人（出质人）证件号码
+            'currevalMode': this.currevalModeVal,  //抵质押物评估方式
+            'dcurrevalOrgID': this.dcurrevalOrgIDVal,  //价值评估机构编号
+            'dcurrevalOrgName': this.dcurrevalOrgNameVal,  //价值评估机构名称
+            'currevalDate': '',  //价值评估时间
+            'currevalValue': this.currevalValueVal,  //评估价值（元）
+            'drCurrevalValue': this.drCurrevalValueVal,  //认定价值（元）
+            'limitValue': this.queryApplyInfoList.businessSum,  //本次担保金额
+            'guarantyRate': this.guarantyRateVal,  //抵质押率
+            'mortgageUnit': this.mortgageUnitVal,  //备注
+          }];
+          otherClrList = this.ypviceMortgagorArr;
+          if(otherClrList.length > 0){
+            data = {
+              'orderNo': this.orderNoVal,
+              'applyNo': this.applyNoVal,
+              'businessType': this.businessTypeVal,  //业务品种
+              'listName': 'clrList',  //更新列表名称
+              'clrList': clrListObj,
+              'otherClrList': otherClrList
+            };
+          }else{
+            data = {
+              'orderNo': this.orderNoVal,
+              'applyNo': this.applyNoVal,
+              'businessType': this.businessTypeVal,  //业务品种
+              'listName': 'clrList',  //更新列表名称
+              'clrList': clrListObj,
+            };
+          }
         }else{
           // clrListObj = [];
           data = {
@@ -709,7 +772,9 @@
             'listName': 'clrList',  //更新列表名称
             'clrList': [],
           };
-        }
+        };
+        this.preventResubmit = false;
+        yu.showLoading();
         this.interfaceRequest('/api/credit/updateApplyInfo',data,"post",(res)=>{
           console.log(res.data.data)
           yu.hideLoading();
