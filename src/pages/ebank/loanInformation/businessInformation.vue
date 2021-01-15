@@ -399,7 +399,7 @@
             },
             //下拉列表
             bindPickerChange(e) {
-                this.childProductNo = true;
+                // this.childProductNo = true;
                 console.log(this.childProductNo)
                 let thisIndex = e.detail.value;
                 this.productId = this.childProductNoIdClass[thisIndex].value;
