@@ -907,7 +907,11 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #f6f8f9;
-    padding: 30rpx 0;
+    // padding: 30rpx 0;
+    padding-top: 30rpx;  
+    padding-bottom: 30rpx;
+    padding-bottom: constant(safe-area-inset-bottom);  
+    padding-bottom: env(safe-area-inset-bottom); 
     .household-content{
       padding-top: 270rpx;
       .form-title{

@@ -48,6 +48,12 @@
       "sdkConfigs": {
 
       }
+    },
+    "safearea": {  
+      "background": "#CCCCCC",  
+      "bottom": {  
+          "offset": "auto"  
+      }  
     }
   },
   "quickapp": {

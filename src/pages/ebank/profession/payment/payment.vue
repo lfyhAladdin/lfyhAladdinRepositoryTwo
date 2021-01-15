@@ -243,7 +243,6 @@
           console.log(res)
           let dataList = res.data.data.putoutList;
           this.dataProcessing(dataList);
-          console.log(dataList);
         },function(err){
           console.log(err)
         });
