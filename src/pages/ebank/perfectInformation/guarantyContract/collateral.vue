@@ -101,6 +101,7 @@
         </view>
         <view class="contract-li" v-if="distinguishOneTwo">
           <view class="beforeRed">房屋年限</view>
+          <view>
             <input class="uni-input"  
               v-model="buyYearVal" 
               @focus="focusInput('buyYear')" 
@@ -108,7 +109,6 @@
             <text class="imgCross" v-show="buyYearFocus" @click="imgCrossClick('buyYear')">
               <img src="@/static/images/perfectInformation/cross.svg">
             </text>
-          <view>
           </view>
         </view>
         <view class="contract-li">
@@ -833,18 +833,36 @@
               image: './static/images/perfectInformation/success.svg',
               duration: 2000
             });
+            yu.showModal({
+              title: "暂存成功",
+              content: res.data.data.returnDesc,
+              showCancel: false,
+              confirmText: "我知道了",
+              success: res => {
+                // if (res.confirm) {
+                //   console.log("用户点击确定");
+                // }
+              }
+            });
             this.queryApplyInfoCommit({
               'orderNo': this.orderNoVal,
               'applyNo': this.applyNoVal,
             }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
           }else{
-            this.queryApplyInfoCommit({
-              'orderNo': this.orderNoVal, 
-              'applyNo': this.applyNoVal,
-              'routerTrue': true,
-              'routerTo': 'guarantyContract',
-              'routerJumpWay': 'navigateTo'
-            }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
+            yu.showToast({
+              title: res.data.data.returnDesc,
+              icon: 'none',
+              duration: 3000
+            });
+            setTimeout(()=>{
+              this.queryApplyInfoCommit({
+                'orderNo': this.orderNoVal, 
+                'applyNo': this.applyNoVal,
+                'routerTrue': true,
+                'routerTo': 'guarantyContract',
+                'routerJumpWay': 'navigateTo'
+              }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
+            },3000);
           }
         },(err)=>{
           console.log(err)

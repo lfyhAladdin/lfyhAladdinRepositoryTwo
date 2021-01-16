@@ -153,7 +153,7 @@
 import uniSection from '@/components/uni-section/uni-section.vue';
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue';
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations,mapActions } from 'vuex'
 
 export default {
 	components: { uniSection, uniSwipeAction, uniSwipeActionItem },
@@ -203,6 +203,7 @@ export default {
     this.pageInfo()
   },
   methods: {
+    ...mapActions(['queryApplyInfoCommit']),
     ...mapMutations(["personalInformationReplace"]),
     // 左滑删除
 			swipeChange(e) {
@@ -415,11 +416,18 @@ export default {
       let posturl="/api/credit/updateApplyInfo";
       console.log(1111111111)
       console.log(data)
+      yu.showLoading();
       this.interfaceRequest(posturl,data,"post",(res)=>{
+        yu.hideLoading();
         let resArr=res.data.data;
         if(resArr.returnCode == 'Success'){
-          // location.reload()
-          this.pageInfo()
+          this.queryApplyInfoCommit({
+            "orderNo": this.orderNoVal, 
+            "applyNo": this.applyNoVal,
+            'routerTrue': true,
+            'routerTo': 'personInformation',
+            'routerJumpWay': 'navigateTo'
+          }); //重新调'申请信息查询'接口
         }else{
           yu.showToast({
             title: resArr.returnDesc,
@@ -428,11 +436,12 @@ export default {
           });
         }
       },(err)=>{
-          yu.showToast({
-            title: '3.3.12更新失败，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+        yu.hideLoading();
+        yu.showToast({
+          title: '3.3.12更新失败，请联系管理员',
+          icon: 'none',
+          duration: 3000
+        });
       });
     }
   }

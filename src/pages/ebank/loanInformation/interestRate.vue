@@ -402,9 +402,20 @@
                     "post",
                     function(res) {
                         console.log("暂存成功!");
-                        uni.showToast({
-                            title: "暂存成功!",
-                            duration: 2000
+                        // uni.showToast({
+                        //     title: "暂存成功!",
+                        //     duration: 2000
+                        // });
+                        yu.showModal({
+                            title: "暂存成功",
+                            content:res.data.data.returnDesc,
+                            showCancel: false,
+                            confirmText: "我知道了",
+                            success: res => {
+                                if (res.confirm) {
+                                    console.log("用户点击确定");
+                                }
+                            }
                         });
                         console.log(res);
                     },

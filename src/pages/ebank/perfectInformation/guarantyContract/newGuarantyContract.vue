@@ -346,13 +346,20 @@
             });
             return;
           };
-          this.queryApplyInfoCommit({
-            "orderNo": this.orderNoVal, 
-            "applyNo": this.applyNoVal,
-            'routerTrue': true,
-            'routerTo': 'guarantyContract',
-            'routerJumpWay': 'navigateTo'
-          }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
+          yu.showToast({
+            title: res.data.data.returnDesc,
+            icon: 'none',
+            duration: 3000
+          });
+          setTimeout(()=>{
+            this.queryApplyInfoCommit({
+              "orderNo": this.orderNoVal, 
+              "applyNo": this.applyNoVal,
+              'routerTrue': true,
+              'routerTo': 'guarantyContract',
+              'routerJumpWay': 'navigateTo'
+            }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
+          },3000);
           // if(e == 'TS'){
           //   yu.showToast({
           //     title: '暂存成功',
