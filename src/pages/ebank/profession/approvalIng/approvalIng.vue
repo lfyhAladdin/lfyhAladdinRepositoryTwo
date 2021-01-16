@@ -278,6 +278,7 @@
         }
         this.interfaceRequest('/api/creditprice/querypriceapprapplyinfo',data,"get",(res)=>{
           console.log(res)
+          let datas = res.data.data;
           this.dataProcessing(datas,datas.applyResDtoList);
         },function(err){
           yu.showToast({
