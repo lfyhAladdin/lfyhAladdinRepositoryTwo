@@ -672,7 +672,7 @@
           this.preventResubmit = true;
           yu.hideLoading();
           let resArr=res.data.data;
-          if(res.data.data=='Success'){
+          if(resArr.returnCode=='Success'){
             // 新增时只调3.12接口，不调3.7了
             if(JSON.stringify(this.personalInformation) == "{}"){
               let dataVal ={
@@ -698,7 +698,7 @@
             }
           }else{
             yu.showToast({
-              title: resArr,
+              title: resArr.returnDesc,
               icon: 'none',
               duration: 3000
             });

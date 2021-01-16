@@ -338,9 +338,9 @@
           console.log(res)
           console.log(res.data.data)
           this.preventResubmit = true;
-          if(res.data.data != 'Success'){
+          if(res.data.data.returnCode != 'Success'){
             yu.showToast({
-              title: res.data.data,
+              title: res.data.data.returnDesc,
               icon: 'none',
               duration: 3000
             });

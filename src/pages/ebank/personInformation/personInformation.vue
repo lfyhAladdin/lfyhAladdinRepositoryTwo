@@ -417,12 +417,12 @@ export default {
       console.log(data)
       this.interfaceRequest(posturl,data,"post",(res)=>{
         let resArr=res.data.data;
-        if(res.data.data=='Success'){
+        if(resArr.returnCode == 'Success'){
           // location.reload()
           this.pageInfo()
         }else{
           yu.showToast({
-            title: resArr,
+            title: resArr.returnDesc,
             icon: 'none',
             duration: 3000
           });

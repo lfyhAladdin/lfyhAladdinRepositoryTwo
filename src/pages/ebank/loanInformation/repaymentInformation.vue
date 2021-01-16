@@ -269,8 +269,8 @@ console.log(1)
         (res)=> {
           console.log(6666);
           console.log(res);
-          console.log(res.data.data.Success)
-          that.successMsg=res.data.data;
+          console.log(res.data.data.returnCode)
+          that.successMsg=res.data.data.returnCode;
           console.log(res.data.data)
          console.log(that.successMsg)
           // that.pageJump(that.perfectInformation);
@@ -282,7 +282,7 @@ console.log(1)
 
 
          if(e=="TS"){
-           this.messageTs=res.data.data;
+           this.messageTs=res.data.data.returnDesc;
                         yu.showModal({
                                 title: "暂存状态",
                                 content:this.messageTs,

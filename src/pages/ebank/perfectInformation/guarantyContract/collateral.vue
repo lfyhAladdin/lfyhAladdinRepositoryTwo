@@ -99,6 +99,18 @@
             </text>
           </view>
         </view>
+        <view class="contract-li" v-if="distinguishOneTwo">
+          <view class="beforeRed">房屋年限</view>
+            <input class="uni-input"  
+              v-model="buyYearVal" 
+              @focus="focusInput('buyYear')" 
+              @blur="blurInput($event,'buyYear')"/>
+            <text class="imgCross" v-show="buyYearFocus" @click="imgCrossClick('buyYear')">
+              <img src="@/static/images/perfectInformation/cross.svg">
+            </text>
+          <view>
+          </view>
+        </view>
         <view class="contract-li">
           <view class="beforeRed">土地使用权类型</view>
           <view>
@@ -353,6 +365,8 @@
         mortgageUnitFocus: false,
         dcurrevalOrgIDVal: '',
         dcurrevalOrgNameVal: '',
+        buyYearVal: '',
+        buyYearFocus: '',
         orderNoVal: '',  //订单编号
         applyNoVal: '',  //申请编号
         businessTypeVal: '',  //业务品种
@@ -377,46 +391,61 @@
             'key': 'clrName',
             'value': '押品名称',
             'boolean': true,
+            'checkOut': false,
           },
           {
             'key': 'address',
             'value': '详细地址',
             'boolean': true,
+            'checkOut': false,
           },
           {
             'key': 'residenceAdd',
             'value': '小区名称',
             'boolean': false,
+            'checkOut': true,
           },
           {
             'key': 'floorArea',
             'value': '建筑面积',
             'boolean': true,
+            'checkOut': false,
           },
           {
             'key': 'totalPrice',
             'value': '房屋总价款',
             'boolean': true,
+            'checkOut': false,
           },
           {
             'key': 'storeyHeightt',
             'value': '总层数',
             'boolean': true,
+            'checkOut': false,
           },
           {
             'key': 'realtyHeight',
             'value': '房屋所在楼层',
             'boolean': true,
+            'checkOut': false,
           },
           {
             'key': 'currevalValue',
             'value': '评估价值',
             'boolean': false,
+            'checkOut': true,
           },
           {
             'key': 'drCurrevalValue',
             'value': '认定价值',
             'boolean': false,
+            'checkOut': true,
+          },
+          {
+            'key': 'buyYear',
+            'value': '房屋年限',
+            'boolean': false,
+            'checkOut': true,
           },
         ]
       }
@@ -478,15 +507,25 @@
         if(this.approvalIngList.businessType2 != undefined && this.approvalIngList.businessType2.includes('一手')){
           this.distinguishOneTwo = false;
           this.residenceAddDis = true;
-          this.requiredField[2].boolean = false;
-          this.requiredField[7].boolean = false;
-          this.requiredField[8].boolean = false;
+          // this.requiredField[2].boolean = false;
+          // this.requiredField[7].boolean = false;
+          // this.requiredField[8].boolean = false;
+          this.requiredField.forEach(item=>{
+            if(item.checkOut){
+              item.boolean = false;
+            }
+          })
         }else{
           this.distinguishOneTwo = true;
           this.residenceAddDis = false;
-          this.requiredField[2].boolean = true;
-          this.requiredField[7].boolean = true;
-          this.requiredField[8].boolean = true;
+          // this.requiredField[2].boolean = true;
+          // this.requiredField[7].boolean = true;
+          // this.requiredField[8].boolean = true;
+          this.requiredField.forEach(item=>{
+            if(item.checkOut){
+              item.boolean = true;
+            }
+          })
         }
 
         this.relativeSumMoney = this.queryApplyInfoList.guarantyList[0].relativeSum;
@@ -724,6 +763,7 @@
             'residenceAdd': this.residenceAddVal,  //小区名称
             'floorArea': this.floorAreaVal,  //建筑面积（平方米）
             'totalPrice': this.totalPriceVal,  //房屋总价款（元）
+            'buyYear': this.buyYearVal,  //房屋年限
             'attribute_3': this.attribute_3Val,  //土地使用权类型
             'storeyHeightt': this.storeyHeighttVal,  //总层数
             'realtyHeight': this.realtyHeightVal,  //房屋所在楼层
@@ -779,9 +819,9 @@
           console.log(res.data.data)
           yu.hideLoading();
           this.preventResubmit = true;
-          if(res.data.data != 'Success'){
+          if(res.data.data.returnCode != 'Success'){
             yu.showToast({
-              title: res.data.data,
+              title: res.data.data.returnDesc,
               icon: 'none',
               duration: 3000
             });

@@ -496,7 +496,7 @@
                         }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
                         if (e == "TS") {
                             console.log(res)
-                            this.messageTs=res.data.data;
+                            this.messageTs=res.data.data.returnDesc;
                             yu.showModal({
                                 title: "暂存状态",
                                 content:this.messageTs,
