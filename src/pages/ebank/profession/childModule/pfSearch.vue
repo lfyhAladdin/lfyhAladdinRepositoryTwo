@@ -16,7 +16,7 @@
             <text>人工定价审批中</text> -->
           </view>
         </view>
-        <view class="pfSearch-ul">
+        <view class="pfSearch-ul" v-if="JSON.stringify(pfSearchBusiness) != '{}'">
           <view class="pfSearch-title">产品种类</view>
           <view class="pfSearch-li">
             <text 

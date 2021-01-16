@@ -190,7 +190,7 @@
                         numNo: 15
                     }
                 }, //起始笔数
-                filterCode: "", //筛选字段
+                filterCode: this.filterCode, //筛选字段
                 businessType: "", //业务品种
                 businessTypeList2: {}, //业务品种列表
                 ajaxJudge: {
@@ -434,7 +434,7 @@
                     beginNo: this.numNo[this.applyPhase].beginNo, //起始笔数
                     totalNo: this.numNo[this.applyPhase].totalNo, //查询笔数
                     sortCode: "contractno",
-                    filterCode: ""
+                    filterCode: this.filterCode
                 };
                 this.interfaceRequest(
                     "/api/contract/busConListQuery",
@@ -479,7 +479,7 @@
                     beginNo: this.numNo[this.applyPhase].beginNo, //起始笔数
                     totalNo: this.numNo[this.applyPhase].totalNo, //查询笔数
                     sortCode: "contractno",
-                    filterCode: ""
+                    filterCode: this.filterCode
                 };
                 this.interfaceRequest(
                     "/api/contract/busConListQuery",
