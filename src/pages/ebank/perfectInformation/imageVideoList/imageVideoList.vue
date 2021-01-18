@@ -89,6 +89,7 @@ export default {
       orderNo:'',
       applyNo:_this.serialNo,
     };
+    yu.showLoading();
     this.interfaceRequest(
       '/api/credit/queryApplyInfo',
       data,
@@ -138,7 +139,7 @@ export default {
         "post",
         function(res) {
           let itemlist=res.data.data.downloadImageOutVoList;
-         
+          yu.hideLoading();
           for(let i=0;i<itemlist.length ; i++){
             let param=itemlist[i].busiFileType;
             itemlist[i].busiFileTypeName=_this.getBusiFileTypeName(_this.busiFileType[param]);
@@ -196,7 +197,7 @@ export default {
       uni.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album'], //从相册选择
+        sourceType: ['camera','album'], //从相册选择或拍照
         success: function (res) {
           const tempFilePaths = res.tempFilePaths;
           uni.request({//路径转换base64

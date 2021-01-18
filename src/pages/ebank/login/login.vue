@@ -132,7 +132,20 @@ export default {
       ifshowPhoneClear:false//是否显示手机号登陆中  手机号清除功能
     };
   },
-
+  created(){
+    let userLoginCode=localStorage.getItem('userLoginCode');
+    if(userLoginCode != '' && userLoginCode != undefined){
+      this.pwdFormdata.account=userLoginCode;
+    }
+    let userLoginPassword=localStorage.getItem('userLoginPassword');
+    if(userLoginPassword != '' && userLoginPassword != undefined){
+      this.pwdFormdata.password=userLoginPassword;
+    }
+    let userLoginPhone=localStorage.getItem('userLoginPhone');
+    if(userLoginPhone != '' && userLoginPhone != undefined){
+      this.phoneFormdata.phoneNo=userLoginPhone;
+    }
+  },
   computed: {
     clickable: function() {
       return this.pwdFormdata.account && this.pwdFormdata.password;
@@ -205,6 +218,8 @@ export default {
         });
         return;
       }
+      localStorage.setItem('userLoginCode',this.pwdFormdata.account);
+      localStorage.setItem('userLoginPassword',this.pwdFormdata.password);
       let mdpassword = this.encodePassword(this.pwdFormdata.password);
       //let mdpassword = this.pwdFormdata.password;
       let data = {
@@ -423,6 +438,7 @@ export default {
           title: "请输入验证码"
         });
       } else {
+        localStorage.setItem('userLoginPhone',this.phoneFormdata.phoneNo);
         let data = {
           username: this.phoneFormdata.phoneNo,
           vcode: this.phoneFormdata.verifyCode,

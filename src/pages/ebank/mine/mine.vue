@@ -100,14 +100,23 @@ export default {
             .then(
               res => {
                 /* 退出成功 */
-                yu.clearStorage();
+                //yu.clearStorage();
+                localStorage.removeItem('userOrgId');
+                localStorage.removeItem('userInfo');
+                localStorage.removeItem('uni-storage-keys');
+                localStorage.removeItem('loginStatus');
                 setTimeout(() => {
                   _this.pageJump("login/login");
                 }, 500);
               },
               err => {
                 /* 退出成功 */
-                yu.clearStorage();
+                //yu.clearStorage();
+                
+                localStorage.removeItem('userOrgId');
+                localStorage.removeItem('userInfo');
+                localStorage.removeItem('uni-storage-keys');
+                localStorage.removeItem('loginStatus');
                 setTimeout(() => {
                   _this.pageJump("login/login");
                 }, 500);

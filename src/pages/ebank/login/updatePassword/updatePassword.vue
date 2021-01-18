@@ -149,6 +149,9 @@ export default {
                 title: "密码修改成功",
                 duration: 1500
               });
+              localStorage.removeItem('userLoginCode');
+              localStorage.removeItem('userLoginPassword');
+              localStorage.removeItem('userLoginPhone');
               //yu.clearStorage();
               setTimeout(() => {
                 let _this = this;
