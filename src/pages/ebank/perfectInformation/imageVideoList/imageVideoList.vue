@@ -19,9 +19,9 @@
           <view class="item before-upload" v-if="item.isIDCard">
             <img class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
             <img v-show="false" class="image-con">
-            <view class="image-con upload-image" :id="item.busiFileType" @click="upload($event,item.busiFileType)">
-                <img class="huiyuan_img" :src="idcard.image" mode="">
-            </view>
+            <input class="image-con upload-image" :id="item.busiFileType" @click="upload($event,item.busiFileType)" ref="file" accept="image/*" type="file" capture="environment" disabled="disabled" />
+            <img class="huiyuan_img" :src="idcard.image" mode="">
+            
           </view>
         </view>
       </view>
@@ -190,9 +190,6 @@ export default {
     //上传图片
     upload(e,busiFileType){
       let _id=busiFileType;
-      console.log('*********');
-      console.log(e.target.id);
-      console.log(_id);
       let _self = this;
       uni.chooseImage({
         count: 1,
@@ -206,7 +203,9 @@ export default {
             responseType: 'arraybuffer',
             success: async res => {
               let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
+              yu.showLoading();
               _self.uploadImagePost(base64,_id);
+              
             }
           });
           _self.iconcheck = 1;//点击后图片更改状态由0变成1
@@ -259,6 +258,7 @@ export default {
         data,
         "post",
         function(res) {
+          yu.hideLoading();
           let filename=res.data.data.uploadImageOutVoList[0].fileName;
           _this.uploadImageResult(bt,base64Code,filename);
         },
@@ -418,6 +418,9 @@ uni-page-body{
           vertical-align: middle;
           align-items: center;
           justify-content: center;
+          position: absolute;
+          width:100%;
+          height:100%;
           img{
             width: 66rpx;
             height: 66rpx;

@@ -137,10 +137,10 @@ export default {
     if(userLoginCode != '' && userLoginCode != undefined){
       this.pwdFormdata.account=userLoginCode;
     }
-    let userLoginPassword=localStorage.getItem('userLoginPassword');
+    /* let userLoginPassword=localStorage.getItem('userLoginPassword');
     if(userLoginPassword != '' && userLoginPassword != undefined){
       this.pwdFormdata.password=userLoginPassword;
-    }
+    } */
     let userLoginPhone=localStorage.getItem('userLoginPhone');
     if(userLoginPhone != '' && userLoginPhone != undefined){
       this.phoneFormdata.phoneNo=userLoginPhone;
@@ -219,7 +219,7 @@ export default {
         return;
       }
       localStorage.setItem('userLoginCode',this.pwdFormdata.account);
-      localStorage.setItem('userLoginPassword',this.pwdFormdata.password);
+      /* localStorage.setItem('userLoginPassword',this.pwdFormdata.password); */
       let mdpassword = this.encodePassword(this.pwdFormdata.password);
       //let mdpassword = this.pwdFormdata.password;
       let data = {
