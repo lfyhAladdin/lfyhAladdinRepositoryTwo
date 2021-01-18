@@ -419,7 +419,7 @@
     padding: 0 0 30rpx 0;
     .pf-titleTwo{
       img{
-        background-color: greenyellow;
+        background-color: green;
       }
     } 
     .contract-content{

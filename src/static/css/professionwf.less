@@ -7,13 +7,16 @@
   font-size: 36rpx;
   color: #333333;
   position: fixed;
-  top: 0;
-  top: constant(safe-area-inset-top);
-  top: env(safe-area-inset-top);
+  // top: 0;
+  // top: constant(safe-area-inset-top);
+  // top: env(safe-area-inset-top);
   left: 0;
   right: 0;
   background: #fff;
   padding: 50rpx 0 20rpx 0;
+  padding-top: 50rpx;
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
   z-index: 9999;
   overflow: hidden;
 }
@@ -83,12 +86,10 @@
 //头部两个固定定位时
 .pf-poifixed{
   position: fixed;
-  // top: 0;
   left: 0;
   right: 0;
   .pf-title{
     position: relative;
-    top: 0;
   }
   .appro-fix{
     background-color: #fff;
