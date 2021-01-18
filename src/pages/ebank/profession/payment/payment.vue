@@ -1,39 +1,31 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title pf-titleThree">
-      <img src="@/static/images/profession/pf-back.svg" @click="backpf">
-      <text>发放支付</text>
-      <img src="@/static/images/profession/pf-screening.svg" class="pf-imgRig" @click="searchpf">
-    </view>
-    <view class="appro-fix">
-      <!--tab页签-->
-      <!-- <view class="appro-tab">
-        <view 
-          v-for="item in tabTitle" 
-          :key="item.id" 
-          :class="item.id == applyPhase ? 'appro-box tab-active' : 'appro-box'"
-          @click="tabClick(item.id)">
-          <view class="active-text">{{item.title}}</view>
-          <view class="active"></view>
-        </view>
-      </view> -->
-      <scroll-view 
-        class="appro-tab" 
-        scroll-x="true"
-        scroll-left="0" 
-        show-scrollbar="false"
-        scroll-with-animation="true"
-        :scroll-into-view="`applyPhase${applyPhase}`">
-        <view 
-          v-for="item in tabTitle" 
-          :key="item.id" 
-          :id="`applyPhase${item.id}`"
-          :class="item.id == applyPhase ? 'appro-box tab-active' : 'appro-box'"
-          @click="tabClick(item.id)">
-          <view class="active-text">{{item.title}}</view>
-          <view class="active"></view>
-        </view>
-      </scroll-view>
+    <view class="pf-poifixed">
+      <view class="pf-title pf-titleThree">
+        <img src="@/static/images/profession/pf-back.svg" @click="backpf">
+        <text>发放支付</text>
+        <img src="@/static/images/profession/pf-screening.svg" class="pf-imgRig" @click="searchpf">
+      </view>
+      <view class="appro-fix">
+        <!--tab页签-->
+        <scroll-view 
+          class="appro-tab" 
+          scroll-x="true"
+          scroll-left="0" 
+          show-scrollbar="false"
+          scroll-with-animation="true"
+          :scroll-into-view="`applyPhase${applyPhase}`">
+          <view 
+            v-for="item in tabTitle" 
+            :key="item.id" 
+            :id="`applyPhase${item.id}`"
+            :class="item.id == applyPhase ? 'appro-box tab-active' : 'appro-box'"
+            @click="tabClick(item.id)">
+            <view class="active-text">{{item.title}}</view>
+            <view class="active"></view>
+          </view>
+        </scroll-view>
+      </view>
     </view>
     <view class="pf-content appro-content">
       
@@ -439,23 +431,18 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
-    padding: 30rpx 0;
-    .appro-fix{
-      position: fixed;
-      top: 130rpx;
-      left: 0;
-      right: 0;
-      background-color: #fff;
-      padding: 26rpx 30rpx 0;
-      border-bottom: 2rpx solid #E5E5E5;
-      .appro-tab{
-        border-bottom: none;
-        padding: 0;
+    // padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
+    .pf-titleThree{
+      img{
+        background-color: aquamarine;
       }
-    }
+    } 
     .appro-content{
+      padding-top: 228rpx;
       .tab-ul{
-        padding: 110rpx 30rpx 24rpx;
+        // padding: 110rpx 30rpx 24rpx;
+        padding: 24rpx 30rpx;
         .tab-li{
           .tab-li-content{
             .tab-top{
