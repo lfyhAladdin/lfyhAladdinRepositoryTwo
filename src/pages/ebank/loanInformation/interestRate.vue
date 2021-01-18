@@ -361,6 +361,11 @@
                                 }
                             });
                     }else{
+                         yu.showToast({
+                                title: res.data.data.returnDesc,
+                                icon: 'none',
+                                duration: 3000
+                            });
                         setTimeout(()=>{
                         that.pageJump(that.repaymentInformation);
                     },1000)
@@ -428,13 +433,17 @@
             floatInput() {
                 console.log(this.baseRate);
                 console.log(this.FloatingValue);
-
+console.log(this.rateFLoat)
                 if (this.rateFLoat == "下浮") {
+                    console.log(123)
                     this.floatNumber = Number(this.baseRate) + Number(this.FloatingValue);
-                    this.businessRateValue = "-" + this.floatNumber*12/10;
-                    this.businessRate=this.businessRateValue.toFixed(2);
+                    console.log(this.floatNumber)
+                    this.businessRateValue =  this.floatNumber*12/10;
+                    console.log(this.businessRateValue)
+                    this.businessRate="-" + this.businessRateValue.toFixed(2);
+console.log(this.businessRate);
                     this.floatNegative = "-" + this.FloatingValue;
-                    console.log(this.businessRate);
+                    
                 } else {
                     this.floatNumber = Number(this.baseRate) + Number(this.FloatingValue);
                     this.businessRateValue = this.floatNumber*12/10;

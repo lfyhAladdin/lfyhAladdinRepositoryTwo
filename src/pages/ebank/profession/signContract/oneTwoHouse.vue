@@ -43,7 +43,7 @@
             </view>
           </view>
         </view>
-        <!-- <view class="pf-ul" v-show="supplementInfo">
+        <view class="pf-ul" v-show="supplementInfo">
           <view class="pf-li">
             <view class="pf-li-left">
               <img src="@/static/images/img-info2.png">
@@ -54,7 +54,7 @@
               <img src="@/static/images/profession/pf-arrow.svg">
             </view>
           </view>
-        </view> -->
+        </view>
 
 
 
@@ -88,6 +88,7 @@
                 interestRate: "loanInformation/interestRate",
                 supplement: "profession/signContract/supplement",
                 signTheContract: "profession/signContract/signTheContract",
+                contractImgInfo: "profession/signContract/contractImgInfo",
                 supplementInfo: true,
                 payInfo: false,
                 borrower: "", //借款人

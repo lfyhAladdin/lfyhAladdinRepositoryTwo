@@ -203,6 +203,13 @@
                 "navigationBarTitleText": "openingBankSearch"
             }
         },
+        /**合同签署-影像信息**/
+        {
+            "path": "pages/ebank/profession/signContract/contractImgInfo",
+            "style": {
+                "navigationBarTitleText": "contractImgInfo"
+            }
+        },
         /**业务-签署合同end**/
         /**普通进件二维码路径**/
         {
@@ -387,7 +394,7 @@
         {
             "path": "pages/ebank/perfectInformation/creditSubmit/creditInformation",
             "style": {
-            "navigationBarTitleText": "征信信息"
+                "navigationBarTitleText": "征信信息"
             }
         },
         /**一手房-下一步-征信信息 --end**/
@@ -411,7 +418,7 @@
         {
             "path": "pages/ebank/perfectInformation/creditSubmit/creditSubmit",
             "style": {
-            "navigationBarTitleText": "creditSubmit"
+                "navigationBarTitleText": "creditSubmit"
             }
         },
         /* 授信提交 end */

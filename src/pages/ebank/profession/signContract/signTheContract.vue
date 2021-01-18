@@ -26,13 +26,13 @@
 			<view class="tab-ul">
 				<view class="tab-li" v-for="item in tabArr[applyPhase]" :key="item.applyNo">
 					<view class="tab-li-features">
-						<view>{{item.businessType}}</view>
+						<view>{{item.businessType2}}</view>
 						<view class="tab-color-orange">{{item.status}}</view>
 					</view>
 					<view class="tab-li-content">
 						<view class="tab-top">
 							<text>{{item.customerName}}</text>
-							<text>{{item.certID}}</text>
+							<text>{{item.certID2}}</text>
 						</view>
 						<view class="tab-center" @click="toPerfectInformation(item)">
 							<view>
@@ -41,7 +41,7 @@
 							</view>
 							<view>
 								<text>合同金额</text>
-								<text>{{item.businessSum}}</text>
+								<text>{{item.businessSum2}}</text>
 							</view>
 							<view>
 								<text>合同编号</text>
@@ -309,7 +309,7 @@
         },
         watch: {},
         computed: {
-            ...mapGetters(["businessTypeList", "userInfor", "queryApplyInfoList"]),
+            ...mapGetters(["businessTypeList", "userInfor", "queryApplyInfoList",'pfSearchBusiness']),
             startDate() {
                 return this.getDate("start");
             },
@@ -321,6 +321,9 @@
             console.log(this.date);
             console.log(options);
             console.log(options.applyPhase);
+            console.log(this.businessTypeList)
+            console.log(this.businessTypeList2)
+            this.pfSearchBusiness=this.businessTypeList;
             this.newTime = this.date.replace(/-/g, "/");
             console.log(this.newTime);
             if (options.applyPhase == undefined) {
@@ -368,6 +371,7 @@
             //页签切换
             tabClick(e) {
                 console.log(e);
+                 console.log(this.pfSearchBusiness)
                 this.applyPhase = e;
                 console.log(this.ajaxJudge[e]);
                 if (this.ajaxJudge[e]) {
@@ -416,7 +420,7 @@
                 for (let key in obj2) {
                     obj2[key] = obj2[key].replace("个人", "").replace("贷款", "");
                 }
-                this.businessTypeList2 = obj;
+                this.businessTypeList = obj;
                 this.pfSearchBusiness = obj2;
                 if (this.applyPhase == "02") {
                     this.querypriceapprapplyinfo();
@@ -474,6 +478,7 @@
                     this.ajaxJudge[this.applyPhase] = true;
                 }
                 let data = {
+                    businessType:this.businessType,
                     userId: this.userID,
                     applyPhase: "02",
                     beginNo: this.numNo[this.applyPhase].beginNo, //起始笔数
@@ -617,45 +622,35 @@
                     if (item.status == "01") {
                         item.status = "待签署";
                     }
-                    if (item.businessType == "1140010") {
-                        item.businessType = "个人一手住房贷款";
-                    }
-                    if (item.businessType == "1140020") {
-                        item.businessType = "个人二手住房贷款";
-                    }
-                    if (item.businessType == "1140120") {
-                        item.businessType = "个人二手商用房贷款";
-                    }
-                    if (item.businessType == "1140110") {
-                        item.businessType = "个人一手商用房贷款";
-                    }
+                    // if (item.businessType == "1140010") {
+                    //     item.businessType = "个人一手住房贷款";
+                    // }
+                    // if (item.businessType == "1140020") {
+                    //     item.businessType = "个人二手住房贷款";
+                    // }
+                    // if (item.businessType == "1140120") {
+                    //     item.businessType = "个人二手商用房贷款";
+                    // }
+                    // if (item.businessType == "1140110") {
+                    //     item.businessType = "个人一手商用房贷款";
+                    // }
                 });
 
                 if (e == null || e.length == 0) {
                     return [];
                 }
-                // let arr = this.businessTypeList2;  //业务品种
+                let arr = this.businessTypeList;  //业务品种
                 e.forEach(item => {
-                    item.certID = filter.cardIDNoHideFormat(item.certID);
-                    // item.businessSum = filter.moneyFormat(item.businessSum) +"元";
+                    item.certID2 = filter.cardIDNoHideFormat(item.certID);
+                    item.businessSum2 = filter.moneyFormat(item.businessSum) +"元";
 
-                    // for(let key in arr){
-                    //   if(item.businessType == key){
-                    //     item.businessType = arr[key];
-                    //   }
-                    // }
+                    for(let key in arr){
+                      if(item.businessType == key){
+                        item.businessType2 = arr[key];
+                      }
+                    }
                 });
-                // if(this.applyPhase == "02"){
-                //   console.log(arr2)
-                //   e.forEach((item)=>{
-                //     for(let key in arr2){
-                //       console.log(item,"合同666666666666")
-                //       if(item.priceApproveFlag == key){
-                //         item.priceApproveFlag = arr2[key];
-                //       }
-                //     }
-                //   })
-                // };
+               
 
                 return e;
             },

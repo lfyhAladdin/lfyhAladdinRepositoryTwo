@@ -57,9 +57,9 @@
           <button class="mini-btn" :class="{'active' : 1 == current}" @click="clickBtn(1)" type="default" size="mini">是</button>
         </view>
         <view class="person-infor-one">
-          <text>贷款金额（万元）</text>
+          <text>贷款金额（元）</text>
          <img v-if="LoanAmount!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="LoanAmount=''" />
-         <input placeholder="请输入" type="number" class="loan-amount" v-model="LoanAmount" maxlength="4" @blur="onKeyInput"/>
+         <input placeholder="请输入" type="number" class="loan-amount" v-model="LoanAmount" maxlength="11" @blur="onKeyInput"/>
             
         </view>
          <view class="person-infor-one">
@@ -68,9 +68,9 @@
          <input placeholder="请输入" type="number" class="loan-amount" maxlength="3" v-model="LoanTerm"/>
         </view>
          <view class="person-infor-one">
-          <text>首付款金额（万元）</text>
+          <text>首付款金额（元）</text>
           <img v-if="downPayment!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="downPayment=''" />
-         <input placeholder="请输入" type="number" class="loan-amount" maxlength="4" v-model="downPayment" @blur="onKeyInput"/>
+         <input placeholder="请输入" type="number" class="loan-amount" maxlength="11" v-model="downPayment" @blur="onKeyInput"/>
         </view>
         <view class="down-payment-ratio">
           <text>首付款比例：</text>
@@ -287,13 +287,13 @@
                         that.LoanAmount = "";
                     } else {
                         that.LoanAmountName = res.data.data.businessSum; //贷款金额
-                        that.LoanAmount = res.data.data.businessSum / 10000; //贷款金额
+                        that.LoanAmount = res.data.data.businessSum; //贷款金额
                     }
                     if (res.data.data.firstValue == "0") {
                         that.downPayment = "";
                     } else {
                         that.downPaymentName = res.data.data.firstValue; //首付款金额
-                        that.downPayment = res.data.data.firstValue / 10000; //首付款金额
+                        that.downPayment = res.data.data.firstValue; //首付款金额
                     }
 
 
@@ -302,7 +302,7 @@
                     console.log(this.downPayment);
                     console.log(this.LoanAmount);
 
-                    this.loansAnd = that.downPayment + that.LoanAmount;
+                    this.loansAnd =Number(that.downPayment)+ Number(that.LoanAmount);
                     console.log(this.loansAnd);
                     this.proportion = that.downPayment / this.loansAnd;
                     this.proportion = this.proportion * 100;
@@ -555,6 +555,11 @@
                                 });
                                 return false;
                             }
+                             yu.showToast({
+                                title: res.data.data.returnDesc,
+                                icon: 'none',
+                                duration: 3000
+                            });
                             setTimeout(() => {
                                 that.pageJump(that.guaranteeInformation);
                             }, 1000);
@@ -578,14 +583,14 @@
                 // this.LoanAmount=Number(this.LoanAmount);
                 console.log(this.downPayment,"首付款金额");
                 console.log(this.LoanAmount,"贷款金额");
-// var regLoan=/^\d{1,3}(\.\d{1,4})?$/;
-var regLoan=/^-?[1-9]+[0-9]*$/;
+var regLoan=/^\d{1,8}(\.\d{1,2})?$/;
+// var regLoan=/^-?[1-9]+[0-9]*$/;
 this.checkReg=regLoan.test(this.LoanAmount);
 this.checDownPayment=regLoan.test(this.downPayment);
 console.log(this.checDownPayment)
 if(this.checkReg===false){
      yu.showModal({
-            title: "贷款金额只能输入整数",
+            title: "贷款金额只能输入到千万",
             content: "",
             showCancel: false,
             confirmText: "我知道了",
@@ -602,7 +607,7 @@ if(this.downPayment==""){
 }else{
    if(this.checDownPayment===false){
      yu.showModal({
-            title: "首付款金额只能输入整数",
+            title: "首付款金额只能输入到千万",
             content: "",
             showCancel: false,
             confirmText: "我知道了",
@@ -618,8 +623,8 @@ this.downPayment="";
 
 
 
-                this.firstValueData = this.downPayment + "0000"; //首付款金额
-                this.businessSumData = this.LoanAmount + "0000"; //贷款金额
+                this.firstValueData = this.downPayment; //首付款金额
+                this.businessSumData = this.LoanAmount; //贷款金额
                 this.firstValueNumber = Number(this.firstValueData)
                 this.businessSumNumber = Number(this.businessSumData)
                 console.log(this.firstValueNumber);

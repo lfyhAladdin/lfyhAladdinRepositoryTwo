@@ -328,6 +328,11 @@ if(this.deductionNumber==""){
                        
   console.log(that.successMsg)
            if(that.successMsg=="Success"){
+              yu.showToast({
+                title: res.data.data.returnDesc,
+                icon: 'none',
+                duration: 3000
+            });
               setTimeout(()=>{
             that.pageJump(that.perfectInformation);
           },1000)

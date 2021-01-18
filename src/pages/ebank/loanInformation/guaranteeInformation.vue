@@ -399,7 +399,11 @@
 								}
 							}
 
-
+                             yu.showToast({
+                                title: res.data.data.returnDesc,
+                                icon: 'none',
+                                duration: 3000
+                            });
 
 							setTimeout(() => {
 								that.pageJump('loanInformation/interestRate');
