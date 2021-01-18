@@ -436,13 +436,16 @@
 console.log(this.rateFLoat)
                 if (this.rateFLoat == "下浮") {
                     console.log(123)
-                    this.floatNumber = Number(this.baseRate) + Number(this.FloatingValue);
+                    this.floatNegative = "-" + this.FloatingValue;
+                    console.log(this.FloatingNegative)
+                    this.floatNumber = Number(this.baseRate) + Number(this.floatNegative);
                     console.log(this.floatNumber)
+                    console.log(this.FloatingValue)
                     this.businessRateValue =  this.floatNumber*12/10;
                     console.log(this.businessRateValue)
-                    this.businessRate="-" + this.businessRateValue.toFixed(2);
+                    this.businessRate=this.businessRateValue.toFixed(2);
 console.log(this.businessRate);
-                    this.floatNegative = "-" + this.FloatingValue;
+                    
                     
                 } else {
                     this.floatNumber = Number(this.baseRate) + Number(this.FloatingValue);

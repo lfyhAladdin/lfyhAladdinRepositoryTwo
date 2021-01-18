@@ -108,7 +108,7 @@
 				<view class="contract-ul">
 					<view class="contract-li">
 						<text>不动产证编号</text>
-						<input placeholder="不动产证编号" type="number" class="iptcontract" v-model="realEstateNo" />
+						<input placeholder="不动产证编号" type="text" class="iptcontract" v-model="realEstateNo" />
 					</view>
 					<view class="contract-li">
 						<text>权证号</text>
