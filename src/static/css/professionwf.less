@@ -85,8 +85,12 @@
   position: fixed;
   left: 0;
   right: 0;
+  top: 0;
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
   .pf-title{
     position: relative;
+    top: 0;
   }
   .appro-fix{
     background-color: #fff;
