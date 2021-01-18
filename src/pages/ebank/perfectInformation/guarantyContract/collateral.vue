@@ -691,8 +691,10 @@
           'key': `${name}Val`,
           'value': e.target.value,
         });
-        if(name == 'totalPrice'){
-          this.guarantyRateVal = (this.queryApplyInfoList.businessSum / this.totalPriceVal).toFixed(2);
+        // if(name == 'totalPrice'){
+          // this.guarantyRateVal = (this.queryApplyInfoList.businessSum / this.totalPriceVal).toFixed(2);
+        if(name == 'drCurrevalValue'){
+          this.guarantyRateVal = (this.queryApplyInfoList.businessSum / this.drCurrevalValueVal).toFixed(2);
           this.collateralInputListReplace({
             'key': 'guarantyRateVal',
             'value': this.guarantyRateVal,

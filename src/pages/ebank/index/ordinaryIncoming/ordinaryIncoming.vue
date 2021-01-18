@@ -138,11 +138,10 @@ export default {
     /***获取用户ID，部门ID */
     /**产品列表 **start****/
     let pdata = { dictionaryName: "businessType" };
-    let that = this;
-    let bt=that.productId;
+    let bt= this.productId;
     let firstdata=[];
 		let seconddata=[];
-    that.queryDictionaryList(pdata, function(res) {
+    this.queryDictionaryList(pdata, (res)=> {
       let products = res.data.data;
       for (let key in products) {
         if(key == "1140020" || key == "1140120"){//二手房
@@ -159,9 +158,9 @@ export default {
       }
     });
     if(bt == "1140020" || bt == "1140120"){//二手房
-      that.productList=seconddata;
+      this.productList=seconddata;
     }else{//一手房
-      that.productList=firstdata;
+      this.productList=firstdata;
     }
     /**产品列表 **end****/
     /**获取搜索结果**/
@@ -268,15 +267,14 @@ export default {
     },
     /**表单提交接口 **start****/
     submitform(imgBatchNumber, imgFirstUploadTime) {
-      let _this=this;
       yu.showToast({
         icon: "none",
         title: "提交申请进行中",
         duration: 1500
       });
       yu.showLoading();
-      let userId = _this.userInfor.loginCode;
-      let orgID = _this.userInfor.orgId;
+      let userId = this.userInfor.loginCode;
+      let orgID = this.userInfor.orgId;
       let imglist = [
         {
           batchNo: imgBatchNumber,
@@ -288,36 +286,37 @@ export default {
         userId: userId,
         orgID: orgID,
         certType: "Ind01",
-        certId: _this.personInfor.idcard,
-        customerName: _this.personInfor.name,
-        mobileTelephone: _this.personInfor.phone,
-        businessType: _this.productId,
+        certId: this.personInfor.idcard,
+        customerName: this.personInfor.name,
+        mobileTelephone: this.personInfor.phone,
+        businessType: this.productId,
         imageList: imglist
       };
-      if (_this.ifShowRealEstate) {
-        formData.projectNo = _this.buildingNo;
+      if (this.ifShowRealEstate) {
+        formData.projectNo = this.buildingNo;
       }
       let posturl = "/api/ordercreditapply/createcreditapply";
-      _this.interfaceRequest(
+      this.interfaceRequest(
         posturl,
         formData,
         "post",
         res => {
           yu.hideLoading();
-          _this.preventResubmit = true;
+          this.preventResubmit = true;
           if (res.data.data.returnCode == "Success") {
             let result = res.data.data.applyNo;
             if (result != null) {
               let e = {
                 orderNo: "",
                 serialNo: result,
-                fromProductTitle: _this.title,
-                fromProductId: _this.productId,
-                fromProductName: _this.productName,
+                fromProductTitle: this.title,
+                fromProductId: this.productId,
+                fromProductName: this.productName,
                 imageList: {
                   imageBatchNo: imgBatchNumber,
                   upLoadDate: imgFirstUploadTime
-                }
+                },
+                businessType2: this.title,
               };
               this.approvalIngListReplace(e);
               let datas = {
@@ -330,16 +329,16 @@ export default {
                 title: "申请成功",
                 duration: 1500
               });
-              _this.clearorDinaryStorage();
-              _this.queryApplyInfoCommit({
+              this.clearorDinaryStorage();
+              this.queryApplyInfoCommit({
                 orderNo: "",
                 applyNo: result,
                 routerTrue: true,
-                routerTo: _this.incomingSuccess,
+                routerTo: this.incomingSuccess,
                 routerJumpWay: "pageJump"
               }); //重新调'申请信息查询'接口
-              //that.uploadImg();
-               _this.personalInformationReplace({});
+              //this.uploadImg();
+               this.personalInformationReplace({});
             }
           } else {
             yu.showToast({
@@ -353,7 +352,7 @@ export default {
         },
         err => {
           yu.hideLoading();
-          _this.preventResubmit = true;
+          this.preventResubmit = true;
         }
       );
     },
@@ -390,10 +389,9 @@ export default {
         title: "身份证图片上传中",
         duration: 1500
       });
-      let _this = this;
       if (
-        _this.imgPath_zheng_base64 === "" ||
-        _this.imgPath_fan_base64 === ""
+        this.imgPath_zheng_base64 === "" ||
+        this.imgPath_fan_base64 === ""
       ) {
         yu.showToast({
           icon: "none",
@@ -407,49 +405,49 @@ export default {
         modelCode: "LS_SQZL",
         uploadImageInVoList: [
           {
-            base64Code: _this.imgPath_zheng_base64,
+            base64Code: this.imgPath_zheng_base64,
             frontBackFlag: "2",
             psnTp: "1",
-            idNumber: _this.personInfor.idcard
+            idNumber: this.personInfor.idcard
           },
           {
-            base64Code: _this.imgPath_fan_base64,
+            base64Code: this.imgPath_fan_base64,
             frontBackFlag: "1",
             psnTp: "1",
-            idNumber: _this.personInfor.idcard
+            idNumber: this.personInfor.idcard
           }
         ]
       };
       foxsdk.logger.info(param);
       let posturl = "/api/imagehandle/uploadreturnnoanddate";
-      _this.interfaceRequest(
+      this.interfaceRequest(
         posturl,
         param,
         "post",
-        function(res) {
+        (res)=> {
           yu.hideLoading();
-          _this.preventResubmit = true;
-          _this.imgBatchNumber = res.data.data.busiSerialNo; //res.data.data.batchId;
-          _this.imgFirstUploadTime = res.data.data.busiStartDate; //_this.getDate();
+          this.preventResubmit = true;
+          this.imgBatchNumber = res.data.data.busiSerialNo; //res.data.data.batchId;
+          this.imgFirstUploadTime = res.data.data.busiStartDate; //this.getDate();
           let e = {
-            fromProductTitle: _this.title,
+            fromProductTitle: this.title,
             imageList: {
-              imageBatchNo: _this.imgBatchNumber,
-              upLoadDate: _this.imgFirstUploadTime
-            }
+              imageBatchNo: this.imgBatchNumber,
+              upLoadDate: this.imgFirstUploadTime
+            },
+            businessType2: this.title,
           };
-          _this.approvalIngListReplace(e);
+          this.approvalIngListReplace(e);
           foxsdk.logger.info("img");
-          foxsdk.logger.info(res.data.data + "&&&&&" + _this.getDate());
+          foxsdk.logger.info(res.data.data + "&&&&&" + this.getDate());
           foxsdk.logger.info(
-            _this.imgBatchNumbe + "&&&&&" + _this.imgFirstUploadTime
+            this.imgBatchNumbe + "&&&&&" + this.imgFirstUploadTime
           );
-          _this.submitform(_this.imgBatchNumber, _this.imgFirstUploadTime);
-          //_this.pageJump(_this.incomingSuccess);
+          this.submitform(this.imgBatchNumber, this.imgFirstUploadTime);
         },
-        function(err) {
+        (err)=> {
           yu.hideLoading();
-          _this.preventResubmit = true;
+          this.preventResubmit = true;
           yu.showToast({
             icon: "none",
             title: "图片上传失败，返回首页",
@@ -458,26 +456,25 @@ export default {
           setTimeout(function() {
             yu.switchTab({ url: "/pages/ebank/index/index" });
           }, 1500);
-          //_this.pageJump(_this.incomingSuccess);
+          //this.pageJump(this.incomingSuccess);
         }
       );
     },
     /* 上传影像平台获取批次号   end */
     /**身份证识别 */
     startOCR(type) {
-      var that = this;
       foxsdk.intsigocr.startOCR(type, ret => {
         // if(type==1){
         if (ret && ret.payload && ret.payload.Name) {
           foxsdk.logger.info(ret.payload);
-          that.personInfor.name = ret.payload.Name;
+          this.personInfor.name = ret.payload.Name;
           localStorage.setItem("personnames", ret.payload.Name);
-          that.personInfor.idcard = ret.payload.IDCardNo;
+          this.personInfor.idcard = ret.payload.IDCardNo;
           localStorage.setItem("personidcards", ret.payload.IDCardNo);
           foxsdk.io.convertLocalFileSystemURL(
             ret.payload.ImagePath,
             url => {
-              that.imgPath_zheng = url;
+              this.imgPath_zheng = url;
               localStorage.setItem("imgPath_zheng", url);
             },
             ret => {
@@ -485,7 +482,7 @@ export default {
             }
           );
           foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
-            that.imgPath_zheng_base64 = entry.payload.imageBase64;
+            this.imgPath_zheng_base64 = entry.payload.imageBase64;
             localStorage.setItem(
               "imgPath_zheng_base64",
               entry.payload.imageBase64
@@ -495,16 +492,17 @@ export default {
           let e = {
             personnames: ret.payload.Name,
             personidcards: ret.payload.IDCardNo,
-            imgPath_zheng: that.imgPath_zheng,
-            imgPath_zheng_base64: that.imgPath_zheng_base64,
-            fromProductTitle: that.title
+            imgPath_zheng: this.imgPath_zheng,
+            imgPath_zheng_base64: this.imgPath_zheng_base64,
+            fromProductTitle: this.title,
+            businessType2: this.title,
           };
-          that.approvalIngListReplace(e);
+          this.approvalIngListReplace(e);
         } else {
           foxsdk.io.convertLocalFileSystemURL(
             ret.payload.ImagePath,
             url => {
-              that.imgPath_fan = url;
+              this.imgPath_fan = url;
               localStorage.setItem("imgPath_fan", url);
             },
             ret => {
@@ -512,7 +510,7 @@ export default {
             }
           );
           foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
-            that.imgPath_fan_base64 = entry.payload.imageBase64;
+            this.imgPath_fan_base64 = entry.payload.imageBase64;
             localStorage.setItem(
               "imgPath_fan_base64",
               entry.payload.imageBase64
@@ -520,11 +518,12 @@ export default {
           });
 
           let e = {
-            imgPath_fan: that.imgPath_fan,
-            imgPath_fan_base64: that.imgPath_fan_base64,
-            fromProductTitle: that.title
+            imgPath_fan: this.imgPath_fan,
+            imgPath_fan_base64: this.imgPath_fan_base64,
+            fromProductTitle: this.title,
+            businessType2: this.title,
           };
-          that.approvalIngListReplace(e);
+          this.approvalIngListReplace(e);
         }
       });
     }

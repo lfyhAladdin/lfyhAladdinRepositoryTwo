@@ -170,6 +170,14 @@
   *{
     font-family: 'PingFangSC-Medium' !important;
   }
+  // body {
+  //   padding-top: constant(safe-area-inset-top);
+  //   padding-left: constant(safe-area-inset-left);
+  //   padding-right: constant(safe-area-inset-right);
+  //   padding-top: env(safe-area-inset-top);
+  //   padding-left: env(safe-area-inset-left);
+  //   padding-right: env(safe-area-inset-right);
+  // }
   uni-page-head{display: none}
   uni-app{background: #ffffff}
 

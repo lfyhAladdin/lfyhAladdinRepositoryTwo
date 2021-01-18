@@ -153,7 +153,8 @@ export default {
             imageList: {
               imageBatchNo: that.imgBatchNumber,
               upLoadDate: that.imgFirstUploadTime
-            }
+            },
+            businessType2: that.title,
           };
           that.approvalIngListReplace(e);
           let datas = {
@@ -167,14 +168,22 @@ export default {
             content: "点击确定，立即完善该业务",
             success: function(res) {
               if (res.confirm) {
-                that.getApplyInfor(orderId,applyID);
+                // that.getApplyInfor(orderId,applyID);
                 that.queryApplyInfoCommit({
-                  orderNo: orderId,
-                  applyNo: applyID
-                });
-                setTimeout(()=>{
-                  yu.navigateTo({ url: '/pages/ebank/perfectInformation/perfectInformation' });
-                },1500)
+                  'orderNo': this.orderNoVal, 
+                  'applyNo': this.applyNoVal,
+                  'routerTrue': true,
+                  'routerTo': '/pages/ebank/perfectInformation/perfectInformation',
+                  'routerJumpWay': 'navigateTo'
+                }); //重新调'申请信息查询'接口
+                
+                // that.queryApplyInfoCommit({
+                //   orderNo: orderId,
+                //   applyNo: applyID
+                // });
+                // setTimeout(()=>{
+                //   yu.navigateTo({ url: '/pages/ebank/perfectInformation/perfectInformation' });
+                // },1500)
               } else if (res.cancel) {
                 console.log("用户点击取消");
                 that.ajaxJudge= true;
@@ -190,24 +199,24 @@ export default {
       );
     },
     //获取申请信息
-    getApplyInfor(orderNo,applyID){
-      let _this=this;
-      let data={
-        orderNo:orderNo,
-        applyNo:applyID,
-      };
-      _this.interfaceRequest(
-        '/api/credit/queryApplyInfo',
-        data,
-        "get",
-        function(res) {
-          let result=res.data.data;
-          console.log(result);
-          _this.approvalIngListReplace(result);
-        },
-        function(err) {}
-      );
-    },
+    // getApplyInfor(orderNo,applyID){
+    //   let _this=this;
+    //   let data={
+    //     orderNo:orderNo,
+    //     applyNo:applyID,
+    //   };
+    //   _this.interfaceRequest(
+    //     '/api/credit/queryApplyInfo',
+    //     data,
+    //     "get",
+    //     function(res) {
+    //       let result=res.data.data;
+    //       console.log(result);
+    //       _this.approvalIngListReplace(result);
+    //     },
+    //     function(err) {}
+    //   );
+    // },
     inquireOrderList() {
       let that = this;
       let userInfo = {

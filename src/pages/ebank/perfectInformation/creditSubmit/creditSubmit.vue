@@ -199,7 +199,7 @@ export default {
           let scenarioList=res.data.data.scenarioList;
           let completCheckList=res.data.data.completCheckList;
           //let isRefused=res.data.data.isRefused;
-          if(_this.isRefused === "2" && completCheckList.length == 0){
+          if(_this.isRefused == "2" && completCheckList.length == 0){
             //通过
             _this.ifCheckProgressing=false;
             _this.ifCheckPass=true;
@@ -213,7 +213,7 @@ export default {
             //风险未通过
             _this.ifRFnopass=false;
           } */
-          if(_this.isRefused === "1"){
+          if(_this.isRefused == "1" || _this.isRefused == ""){
             //风险未通过
             _this.ifRFnopass=false;
             //风险评估失败  被否决  该申请被销毁了

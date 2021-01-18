@@ -39,13 +39,13 @@ export default {
     };
   },
   onLoad(option) {
-    let _this=this;
     let e = {
       fromProductTitle: "",
       fromProductName: "",
-      fromProductId: ""
+      fromProductId: "",
+      businessType2: "",
     };
-    _this.fromProduct=option.from;
+    this.fromProduct=option.from;
     if(option.from === 'firstroom'){//一手房
       e.fromProductTitle="一手房";
       e.fromProductName="个人一手住房贷款";
@@ -63,8 +63,9 @@ export default {
       e.fromProductName="个人二手商用房贷款";
       e.fromProductId="1140120";
     }
-    _this.title=e.fromProductTitle;
-    _this.approvalIngListReplace(e);
+    e.businessType2 = e.fromProductTitle;
+    this.title=e.fromProductTitle;
+    this.approvalIngListReplace(e);
   },
   onShow() {},
   onUnload() {},
@@ -77,22 +78,20 @@ export default {
       yu.switchTab({ url: "/pages/ebank/index/index" });
     },
     newpageJump(ordinary){
-      let _this=this;
-      let url = ordinary+"?from="+_this.fromProduct;
-      _this.pageJump(url);
+      let url = ordinary+"?from="+ this.fromProduct;
+      this.pageJump(url);
     },
     // 二维码生成工具
     couponQrCodes() {
-      let _this=this;
-      _this.qrcodeUrl="https://boltest2.lccb.com.cn:280/view/order/orderRequest.html?businessType="+_this.approvalIngList.fromProductId+"&loginCode="+_this.userInfor.loginCode+"&orgId="+_this.userInfor.orgId;
-      _this.$nextTick(function () {
-        _this.qrcodeWidth = _this.$refs.qrcodeJS.$el.clientWidth + 'px';
-        _this.qrcodeHeight = _this.$refs.qrcodeJS.$el.clientHeight + 'px';
+        this.qrcodeUrl="https://boltest2.lccb.com.cn:280/view/order/orderRequest.html?businessType="+ this.approvalIngList.fromProductId+"&loginCode="+ this.userInfor.loginCode+"&orgId="+ this.userInfor.orgId;
+        this.$nextTick(function () {
+        this.qrcodeWidth = this.$refs.qrcodeJS.$el.clientWidth + 'px';
+        this.qrcodeHeight = this.$refs.qrcodeJS.$el.clientHeight + 'px';
       })
-      const ww = _this.$refs.qrcodeJS.$el.clientWidth; 
-      const hh = _this.$refs.qrcodeJS.$el.clientHeight;
+      const ww = this.$refs.qrcodeJS.$el.clientWidth; 
+      const hh = this.$refs.qrcodeJS.$el.clientHeight;
       new qrCode("couponQrCodes", {
-        text: _this.qrcodeUrl,
+        text: this.qrcodeUrl,
         width: ww,
         height: hh,
         colorDark: "#333333",
