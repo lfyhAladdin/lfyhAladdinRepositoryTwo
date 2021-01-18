@@ -103,8 +103,18 @@
   @import '~@styles/uni-nvue.css';
   @import '@/static/css/professionwf.less';
   .uni-container{
+    // background-color: #FFFFFF;
+    // padding: 30rpx 0;
+    padding-top: 0;
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: 30rpx;
     background-color: #FFFFFF;
-    padding: 30rpx 0;
+    .pf-titleTwo{
+      img{
+        background-color: gold;
+      }
+    } 
     .guaranty-content{
       padding: 120rpx 30rpx 0;
       .guaranty-add{  
