@@ -91,6 +91,11 @@
 						<input placeholder="请输入" type="number" class="iptcontract" v-model="houseContractNo" />
 
 					</view>
+                    <view class="contract-li">
+						<text>确认房屋预售合同号</text>
+						<input placeholder="再次输入房屋预售合同号" type="number" class="iptcontract" v-model="houseContractTwo" @blur="confirmInput"/>
+
+					</view>
 				</view>
 				<view class="contract-button">
 					<button type="primary" @click="submitSupplement" :disabled="isDisable">确定</button>
@@ -124,6 +129,10 @@
 					<view class="contract-li">
 						<text>权证登记机关</text>
 						<input placeholder="请输入" type="text" class="iptcontract" @blur="authority" v-model="certificateRegistration" />
+					</view>
+                    <view class="contract-li">
+						<text style="color:red">请确保该信息无误，若错误需要退件重新走审批流程</text>
+						
 					</view>
 				</view>
 				<view class="contract-button">
@@ -173,7 +182,8 @@
                 }], //页签标题
                 coverAll: false, //底部框
                 houseContractNo: "", //预售合同号
-                twoHouseCollateral: false, //二手房押品底部弹框(补录押品信息)
+                houseContractTwo:"",//确认预售合同号
+                twoHouseCollateral:false, //二手房押品底部弹框(补录押品信息)
                 tabArr: {}, //页签内容
                 applyPhase: "", //申请阶段
                 pfSearchBusiness: {}, //业务品种列表
@@ -578,8 +588,7 @@
                 this.businessTypeInfo = e.businessType;
                 this.customerNa = e.customerName;
                 if (
-                    this.businessTypeInfo == "个人一手住房贷款" ||
-                    this.businessTypeInfo == "个人一手商用房贷款"
+                    this.businessTypeInfo == "1140010" || this.businessTypeInfo == "1140110"
                 ) {
                     this.coverAll = true;
                 } else {
@@ -776,8 +785,8 @@
                 this.isDisable = true;
 
                 if (
-                    res.businessType == "个人二手住房贷款" ||
-                    res.businessType == "个人二手商用房贷款"
+                    res.businessType == "1140020" ||
+                    res.businessType == "1140120"
                 ) {
                     let data = {
                         orderNo: "",
@@ -890,7 +899,6 @@
                     res => {
                         console.log(res, "押品信息补录");
                         this.messageData = res.data.message;
-                        console.log(res.data.data.returnCode);
                         setTimeout(() => {
                             this.isDisable = false;
                         }, 1000);
@@ -1076,6 +1084,24 @@
                         regStr,
                         ""
                     );
+                }
+            },
+            //房屋预售合同号确认
+            confirmInput(){
+                if(this.houseContractTwo!==this.houseContractNo){
+                       yu.showModal({
+                        title: "房屋预售合同号不一致！",
+                        content: "请输入一致的房屋预售合同号！",
+                        success: res => {
+                            if (res.confirm) {
+                                console.log("用户点击确定");
+                            } else if (res.cancel) {
+                                console.log("用户点击取消");
+                            }
+                        }
+                    });
+                    this.houseContractTwo="";
+                    return false;
                 }
             },
             bindDateChange: function(e) {
