@@ -417,11 +417,6 @@
   .uni-container{
     // padding: 30rpx 0;
     padding: 0 0 30rpx 0;
-    .pf-titleTwo{
-      img{
-        background-color: green;
-      }
-    } 
     .contract-content{
       padding-top: 130rpx;
       .contract-title{
