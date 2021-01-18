@@ -15,15 +15,16 @@
   background: #fff;
   padding: 50rpx 0 20rpx 0;
   z-index: 9999;
+  overflow: hidden;
 }
 .pf-titleTwo{
   img{
     width: 20rpx;
     position: absolute;
-    // left: 20rpx;
+    top: 24rpx;
     left: 0;
     bottom: 30rpx;
-    padding: 0 30rpx;
+    padding: 20px 30rpx;
   }
 }
 .pf-titleThree{
@@ -33,8 +34,7 @@
   img{
     width: 20rpx;
     height: 36rpx;
-    // margin-right: 30rpx;
-    padding: 0 30rpx;
+    padding: 20rpx 30rpx;
   }
   .pf-imgRig{
     width: 38rpx;
@@ -43,7 +43,6 @@
   .pf-text{
     font-size: 30rpx;
     color: #3B86F7;
-    // margin-left: 30rpx;
     padding: 0 30rpx;
   }
   .gencies-item{
@@ -80,6 +79,28 @@
   //间隔头部标题
 .pf-content{
   padding-top: 80rpx;
+}
+//头部两个固定定位时
+.pf-poifixed{
+  position: fixed;
+  top: 0;
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
+  left: 0;
+  right: 0;
+  .pf-title{
+    position: relative;
+    top: 0;
+  }
+  .appro-fix{
+    background-color: #fff;
+    padding: 26rpx 30rpx 0;
+    border-bottom: 2rpx solid #E5E5E5;
+    .appro-tab{
+      border-bottom: none;
+      padding: 0;
+    }
+  }
 }
 //顶部
 

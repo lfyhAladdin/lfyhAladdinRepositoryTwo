@@ -415,8 +415,15 @@
   @import '~@styles/uni-nvue.css';
   @import '@/static/css/professionwf.less';
   .uni-container{
-    padding: 30rpx 0;
+    // padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
+    .pf-titleTwo{
+      img{
+        background-color: aquamarine;
+      }
+    } 
     .contract-content{
+      padding-top: 130rpx;
       .contract-title{
         padding: 30rpx 40rpx;
         line-height: 32rpx;

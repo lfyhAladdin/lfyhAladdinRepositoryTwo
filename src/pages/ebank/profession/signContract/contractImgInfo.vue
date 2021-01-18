@@ -69,7 +69,7 @@ export default {
           param:["2012060401","2012060402","2012060403"]
         },
       ],//二级菜单参数
-      paramBusiFileTypeList:[],//影响信息参数
+      paramBusiFileTypeList:[],//影像信息参数
       busiFileType:[],//编号  数据字典查询结果
     };
   },
@@ -77,7 +77,10 @@ export default {
     ...mapGetters(['approvalIngList','queryApplyInfoList'])
   },
   onLoad: function(options) {
-    this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
+    console.log(options)
+    // this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
+    this.serialNo =  "2021011300000110";
+
   },
   created(){
     this.fromID=localStorage.getItem('imgFromID');
@@ -87,13 +90,14 @@ export default {
     let _this=this;
     let data={
       orderNo:'',
-      applyNo:_this.serialNo,
+      applyNo:"2021011300000110",
     };
     this.interfaceRequest(
       '/api/credit/queryApplyInfo',
       data,
       "get",
       function(res) {
+        console.log(res)
         let result=res.data.data;
         _this.imageBatchNo=result.imageList[0].imageBatchNo;
         _this.imageUpLoadDate=result.imageList[0].imageUpLoadDate;
@@ -122,13 +126,15 @@ export default {
     },
     //获取下载当前申请的影像信息
     getImagesList(imageBatchNo,busiStartDate){
+      console.log(imageBatchNo)
+      console.log(busiStartDate)
       //获取图片信息 start
       let _this=this;
       let posturl="/api/imagehandle/downloadbynoanddate";
       let param={
         "busiSerialNo": imageBatchNo,
         "busiStartDate":busiStartDate,
-        "busiFileTypeList":_this.paramBusiFileTypeList,
+        "busiFileTypeList":["2012060301","2012060302","2012060303","2012060304","2012060305"],
         "filePartName": "LS_SQZL_P",
         "modelCode": "LS_SQZL"
       };
@@ -137,6 +143,7 @@ export default {
         param,
         "post",
         function(res) {
+          console.log(res)
           let itemlist=res.data.data.downloadImageOutVoList;
          
           for(let i=0;i<itemlist.length ; i++){

@@ -88,7 +88,6 @@
                 interestRate: "loanInformation/interestRate",
                 supplement: "profession/signContract/supplement",
                 signTheContract: "profession/signContract/signTheContract",
-                contractImgInfo: "profession/signContract/contractImgInfo",
                 supplementInfo: true,
                 payInfo: false,
                 borrower: "", //借款人
@@ -112,7 +111,7 @@
             console.log(this.contractNo, "合同编号")
             this.houseName = this.oneTwoHouseInfo.businessType;
             console.log(this.houseName)
-            if (this.houseName == "个人一手住房贷款" || this.houseName == "个人一手商用房贷款") {
+            if (this.houseName == "1140010" || this.houseName == "1140110") {
                 this.HouseTitle = "一手房";
             } else {
                 this.HouseTitle = "二手房";
@@ -256,7 +255,12 @@
                 yu.navigateTo({
                     url: 'supplement?+contractNo=' + this.contractNo,
                 });
-            }
+            },
+            getImgInfo(){
+                yu.navigateTo({
+                    url: 'supplement?+contractNo=' + this.contractNo,
+                });
+            },
         }
     };
 </script>
