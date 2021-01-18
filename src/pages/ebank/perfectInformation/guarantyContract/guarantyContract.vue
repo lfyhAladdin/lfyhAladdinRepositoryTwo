@@ -104,7 +104,7 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
-    padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
     .guaranty-content{
       padding: 120rpx 30rpx 0;
       .guaranty-add{  
