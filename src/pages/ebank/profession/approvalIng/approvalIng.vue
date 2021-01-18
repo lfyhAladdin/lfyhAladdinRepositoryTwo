@@ -524,9 +524,20 @@
   @import '~@styles/uni-nvue.css';
   @import '@/static/css/professionwf.less';
   .uni-container{
+    // background-color: #FFFFFF;
+    // padding: 30rpx 0;
+    padding-top: 0;
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: 30rpx;
     background-color: #FFFFFF;
-    padding: 30rpx 0;
+    .pf-titleThree{
+      img{
+        background-color: aquamarine;
+      }
+    } 
     .appro-content{
+      padding-top: 228rpx;
       .tab-ul{
         // padding: 110rpx 30rpx 24rpx;
         padding: 24rpx 30rpx;

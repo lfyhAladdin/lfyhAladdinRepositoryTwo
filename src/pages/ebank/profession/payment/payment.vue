@@ -431,18 +431,10 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
-    // padding: 30rpx 0;
-    padding: 0 0 30rpx 0;
-    .pf-titleThree{
-      img{
-        background-color: aquamarine;
-      }
-    } 
+    padding: 30rpx 0;
     .appro-content{
-      padding-top: 228rpx;
       .tab-ul{
-        // padding: 110rpx 30rpx 24rpx;
-        padding: 24rpx 30rpx;
+        padding: 110rpx 30rpx 24rpx;
         .tab-li{
           .tab-li-content{
             .tab-top{
