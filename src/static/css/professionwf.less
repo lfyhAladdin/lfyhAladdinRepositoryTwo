@@ -8,17 +8,12 @@
   color: #333333;
   position: fixed;
   top: 0;
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
   left: 0;
   right: 0;
   background: #fff;
-  // padding: 50rpx 30rpx 20rpx 30rpx;
-  // padding: 50rpx 0 20rpx 0;
-  padding-top: 50rpx;
-  padding-top: constant(safe-area-inset-top);   //为导航栏+状态栏的高度 88px
-  padding-top: env(safe-area-inset-top);          
-  // padding-left: constant(safe-area-inset-left);   //如果未竖屏时为0                
-  // padding-right: constant(safe-area-inset-right); //如果未竖屏时为0  
-  padding-bottom: 20rpx;   
+  padding: 50rpx 0 20rpx 0;
   z-index: 9999;
 }
 .pf-titleTwo{
