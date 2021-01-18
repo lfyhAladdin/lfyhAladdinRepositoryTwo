@@ -1,20 +1,22 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title pf-titleThree">
-      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
-      <text>{{identity}}信息</text>
-      <text class="pf-text" @click="nextStep(false)">暂存</text>
-    </view>
-    <!--信息完善进度条-start-->
-    <view class="household-progress">
-      <img src="@/static/images/firstroom/shortProgress02.svg" />
-      <view class="uni-flex uni-row">
-        <view class="flex-item active">户籍信息</view>
-        <view class="flex-item active">基本信息</view>
-        <view class="flex-item">工作信息</view>
+    <view class="pf-poifixed">
+      <view class="pf-title pf-titleThree">
+        <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+        <text>{{identity}}信息</text>
+        <text class="pf-text" @click="nextStep(false)">暂存</text>
       </view>
+      <!--信息完善进度条-start-->
+      <view class="household-progress">
+        <img src="@/static/images/firstroom/shortProgress02.svg" />
+        <view class="uni-flex uni-row">
+          <view class="flex-item active">户籍信息</view>
+          <view class="flex-item active">基本信息</view>
+          <view class="flex-item">工作信息</view>
+        </view>
+      </view>
+      <!--信息完善进度条-end-->
     </view>
-    <!--信息完善进度条-end-->
     <view class="pf-content baseIn-content">
       <!--个人信息-start-->
       <view class="contract-ul marginT25">
