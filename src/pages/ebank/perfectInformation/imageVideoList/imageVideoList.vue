@@ -19,9 +19,9 @@
           <view class="item before-upload" v-if="item.isIDCard">
             <img class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
             <img v-show="false" class="image-con">
-            <input class="image-con upload-image" :id="item.busiFileType" @click="upload($event,item.busiFileType)" ref="file" accept="image/*" type="file" capture="environment" disabled="disabled" />
+            <view class="image-con upload-image" :id="item.busiFileType" @click="upload($event)">
             <img class="huiyuan_img" :src="idcard.image" mode="">
-            
+            </view>
           </view>
         </view>
       </view>
@@ -188,22 +188,25 @@ export default {
     },
     /*******上传图片  start */
     //上传图片
-    upload(e,busiFileType){
-      let _id=busiFileType;
+    upload(e){
+      console.log(e);
+      let _id=e.target.id;
       let _self = this;
       uni.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ['camera','album'], //从相册选择或拍照
         success: function (res) {
+          yu.showLoading();
           const tempFilePaths = res.tempFilePaths;
           uni.request({//路径转换base64
             url: tempFilePaths[0],
             method: 'GET',
             responseType: 'arraybuffer',
             success: async res => {
+              yu.hideLoading();
               let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
-              yu.showLoading();
+              
               _self.uploadImagePost(base64,_id);
               
             }
@@ -214,6 +217,21 @@ export default {
           console.log(e);
         }
       });
+      /* let file=e.target.files[0];
+      let type=file.type.split('/')[0];
+      let Orientation=null;
+      if(type === 'image'){
+        let reader=new FileReader();
+        reader.readAsDataURL(file);
+        let _this=this;
+        reader.onloadend=function(){
+          let dataurl=reader.result;//beas64code
+          let base64JPG = dataurl.split(';base64,')[1];
+          const base64 = e.target.result // 获取到它的base64文件
+          yu.showLoading();
+          _self.uploadImagePost(base64JPG,_id);
+        }
+      }else{} */
     },
     //上传图片图片页面效果处理
     uploadImageResult(type,base64,filename){
