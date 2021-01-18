@@ -178,7 +178,7 @@ export default {
           if (res.errMsg == "getStorage:ok") {
             let userInfo = res.data || {};
             _this.userId = userInfo.userId;
-            _this.pwdFormdata.account = userInfo.account || "";
+            //_this.pwdFormdata.account = userInfo.account || "";
           }
         }
       });
@@ -491,10 +491,10 @@ export default {
     //忘记密码页面跳转
     forgetPassword() {
       let _this = this;
-      _this.pwdFormdata.account= "";
+      /* _this.pwdFormdata.account= "";
       _this.pwdFormdata.password="";
       _this.phoneFormdata.phoneNo="";
-      _this.phoneFormdata.verifyCode="";
+      _this.phoneFormdata.verifyCode=""; */
       _this.pageJump("login/updatePassword/verifyIdentidy/verifyIdentidy");
     },
     //清空输入框信息   start
