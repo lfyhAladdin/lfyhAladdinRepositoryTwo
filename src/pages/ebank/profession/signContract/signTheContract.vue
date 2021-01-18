@@ -117,7 +117,7 @@
 					</view>
 					<view class="contract-li">
 						<text>权证号</text>
-						<input placeholder="请输入" type="number" class="iptcontract" v-model="warrantNumber" />
+						<input placeholder="请输入" type="text" class="iptcontract" v-model="warrantNumber" />
 					</view>
 					<view class="contract-li">
 						<text>权证到期日期</text>
