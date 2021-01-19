@@ -59,8 +59,7 @@
 							<text @click="querypriceresult(item)">补录押品信息</text>
 						</view>
 						<view class="tab-bottom" v-if="item.status == '待发起入库'">
-							<!-- <text @click="warehousing(item)" :disabled="isDisable">发起入库申请</text> -->
-             <view><button size="mini" class="mini-btn applyWarehousing" type="default" @click="warehousing(item)" :disabled="isDisable">发起入库申请</button> </view> 
+							<text @click="warehousing(item)">发起入库申请</text>
 						</view>
 						<view class="tab-bottom" v-if="item.status == '待签署'">
 							<text @click="toPerfectInformation(item)">合同待生效</text>
@@ -181,8 +180,8 @@
                 }], //页签标题
                 coverAll: false, //底部框
                 houseContractNo: "", //预售合同号
-                houseContractTwo:"",//确认预售合同号
-                twoHouseCollateral:false, //二手房押品底部弹框(补录押品信息)
+                houseContractTwo: "", //确认预售合同号
+                twoHouseCollateral: false, //二手房押品底部弹框(补录押品信息)
                 tabArr: {}, //页签内容
                 applyPhase: "", //申请阶段
                 // pfSearchBusiness: {}, //业务品种列表
@@ -313,12 +312,13 @@
                 date: currentDate,
                 realEstateNo: "", //不动产证编号
                 warrantNumber: "", //权证号
-                certificateRegistration: "" //权证登记机关
+                certificateRegistration: "", //权证登记机关
+                preventResubmit: true, //防重复提交
             };
         },
         watch: {},
         computed: {
-            ...mapGetters(["businessTypeList", "userInfor", "queryApplyInfoList",'pfSearchBusiness']),
+            ...mapGetters(["businessTypeList", "userInfor", "queryApplyInfoList", 'pfSearchBusiness']),
             startDate() {
                 return this.getDate("start");
             },
@@ -332,7 +332,7 @@
             console.log(options.applyPhase);
             console.log(this.businessTypeList)
             console.log(this.businessTypeList2)
-            this.pfSearchBusiness=this.businessTypeList;
+            this.pfSearchBusiness = this.businessTypeList;
             this.newTime = this.date.replace(/-/g, "/");
             console.log(this.newTime);
             if (options.applyPhase == undefined) {
@@ -380,7 +380,7 @@
             //页签切换
             tabClick(e) {
                 console.log(e);
-                 console.log(this.pfSearchBusiness)
+                console.log(this.pfSearchBusiness)
                 this.applyPhase = e;
                 console.log(this.ajaxJudge[e]);
                 if (this.ajaxJudge[e]) {
@@ -487,7 +487,7 @@
                     this.ajaxJudge[this.applyPhase] = true;
                 }
                 let data = {
-                    businessType:this.businessType,
+                    businessType: this.businessType,
                     userId: this.userID,
                     applyPhase: "02",
                     beginNo: this.numNo[this.applyPhase].beginNo, //起始笔数
@@ -647,18 +647,18 @@
                 if (e == null || e.length == 0) {
                     return [];
                 }
-                let arr = this.businessTypeList;  //业务品种
+                let arr = this.businessTypeList; //业务品种
                 e.forEach(item => {
                     item.certID2 = filter.cardIDNoHideFormat(item.certID);
-                    item.businessSum2 = filter.moneyFormat(item.businessSum) +"元";
+                    item.businessSum2 = filter.moneyFormat(item.businessSum) + "元";
 
-                    for(let key in arr){
-                      if(item.businessType == key){
-                        item.businessType2 = arr[key];
-                      }
+                    for (let key in arr) {
+                        if (item.businessType == key) {
+                            item.businessType2 = arr[key];
+                        }
                     }
                 });
-               
+
 
                 return e;
             },
@@ -780,8 +780,24 @@
             //发起入库申请
             warehousing(res) {
                 console.log(res);
-                console.log(this.isDisable);
-                this.isDisable = true;
+                console.log(this.preventResubmit);
+
+                if (!this.preventResubmit) {
+                    yu.showModal({
+                        content: '操作进行中，请稍等',
+                        showCancel: false,
+                        cancelText: "确定",
+                        success: function(res) {
+                            if (res.confirm) {
+                                console.log('用户点击确定');
+                            }
+                        }
+                    });
+                    return;
+                };
+
+
+
 
                 if (
                     res.businessType == "1140020" ||
@@ -791,6 +807,7 @@
                         orderNo: "",
                         contractNo: res.contractNo //合同编号
                     };
+                    this.preventResubmit = false;
                     this.interfaceRequest(
                         "/api/contract/wareApply",
                         data,
@@ -799,9 +816,7 @@
                             console.log(res);
                             this.message = res.data.message;
                             console.log(this.message);
-                            setTimeout(() => {
-                                this.isDisable = false;
-                            }, 2000);
+                            this.preventResubmit = true;
                             if (this.message) {
                                 yu.showModal({
                                     title: "申请失败",
@@ -1086,9 +1101,9 @@
                 }
             },
             //房屋预售合同号确认
-            confirmInput(){
-                if(this.houseContractTwo!==this.houseContractNo){
-                       yu.showModal({
+            confirmInput() {
+                if (this.houseContractTwo !== this.houseContractNo) {
+                    yu.showModal({
                         title: "房屋预售合同号不一致！",
                         content: "请输入一致的房屋预售合同号！",
                         success: res => {
@@ -1099,7 +1114,7 @@
                             }
                         }
                     });
-                    this.houseContractTwo="";
+                    this.houseContractTwo = "";
                     return false;
                 }
             },
@@ -1133,18 +1148,18 @@
     .uni-container {
         background-color: #ffffff;
         padding: 0 0 30rpx 0;
-        .appro-content{
+        .appro-content {
             padding-top: 228rpx;
-            .tab-ul{
+            .tab-ul {
                 padding: 24rpx 30rpx;
             }
         }
-        .pf-poifixed{
-            .appro-fix{
-                .appro-tab{
+        .pf-poifixed {
+            .appro-fix {
+                .appro-tab {
                     justify-content: flex-start;
                 }
-            } 
+            }
         }
     }
     
@@ -1273,15 +1288,5 @@
         .second-hand-mortgage {
             height: 1000rpx;
         }
-    }
-    
-    .applyWarehousing {
-        font-size: 26rpx;
-        color: #666666;
-        border-radius: 38rpx;
-        border: 2rpx solid #E5E5E5;
-        background: #FFFFFF;
-        margin-bottom: -20rpx;
-        position: inherit;
     }
 </style>
