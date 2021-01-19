@@ -1,5 +1,5 @@
 <template>
-  <view class="uni-container">
+  <view :class="phoneSystem ? 'uni-container uni-container-ios':'uni-container'">
     <view :class="phoneSystem ? 'pf-poifixed pf-poifixed-ios':'pf-poifixed'">
       <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
         <img src="@/static/images/profession/pf-back.svg" @click="backpf">
@@ -524,7 +524,8 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
-    padding: 0 0 30rpx 0;
+    // padding: 0 0 30rpx 0;
+    padding: 30rpx 0;
     .appro-content{
       padding-top: 228rpx;
       .tab-ul{
@@ -538,6 +539,9 @@
       height: 0;
       background-color: transparent;
     }
+  }
+  .uni-container-ios{
+    padding: 0 0 30rpx 0;
   }
 
 </style>
