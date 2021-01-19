@@ -36,12 +36,10 @@
       return {
         guarantyData: [],  //列表
         businessSumVal: '',  //贷款金额，为空时不允许添加担保合同
-        phoneSystem: true,  //ios true，安卓 false
       }
     },
     onLoad() {
       console.log(this.queryApplyInfoList)
-      this.phoneSystem = getApp().globalData.phoneSystem;
       // this.guarantyData = this.queryApplyInfoList.clrList;
       this.guarantyData = this.queryApplyInfoList.guarantyList;
       this.businessSumVal = this.queryApplyInfoList.businessSum;

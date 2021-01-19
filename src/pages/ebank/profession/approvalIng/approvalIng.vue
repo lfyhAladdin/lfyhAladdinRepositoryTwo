@@ -172,7 +172,6 @@
           '04': true,
           '05': true,
         },  //是否允许上拉加载
-        phoneSystem: true,  //ios true，安卓 false
       };
     },
     watch:{
@@ -183,7 +182,6 @@
     },
     onLoad(options) {
       console.log(options);
-      this.phoneSystem = getApp().globalData.phoneSystem;
       this.userID = this.userInfor.loginCode;
       this.orgId =  this.userInfor.orgId;
       console.log(this.userInfor)

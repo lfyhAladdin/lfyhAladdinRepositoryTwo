@@ -151,12 +151,6 @@
         	success: function (res) {
             // iphoneX 的safeArea为 {bottom: 812, height: 768, right: 375, left: 0, top: 44, width: 375}
         		console.log(res);
-            alert(JSON.stringify(res))
-            if(res.platform == 'ios'){
-              getApp().globalData.phoneSystem = true;
-            }else{
-              getApp().globalData.phoneSystem = false;
-            }
             if (res.safeArea.top > 0) {
               _this.$scope.globalData.immergeTop = res.safeArea.top;
             }
