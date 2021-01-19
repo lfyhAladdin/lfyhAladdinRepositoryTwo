@@ -362,6 +362,14 @@
       },
       // 下一步
       nextStep(isJump){
+        if(this.personInfor.phone == ''){
+          yu.showToast({
+            title: this.verifyPhone.tipText,
+            icon: 'none',
+            duration: 3000
+          });
+          return;
+        }
         if(!this.preventResubmit){
           yu.showModal({
             content: '操作进行中，请稍等',
@@ -379,7 +387,7 @@
         this.isJump = isJump;
         let personalInformation = this.personalInformation;
 
-        var marriage='',relationShip='';
+        let marriage='',relationShip='';
         if(this.identity=='担保人' || this.identity=='共借人'){
           marriage=this.marriageList[this.marriageIdx].key
         }else if(this.identity=='担保人配偶' || this.identity=='共借人配偶' || this.identity=='借款人配偶'){

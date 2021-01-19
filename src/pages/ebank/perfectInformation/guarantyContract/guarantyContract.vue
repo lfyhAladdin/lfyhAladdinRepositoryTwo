@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title pf-titleTwo">
+    <view :class="phoneSystem ? 'pf-title pf-titleTwo':'pf-title pf-poifixed-android pf-titleTwo'">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
@@ -36,10 +36,12 @@
       return {
         guarantyData: [],  //列表
         businessSumVal: '',  //贷款金额，为空时不允许添加担保合同
+        phoneSystem: true,  //ios true，安卓 false
       }
     },
     onLoad() {
       console.log(this.queryApplyInfoList)
+      this.phoneSystem = getApp().globalData.phoneSystem;
       // this.guarantyData = this.queryApplyInfoList.clrList;
       this.guarantyData = this.queryApplyInfoList.guarantyList;
       this.businessSumVal = this.queryApplyInfoList.businessSum;

@@ -1,7 +1,7 @@
 <template>
   <view class="uni-container">
-    <view class="pf-poifixed">
-      <view class="pf-title pf-titleThree">
+    <view :class="phoneSystem ? 'pf-poifixed':'pf-poifixed pf-poifixed-android'">
+      <view :class="phoneSystem ?'pf-title pf-titleThree':'pf-title pf-title-android pf-titleThree'">
         <img src="@/static/images/profession/pf-back.svg" @click="backpf">
         <text>授信业务</text>
         <img src="@/static/images/profession/pf-screening.svg" class="pf-imgRig" @click="searchpf">
@@ -172,6 +172,7 @@
           '04': true,
           '05': true,
         },  //是否允许上拉加载
+        phoneSystem: true,  //ios true，安卓 false
       };
     },
     watch:{
@@ -182,7 +183,7 @@
     },
     onLoad(options) {
       console.log(options);
-      // alert(JSON.stringify(options));
+      this.phoneSystem = getApp().globalData.phoneSystem;
       this.userID = this.userInfor.loginCode;
       this.orgId =  this.userInfor.orgId;
       console.log(this.userInfor)

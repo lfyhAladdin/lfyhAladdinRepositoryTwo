@@ -20,7 +20,8 @@
       immergeTop: 0,
       immergeBottom: 0,
       hideTime: 0,
-      showTime: 0
+      showTime: 0,
+      phoneSystem: true,  //ios true，安卓 false
     },
     onLaunch: function(query) {
       this.initApp();
@@ -150,6 +151,11 @@
         	success: function (res) {
             // iphoneX 的safeArea为 {bottom: 812, height: 768, right: 375, left: 0, top: 44, width: 375}
         		console.log(res);
+            if(res.platform == 'ios'){
+              getApp().globalData.phoneSystem = true;
+            }else{
+              getApp().globalData.phoneSystem = false;
+            }
             if (res.safeArea.top > 0) {
               _this.$scope.globalData.immergeTop = res.safeArea.top;
             }
