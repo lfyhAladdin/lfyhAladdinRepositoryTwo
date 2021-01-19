@@ -433,7 +433,7 @@
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;
     .appro-content{
-      padding-top: 228rpx;
+      padding-top: 200rpx;
       .tab-ul{
         padding: 24rpx 30rpx;
         .tab-li{

@@ -220,6 +220,7 @@
     background-color: #FFFFFF;
   }
   .pf-content{
+    padding-top: 50rpx;
     .pf-module{
       margin: 26rpx 0;
       .pf-ulTitle{
