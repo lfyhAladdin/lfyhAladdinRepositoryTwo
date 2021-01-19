@@ -122,10 +122,12 @@ export default {
       let userName = result.userName;
       let data = {
         userName: userName,
+        // userName: userName =='' ? _this.person.username : userName,
         certNo: _this.person.idcard,
         userMobilephone: _this.phoneFormdata.phoneNo,
         vcode:_this.phoneFormdata.verifyCode
       };
+      yu.showLoading();
       this.$http
         .request({
           method: "GET",
@@ -139,6 +141,7 @@ export default {
         })
         .then(
           res => {
+            yu.hideLoading();
             let result = res.data.data;
             if (result) {
               //原密码验证成功
@@ -152,7 +155,9 @@ export default {
               _this.oldPassword = "";
             }
           },
-          err => {}
+          err => {
+            yu.hideLoading();
+          }
         );
     },
     // 发送验证码

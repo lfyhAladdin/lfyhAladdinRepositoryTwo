@@ -1,7 +1,7 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ? 'pf-poifixed':'pf-poifixed pf-poifixed-android'">
-      <view :class="phoneSystem ?'pf-title pf-titleThree':'pf-title pf-title-android pf-titleThree'">
+    <view :class="phoneSystem ? 'pf-poifixed pf-poifixed-ios':'pf-poifixed'">
+      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
         <img src="@/static/images/profession/pf-back.svg" @click="backpf">
         <text>授信业务</text>
         <img src="@/static/images/profession/pf-screening.svg" class="pf-imgRig" @click="searchpf">

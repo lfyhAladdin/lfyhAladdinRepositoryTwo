@@ -155,9 +155,10 @@ export default {
               //yu.clearStorage();
               setTimeout(() => {
                 let _this = this;
+                console.log(this)
                 if (_this.pageFrom == "firstlogin") {
                   if(_this.hasOrginNum){
-                    yu.switchTab(_this.updateSucessUrl);
+                    yu.switchTab({url: _this.updateSucessUrl});
                   }else{
                     _this.pageJump(_this.updateSucessUrl);
                   }

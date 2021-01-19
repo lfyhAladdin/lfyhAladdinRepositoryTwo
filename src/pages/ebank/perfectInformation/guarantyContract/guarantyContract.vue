@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ? 'pf-title pf-titleTwo':'pf-title pf-poifixed-android pf-titleTwo'">
+    <view :class="phoneSystem ? 'pf-title pf-poifixed-ios pf-titleTwo':'pf-title pf-titleTwo'">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
