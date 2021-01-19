@@ -133,7 +133,7 @@ export default {
     };
   },
   created(){
-    let userLoginCode=localStorage.getItem('userLoginCode');
+    let userLoginCode=sessionStorage.getItem('userLoginCode');
     if(userLoginCode != '' && userLoginCode != undefined){
       this.pwdFormdata.account=userLoginCode;
     }
@@ -141,7 +141,7 @@ export default {
     if(userLoginPassword != '' && userLoginPassword != undefined){
       this.pwdFormdata.password=userLoginPassword;
     } */
-    let userLoginPhone=localStorage.getItem('userLoginPhone');
+    let userLoginPhone=sessionStorage.getItem('userLoginPhone');
     if(userLoginPhone != '' && userLoginPhone != undefined){
       this.phoneFormdata.phoneNo=userLoginPhone;
     }
@@ -218,7 +218,7 @@ export default {
         });
         return;
       }
-      localStorage.setItem('userLoginCode',this.pwdFormdata.account);
+      sessionStorage.setItem('userLoginCode',this.pwdFormdata.account);
       /* localStorage.setItem('userLoginPassword',this.pwdFormdata.password); */
       let mdpassword = this.encodePassword(this.pwdFormdata.password);
       //let mdpassword = this.pwdFormdata.password;
@@ -438,7 +438,7 @@ export default {
           title: "请输入验证码"
         });
       } else {
-        localStorage.setItem('userLoginPhone',this.phoneFormdata.phoneNo);
+        sessionStorage.setItem('userLoginPhone',this.phoneFormdata.phoneNo);
         let data = {
           username: this.phoneFormdata.phoneNo,
           vcode: this.phoneFormdata.verifyCode,

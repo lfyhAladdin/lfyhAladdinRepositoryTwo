@@ -189,7 +189,6 @@ export default {
     /*******上传图片  start */
     //上传图片
     upload(e){
-      console.log(e);
       let _id=e.target.id;
       let _self = this;
       uni.chooseImage({
@@ -199,17 +198,9 @@ export default {
         success: function (res) {
           yu.showLoading();
           const tempFilePaths = res.tempFilePaths;
-          uni.request({//路径转换base64
-            url: tempFilePaths[0],
-            method: 'GET',
-            responseType: 'arraybuffer',
-            success: async res => {
-              yu.hideLoading();
-              let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
-              
-              _self.uploadImagePost(base64,_id);
-              
-            }
+          _self.convertImgToBase64(tempFilePaths[0], function (data) {
+            let base64code=data.split(';base64,')[1];
+            _self.uploadImagePost(base64code,_id);//调用上传图片方法
           });
           _self.iconcheck = 1;//点击后图片更改状态由0变成1
         },
@@ -217,21 +208,22 @@ export default {
           console.log(e);
         }
       });
-      /* let file=e.target.files[0];
-      let type=file.type.split('/')[0];
-      let Orientation=null;
-      if(type === 'image'){
-        let reader=new FileReader();
-        reader.readAsDataURL(file);
-        let _this=this;
-        reader.onloadend=function(){
-          let dataurl=reader.result;//beas64code
-          let base64JPG = dataurl.split(';base64,')[1];
-          const base64 = e.target.result // 获取到它的base64文件
-          yu.showLoading();
-          _self.uploadImagePost(base64JPG,_id);
-        }
-      }else{} */
+    },
+    //url转化为base64
+    convertImgToBase64(url, callback, outputFormat){
+      var canvas = document.createElement('CANVAS'),
+      ctx = canvas.getContext('2d'),
+      img = new Image;
+      img.crossOrigin = 'Anonymous';
+      img.onload = function(){
+        canvas.height = img.height;
+        canvas.width = img.width;
+        ctx.drawImage(img,0,0);
+        var dataURL = canvas.toDataURL(outputFormat || 'image/*',0.5);
+        callback.call(this, dataURL);
+        canvas = null; 
+      };
+      img.src = url;
     },
     //上传图片图片页面效果处理
     uploadImageResult(type,base64,filename){
