@@ -184,7 +184,6 @@
                 twoHouseCollateral: false, //二手房押品底部弹框(补录押品信息)
                 tabArr: {}, //页签内容
                 applyPhase: "", //申请阶段
-                // pfSearchBusiness: {}, //业务品种列表
                 userID: "", //客户经理编号
                 numNo: {
                     "01": {
@@ -318,7 +317,7 @@
         },
         watch: {},
         computed: {
-            ...mapGetters(["businessTypeList", "userInfor", "queryApplyInfoList", 'pfSearchBusiness']),
+            ...mapGetters(["businessTypeList", "userInfor", "queryApplyInfoList", ]),
             startDate() {
                 return this.getDate("start");
             },
@@ -380,7 +379,6 @@
             //页签切换
             tabClick(e) {
                 console.log(e);
-                console.log(this.pfSearchBusiness)
                 this.applyPhase = e;
                 console.log(this.ajaxJudge[e]);
                 if (this.ajaxJudge[e]) {
