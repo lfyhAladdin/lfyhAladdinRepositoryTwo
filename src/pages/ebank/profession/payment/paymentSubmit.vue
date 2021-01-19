@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title pf-titleTwo">
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
       <img src="@/static/images/creditsubmit/wBackArrow.svg" @click="backpf">
       <text>提交中</text>
     </view>

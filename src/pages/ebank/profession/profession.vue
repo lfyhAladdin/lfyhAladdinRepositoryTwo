@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title">
+    <view :class="phoneSystem ?'pf-title pf-title-ios':'pf-title'">
       <text>业务</text>
     </view>
     <view class="pf-content">

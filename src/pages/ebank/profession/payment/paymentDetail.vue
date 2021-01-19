@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title pf-titleTwo">
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>发放支付</text>
     </view>
@@ -143,6 +143,6 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
-    padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
   }
 </style>

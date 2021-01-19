@@ -1,6 +1,5 @@
 <template>
   <view class="uni-container">
-    <!--<view :class="phoneSystem ? 'pf-poifixed pf-poifixed-ios':'pf-poifixed'">-->
     <view class="pf-poifixed">
       <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
         <img src="@/static/images/profession/pf-back.svg" @click="backpf">
@@ -529,7 +528,6 @@
     .appro-content{
       padding-top: 228rpx;
       .tab-ul{
-        // padding: 110rpx 30rpx 24rpx;
         padding: 24rpx 30rpx;
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title pf-titleThree">
+    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <view class="gencies-item">
         <input class="uni-input" 
@@ -110,7 +110,7 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
-    padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
     .gencies-content{
       .gencies-ul{
         padding-left: 30rpx;

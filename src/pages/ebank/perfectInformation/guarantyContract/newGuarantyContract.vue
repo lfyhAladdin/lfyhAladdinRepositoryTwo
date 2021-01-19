@@ -5,7 +5,7 @@
       <text>担保合同</text>
       <text class="pf-text" @click="updateApplyInfo('TS')">暂存</text>
     </view> -->
-    <view class="pf-title pf-titleTwo">
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
@@ -415,8 +415,7 @@
   @import '~@styles/uni-nvue.css';
   @import '@/static/css/professionwf.less';
   .uni-container{
-    padding: 30rpx 0;
-    // padding: 0 0 30rpx 0;
+    padding: 0 0 30rpx 0;
     .contract-content{
       padding-top: 130rpx;
       .contract-title{

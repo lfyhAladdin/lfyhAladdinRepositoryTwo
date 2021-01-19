@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title pf-titleThree">
+    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>选择抵押人</text>
       <text class="pf-text" @click="backContract">确定</text>
@@ -148,7 +148,7 @@
   @import '~@styles/uni-nvue.css';
   @import '@/static/css/professionwf.less';
   .uni-container{
-    padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
     .mortgagor-content{
       .mortgagor-title{
         padding: 30rpx 0 0 0;

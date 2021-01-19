@@ -1,7 +1,7 @@
 <template>
   <view class="uni-container">
     <view class="pf-poifixed">
-      <view class="pf-title pf-titleThree">
+      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
         <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
         <text>{{identity}}信息</text>
         <text class="pf-text" @click="nextStep(false)">暂存</text>
@@ -538,7 +538,7 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #f6f8f9;
-    padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
     .baseIn-content{
       padding-top: 270rpx;
     

@@ -1,24 +1,26 @@
 <template>
 	<view class="uni-container">
-		<view class="pf-title pf-titleThree">
-			<img src="@/static/images/profession/pf-back.svg" @click="backpf">
-			<text>签署合同</text>
-			<img src="@/static/images/profession/pf-screening.svg" class="pf-imgRig" @click="searchpf">
-		</view>
+        <view class="pf-poifixed">
+            <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+                <img src="@/static/images/profession/pf-back.svg" @click="backpf">
+                <text>签署合同</text>
+                <img src="@/static/images/profession/pf-screening.svg" class="pf-imgRig" @click="searchpf">
+            </view>
 
-		<view class="appro-tab">
-			<view class="appro-fix">
+            <view class="appro-tab">
+                <view class="appro-fix">
 
-				<view class="appro-tab" scroll-x="true" scroll-left="0" show-scrollbar="false" scroll-with-animation="true"
-				 :scroll-into-view="`applyPhase${applyPhase}`">
-					<view v-for="item in tabTitle" :key="item.id" :id="`applyPhase${item.id}`" :class="item.id == applyPhase ? 'appro-box tab-active' : 'appro-box'"
-					 @click="tabClick(item.id)">
-						<view class="active-text">{{item.title}}</view>
-						<view class="active"></view>
-					</view>
-				</view>
-			</view>
-		</view>
+                    <view class="appro-tab" scroll-x="true" scroll-left="0" show-scrollbar="false" scroll-with-animation="true"
+                    :scroll-into-view="`applyPhase${applyPhase}`">
+                        <view v-for="item in tabTitle" :key="item.id" :id="`applyPhase${item.id}`" :class="item.id == applyPhase ? 'appro-box tab-active' : 'appro-box'"
+                        @click="tabClick(item.id)">
+                            <view class="active-text">{{item.title}}</view>
+                            <view class="active"></view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
 		<view class="pf-content appro-content">
 
 
@@ -1133,24 +1135,11 @@
     @import "@/static/css/professionwf.less";
     .uni-container {
         background-color: #ffffff;
-        padding: 30rpx 0;
-        .appro-fix {
-            position: fixed;
-            top: 130rpx;
-            left: 0;
-            right: 0;
-            background-color: #fff;
-            padding: 26rpx 30rpx 0;
-            border-bottom: 2rpx solid #e5e5e5;
-            .appro-tab {
-                border-bottom: none;
-                padding: 0;
-                justify-content: flex-start;
-            }
-        }
-        .appro-content {
-            .tab-ul {
-                padding: 110rpx 30rpx 24rpx;
+        padding: 0 0 30rpx 0;
+        .appro-content{
+            padding-top: 228rpx;
+            .tab-ul{
+                padding: 24rpx 30rpx;
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view class="pf-title pf-titleThree">
+    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>押品信息</text>
       <text class="pf-text" @click="updateApplyInfo('TS')">暂存</text>
@@ -941,7 +941,7 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
-    padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
     .collateral-content{
       .contract-li{
         .imgCross{
