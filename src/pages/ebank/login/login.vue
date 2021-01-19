@@ -250,6 +250,12 @@ export default {
         })
         .catch(error => {
           yu.hideLoading();
+          yu.showToast({
+            icon: "none",
+            title: "用户名或密码错误！",
+            duration: 2000
+          });
+          return;
         });
     },
     getRSAPublicKey: function() {
@@ -465,6 +471,12 @@ export default {
           })
           .catch(error => {
             yu.hideLoading();
+            yu.showToast({
+              icon: "none",
+              title: "手机号或验证码错误！",
+              duration: 2000
+            });
+            return;
             console.log(error);
           });
       }

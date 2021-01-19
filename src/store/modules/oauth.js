@@ -195,7 +195,12 @@ const actions = {
           resolve(res.data);
         },
         fail: (err) => {
-          console.log('request---' + err);
+          yu.showToast({
+            icon: "none",
+            title: "登录信息错误！",
+            duration: 2000
+          });
+          return;
         }
       });
       // var data = {

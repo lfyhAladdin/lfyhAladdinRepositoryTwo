@@ -194,7 +194,7 @@ export default {
       uni.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['camera','album'], //从相册选择或拍照
+        sourceType: ['camera'], //从相册选择或拍照
         success: function (res) {
           yu.showLoading();
           const tempFilePaths = res.tempFilePaths;
