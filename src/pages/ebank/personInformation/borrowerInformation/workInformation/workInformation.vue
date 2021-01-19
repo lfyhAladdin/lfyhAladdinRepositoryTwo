@@ -250,7 +250,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["approvalIngList", "userInfor","personalInformation"]),
+    ...mapGetters(["approvalIngList", "userInfor", "personalInformation"]),
   },
   onLoad(option) {
     this.orderNoVal = this.approvalIngList.orderNo;
@@ -261,7 +261,7 @@ export default {
     this.getOccupationList();
     this.getHeadShipList();
     this.getPositionList();
-    if(JSON.stringify(this.personalInformation) != "{}"){
+    if (JSON.stringify(this.personalInformation) != "{}") {
       this.getPersonalData();
     }
   },
@@ -429,9 +429,7 @@ export default {
             applyNo: this.applyNoVal,
           }); //重新调'申请信息查询'接口，确保人员信息列表准确
 
-          if (res.data.data.returnCode =="Success" ) {
-
- if (that.isJump) {
+          if (res.data.data.returnCode == "Success") {
               if (this.personInfor.companyName == "") {
                 yu.showModal({
                   title: "单位名称不能为空！",
@@ -446,7 +444,7 @@ export default {
                 });
                 return false;
               }
-              if (this.personInfor.companyAddress == "") {
+               if (this.personInfor.companyAddress == "") {
                 yu.showModal({
                   title: "单位地址不能为空！",
                   content: "",
@@ -460,7 +458,7 @@ export default {
                 });
                 return false;
               }
-              if (this.personInfor.telephone == "") {
+               if (this.personInfor.telephone == "") {
                 yu.showModal({
                   title: "单位电话不能为空！",
                   content: "",
@@ -474,22 +472,18 @@ export default {
                 });
                 return false;
               }
+            if (that.isJump) {
+             
               that.pageJump(
                 "personInformation/borrowerInformation/contactInformation/contactInformation"
               );
             } else {
               alert("暂存成功！");
             }
-
           } else {
-
-
-
-
-
- yu.showModal({
+            yu.showModal({
               title: "失败了！",
-              content: errorMsg==null?errorReturnDesc:errorMsg,
+              content: errorMsg == null ? errorReturnDesc : errorMsg,
               showCancel: false,
               confirmText: "我知道了",
               success: (res) => {
@@ -499,19 +493,6 @@ export default {
               },
             });
             return false;
-
-
-
-
-
-
-
-
-
-
-
-
-           
           }
         },
         function (err) {
@@ -691,7 +672,7 @@ uni-page-body:after {
         }
         picker {
           float: right;
-          color: #c7c9cd;
+          color: #333333;
           font-size: 32rpx;
           margin-right: 23rpx;
           height: 100%;

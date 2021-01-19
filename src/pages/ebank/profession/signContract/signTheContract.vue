@@ -186,7 +186,7 @@
                 twoHouseCollateral:false, //二手房押品底部弹框(补录押品信息)
                 tabArr: {}, //页签内容
                 applyPhase: "", //申请阶段
-                pfSearchBusiness: {}, //业务品种列表
+                // pfSearchBusiness: {}, //业务品种列表
                 userID: "", //客户经理编号
                 numNo: {
                     "01": {
@@ -431,7 +431,7 @@
                     obj2[key] = obj2[key].replace("个人", "").replace("贷款", "");
                 }
                 this.businessTypeList = obj;
-                this.pfSearchBusiness = obj2;
+                // this.pfSearchBusiness = obj2;
                 if (this.applyPhase == "02") {
                     this.querypriceapprapplyinfo();
                 } else {

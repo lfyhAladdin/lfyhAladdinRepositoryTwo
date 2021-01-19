@@ -12,13 +12,13 @@
           </view>
           <view class="bottomPart">手动新增</view>
         </view>
-        <view class="flex-item" @click="add(2)">
+        <view class="flex-item" @click="addToast">
           <view class="topPart">
             <img src="@/static/images/addPhotoId.png" />
           </view>
           <view class="bottomPart">拍身份证新增</view>
         </view>
-        <view class="flex-item">
+        <view class="flex-item" @click="addToast">
           <view class="topPart">
             <img src="@/static/images/addShare.png" />
           </view>
@@ -205,6 +205,14 @@ export default {
   methods: {
     ...mapActions(['queryApplyInfoCommit']),
     ...mapMutations(["personalInformationReplace"]),
+    addToast(){
+      yu.showToast({
+            title:"敬请期待",
+            icon: 'none',
+            duration: 3000
+          });
+           yu.hideLoading();
+    },
     // 左滑删除
 			swipeChange(e) {
 				console.log('返回：', e);

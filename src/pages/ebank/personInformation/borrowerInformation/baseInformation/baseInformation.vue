@@ -68,7 +68,7 @@
           </picker>
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
         </view>
-        <view class="person-infor-one">
+        <view class="person-infor-one residential-address">
           <text>居住地址</text>
           <!-- 三级联动 -->
           <picker
@@ -856,6 +856,11 @@ uni-page-body:after {
           right: 0;
           color: red;
         }
+      }
+      .residential-address{
+          picker {
+            width: 500rpx;
+          }
       }
       .person-infor-one:last-child {
         border: 0;
