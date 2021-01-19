@@ -216,12 +216,16 @@ export default {
       img = new Image;
       img.crossOrigin = 'Anonymous';
       img.onload = function(){
-        canvas.height = img.height;
-        canvas.width = img.width;
-        ctx.drawImage(img,0,0);
-        var dataURL = canvas.toDataURL(outputFormat || 'image/*',0.5);
-        callback.call(this, dataURL);
-        canvas = null; 
+        var width = img.width;
+        var height = img.height;
+        // 按比例压缩2倍       //设置压缩比例，最后的值越大压缩越高
+        var rate = (width < height ? width / height : height / width) / 2;
+        canvas.width = width * rate;
+        canvas.height = height * rate;           //绘制新图
+        ctx.drawImage(img, 0, 0, width, height, 0, 0, width * rate, height * rate);                                               //转base64
+        var dataURL = canvas.toDataURL(outputFormat || 'image/png');
+        callback.call(this, dataURL);   //回调函数传入base64的值
+        canvas = null;
       };
       img.src = url;
     },
