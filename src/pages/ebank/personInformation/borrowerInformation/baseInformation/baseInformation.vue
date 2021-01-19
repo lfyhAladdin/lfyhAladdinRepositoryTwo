@@ -1,154 +1,112 @@
 <template>
-  <view class="incoming">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack">
-        <img src="@/static/images/firstroom/backArrow.svg" />
+  <view class="uni-container">
+    <view class="pf-poifixed">
+      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+        <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+        <text>借款人信息</text>
+        <text class="pf-text" @click="nextStep(false)">暂存</text>
       </view>
-      <view class="ch-title">借款人信息</view>
-      <view class="ch-other" @click="nextStep(false)">暂存</view>
-    </view>
-    <!--信息完善进度条-start-->
-    <view class="progress">
-      <img src="@/static/images/firstroom/longProgress02.svg" />
-      <view class="uni-flex uni-row">
-        <view class="flex-item active">户籍信息</view>
-        <view class="flex-item">基本信息</view>
-        <view class="flex-item">工作信息</view>
-        <view class="flex-item">联系人信息</view>
+      <!--信息完善进度条-start-->
+      <view class="household-progress">
+        <img src="@/static/images/firstroom/longProgress02.svg" />
+        <view class="uni-flex uni-row">
+          <view class="flex-item active">户籍信息</view>
+          <view class="flex-item">基本信息</view>
+          <view class="flex-item">工作信息</view>
+          <view class="flex-item">联系人信息</view>
+        </view>
       </view>
+      <!--信息完善进度条-end-->
     </view>
-    <!--信息完善进度条-end-->
-    <view class="customize-content-form">
+    <view class="pf-content baseIn-content">
       <!--个人信息-start-->
-      <view class="person-infor marginT25">
-        <view class="person-infor-one">
-          <text>手机号码</text>
-          <img
-            v-if="personInfor.phone!=''"
-            class="cleanUp"
-            src="@/static/images/firstroom/cleanUp.svg"
-            @click="personInfor.phone=''"
-          />
-          <input
-            placeholder="请输入"
-            maxlength="11"
-            type="number"
-            v-model.trim="personInfor.phone"
-            @focus="verifyPhone.isTipShow=false"
-            @blur="checkPhone(personInfor.phone)"
-          />
-          <view v-if="verifyPhone.isTipShow" class="tips">{{verifyPhone.tipText}}</view>
+      <view class="contract-ul marginT25">
+        <view class="contract-li-tips">
+          <view class="contract-li">
+            <view>手机号码</view>
+            <view>
+              <input class="uni-input" placeholder="请输入" type="number" v-model.trim="personInfor.phone" @focus="verifyPhone.isTipShow=false" @blur="checkPhone(personInfor.phone)" />
+              <img v-if="personInfor.phone!=''" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.phone=''">
+            </view>
+          </view>
+          <view v-if="verifyPhone.isTipShow" class="contract-tips">{{verifyPhone.tipText}}</view>
         </view>
-        <view class="person-infor-one">
-          <text>个人年收入（元）</text>
-          <img
-            v-if="personInfor.yearIncome!=''"
-            class="cleanUp"
-            src="@/static/images/firstroom/cleanUp.svg"
-            @click="personInfor.yearIncome=''"
-          />
-          <input
-            placeholder="请输入"
-            type="number"
-            v-model.trim="personInfor.yearIncome"
-            @focus="verifyYearIncome.isTipShow=false"
-            @blur="checkYearIncome(personInfor.yearIncome)"
-          />
-          <view v-if="verifyYearIncome.isTipShow" class="tips">{{verifyYearIncome.tipText}}</view>
+        <view class="contract-li-tips">
+          <view class="contract-li">
+            <view>个人年收入（元）</view>
+            <view>
+              <input class="uni-input" placeholder="请输入" maxlength="11" type="number" v-model.trim="personInfor.yearIncome" @focus="verifyYearIncome.isTipShow=false" @blur="checkYearIncome(personInfor.yearIncome)" />
+              <img v-if="personInfor.yearIncome!=''" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.yearIncome=''" />
+            </view>
+          </view>
+          <view v-if="verifyYearIncome.isTipShow" class="contract-tips">{{verifyYearIncome.tipText}}</view>
         </view>
-        <view class="person-infor-one">
-          <text>居住状况</text>
-          <picker
-            @change="familyStatusChange"
-            :value="familyStatusIdx"
-            :range-key="'value'"
-            :range="familyStatusList"
-          >
-            <view class="uni-input">{{familyStatusList[familyStatusIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
+        <view class="contract-li">
+          <view>居住状况</view>
+          <view>
+            <picker @change="familyStatusChange" :value="familyStatusIdx" :range-key="'value'" :range="familyStatusList">
+              {{familyStatusList[familyStatusIdx].value}}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
         </view>
-        <view class="person-infor-one residential-address">
-          <text>居住地址</text>
-          <!-- 三级联动 -->
-          <picker
-            mode="multiSelector"
-            @columnchange="changeNextCol"
-            :value="mulIndex"
-            :range="mulArr"
-          >
-            <view
-              class="picker address"
-              v-if="isShow"
-            >{{mulArr[0][mulIndex[0]]}}，{{mulArr[1][mulIndex[1]]}}，{{mulArr[2][mulIndex[2]]}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
+        <view class="collateral-site">
+          <view class="contract-li">
+            <view>居住地址</view>
+            <view class="colladdress">
+              <picker mode="multiSelector" @columnchange="changeNextCol" :value="mulIndex" :range="mulArr">
+                <view class="picker" v-if="isShow">
+                {{mulArr[0][mulIndex[0]]}}，{{mulArr[1][mulIndex[1]]}}，{{mulArr[2][mulIndex[2]]}}
+                </view>
+              </picker>
+              <img src="@/static/images/firstroom/formChooseArrow.svg" />
+            </view>
+          </view>
+          <view class="collateral-flex">
+            <textarea 
+              placeholder="请输入详细地址"  
+              v-model.trim="personInfor.detailAddress"
+              auto-height fixed="true"/>
+          </view>
         </view>
-        <view class="person-infor-one">
-          <!-- <input placeholder="请输入详细地址" type="text" v-model.trim="personInfor.detailAddress" />  -->
-          <textarea
-            placeholder="请输入详细地址"
-            name
-            id
-            cols="30"
-            rows="10"
-            v-model.trim="personInfor.detailAddress"
-          ></textarea>
+        <view class="contract-li">
+          <view>最高学历</view>
+          <view>
+            <picker @change="eduexperienceChange" :value="eduexperienceIdx" :range-key="'value'" :range="eduexperienceList">
+              {{eduexperienceList[eduexperienceIdx].value}}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
         </view>
-        <!-- <view class="person-infor-one">
-          <text>居住地址邮编</text>
-          <img v-if="personInfor.postcode!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.postcode=''" />
-          <input placeholder="请输入" type="number" v-model.trim="personInfor.postcode" @focus="verifyPostcode.isTipShow=false" @blur="checkPostCode(personInfor.postcode)" />
-          <view v-if="verifyPostcode.isTipShow" class="tips">{{verifyPostcode.tipText}}</view>
-        </view>-->
-        <view class="person-infor-one">
-          <text>最高学历</text>
-          <picker
-            @change="eduexperienceChange"
-            :value="eduexperienceIdx"
-            :range-key="'value'"
-            :range="eduexperienceList"
-          >
-            <view class="uni-input">{{eduexperienceList[eduexperienceIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
+        <view class="contract-li">
+          <view>最高学位</view>
+          <view>
+            <picker @change="edudegreeChange" :value="edudegreeIdx" :range-key="'value'" :range="edudegreeList">
+              {{edudegreeList[edudegreeIdx].value}}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
         </view>
-        <view class="person-infor-one">
-          <text>最高学位</text>
-          <picker
-            @change="edudegreeChange"
-            :value="edudegreeIdx"
-            :range-key="'value'"
-            :range="edudegreeList"
-          >
-            <view class="uni-input">{{edudegreeList[edudegreeIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
+        <view class="contract-li">
+          <view>婚姻状况</view>
+          <view>
+            <picker @change="marriageChange" :value="marriageIdx" :range-key="'value'" :range="marriageList">
+              {{marriageList[marriageIdx].value}}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
         </view>
-        <view class="person-infor-one">
-          <text>婚姻状况</text>
-          <picker
-            @change="marriageChange"
-            :value="marriageIdx"
-            :range-key="'value'"
-            :range="marriageList"
-          >
-            <view class="uni-input">{{marriageList[marriageIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
-        </view>
+        
       </view>
       <!--个人信息-end-->
-      <view class @click="nextStep(true)">
-        <view class="cbutton">
-          <text>下一步</text>
-        </view>
+      <view class="contract-button">
+        <button type="primary" @click="nextStep(true)">下一步</button>
       </view>
     </view>
   </view>
 </template>
 <script>
-import pageHead from "@/components/page-head.vue";
+  import pageHead from "@/components/page-head.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -650,421 +608,16 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-uni-page-wrapper {
-  height: 100% !important;
-}
-
-uni-page-wrapper:after {
-  display: block;
-  content: "";
-  clear: both;
-}
-
-uni-page-body {
-  height: 100% !important;
-}
-
-uni-page-body:after {
-  display: block;
-  content: "";
-  clear: both;
-}
-
-.incoming {
-  background: #f6f8f9 !important;
-  width: 100%;
-  height: 100%;
-  .customize-content-form {
-    background: #f6f8f9 !important;
-    width: 100%;
-    height: 100%;
-    padding-top: 362rpx;
-    .image-information {
-      padding: 0 40rpx;
-      height: 421rpx;
-      background: #ffffff;
-      .title {
-        height: 45rpx;
-        line-height: 45rpx;
-        font-size: 32rpx;
-        color: #333333;
-        padding-top: 26rpx;
-      }
-      .yearIncome-box {
-        width: 310rpx;
-        height: 264rpx;
-        display: inline-block;
-        margin-top: 48rpx;
-        .yearIncome-positive {
-          width: 310rpx;
-          height: 210rpx;
-          background: url("~@/static/images/firstroom/idcardPositive.svg")
-            center top no-repeat;
-          background-size: 310rpx 210rpx;
-          position: relative;
-        }
-        .yearIncome-negative {
-          width: 310rpx;
-          height: 210rpx;
-          position: relative;
-          background: url("~@/static/images/firstroom/idcardNegative.svg")
-            center top no-repeat;
-          background-size: 310rpx 210rpx;
-        }
-        .yearIncome-img {
-          width: 310rpx;
-          height: 210rpx;
-          position: absolute;
-          left: 0;
-          top: 0;
-          z-index: 1;
-        }
-        .yearIncome-camera {
-          width: 90rpx;
-          height: 90rpx;
-          text-align: center;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          margin-left: -45rpx;
-          margin-top: -45rpx;
-          z-index: 2;
-          img {
-            width: 90rpx;
-            height: 90rpx;
-          }
-        }
-        .yearIncome-infor {
-          height: 37rpx;
-          line-height: 37rpx;
-          text-align: center;
-          color: #333333;
-          font-size: 26rpx;
-          margin-top: 17rpx;
-        }
-      }
-      .yearIncome-box:last-child {
-        margin-left: 50rpx;
-      }
-    }
-    .image-information:after {
-      display: block;
-      content: "";
-      clear: both;
-    }
-    .person-infor {
-      background: #ffffff;
-      padding-left: 30rpx;
-      .person-infor-one {
-        height: 105rpx;
-        line-height: 105rpx;
-        border-bottom: 1rpx solid #e5e5e5;
-        padding-left: 10rpx;
-        padding-right: 40rpx;
-        position: relative;
-        text {
-          float: left;
-          color: #333333;
-          font-size: 32rpx;
-        }
-        text:last-child {
-          float: right;
-          color: #999999;
-          margin-right: 40rpx;
-        }
-        input {
-          float: right;
-          width: 300rpx;
-          color: #333333;
-          font-size: 32rpx;
-          /* margin-right: 40rpx; */
-          height: 45rpx;
-          line-height: 45rpx;
-          text-align: right;
-          padding: 30rpx 0;
-          .uni-input {
-            color: #333333;
-          }
-          .uni-input-placeholder {
-            color: #c7c9cd;
-          }
-        }
-        textarea {
-          width: 100%;
-          height: 105rpx;
-          text-align: right;
-        }
-        input.nameUsed {
-          /* margin-right: 90rpx; */
-          width: 276rpx;
-        }
-        picker {
-          float: right;
-          color: #333333;
-          font-size: 32rpx;
-          margin-right: 23rpx;
-          height: 100%;
-          line-height: 45rpx;
-          padding: 30rpx 0;
-          display: block;
-          width: 300rpx;
-          text-align: right;
-          .uni-input {
-            font-size: 32rpx;
-            padding: 0;
-            height: 45rpx;
-            line-height: 45rpx;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-        }
-        .address {
-          line-height: 38rpx;
-        }
-        .plus {
-          /* position: absolute;
-            top: 50%;
-            right: 30rpx; */
-          float: right;
-          /* margin-top: -15rpx; */
-          width: 30rpx;
-          margin-right: -10rpx;
-          margin-left: 25rpx;
-          margin-top: 36rpx;
-        }
-        .cleanUp {
-          float: right;
-          width: 34rpx;
-          /* margin-right: 40rpx; */
-          margin-right: -10rpx;
-          margin-left: 25rpx;
-          margin-top: 36rpx;
-        }
-        .choose-arrow {
-          width: 15rpx;
-          height: 26rpx;
-          position: absolute;
-          top: 50%;
-          right: 32rpx;
-          margin-top: -13rpx;
-          /* margin-right: -7.5rpx; */
-        }
-        .tips {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          color: red;
-        }
-      }
-      .residential-address{
-          picker {
-            width: 500rpx;
-          }
-      }
-      .person-infor-one:last-child {
-        border: 0;
-      }
+  @import '@/static/css/professionwf.less';
+  .uni-container{
+    background-color: #f6f8f9;
+    padding: 0 0 30rpx 0;
+    .baseIn-content{
+      padding-top: 270rpx;
+    
     }
   }
-  .customize-content-form:after {
-    display: block;
-    content: "";
-    clear: both;
+  .marginT25{
+    margin-top: 25rpx;
   }
-}
-
-.incoming:after {
-  display: block;
-  content: "";
-  clear: both;
-}
-
-.customize-head {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 100%;
-  padding: 62rpx 0 18rpx 0;
-  height: 50rpx;
-  line-height: 50rpx;
-  background: #ffffff;
-  display: flex;
-  vertical-align: middle;
-  align-items: center;
-  border-bottom: 1rpx solid #e5e5e5;
-  .ch-img {
-    position: absolute;
-    left: 0;
-    top: 69rpx;
-    width: 20rpx;
-    height: 36rpx;
-    margin-left: 36rpx;
-    img {
-      width: 20rpx;
-      height: 36rpx;
-    }
-  }
-  .ch-title {
-    font-size: 36rpx;
-    height: 50rpx;
-    line-height: 50rpx;
-    margin: 0 auto;
-    text-align: center;
-    color: #333333;
-  }
-  .ch-other {
-    position: absolute;
-    right: 40rpx;
-    top: 69rpx;
-    height: 36rpx;
-    line-height: 36rpx;
-    color: #3b86f7;
-    font-size: 30rpx;
-  }
-}
-
-.cbutton {
-  width: 620rpx;
-  padding: 0;
-  margin: 41rpx auto 190rpx auto;
-  font-size: 36rpx;
-  color: #edf6fe;
-  height: 100rpx;
-  line-height: 100rpx;
-  border-radius: 50rpx;
-  background: #3b86f7;
-  border: 0rpx;
-  text-align: center;
-  box-shadow: 0rpx 10rpx 23rpx 0rpx rgba(#3b86f7, 0.4);
-}
-
-.cbutton:after {
-  display: block;
-  content: "";
-  clear: both;
-}
-
-.form-title {
-  height: 94rpx;
-  line-height: 94rpx;
-  text-align: center;
-  font-size: 32rpx;
-  color: #333333;
-  padding-left: 40rpx;
-  display: flex;
-  vertical-align: middle;
-  align-items: center;
-  .vLine {
-    width: 10rpx;
-    height: 34rpx;
-    background: #3b86f7;
-    border-radius: 4px;
-    margin-right: 17rpx;
-  }
-}
-
-.progress {
-  position: fixed;
-  top: 130rpx;
-  left: 0;
-  z-index: 9;
-  width: 100%;
-  height: 170rpx;
-  padding-top: 60rpx;
-  background: #ffffff;
-  text-align: center;
-  img {
-    width: 548rpx;
-  }
-  .uni-flex {
-    font-size: 24rpx;
-    color: #999999;
-    padding-left: 18rpx;
-    .active {
-      color: #333435;
-    }
-  }
-}
-
-.marginT25 {
-  margin-top: 25rpx;
-}
-
-.pickerMask {
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.mpvue-picker-content {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  transition: all 0.3s ease;
-  transform: translateY(100%);
-  z-index: 3000;
-}
-
-.mpvue-picker-view-show {
-  transform: translateY(0);
-}
-
-.mpvue-picker__hd {
-  display: flex;
-  padding: 9px 15px;
-  background-color: #fff;
-  position: relative;
-  text-align: center;
-  font-size: 17px;
-}
-
-.mpvue-picker__hd:after {
-  content: " ";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 1px;
-  border-bottom: 1px solid #e5e5e5;
-  color: #e5e5e5;
-  transform-origin: 0 100%;
-  transform: scaleY(0.5);
-}
-
-.mpvue-picker__action {
-  display: block;
-  flex: 1;
-  color: #1aad19;
-}
-
-.mpvue-picker__action:first-child {
-  text-align: left;
-  color: #888;
-}
-
-.mpvue-picker__action:last-child {
-  text-align: right;
-}
-
-.picker-item {
-  text-align: center;
-  line-height: 40px;
-  font-size: 16px;
-}
-
-.mpvue-picker-view {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 238px;
-  background-color: rgba(255, 255, 255, 1);
-}
 </style>

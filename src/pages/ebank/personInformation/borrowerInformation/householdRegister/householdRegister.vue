@@ -1,22 +1,24 @@
 <template>
-  <view class="incoming">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title">借款人信息</view>
-      <view class="ch-other" @click="nextStep(false)">暂存</view>
-    </view>
-    <view class="customize-content-form">
+  <view class="uni-container">
+    <view class="pf-poifixed">
+      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+        <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+        <text>借款人信息</text>
+        <text class="pf-text" @click="nextStep(false)">暂存</text>
+      </view>
       <!--信息完善进度条-start-->
-      <view class="progress">
+      <view class="household-progress">
         <img src="@/static/images/firstroom/longProgress01.svg" />
         <view class="uni-flex uni-row">
-          <view class="flex-item active">户籍信息</view>
-          <view class="flex-item">基本信息</view>
-          <view class="flex-item">工作信息</view>
-          <view class="flex-item">联系人信息</view>
+            <view class="flex-item active">户籍信息</view>
+            <view class="flex-item">基本信息</view>
+            <view class="flex-item">工作信息</view>
+            <view class="flex-item">联系人信息</view>
         </view>
       </view>
       <!--信息完善进度条-end-->
+    </view>
+    <view class="pf-content household-content">
       <!--影像信息-start-->
       <view class="form-title">
         <view class="vLine"></view>影像信息
@@ -40,85 +42,101 @@
         </view>
       </view>
       <!--影像信息-end-->
-
       <!--选择关联人-start-->
       <view class="form-title" v-if="relatedPerson">
         <view class="vLine"></view>选择关联人
       </view>
-      <view class="person-infor" v-if="relatedPerson">
-        <view class="person-infor-one">
-          <text>{{relatedPerson}}</text>
-          <picker @change="relatedPersonChange" :value="relatedPersonIdx" :range-key="'value'" :range="relatedPersonList">
+      <view class="contract-ul" v-if="relatedPerson">
+        <view class="contract-li">
+          <view>{{relatedPerson}}</view>
+          <view>
+            <picker @change="relatedPersonChange" :value="relatedPersonIdx" :range-key="'value'" :range="relatedPersonList">
 						<view class="uni-input">{{relatedPersonList[relatedPersonIdx].value}}</view>
 					</picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
+            <img src="@/static/images/firstroom/formChooseArrow.svg">
+          </view>
         </view>
       </view>
       <!--选择关联人-end-->
-
       <!--个人信息-start-->
       <view class="form-title">
         <view class="vLine"></view>户籍信息
       </view>
-      <view class="person-infor">
-        <view class="person-infor-one">
-          <text>姓名</text>
-          <!-- <img v-if="personInfor.name!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.name=''" /> -->
-          <input placeholder="请输入" type="text" v-model.trim="personInfor.name" @focus="verifyName.isTipShow=false" @blur="checkName(personInfor.name)" disabled="true" />
-          <view v-if="verifyName.isTipShow" class="tips">{{verifyName.tipText}}</view>
+      <view class="contract-ul">
+        <view class="contract-li-tips">
+          <view class="contract-li">
+            <view>姓名</view>
+            <view>
+              <input class="uni-input" placeholder="请输入" type="text" v-model.trim="personInfor.name" @focus="verifyName.isTipShow=false" @blur="checkName(personInfor.name)" disabled="true" />
+            </view>
+          </view>
+          <view v-show="verifyName.isTipShow" class="contract-tips">{{verifyName.tipText}}</view>
         </view>
-        <!--<view class="person-infor-one">
-          <text>身份证号</text>
-          <img v-if="personInfor.idcard!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.idcard=''" />
-          <input placeholder="请输入" type="idcard" v-model.trim="personInfor.idcard" @focus="verifyIdcard.isTipShow=false" @blur="checkIdcard(personInfor.idcard)" />
-          <view v-if="verifyIdcard.isTipShow" class="tips">{{verifyIdcard.tipText}}</view>
-        </view> -->
-        <view class="person-infor-one">
-          <text>身份证号</text>
-          <text>{{personInfor.idcard}}</text>
-        </view> 
-        <view class="person-infor-one" v-for="(item,index) in personInfor.nameUsedList" :key="index+'a'">
-          <text>曾用名（选填）</text>
-          <img v-if="index==0" class="plus" src="@/static/images/firstroom/plus.svg" @click="addName" />
-          <img v-else class="plus" src="@/static/images/firstroom/minus.png" @click="deleteName(index)" />
-          <img v-if="personInfor.nameUsedList[index].name!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.nameUsedList[index].name=''" />
-          <input :class="{nameUsed:index==0}" placeholder="请输入" type="text" v-model.trim="item.name" @focus="personInfor.nameUsedList[index].isTipShow=false" @blur="checkNameUsed(personInfor.nameUsedList[index].name,index)" />
-          <view v-if="personInfor.nameUsedList[index].isTipShow" class="tips">姓名只能输入中文和“.”，2-20个字</view>
+        <view class="contract-li">
+          <view>身份证号</view>
+          <view>
+            <text>{{personInfor.idcard}}</text>
+          </view>
         </view>
-        <view class="person-infor-one">
-          <text>性别</text>
-          <text>{{personInfor.sex}}</text>
-        </view> 
-        <view class="person-infor-one">
-          <text>出生日期</text>
-          <text>{{personInfor.birthday}}</text>
-        </view> 
+        <view class="contract-li-tips" v-for="(item,index) in personInfor.nameUsedList" :key="index">
+          <view class="contract-li">
+            <view>曾用名（选填）</view>
+            <view>
+              <input class="uni-input" placeholder="请输入" type="text" v-model.trim="item.name" @focus="personInfor.nameUsedList[index].isTipShow=false" @blur="checkNameUsed(personInfor.nameUsedList[index].name,index)" />
+              <img v-if="personInfor.nameUsedList[index].name!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.nameUsedList[index].name=''" />
+              <img v-if="index==0" src="@/static/images/firstroom/plus.svg" @click="addName" />
+              <img v-else src="@/static/images/firstroom/minus.png" @click="deleteName(index)" />
+            </view>
+          </view>
+          <view v-show="personInfor.nameUsedList[index].isTipShow" class="contract-tips">姓名只能输入中文和“.”，2-20个字</view>
+        </view>
+        <view class="contract-li">
+          <view>性别</view>
+          <view>
+            <text>{{personInfor.sex}}</text>
+          </view>
+        </view>
+        <view class="contract-li">
+          <view>出生日期</view>
+          <view>
+            <text>{{personInfor.birthday}}</text>
+          </view>
+        </view>
       </view>
-      <view class="person-infor marginT25">
-        <view class="person-infor-one address">
-          <text>户籍地址</text>
-          <!-- <input placeholder="请输入" type="text" v-model.trim="personInfor.ermanentAddress" /> -->
-          <textarea placeholder="请输入" placeholder-style="color:#c7c9cd" v-model.trim="personInfor.ermanentAddress" ></textarea>
+      <view class="contract-ul marginT25">
+        <view class="collateral-site">
+          <view class="contract-li">
+            <view>户籍地址</view>
+          </view>
+          <view class="collateral-flex">
+            <textarea placeholder="请输入户籍地址" placeholder-style="color:#c7c9cd" v-model.trim="personInfor.ermanentAddress" auto-height fixed="true"/>
+          </view>
         </view>
-        <view class="person-infor-one">
-          <text>证件到期日</text>
-          <picker mode="date" :value="personInfor.date" :start="startDate" :end="endDate" @change="bindDateChange">
-						<view class="uni-input">{{personInfor.date}}</view>
-					</picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
+        <view class="contract-li" v-if="maturityDateyBoolean">
+          <view>证件到期日</view>
+          <view>
+            <picker mode="date" :value="personInfor.date" :start="startDate" :end="endDate" @change="bindDateChange">
+              {{personInfor.date}}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
+        </view>
+         <view class="contract-li" v-if="!maturityDateyBoolean">
+          <view>证件到期日</view>
+          <view>
+            <text>长期</text>
+          </view>
         </view>
       </view>
       <!--个人信息-end-->
-      <view class="" @click="nextStep(true)">
-        <view class="cbutton">
-          <text>下一步</text>
-        </view>
+      <view class="contract-button">
+        <button type="primary" @click="nextStep(true)">下一步</button>
       </view>
     </view>
   </view>
 </template>
 <script>
-    import pageHead from '@/components/page-head.vue';
+ import pageHead from '@/components/page-head.vue';
     import {mapGetters,mapActions,mapMutations} from 'vuex'
 
     export default {
@@ -127,7 +145,6 @@
                 format: true
             })
             return {
-                identity: "",
                 listName: "",
                 userId: '',
                 navigateFlag: false,
@@ -176,6 +193,7 @@
                 isJump: true,
                 busiSerialNoVal: '', //业务流水号
                 busiStartDateVal: '', //业务日期
+                maturityDateyBoolean: true,  //长期false 日历框true
             }
         },
         onLoad(option) {
@@ -591,311 +609,19 @@
         mounted() {
 
         }
-    };
+    }; 
+
 </script>
 
 <style lang='scss' scoped>
-    uni-page-wrapper {
-        height: 100% !important;
-    }
-    
-    uni-page-wrapper:after {
-        display: block;
-        content: "";
-        clear: both;
-    }
-    
-    uni-page-body {
-        height: 100% !important;
-    }
-    
-    uni-page-body:after {
-        display: block;
-        content: "";
-        clear: both;
-    }
-    
-    .incoming {
-        background: #f6f8f9 !important;
-        width: 100%;
-        height: 100%;
-        .customize-content-form {
-            background: #f6f8f9 !important;
-            width: 100%;
-            height: 100%;
-            padding-top: 128rpx;
-            .image-information {
-                padding: 0 40rpx;
-                height: 421rpx;
-                background: #ffffff;
-                .title {
-                    height: 45rpx;
-                    line-height: 45rpx;
-                    font-size: 32rpx;
-                    color: #333333;
-                    padding-top: 26rpx;
-                }
-                .idcard-box {
-                    width: 310rpx;
-                    height: 264rpx;
-                    display: inline-block;
-                    margin-top: 48rpx;
-                    .idcard-positive {
-                        width: 310rpx;
-                        height: 210rpx;
-                        // background: url('~@/static/images/firstroom/idcardPositive.svg') center top no-repeat;
-                        background-size: 310rpx 210rpx;
-                        position: relative;
-                    }
-                    .idcard-negative {
-                        width: 310rpx;
-                        height: 210rpx;
-                        position: relative;
-                        // background: url('~@/static/images/firstroom/idcardNegative.svg') center top no-repeat;
-                        background-size: 310rpx 210rpx;
-                    }
-                    .idcard-img {
-                        width: 310rpx;
-                        height: 210rpx;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        z-index: 1;
-                    }
-                    .idcard-camera {
-                        width: 90rpx;
-                        height: 90rpx;
-                        text-align: center;
-                        position: absolute;
-                        left: 50%;
-                        top: 50%;
-                        margin-left: -45rpx;
-                        margin-top: -45rpx;
-                        z-index: 2;
-                        img {
-                            width: 90rpx;
-                            height: 90rpx;
-                        }
-                    }
-                    .idcard-infor {
-                        height: 37rpx;
-                        line-height: 37rpx;
-                        text-align: center;
-                        color: #333333;
-                        font-size: 26rpx;
-                        margin-top: 17rpx;
-                    }
-                }
-                .idcard-box:last-child {
-                    margin-left: 50rpx;
-                }
-            }
-            .image-information:after {
-                display: block;
-                content: "";
-                clear: both;
-            }
-            .person-infor {
-                background: #ffffff;
-                padding-left: 30rpx;
-                .person-infor-one {
-                    height: 105rpx;
-                    line-height: 105rpx;
-                    border-bottom: 1rpx solid #E5E5E5;
-                    padding-left: 10rpx;
-                    padding-right: 40rpx;
-                    position: relative;
-                    text {
-                        float: left;
-                        color: #333333;
-                        font-size: 32rpx;
-                    }
-                    text:last-child {
-                        float: right;
-                        color: #999999;
-                        margin-right: 40rpx
-                    }
-                    input {
-                        float: right;
-                        color: #333333;
-                        font-size: 32rpx;
-                        /* margin-right: 40rpx; */
-                        width: 300rpx;
-                        height: 45rpx;
-                        line-height: 45rpx;
-                        text-align: right;
-                        padding: 30rpx 0;
-                        .uni-input {
-                            color: #333333
-                        }
-                        .uni-input-placeholder {
-                            color: #c7c9cd
-                        }
-                    }
-                    input.nameUsed {
-                        /* margin-right: 90rpx; */
-                        width: 276rpx;
-                    }
-                    picker {
-                        float: right;
-                        color: #c7c9cd;
-                        font-size: 32rpx;
-                        margin-right: 23rpx;
-                        height: 100%;
-                        line-height: 45rpx;
-                        padding: 30rpx 0;
-                        display: block;
-                        width: 300rpx;
-                        text-align: right;
-                        .uni-input {
-                            font-size: 32rpx;
-                            padding: 0;
-                            height: 45rpx;
-                            line-height: 45rpx;
-                            overflow: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
-                        }
-                    }
-                    .plus {
-                        /* position: absolute;
-            top: 50%;
-            right: 30rpx; */
-                        float: right;
-                        /* margin-top: -15rpx; */
-                        width: 30rpx;
-                        margin-right: -10rpx;
-                        margin-left: 25rpx;
-                        margin-top: 36rpx;
-                    }
-                    .cleanUp {
-                        float: right;
-                        width: 34rpx;
-                        /* margin-right: 40rpx; */
-                        margin-right: -10rpx;
-                        margin-left: 25rpx;
-                        margin-top: 36rpx;
-                    }
-                    .choose-arrow {
-                        width: 15rpx;
-                        height: 26rpx;
-                        position: absolute;
-                        top: 50%;
-                        right: 32rpx;
-                        margin-top: -13rpx;
-                        /* margin-right: -7.5rpx; */
-                    }
-                    .tips {
-                        position: absolute;
-                        bottom: 0;
-                        right: 40rpx;
-                        line-height: 30rpx;
-                        color: #E75E58;
-                        font-size: 22rpx;
-                    }
-                }
-                .person-infor-one:last-child {
-                    border: 0;
-                }
-                .address {
-                    height: 160rpx;
-                    textarea {
-                        float: right;
-                        color: #333333;
-                        font-size: 32rpx;
-                        /* margin-right: 40rpx; */
-                        width: 500rpx;
-                        height: 90rpx;
-                        line-height: 45rpx;
-                        text-align: right;
-                        padding: 30rpx 0;
-                        .uni-textarea-compute {
-                            color: #333333
-                        }
-                    }
-                }
-            }
-        }
-        .customize-content-form:after {
-            display: block;
-            content: "";
-            clear: both;
-        }
-    }
-    
-    .incoming:after {
-        display: block;
-        content: "";
-        clear: both;
-    }
-    
-    .customize-head {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 10;
-        width: 100%;
-        padding: 62rpx 0 18rpx 0;
-        height: 50rpx;
-        line-height: 50rpx;
-        background: #ffffff;
-        display: flex;
-        vertical-align: middle;
-        align-items: center;
-        border-bottom: 1rpx solid #e5e5e5;
-        .ch-img {
-            position: absolute;
-            left: 0;
-            top: 69rpx;
-            width: 20rpx;
-            height: 36rpx;
-            margin-left: 36rpx;
-            img {
-                width: 20rpx;
-                height: 36rpx;
-            }
-        }
-        .ch-title {
-            font-size: 36rpx;
-            height: 50rpx;
-            line-height: 50rpx;
-            margin: 0 auto;
-            text-align: center;
-            color: #333333;
-        }
-        .ch-other {
-            position: absolute;
-            right: 40rpx;
-            top: 69rpx;
-            height: 36rpx;
-            line-height: 36rpx;
-            color: #3B86F7;
-            font-size: 30rpx;
-        }
-    }
-    
-    .cbutton {
-        width: 620rpx;
-        padding: 0;
-        margin: 41rpx auto 190rpx auto;
-        font-size: 36rpx;
-        color: #edf6fe;
-        height: 100rpx;
-        line-height: 100rpx;
-        border-radius: 50rpx;
-        background: #3b86f7;
-        border: 0rpx;
-        text-align: center;
-        box-shadow: 0rpx 10rpx 23rpx 0rpx rgba(#3b86f7, 0.40);
-    }
-    
-    .cbutton:after {
-        display: block;
-        content: "";
-        clear: both;
-    }
-    
-    .form-title {
+  @import '@/static/css/professionwf.less';
+  .uni-container{
+    background-color: #f6f8f9;
+    padding-top: 0;  
+    padding-bottom: 30rpx;
+    .household-content{
+      padding-top: 270rpx;
+      .form-title{
         height: 94rpx;
         line-height: 94rpx;
         text-align: center;
@@ -905,34 +631,100 @@
         display: flex;
         vertical-align: middle;
         align-items: center;
-        .vLine {
-            width: 10rpx;
-            height: 34rpx;
-            background: #3B86F7;
-            border-radius: 4px;
-            margin-right: 17rpx;
+        .vLine{
+          width: 10rpx;
+          height: 34rpx;
+          background: #3B86F7;
+          border-radius: 4px;
+          margin-right: 17rpx;
         }
-    }
-    
-    .progress {
-        height: 170rpx;
-        padding-top: 60rpx;
+      }
+      .image-information{
+        padding: 0 40rpx;
+        // height: 421rpx;
         background: #ffffff;
-        text-align: center;
-        img {
-            width: 548rpx;
+        .title{
+          height: 45rpx;
+          line-height: 45rpx;
+          font-size: 32rpx;
+          color: #333333;
+          padding-top: 26rpx;
         }
-        .uni-flex {
-            font-size: 24rpx;
-            color: #999999;
-            padding-left: 18rpx;
-            .active {
-                color: #333435;
+        .idcard-box{
+          width: 310rpx;
+          height: 264rpx;
+          display: inline-block;
+          margin-top: 48rpx;
+          margin-bottom: 24rpx;
+          .idcard-positive{
+            width: 310rpx;
+            height: 210rpx;
+            background-size: 310rpx 210rpx;
+            position: relative;
+            
+          }
+          .idcard-negative{
+            width: 310rpx;
+            height: 210rpx;
+            position: relative;
+            background-size: 310rpx 210rpx;
+          }
+          .idcard-img{
+            width: 310rpx;
+            height: 210rpx;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+          }
+          .idcard-camera{
+            width: 90rpx;
+            height: 90rpx;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -45rpx;
+            margin-top: -45rpx;
+            z-index: 2;
+            img{
+              width: 90rpx;
+              height: 90rpx;
             }
+          }
+          .idcard-infor{
+            height: 37rpx;
+            line-height: 37rpx;
+            text-align: center;
+            color: #333333;
+            font-size: 26rpx;
+            margin-top: 17rpx;
+          }
         }
+        .idcard-box:last-child{
+          margin-left: 50rpx;
+        }
+        
+      }
+      .image-information:after{
+        display: block;
+        content: "";
+        clear: both;
+      }
+      .contract-ul{
+        .collateral-site{
+          .contract-li{
+            uni-view:last-of-type{
+              justify-content: flex-start;
+              margin-left: 0;
+              color: #333435;
+            }
+          }
+        }
+      }
     }
-    
-    .marginT25 {
-        margin-top: 25rpx;
-    }
+  }
+  .marginT25{
+    margin-top: 25rpx;
+  }
 </style>
