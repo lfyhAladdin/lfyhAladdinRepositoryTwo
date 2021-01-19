@@ -6,17 +6,14 @@
                 <text>签署合同</text>
                 <img src="@/static/images/profession/pf-screening.svg" class="pf-imgRig" @click="searchpf">
             </view>
+            <view class="appro-fix">
 
-            <view class="appro-tab">
-                <view class="appro-fix">
-
-                    <view class="appro-tab" scroll-x="true" scroll-left="0" show-scrollbar="false" scroll-with-animation="true"
-                    :scroll-into-view="`applyPhase${applyPhase}`">
-                        <view v-for="item in tabTitle" :key="item.id" :id="`applyPhase${item.id}`" :class="item.id == applyPhase ? 'appro-box tab-active' : 'appro-box'"
-                        @click="tabClick(item.id)">
-                            <view class="active-text">{{item.title}}</view>
-                            <view class="active"></view>
-                        </view>
+                <view class="appro-tab" scroll-x="true" scroll-left="0" show-scrollbar="false" scroll-with-animation="true"
+                :scroll-into-view="`applyPhase${applyPhase}`">
+                    <view v-for="item in tabTitle" :key="item.id" :id="`applyPhase${item.id}`" :class="item.id == applyPhase ? 'appro-box tab-active' : 'appro-box'"
+                    @click="tabClick(item.id)">
+                        <view class="active-text">{{item.title}}</view>
+                        <view class="active"></view>
                     </view>
                 </view>
             </view>
@@ -1141,6 +1138,13 @@
             .tab-ul{
                 padding: 24rpx 30rpx;
             }
+        }
+        .pf-poifixed{
+            .appro-fix{
+                .appro-tab{
+                    justify-content: flex-start;
+                }
+            } 
         }
     }
     

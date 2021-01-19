@@ -1,68 +1,68 @@
 <template>
   <view class="information-box">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
-      <view class="ch-share"  @click="showShareFunction"><img src="@/static/images/firstroom/share.svg" /></view>
+    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{title}}</text>
+      <img src="@/static/images/firstroom/share.svg" @click="showShareFunction" class="ch-share">
     </view>
-
-    <view class="pinformations">
-      <view class="pinformation-one">
-        <view class="pinformation"  @click="goDetailPage(personInformation,false)">
-          <view class="pinformation-left">
-            <img src="@/static/images/firstroom/PIperson.svg" />
-            <text>人员信息</text>
+    <view class="pf-content information-content">
+      <view class="pinformations">
+        <view class="pinformation-one">
+          <view class="pinformation"  @click="goDetailPage(personInformation,false)">
+            <view class="pinformation-left">
+              <img src="@/static/images/firstroom/PIperson.svg" />
+              <text>人员信息</text>
+            </view>
+            <view class="pinformation-right">
+              <text v-show="ifperfectPersonInfor">已完善</text>
+              <text v-show="!ifperfectPersonInfor" class="not-completed">未完善</text>
+              <img src="@/static/images/firstroom/formChooseArrow.svg" />
+            </view>
           </view>
-          <view class="pinformation-right">
-            <text v-show="ifperfectPersonInfor">已完善</text>
-            <text v-show="!ifperfectPersonInfor" class="not-completed">未完善</text>
-            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+        </view>
+      </view>
+      <view class="pinformations">
+        <view class="pinformation-two">
+          <view class="pinformation" @click="goDetailPage(businessInformation,false)">
+            <view class="pinformation-left">
+              <img src="@/static/images/firstroom/PIloan.svg" />
+              <text>贷款申请信息</text>
+            </view>
+            <view class="pinformation-right">
+              <text v-show="ifperfectBusinessInfor">已完善</text>
+              <text v-show="!ifperfectBusinessInfor" class="not-completed">未完善</text>
+              <img src="@/static/images/firstroom/formChooseArrow.svg" />
+            </view>
+          </view>
+          <view class="pinformation" @click="goDetailPage(guarantyContract,false)">
+            <view class="pinformation-left">
+              <img src="@/static/images/firstroom/PIcontract.svg" />
+              <text>担保合同</text>
+            </view>
+            <view class="pinformation-right">
+              <text v-show="ifperfectGuarantyContractr">已完善</text>
+              <text v-show="!ifperfectGuarantyContractr" class="not-completed">未完善</text>
+              <img src="@/static/images/firstroom/formChooseArrow.svg" />
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="pinformations">
+        <view class="pinformation-one">
+          <view class="pinformation"  @click="goDetailPage(imageInformation,false)">
+            <view class="pinformation-left">
+              <img src="@/static/images/firstroom/PIimage.svg" />
+              <text>影像信息</text>
+            </view>
+            <view class="pinformation-right">
+              <text v-show="ifperfectImageInfor">已完善</text>
+              <text v-show="!ifperfectImageInfor" class="not-completed">未完善</text>
+              <img src="@/static/images/firstroom/formChooseArrow.svg" />
+            </view>
           </view>
         </view>
       </view>
     </view>
-    <view class="pinformations">
-      <view class="pinformation-two">
-        <view class="pinformation" @click="goDetailPage(businessInformation,false)">
-          <view class="pinformation-left">
-            <img src="@/static/images/firstroom/PIloan.svg" />
-            <text>贷款申请信息</text>
-          </view>
-          <view class="pinformation-right">
-            <text v-show="ifperfectBusinessInfor">已完善</text>
-            <text v-show="!ifperfectBusinessInfor" class="not-completed">未完善</text>
-            <img src="@/static/images/firstroom/formChooseArrow.svg" />
-          </view>
-        </view>
-        <view class="pinformation" @click="goDetailPage(guarantyContract,false)">
-          <view class="pinformation-left">
-            <img src="@/static/images/firstroom/PIcontract.svg" />
-            <text>担保合同</text>
-          </view>
-          <view class="pinformation-right">
-            <text v-show="ifperfectGuarantyContractr">已完善</text>
-            <text v-show="!ifperfectGuarantyContractr" class="not-completed">未完善</text>
-            <img src="@/static/images/firstroom/formChooseArrow.svg" />
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="pinformations">
-      <view class="pinformation-one">
-        <view class="pinformation"  @click="goDetailPage(imageInformation,false)">
-          <view class="pinformation-left">
-            <img src="@/static/images/firstroom/PIimage.svg" />
-            <text>影像信息</text>
-          </view>
-          <view class="pinformation-right">
-            <text v-show="ifperfectImageInfor">已完善</text>
-            <text v-show="!ifperfectImageInfor" class="not-completed">未完善</text>
-            <img src="@/static/images/firstroom/formChooseArrow.svg" />
-          </view>
-        </view>
-      </view>
-    </view>
-
     <view class="">
       <view class="cbutton" @click="goDetailPage(creditInformation,true)">
         <text>下一步</text>
@@ -302,51 +302,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import '@/static/css/professionwf.less';
 .information-box {
   background: #ffffff !important;
   width: 100%;
   height: 100%;
 }
-.customize-head {
-  padding: 62rpx 56rpx 16rpx 36rpx;
-  height: 50rpx;
-  line-height: 50rpx;
-  background: #ffffff;
-  display: flex;
-  vertical-align: middle;
-  align-items: center;
-  position: relative;
-  .ch-img {
-    width: 20rpx;
-    height: 36rpx;
-    img {
-      width: 20rpx;
-      height: 36rpx;
-    }
-  }
-  .ch-title {
-    /**width: 160rpx;**/
-    font-size: 36rpx;
-    height: 50rpx;
-    line-height: 50rpx;
-    margin: 0 auto;
-    text-align: center;
-    color: #333333;
-  }
+.pf-title{
   .ch-share {
     width: 34rpx;
     height: 34rpx;
-    position: absolute;
-    top: 50%;
-    right: 36rpx;
-    margin-top: 8rpx;
-    margin-right: -17rpx;
-    img {
-      width: 34rpx;
-      height: 34rpx;
-    }
   }
 }
+
 .pinformations {
   padding: 30rpx 30rpx 0 30rpx;
   .pinformation-one {

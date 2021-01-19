@@ -1,8 +1,8 @@
 <template>
   <view class="outermost">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title">{{title}}</view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{title}}</text>
     </view>
     <view class="container">
       <view class="uni-flex uni-row operationList">
@@ -456,41 +456,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.customize-head{
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  width: 100%;
-  padding: 62rpx 36rpx 18rpx 0;
-  height: 50rpx;
-  line-height: 50rpx;
-  background: #ffffff;
-  display: flex;
-  vertical-align: middle;
-  align-items: center;
-  border-bottom: 1rpx solid #e5e5e5;
-  .ch-img{
-    position: absolute;
-    left: 0;
-    top: 69rpx;
-    width: 20rpx;
-    height: 36rpx;
-    margin-left: 36rpx;
-    img{
-      width: 20rpx;
-      height: 36rpx;
-    }
-  }
-  .ch-title{
-    font-size: 36rpx;
-    height: 50rpx;
-    line-height: 50rpx;
-    margin:0 auto;
-    text-align: center;
-    color: #333333;
-  }
-}
+@import '@/static/css/professionwf.less';
+
 .container{
   box-sizing: border-box;
   height: 100%;

@@ -378,7 +378,7 @@
       color: #FFFFFF;
     }
     .pSubmit-content{
-      padding-top: 60rpx;
+      padding-top: 56rpx;
       .pSubmit-top{
         height: 342rpx;
         background: linear-gradient(180deg, #3875F6 0%, #3B96F7 100%);
