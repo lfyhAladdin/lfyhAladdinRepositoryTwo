@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ? 'pf-title pf-poifixed-ios pf-titleTwo':'pf-title pf-titleTwo'">
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
@@ -106,8 +106,8 @@
   @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
-    padding: 30rpx 0;
-    // padding: 0 0 30rpx 0;
+    // padding: 30rpx 0;
+    padding: 0 0 30rpx 0;
     .guaranty-content{
       padding: 120rpx 30rpx 0;
       .guaranty-add{  
