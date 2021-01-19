@@ -133,7 +133,7 @@
 
         },
         onLoad() {
-          
+          console.log( this.adjustRateTypeIdArrKey)
             console.log(this.queryApplyInfoList, "信息1111111111111111");
             this.rateClassName = this.queryApplyInfoList.rateClass; //基准利率类型
             this.rateFloatTypeName = this.queryApplyInfoList.rateFloatType;
@@ -313,9 +313,12 @@
                 if (this.queryApplyInfoList.rateFloatType == "") {
                     this.queryApplyInfoList.rateFloatType = "0"
                 }
-                if (this.queryApplyInfoList.adjustRateType == "") {
-                    this.queryApplyInfoList.adjustRateType = "0"
+               
+                if(this.queryApplyInfoList.adjustRateType=="" && this.adjustRateTypeIdArrKey==undefined){
+                   this.queryApplyInfoList.adjustRateType="1";
                 }
+                console.log(this.queryApplyInfoList.adjustRateType);
+                 console.log( this.adjustRateTypeIdArrKey)
                 let that = this;
                 console.log(this.rateAdjustCycIndex);
                 console.log(this.adjustRateTypeIdArrKey)
@@ -326,6 +329,7 @@
                     listName: "rateInfo",
                     rateInfo: [{
                         adjustRateType: this.adjustRateTypeIdArrKey == undefined ? this.queryApplyInfoList.adjustRateType : this.adjustRateTypeIdArrKey,
+                        // adjustRateType:"",
                         rateAdjustCyc: this.rateAdjustCycIndex,
                         rateClass: this.rateClassKey == undefined ? this.queryApplyInfoList.rateClass : this.rateClassKey,
                         rateFLoat: this.flag ? this.FloatingValue : this.floatNegative,
@@ -374,59 +378,7 @@
                     function(err) {}
                 );
             },
-            deposit() {
-                if (this.current == "0") {
-                    this.rateType = "02";
-                } else {
-                    this.rateType = "05";
-                }
-                if (this.FloatingValue == "") {
-                    this.FloatingValue = this.queryApplyInfoList.rateFLoat;
-                }
-                console.log("暂存");
-                let that = this;
-                let formData = {
-                    applyNo: that.applicationNumber,
-                    orderNo: "",
-                    listName: "rateInfo",
-                    rateInfo: [{
-
-                        adjustRateType: this.adjustRateTypeIndex,
-                        rateAdjustCyc: this.rateAdjustCycIndex,
-                        rateClass: this.productList[this.productIndex].rateClass,
-                        rateFLoat: this.flag ? this.FloatingValue : this.floatNegative,
-                        rateFloatType: this.rateFloatTypeValue,
-                        rateType: this.rateType
-                    }]
-                };
-
-                let posturl = "/api/credit/updateApplyInfo";
-                that.interfaceRequest(
-                    posturl,
-                    formData,
-                    "post",
-                    function(res) {
-                        console.log("暂存成功!");
-                        // uni.showToast({
-                        //     title: "暂存成功!",
-                        //     duration: 2000
-                        // });
-                        yu.showModal({
-                            title: "暂存成功",
-                            content:res.data.data.returnDesc,
-                            showCancel: false,
-                            confirmText: "我知道了",
-                            success: res => {
-                                if (res.confirm) {
-                                    console.log("用户点击确定");
-                                }
-                            }
-                        });
-                        console.log(res);
-                    },
-                    function(err) {}
-                );
-            },
+          
             /**表单提交接口 **end****/
     
            // 执行利率=(基准利率+浮动值)*12/10

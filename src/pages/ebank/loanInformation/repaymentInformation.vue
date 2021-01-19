@@ -230,8 +230,8 @@ export default {
 console.log(1)
 console.log(this.queryApplyInfoList)
 console.log(this.queryApplyInfoList.applyNo)
- if(this.queryApplyInfoList.corpusPayMethod==""){
-        this.queryApplyInfoList.corpusPayMethod="1"
+ if(this.queryApplyInfoList.corpusPayMethod=="" &&this.corpusPayMethodKey==undefined){
+        this.queryApplyInfoList.corpusPayMethod="3"
       }
 console.log(1)
 

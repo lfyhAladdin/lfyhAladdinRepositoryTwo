@@ -2,10 +2,10 @@
   <view class="information-box">
     <view class="customize-head">
       <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
+      <view class="ch-title"><text>影像信息</text></view>
     </view>
     <view class="image-list-con">
-      <view class="image-information" v-for="(item,index) in imagelists" :key="index">
+      <view class="image-information" v-for="(item,index) in imagelists" :key="index" v-if="item.busiFileType=='2012060302'">
         <view class="title" ><text class="title-line"></text><text>{{item.busiFileTypeName}}</text></view>
         <view class="image-list">
           <view class="item after-upload" v-for="(imageOne,i) in item.downloadImageDtoList" :key="i">
@@ -33,9 +33,8 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
 export default {
   data: function() {
     return {
-      title: "影像信息",
       serialNo: "", //申请编号
-      imageInformation: "perfectInformation/imageInformation/imageInformation", //影像信息跳转
+      oneTwoHouse: "profession/signContract/oneTwoHouse", //影像信息跳转
       iconcheck:0, //是否上传
       imageBatchNo:'',//图片版本批次号
       imageUpLoadDate:'',//图片上传时间
@@ -78,8 +77,8 @@ export default {
   },
   onLoad: function(options) {
     console.log(options)
-    // this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
-    this.serialNo =  "2021011300000110";
+    this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
+    // this.serialNo =  "2021011300000110";
 
   },
   created(){
@@ -90,7 +89,7 @@ export default {
     let _this=this;
     let data={
       orderNo:'',
-      applyNo:"2021011300000110",
+      applyNo:_this.serialNo,
     };
     this.interfaceRequest(
       '/api/credit/queryApplyInfo',
@@ -122,7 +121,7 @@ export default {
   methods: {
     //返回上一页
     navigateBack() {
-      this.pageJump(this.imageInformation);
+      this.pageJump(this.oneTwoHouse);
     },
     //获取下载当前申请的影像信息
     getImagesList(imageBatchNo,busiStartDate){
@@ -134,7 +133,7 @@ export default {
       let param={
         "busiSerialNo": imageBatchNo,
         "busiStartDate":busiStartDate,
-        "busiFileTypeList":["2012060301","2012060302","2012060303","2012060304","2012060305"],
+        "busiFileTypeList":_this.paramBusiFileTypeList,
         "filePartName": "LS_SQZL_P",
         "modelCode": "LS_SQZL"
       };

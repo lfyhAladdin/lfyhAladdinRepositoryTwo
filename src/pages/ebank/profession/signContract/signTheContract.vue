@@ -36,8 +36,8 @@
 						</view>
 						<view class="tab-center" @click="toPerfectInformation(item)">
 							<view>
-								<text>{{housSwitch(item.businessType,'楼盘名称','房屋位置')}}</text>
-								<text>{{housSwitch(item.businessType,item.projectName,item.address)}}</text>
+								<text>{{housSwitch(item.businessType2,'楼盘名称','房屋位置')}}</text>
+								<text>{{housSwitch(item.businessType2,item.projectName,item.address)}}</text>
 							</view>
 							<view>
 								<text>合同金额</text>
@@ -88,12 +88,12 @@
 				<view class="contract-ul">
 					<view class="contract-li">
 						<text>房屋预售合同号</text>
-						<input placeholder="请输入" type="number" class="iptcontract" v-model="houseContractNo" />
+						<input placeholder="请输入" type="text" class="iptcontract" v-model="houseContractNo" />
 
 					</view>
                     <view class="contract-li">
 						<text>确认房屋预售合同号</text>
-						<input placeholder="再次输入房屋预售合同号" type="number" class="iptcontract" v-model="houseContractTwo" @blur="confirmInput"/>
+						<input placeholder="再次输入房屋预售合同号" type="text" class="iptcontract" v-model="houseContractTwo" @blur="confirmInput"/>
 
 					</view>
 				</view>
