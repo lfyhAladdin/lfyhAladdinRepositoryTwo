@@ -6,7 +6,7 @@
     </view>
     <view class="pf-content image-list-con">
       <view class="image-information" v-for="(item,index) in imagelists" :key="index">
-        <view class="title" ><text class="title-line"></text><text>{{item.busiFileTypeName}}</text></view>
+        <view class="title" v-if="item.busiFileTypeName != 'undefined'" ><text class="title-line"></text><text>{{item.busiFileTypeName}}</text></view>
         <view class="image-list">
           <view class="item after-upload" v-for="(imageOne,i) in item.downloadImageDtoList" :key="i">
             <img v-if="item.isIDCard" @click="delImage(imageOne.busiFileType,imageOne.originName)" class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
@@ -67,6 +67,51 @@ export default {
           id:"3",
           name:"抵押房产资料",
           param:["2012060401","2012060402","2012060403"]
+        },
+        {
+          id:"4",
+          name:"征信相关资料",
+          param:["2012060501","2012060502","2012060503"]
+        },
+        {
+          id:"5",
+          name:"系统生成表格",
+          param:["2012060601","2012060602","2012060603","2012060604"]
+        },
+        {
+          id:"6",
+          name:"房产证、他项权证",
+          param:["20120701"]
+        },
+        {
+          id:"7",
+          name:"放款账户信息",
+          param:["2012070201","2012070202"]
+        },
+        {
+          id:"8",
+          name:"借款抵押合同信息",
+          param:["20120703"]
+        },
+        {
+          id:"9",
+          name:"其他资料",
+          param:["20120704"]
+        },
+        {
+          id:"10",
+          name:"放款通知书",
+          param:["20120801"]
+        },
+        {
+          id:"11",
+          name:"放款凭证",
+          param:["2012080201"]
+        },
+        {
+          id:"12",
+          name:"其他贷后资料",
+          param:["20120803"]
         },
       ],//二级菜单参数
       paramBusiFileTypeList:[],//影响信息参数

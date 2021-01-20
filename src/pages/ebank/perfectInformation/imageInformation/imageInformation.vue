@@ -56,11 +56,11 @@ export default {
             "收入证明资料",
             "用途证明资料",
             "抵押房产资料",
-            /* "征信相关资料",
-            "系统生成表格" */
+            "征信相关资料",
+            "系统生成表格"
           ]
         },
-        /* {
+        {
           id: "content",
           name: "放款审核",
           open: false,
@@ -76,7 +76,7 @@ export default {
           name: "出账后",
           open: false,
           pages: ["放款通知书", "放款凭证", "其他贷后资料"]
-        } */
+        }
       ],
 
       navigateFlag: false
