@@ -169,8 +169,8 @@ export default {
               if (res.confirm) {
                 // that.getApplyInfor(orderId,applyID);
                 that.queryApplyInfoCommit({
-                  'orderNo': this.orderNoVal, 
-                  'applyNo': this.applyNoVal,
+                  'orderNo': orderId, 
+                  'applyNo': applyID,
                   'routerTrue': true,
                   'routerTo': '/pages/ebank/perfectInformation/perfectInformation',
                   'routerJumpWay': 'navigateTo'

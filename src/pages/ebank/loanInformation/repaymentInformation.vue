@@ -9,7 +9,7 @@
 
 <view class="image-content">
     <img style="height:26rpx;margin:0 auto;display:block;margin-top:63rpx" src="@/static/images/firstroom/longProgress04.svg" />
-    <ul class="loaninfo"><li>业务信息</li><li>担保信息</li><li>利率期限信息</li><li>还款信息</li></ul>
+    <ul class="loaninfo"><li>业务信息</li><li>担保信息</li><li>利率信息</li><li>还款信息</li></ul>
 </view>
  <!--个人信息-start-->
       <view class="person-infor">
