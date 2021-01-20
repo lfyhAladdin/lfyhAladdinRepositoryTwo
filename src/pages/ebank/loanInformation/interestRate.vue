@@ -298,6 +298,7 @@
             /**表单提交接口 **start****/
             submitform(e) {
                 //TS 暂存 save 提交下一步
+                console.log()
                 if (this.current == "0") {
                     this.rateType = "02";
                 } else {
@@ -387,6 +388,7 @@
                 console.log(this.FloatingValue);
 console.log(this.rateFLoat)
                 if (this.rateFLoat == "下浮") {
+                    this.flag = false;
                     console.log(123)
                     this.floatNegative = "-" + this.FloatingValue;
                     console.log(this.FloatingNegative)
@@ -400,6 +402,7 @@ console.log(this.businessRate);
                     
                     
                 } else {
+                    this.flag = true;
                     this.floatNumber = Number(this.baseRate) + Number(this.FloatingValue);
                     this.businessRateValue = this.floatNumber*12/10;
                     this.businessRate=this.businessRateValue.toFixed(2);
