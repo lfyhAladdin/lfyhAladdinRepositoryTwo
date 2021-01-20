@@ -34,7 +34,8 @@
             ulLi: [
               {
                 imgIcon: './static/images/profession/pf-1-1.svg',
-                liTitle: '订单待处理',
+                // liTitle: '订单待处理',
+                liTitle: '待确认订单',
                 liId: 'pendingOrder',
                 liKey: 'orderPending',
                 liNum: '',
