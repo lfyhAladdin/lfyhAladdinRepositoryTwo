@@ -567,7 +567,10 @@
                         }
                         that.personInfor.birthday = resData.bornDate.replace(/\//g, '-');
                         that.personInfor.ermanentAddress = resData.nativeAdd;
-                        that.personInfor.date = resData.idexpiry.replace(/\//g, '-');
+                        console.log(resData.idexpiry,"6666666666666666666")
+                        if(resData.idexpiry!==""){
+                          that.personInfor.date = resData.idexpiry.replace(/\//g, '-');
+                        }
                         var nameArr = resData.formerlyName.split(',');
                         that.personInfor.nameUsedList = [];
                         nameArr.forEach((item, index) => {
