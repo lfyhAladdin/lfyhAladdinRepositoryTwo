@@ -43,7 +43,7 @@
             </view>
           </view>
         </view>
-        <view class="pf-ul" v-show="supplementInfo" @click="getImgInfo">
+        <!-- <view class="pf-ul" v-show="supplementInfo" @click="getImgInfo">
           <view class="pf-li">
             <view class="pf-li-left">
               <img src="@/static/images/img-info2.png">
@@ -54,7 +54,7 @@
               <img src="@/static/images/profession/pf-arrow.svg">
             </view>
           </view>
-        </view>
+        </view> -->
 
 
 
@@ -256,7 +256,7 @@
                     url: 'supplement?+contractNo=' + this.contractNo,
                 });
             },
-            getImgInfo(){
+            getImgInfo() {
                 yu.navigateTo({
                     url: 'contractImgInfo',
                 });

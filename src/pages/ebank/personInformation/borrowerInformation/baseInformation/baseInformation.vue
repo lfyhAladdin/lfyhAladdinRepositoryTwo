@@ -10,8 +10,8 @@
       <view class="household-progress">
         <img src="@/static/images/firstroom/longProgress02.svg" />
         <view class="uni-flex uni-row">
-          <view class="flex-item active">户籍信息</view>
-          <view class="flex-item">基本信息</view>
+          <view class="flex-item ">户籍信息</view>
+          <view class="flex-item active">基本信息</view>
           <view class="flex-item">工作信息</view>
           <view class="flex-item">联系人信息</view>
         </view>
