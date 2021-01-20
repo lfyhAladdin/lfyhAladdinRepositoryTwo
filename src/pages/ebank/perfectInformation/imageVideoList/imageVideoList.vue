@@ -1,10 +1,10 @@
 <template>
   <view class="information-box">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{title}}</text>
     </view>
-    <view class="image-list-con">
+    <view class="pf-content image-list-con">
       <view class="image-information" v-for="(item,index) in imagelists" :key="index">
         <view class="title" ><text class="title-line"></text><text>{{item.busiFileTypeName}}</text></view>
         <view class="image-list">
@@ -328,6 +328,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import '@/static/css/professionwf.less';
 uni-page-wrapper{
   background: #f6f8f9 !important;
   height: 100%;

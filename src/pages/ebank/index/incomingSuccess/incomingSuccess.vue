@@ -1,10 +1,10 @@
 <template>
   <view class="incoming">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{title}}</text>
     </view>
-    <view class="customize-content-qrcode">
+    <view class="pf-content customize-content-qrcode">
       <view class="qrcode-box">
         <view class="qrcode" id="qrcodeSuccessJS" ref="qrcodeSuccessJS">
           <view class="qrcode-code">
@@ -130,6 +130,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '@/static/css/professionwf.less';
 uni-page-wrapper {
   height: 100% !important;
 }
@@ -232,7 +233,7 @@ uni-page-body:after {
         border-top: 0.6rpx solid #e0e0e0;
         margin-top: 39rpx;
         text {
-          width: 344.7rpx;
+          width: 49.8%;
           height: 94rpx;
           line-height: 94rpx;
           font-family: PingFangSC-Regular;
