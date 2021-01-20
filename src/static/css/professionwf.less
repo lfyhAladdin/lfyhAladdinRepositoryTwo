@@ -70,19 +70,27 @@
       position: absolute;
       top: 26rpx;
       left: 14rpx;
+      padding: 0;
+    }
+    .imgSearch-ios{
+      top: constant(safe-area-inset-top);
+      top: env(safe-area-inset-top);
     }
     .imgCross{
       height: 60rpx;
-      padding-top: 22rpx;
       position: absolute;
-      top: 0;
+      top: 22rpx;
       right: 14rpx;
       img{
+        padding: 0;
         width: 32rpx;
         height: 32rpx;
         margin-right: 0;
       }
-      
+    }
+    .imgCross-ios{
+      top: constant(safe-area-inset-top);
+      top: env(safe-area-inset-top);
     }
   }
 }

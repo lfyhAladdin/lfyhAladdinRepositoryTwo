@@ -1,6 +1,8 @@
 <template>
   <view class="uni-container">
-    <view class="mine-titleB"><text>我的</text></view>
+    <view :class="phoneSystem ?'pf-title pf-title-ios':'pf-title'">
+      <text>我的</text>
+    </view>
     <view class="mine-title">
       <view class="mine-title-avatar"><img :src=useravatar /></view>
       <view class="mine-title-content">
@@ -139,6 +141,10 @@ uni-page-body {
   background: url("~@/static/images/mine/mineBG.svg") left top no-repeat;
   background-size: 100%;
   background-color: #ffffff;
+}
+.pf-title{
+  background: no-repeat;
+  color: #ffffff;
 }
 .uni-container {
   background: transparent;

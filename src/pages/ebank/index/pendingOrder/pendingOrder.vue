@@ -1,10 +1,9 @@
 <template>
   <view class="pending-order">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{title}}</text>
     </view>
-
     <view class="orderlist">
       <view class="order" v-for="(orderOne,index) in orderlist" :key="index">
         <view class="order-title">

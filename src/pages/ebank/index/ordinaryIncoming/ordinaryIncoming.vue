@@ -1,8 +1,8 @@
 <template>
   <view class="incoming">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{title}}</text>
     </view>
     <view class="customize-content-form">
       <!--影像信息-start-->
@@ -533,7 +533,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "@/static/css/professionwf.less";
 uni-page-wrapper {
   height: 100% !important;
 }

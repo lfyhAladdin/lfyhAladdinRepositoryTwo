@@ -27,7 +27,7 @@
                 <text>{{dataObj.termMonth}}</text>
               </view>
               <view>
-                <text>收入负债比（%）</text>
+                <text>支出收入比（%）</text>
                 <text>{{dataObj.outInRatio}}</text>
               </view>
             </view>
@@ -61,6 +61,7 @@ export default {
     },
     methods:{
       applyriskintelligencecheck(){
+        yu.showLoading();
         let data = {
           'orderNo': this.orderNoVal,  //订单编号
           'isQuery':'1',//20210115新加字段
@@ -68,10 +69,24 @@ export default {
           'applyNo': this.applyNoVal,  //申请编号
         }
         this.interfaceRequest('/api/lendriskintelligencecheck/applyriskintelligencecheck',data,"get",(res)=>{
+          yu.hideLoading();
           console.log(res)
+          if(res.data.data.returnCode == "Failed"){
+            this.showToastFun(res.data.data.returnDesc);
+            return;
+          }
           this.dataObj = res.data.data;
         },function(err){
+          yu.hideLoading();
+          this.showToastFun("5.10风险智能探测失败，请联系管理员！");
           console.log(err)
+        });
+      },
+      showToastFun(e){
+        yu.showToast({
+          title: e,
+          icon: 'none',
+          duration: 3000
         });
       },
       //返回
@@ -87,7 +102,6 @@ export default {
 </script>
 <style lang='scss'>
   @import '~@styles/uni-nvue.css';
-  @import '@/static/css/professionwf.less';
 .uni-container{
   background-color: #FFFFFF;
   padding: 0 0 30rpx 0;

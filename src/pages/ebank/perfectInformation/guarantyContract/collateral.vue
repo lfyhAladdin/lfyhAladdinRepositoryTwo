@@ -89,14 +89,15 @@
         <view class="contract-li">
           <view class="beforeRed">房屋总价款（元）</view>
           <view>
-            <input class="uni-input" 
+            <!--<input class="uni-input" 
               placeholder="购入价"  
               v-model="totalPriceVal" 
               @focus="focusInput('totalPrice')"    
               @blur="blurInput($event,'totalPrice')"/>
             <text class="imgCross" v-show="totalPriceFocus" @click="imgCrossClick('totalPrice')">
               <img src="@/static/images/perfectInformation/cross.svg">
-            </text>
+            </text>-->
+            <text>{{totalPriceVal}}</text>
           </view>
         </view>
         <view class="contract-li" v-if="distinguishOneTwo">
@@ -351,7 +352,7 @@
         floorAreaVal: '',
         floorAreaFocus: false,
         totalPriceVal: '',
-        totalPriceFocus: false,
+        // totalPriceFocus: false,
         storeyHeighttVal: '',
         storeyHeighttFocus: false,
         realtyHeightVal: '',
@@ -411,12 +412,12 @@
             'boolean': true,
             'checkOut': false,
           },
-          {
-            'key': 'totalPrice',
-            'value': '房屋总价款',
-            'boolean': true,
-            'checkOut': false,
-          },
+          // {
+          //   'key': 'totalPrice',
+          //   'value': '房屋总价款',
+          //   'boolean': true,
+          //   'checkOut': false,
+          // },
           {
             'key': 'storeyHeightt',
             'value': '总层数',
@@ -494,7 +495,8 @@
         this.orderNoVal = this.approvalIngList.orderNo;
         this.applyNoVal = this.approvalIngList.serialNo;
         this.businessTypeVal = this.approvalIngList.businessType;
-
+        this.totalPriceVal = Number(this.queryApplyInfoList.businessSum) + Number(this.queryApplyInfoList.firstValue);
+        
         this.certtypeVal = this.queryApplyInfoList.customerCertType;  
         this.certIdVal = this.queryApplyInfoList.customerCertID;  
         this.ownerName1Val = this.queryApplyInfoList.fullName;
@@ -507,20 +509,15 @@
         if(this.approvalIngList.businessType2 != undefined && this.approvalIngList.businessType2.includes('一手')){
           this.distinguishOneTwo = false;
           this.residenceAddDis = true;
-          // this.requiredField[2].boolean = false;
-          // this.requiredField[7].boolean = false;
-          // this.requiredField[8].boolean = false;
           this.requiredField.forEach(item=>{
             if(item.checkOut){
               item.boolean = false;
             }
-          })
+          });
+          this.guarantyRateVal = (this.queryApplyInfoList.businessSum / this.totalPriceVal).toFixed(2);
         }else{
           this.distinguishOneTwo = true;
           this.residenceAddDis = false;
-          // this.requiredField[2].boolean = true;
-          // this.requiredField[7].boolean = true;
-          // this.requiredField[8].boolean = true;
           this.requiredField.forEach(item=>{
             if(item.checkOut){
               item.boolean = true;
@@ -699,15 +696,7 @@
               'value': this.guarantyRateVal,
             });
           }
-        }else{
-          if(name == 'totalPrice'){
-            this.guarantyRateVal = (this.queryApplyInfoList.businessSum / this.totalPriceVal).toFixed(2);
-            this.collateralInputListReplace({
-              'key': 'guarantyRateVal',
-              'value': this.guarantyRateVal,
-            });
-          }
-        }
+        };
       },
       focusInput(name){
         this[`${name}Focus`] = true;
@@ -719,9 +708,9 @@
           'value': '',
         });
         this[`${name}Focus`] = false;
-        if(name == 'totalPrice'){
-          this.guarantyRateVal = '';
-        }
+        // if(name == 'totalPrice'){
+        //   this.guarantyRateVal = '';
+        // }
       },
       //申请信息更新
       updateApplyInfo(e){
@@ -938,7 +927,6 @@
 
 <style lang='scss'>
   @import '~@styles/uni-nvue.css';
-  @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;

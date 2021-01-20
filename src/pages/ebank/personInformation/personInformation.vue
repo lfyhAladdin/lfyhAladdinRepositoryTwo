@@ -456,7 +456,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/static/css/professionwf.less';
 
 .container{
   box-sizing: border-box;

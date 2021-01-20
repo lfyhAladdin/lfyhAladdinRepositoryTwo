@@ -1,180 +1,113 @@
 <template>
-  <view class="incoming">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack">
-        <img src="@/static/images/firstroom/backArrow.svg" />
+  <view class="uni-container">
+    <view class="pf-poifixed">
+      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+        <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+        <text>借款人信息</text>
+        <text class="pf-text" @click="submit(false)">暂存</text>
       </view>
-      <view class="ch-title">借款人信息</view>
-      <view class="ch-other" @click="nextStep(false)">暂存</view>
-    </view>
-    <!--信息完善进度条-start-->
-    <view class="progress">
-      <img src="@/static/images/firstroom/longProgress03.svg" />
-      <view class="uni-flex uni-row">
-        <view class="flex-item active">户籍信息</view>
-        <view class="flex-item">基本信息</view>
-        <view class="flex-item">工作信息</view>
+      <!--信息完善进度条-start-->
+      <view class="household-progress">
+        <img src="@/static/images/firstroom/longProgress03.svg" />
+        <view class="uni-flex uni-row">
+         <view class="flex-item">户籍信息</view>
+        <view class="flex-item ">基本信息</view>
+        <view class="flex-item active">工作信息</view>
         <view class="flex-item">联系人信息</view>
+        </view>
       </view>
+      <!--信息完善进度条-end-->
     </view>
-    <!--信息完善进度条-end-->
-    <view class="customize-content-form">
+    <view class="pf-content work-content">
       <!--个人信息-start-->
-      <view class="person-infor marginT25">
-        <view class="person-infor-one">
-          <text>单位名称</text>
-          <img
-            v-if="personInfor.companyName!=''"
-            class="cleanUp"
-            src="@/static/images/firstroom/cleanUp.svg"
-            @click="personInfor.companyName=''"
-          />
-          <!-- <input placeholder="请输入" type="text" v-model.trim="personInfor.companyName" @focus="verifyCompanyName.isTipShow=false" @blur="checkCompanyName(personInfor.companyName)" /> -->
-          <textarea
-            name
-            placeholder-style="color:#c7c9cd"
-            placeholder="请输入"
-            id
-            cols="30"
-            rows="10"
-            v-model.trim="personInfor.companyName"
-            @focus="verifyCompanyName.isTipShow=false"
-            @blur="checkCompanyName(personInfor.companyName)"
-          ></textarea>
-          <view v-if="verifyCompanyName.isTipShow" class="tips">{{verifyCompanyName.tipText}}</view>
-        </view>
-        <!--<view class="person-infor-one">
-          <text>规模判断</text>
-          <picker @change="scaleJudgementChange" :value="scaleJudgementIdx" :range-key="'value'" :range="scaleJudgementList">
-						<view class="uni-input">{{scaleJudgementList[scaleJudgementIdx].value}}</view>
-					</picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
-        </view>-->
-        <view class="person-infor-one">
-          <text>单位地址</text>
-          <img
-            v-if="personInfor.companyAddress!=''"
-            class="cleanUp"
-            src="@/static/images/firstroom/cleanUp.svg"
-            @click="personInfor.companyAddress=''"
-          />
-          <!-- <input placeholder="请输入" type="text" v-model.trim="personInfor.companyAddress" @focus="verifyCompanyAddress.isTipShow=false" @blur="checkCompanyAddress(personInfor.companyAddress)" /> -->
-          <textarea
-            name
-            id
-            placeholder-style="color:#c7c9cd"
-            placeholder="请输入"
-            cols="30"
-            rows="10"
-            v-model.trim="personInfor.companyAddress"
-            @focus="verifyCompanyAddress.isTipShow=false"
-            @blur="checkCompanyAddress(personInfor.companyAddress)"
-          ></textarea>
-          <view v-if="verifyCompanyAddress.isTipShow" class="tips">{{verifyCompanyAddress.tipText}}</view>
-        </view>
-        <!--<view class="person-infor-one">
-          <text>单位地址邮编</text>
-          <img v-if="personInfor.postcode!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.postcode=''" />
-          <input placeholder="请输入" type="number" v-model.trim="personInfor.postcode" @focus="verifyPostcode.isTipShow=false" @blur="checkPostCode(personInfor.postcode)" />
-          <view v-if="verifyPostcode.isTipShow" class="tips">{{verifyPostcode.tipText}}</view>
-        </view>-->
-        <view class="person-infor-one">
-          <text>单位电话</text>
-          <img
-            v-if="personInfor.telephone!=''"
-            class="cleanUp"
-            src="@/static/images/firstroom/cleanUp.svg"
-            @click="personInfor.telephone=''"
-          />
-          <input
-            placeholder="请输入"
-            maxlength="11"
-            type="number"
-            v-model.trim="personInfor.telephone"
-            @focus="verifyTelephone.isTipShow=false"
-            @blur="checkTelephone(personInfor.telephone)"
-          />
-          <view v-if="verifyTelephone.isTipShow" class="tips">{{verifyTelephone.tipText}}</view>
-        </view>
-        <view class="person-infor-one">
-          <text>单位性质</text>
-          <picker
-            @change="workNatureChange"
-            :value="workNatureIdx"
-            :range-key="'value'"
-            :range="workNatureList"
-          >
-            <view class="uni-input">{{workNatureList[workNatureIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
-        </view>
-        <view class="person-infor-one">
-          <text>单位所属行业</text>
-          <picker
-            @change="unitKindChange"
-            :value="unitKindIdx"
-            :range-key="'value'"
-            :range="unitKindList"
-          >
-            <view class="uni-input">{{unitKindList[unitKindIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
-        </view>
-        <view class="person-infor-one">
-          <text>职业</text>
-          <picker
-            @change="occupationChange"
-            :value="occupationIdx"
-            :range-key="'value'"
-            :range="occupationList"
-          >
-            <view class="uni-input">{{occupationList[occupationIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
-        </view>
-        <view class="person-infor-one">
-          <text>职务</text>
-          <picker
-            @change="headShipChange"
-            :value="headShipIdx"
-            :range-key="'value'"
-            :range="headShipList"
-          >
-            <view class="uni-input">{{headShipList[headShipIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
-        </view>
-        <view class="person-infor-one">
-          <text>职称</text>
-          <picker
-            @change="positionChange"
-            :value="positionIdx"
-            :range-key="'value'"
-            :range="positionList"
-          >
-            <view class="uni-input">{{positionList[positionIdx].value}}</view>
-          </picker>
-          <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
-        </view>
-        <!--<view class="person-infor-one">
-          <text>是否本行员工</text>
-          <view class="btnList">
-            <button size="mini" :type="staff=='1'?'primary':''" @click="staff='1'">是</button>
-            <button size="mini" :type="staff=='2'?'primary':''" @click="staff='2'">否</button>
+      <view class="contract-ul marginT25">
+        <view class="contract-li-tips">
+          <view class="contract-li">
+            <view>单位名称</view>
+            <view>
+              <input class="uni-input" placeholder="请输入" type="text" v-model.trim="personInfor.companyName" @focus="verifyCompanyName.isTipShow=false" @blur="checkCompanyName(personInfor.companyName)" />
+              <img v-if="personInfor.companyName!=''" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.companyName=''" />
+            </view>
           </view>
-        </view>-->
+          <view v-if="verifyCompanyName.isTipShow" class="contract-tips">{{verifyCompanyName.tipText}}</view>
+        </view>
+        <view class="contract-li-tips">
+          <view class="contract-li">
+            <view>单位地址</view>
+            <view>
+              <input class="uni-input" placeholder="请输入" type="text" v-model.trim="personInfor.companyAddress" @focus="verifyCompanyAddress.isTipShow=false" @blur="checkCompanyAddress(personInfor.companyAddress)" />
+              <img v-if="personInfor.companyAddress!=''" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.companyAddress=''" />
+            </view>
+          </view>
+          <view v-if="verifyCompanyAddress.isTipShow" class="contract-tips">{{verifyCompanyAddress.tipText}}</view>
+        </view>
+        <view class="contract-li-tips">
+          <view class="contract-li">
+            <view>单位电话</view>
+            <view>
+              <input class="uni-input" placeholder="请输入" type="number" maxlength="11" v-model.trim="personInfor.telephone" @focus="verifyTelephone.isTipShow=false" @blur="checkTelephone(personInfor.telephone)" />
+              <img v-if="personInfor.telephone!=''" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.telephone=''" />
+            </view>
+          </view>
+          <view v-if="verifyTelephone.isTipShow" class="contract-tips">{{verifyTelephone.tipText}}</view>
+        </view>
+        <view class="contract-li">
+          <view>单位性质</view>
+          <view>
+            <picker @change="workNatureChange" :value="workNatureIdx" :range-key="'value'" :range="workNatureList">
+              {{workNatureList[workNatureIdx].value}}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
+        </view>
+        <view class="contract-li">
+          <view>单位所属行业</view>
+          <view>
+            <picker @change="unitKindChange" :value="unitKindIdx" :range-key="'value'" :range="unitKindList">
+              {{unitKindList[unitKindIdx].value}}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
+        </view>
+        <view class="contract-li">
+          <view>职业</view>
+          <view>
+            <picker @change="occupationChange" :value="occupationIdx" :range-key="'value'" :range="occupationList">
+						<view class="uni-input">{{occupationList[occupationIdx].value}}</view>
+					</picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
+        </view>
+        <view class="contract-li">
+          <view>职务</view>
+          <view>
+            <picker @change="headShipChange" :value="headShipIdx" :range-key="'value'" :range="headShipList">
+              {{headShipList[headShipIdx].value}}
+            </picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
+        </view>
+
+ <view class="contract-li">
+          <view>职称</view>
+          <view>
+            <picker @change="positionChange" :value="positionIdx" :range-key="'value'" :range="positionList">
+						<view class="uni-input">{{positionList[positionIdx].value}}</view>
+					</picker>
+            <img src="@/static/images/firstroom/formChooseArrow.svg" />
+          </view>
+        </view>
+
       </view>
       <!--个人信息-end-->
-      <view class @click="nextStep(true)">
-        <view class="cbutton">
-          <text>下一步</text>
-        </view>
+      <view class="contract-button">
+        <button type="primary" @click="nextStep(true)">下一步</button>
       </view>
     </view>
   </view>
 </template>
 <script>
-import pageHead from "@/components/page-head.vue";
+  import pageHead from "@/components/page-head.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -575,292 +508,16 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-uni-page-wrapper {
-  height: 100% !important;
-}
-
-uni-page-wrapper:after {
-  display: block;
-  content: "";
-  clear: both;
-}
-
-uni-page-body {
-  height: 100% !important;
-}
-
-uni-page-body:after {
-  display: block;
-  content: "";
-  clear: both;
-}
-
-.incoming {
-  background: #f6f8f9 !important;
-  width: 100%;
-  height: 100%;
-  .customize-content-form {
-    background: #f6f8f9 !important;
-    width: 100%;
-    height: 100%;
-    padding-top: 362rpx;
-    .image-information {
-      padding: 0 40rpx;
-      height: 421rpx;
-      background: #ffffff;
-      .title {
-        height: 45rpx;
-        line-height: 45rpx;
-        font-size: 32rpx;
-        color: #333333;
-        padding-top: 26rpx;
-      }
-    }
-    .image-information:after {
-      display: block;
-      content: "";
-      clear: both;
-    }
-    .person-infor {
-      background: #ffffff;
-      padding-left: 30rpx;
-      .person-infor-one {
-        height: 105rpx;
-        line-height: 105rpx;
-        border-bottom: 1rpx solid #e5e5e5;
-        padding-left: 10rpx;
-        padding-right: 40rpx;
-        position: relative;
-        text {
-          float: left;
-          color: #333333;
-          font-size: 32rpx;
-        }
-        text:last-child {
-          float: right;
-          color: #999999;
-          margin-right: 40rpx;
-        }
-        input {
-          float: right;
-          color: #333333;
-          font-size: 32rpx;
-          /* margin-right: 40rpx; */
-          width: 300rpx;
-          height: 45rpx;
-          line-height: 45rpx;
-          text-align: right;
-          padding: 30rpx 0;
-          .uni-input {
-            color: #333333;
-          }
-          .uni-input-placeholder {
-            color: #c7c9cd;
-          }
-        }
-        textarea {
-          width: 71%;
-          height: 105rpx;
-          text-align: right;
-          padding-top: 30rpx;
-          margin-left: 140rpx;
-          line-height: 36rpx;
-        }
-        input.nameUsed {
-          /* margin-right: 90rpx; */
-          width: 276rpx;
-        }
-        picker {
-          float: right;
-          color: #333333;
-          font-size: 32rpx;
-          margin-right: 23rpx;
-          height: 100%;
-          line-height: 45rpx;
-          padding: 30rpx 0;
-          display: block;
-          width: 300rpx;
-          text-align: right;
-          .uni-input {
-            font-size: 32rpx;
-            padding: 0;
-            height: 45rpx;
-            line-height: 45rpx;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-        }
-        .plus {
-          /* position: absolute;
-            top: 50%;
-            right: 30rpx; */
-          float: right;
-          /* margin-top: -15rpx; */
-          width: 30rpx;
-          margin-right: -10rpx;
-          margin-left: 25rpx;
-          margin-top: 36rpx;
-        }
-        .cleanUp {
-          float: right;
-          width: 34rpx;
-          /* margin-right: 40rpx; */
-          margin-right: -10rpx;
-          margin-left: 25rpx;
-          margin-top: 34rpx;
-        }
-        .choose-arrow {
-          width: 15rpx;
-          height: 26rpx;
-          position: absolute;
-          top: 50%;
-          right: 32rpx;
-          margin-top: -13rpx;
-          /* margin-right: -7.5rpx; */
-        }
-        .tips {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          color: red;
-        }
-        .btnList {
-          float: right;
-          width: 300rpx;
-          height: 100%;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-        }
-      }
-      .person-infor-one:last-child {
-        border: 0;
-      }
+  @import '@/static/css/professionwf.less';
+  .uni-container{
+    background-color: #f6f8f9;
+    padding: 0 0 30rpx 0;
+    .work-content{
+      padding-top: 270rpx;
+    
     }
   }
-  .customize-content-form:after {
-    display: block;
-    content: "";
-    clear: both;
+  .marginT25{
+    margin-top: 25rpx;
   }
-}
-
-.incoming:after {
-  display: block;
-  content: "";
-  clear: both;
-}
-
-.customize-head {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 100%;
-  padding: 62rpx 0 18rpx 0;
-  height: 50rpx;
-  line-height: 50rpx;
-  background: #ffffff;
-  display: flex;
-  vertical-align: middle;
-  align-items: center;
-  border-bottom: 1rpx solid #e5e5e5;
-  .ch-img {
-    position: absolute;
-    left: 0;
-    top: 69rpx;
-    width: 20rpx;
-    height: 36rpx;
-    margin-left: 36rpx;
-    img {
-      width: 20rpx;
-      height: 36rpx;
-    }
-  }
-  .ch-title {
-    font-size: 36rpx;
-    height: 50rpx;
-    line-height: 50rpx;
-    margin: 0 auto;
-    text-align: center;
-    color: #333333;
-  }
-  .ch-other {
-    position: absolute;
-    right: 40rpx;
-    top: 69rpx;
-    height: 36rpx;
-    line-height: 36rpx;
-    color: #3b86f7;
-    font-size: 30rpx;
-  }
-}
-
-.cbutton {
-  width: 620rpx;
-  padding: 0;
-  margin: 41rpx auto 190rpx auto;
-  font-size: 36rpx;
-  color: #edf6fe;
-  height: 100rpx;
-  line-height: 100rpx;
-  border-radius: 50rpx;
-  background: #3b86f7;
-  border: 0rpx;
-  text-align: center;
-  box-shadow: 0rpx 10rpx 23rpx 0rpx rgba(#3b86f7, 0.4);
-}
-
-.cbutton:after {
-  display: block;
-  content: "";
-  clear: both;
-}
-
-.form-title {
-  height: 94rpx;
-  line-height: 94rpx;
-  text-align: center;
-  font-size: 32rpx;
-  color: #333333;
-  padding-left: 40rpx;
-  display: flex;
-  vertical-align: middle;
-  align-items: center;
-  .vLine {
-    width: 10rpx;
-    height: 34rpx;
-    background: #3b86f7;
-    border-radius: 4px;
-    margin-right: 17rpx;
-  }
-}
-
-.progress {
-  position: fixed;
-  top: 130rpx;
-  left: 0;
-  z-index: 9;
-  width: 100%;
-  height: 170rpx;
-  padding-top: 60rpx;
-  background: #ffffff;
-  text-align: center;
-  img {
-    width: 548rpx;
-  }
-  .uni-flex {
-    font-size: 24rpx;
-    color: #999999;
-    padding-left: 18rpx;
-    .active {
-      color: #333435;
-    }
-  }
-}
-
-.marginT25 {
-  margin-top: 25rpx;
-}
 </style>

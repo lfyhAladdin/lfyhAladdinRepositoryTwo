@@ -1142,7 +1142,6 @@
 </script>
 <style lang='scss'>
     @import "~@styles/uni-nvue.css";
-    @import "@/static/css/professionwf.less";
     .uni-container {
         background-color: #ffffff;
         padding: 0 0 30rpx 0;

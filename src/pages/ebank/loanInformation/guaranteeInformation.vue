@@ -12,7 +12,7 @@
 			<ul class="loaninfo">
 				<li>业务信息</li>
 				<li>担保信息</li>
-				<li>利率期限信息</li>
+				<li>利率信息</li>
 				<li>还款信息</li>
 			</ul>
 		</view>

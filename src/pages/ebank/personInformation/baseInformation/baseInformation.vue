@@ -301,11 +301,7 @@
 
         },(err)=>{
           yu.hideLoading();
-          yu.showToast({
-            title: '7.8地区查询出现问题，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun("7.8地区查询出现问题，请联系管理员");
         });
       },
       // 获取最高学历列表
@@ -360,16 +356,15 @@
           }
         });
       },
+      showToastFun(e){
+        yu.showToast({
+          title: e,
+          icon: 'none',
+          duration: 3000
+        });
+      },
       // 下一步
       nextStep(isJump){
-        if(this.personInfor.phone == ''){
-          yu.showToast({
-            title: this.verifyPhone.tipText,
-            icon: 'none',
-            duration: 3000
-          });
-          return;
-        }
         if(!this.preventResubmit){
           yu.showModal({
             content: '操作进行中，请稍等',
@@ -381,6 +376,14 @@
               }
             }
           });
+          return;
+        }
+        if(this.personInfor.phone == ''){
+          this.showToastFun(this.verifyPhone.tipText)
+          return;
+        }
+        if(this.personInfor.yearIncome == ''){
+          this.showToastFun(this.verifyYearIncome.tipText)
           return;
         }
         this.preventResubmit = false;
@@ -450,20 +453,12 @@
               }); //重新调'申请信息查询'接口
             }
           }else{
-            yu.showToast({
-              title: resArr.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(resArr.returnDesc);
           }
         },(err)=>{
           this.preventResubmit = true;
           yu.hideLoading();
-          yu.showToast({
-            title: '3.7个人信息出现问题，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.7个人信息出现问题，请联系管理员');
         });
       },
       // 3.2接口 获取个人信息
@@ -495,19 +490,11 @@
                 this.mulIndex=resData.coord.split(',');
               }
             }else{
-              yu.showToast({
-                title: resData.returnDesc,
-                icon: 'none',
-                duration: 3000
-              });
+              this.showToastFun(resData.returnDesc);
             }
           },(err)=>{
             yu.hideLoading();
-            yu.showToast({
-              title: '3.2个人信息出现问题，请联系管理员',
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun('3.2个人信息出现问题，请联系管理员');
           });
       },
       // 下拉框回显
@@ -535,7 +522,6 @@
 </script>
 
 <style lang='scss' scoped>
-  @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #f6f8f9;
     padding: 0 0 30rpx 0;

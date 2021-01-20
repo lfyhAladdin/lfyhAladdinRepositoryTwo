@@ -130,7 +130,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/static/css/professionwf.less';
 uni-page-wrapper {
   height: 100% !important;
 }

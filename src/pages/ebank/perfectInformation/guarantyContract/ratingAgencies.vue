@@ -10,8 +10,8 @@
           v-model="valInput" 
           @focus="focusInput" 
           @blur="blurInput"/>
-        <img src="@/static/images/perfectInformation/search.svg" class="imgSearch">
-        <view class="imgCross" v-show="imgCross" @click="imgCrossClick">
+        <img src="@/static/images/perfectInformation/search.svg" :class="phoneSystem ? 'imgSearch imgSearch-ios' : 'imgSearch'">
+        <view :class="phoneSystem ? 'imgCross imgCross-ios' : 'imgCross'" v-show="imgCross" @click="imgCrossClick">
           <img src="@/static/images/perfectInformation/cross.svg">
         </view>
       </view>
@@ -107,7 +107,6 @@
 
 <style lang='scss'>
   @import '~@styles/uni-nvue.css';
-  @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;

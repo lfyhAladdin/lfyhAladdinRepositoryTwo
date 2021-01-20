@@ -302,7 +302,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import '@/static/css/professionwf.less';
 .information-box {
   background: #ffffff !important;
   width: 100%;

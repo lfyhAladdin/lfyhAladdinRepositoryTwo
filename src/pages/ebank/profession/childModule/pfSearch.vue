@@ -127,7 +127,6 @@
 </script>
 <style lang='scss'>
   @import '~@styles/uni-nvue.css';
-  @import '@/static/css/professionwf.less';
 
   .pfSearchBox{
     padding: 130rpx 0 0 24rpx;
