@@ -4,7 +4,7 @@
       <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
         <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
         <text>借款人信息</text>
-        <text class="pf-text" @click="submit(false)">暂存</text>
+        <text class="pf-text" @click="nextStep(false)">暂存</text>
       </view>
       <!--信息完善进度条-start-->
       <view class="household-progress">
