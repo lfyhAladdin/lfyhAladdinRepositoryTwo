@@ -241,10 +241,20 @@ export default {
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ['camera'], //从相册选择或拍照
         success: function (res) {
-          yu.showLoading();
+           yu.showToast({
+            icon: "none",
+            title: "图片获取成功",
+            duration: 1500
+          });
           const tempFilePaths = res.tempFilePaths;
           _self.convertImgToBase64(tempFilePaths[0], function (data) {
+            yu.showToast({
+              icon: "none",
+              title: "图片压缩成功",
+              duration: 1500
+            });
             let base64code=data.split(';base64,')[1];
+
             _self.uploadImagePost(base64code,_id);//调用上传图片方法
           });
           _self.iconcheck = 1;//点击后图片更改状态由0变成1
@@ -312,12 +322,21 @@ export default {
           }
         ]
       };
+       yu.showToast({
+        icon: "none",
+        title: "图片开始上传",
+        duration: 1500
+      });
        _this.interfaceRequest(
         postUrl,
         data,
         "post",
         function(res) {
-          yu.hideLoading();
+           yu.showToast({
+            icon: "none",
+            title: "图片上传成功",
+            duration: 1500
+          });
           let filename=res.data.data.uploadImageOutVoList[0].fileName;
           _this.uploadImageResult(bt,base64Code,filename);
         },
