@@ -52,15 +52,6 @@
                 liId: '01',
                 liKey: 'creditSubmit',
                 liNum: '',
-                // liUrl: 'approvalIng/approvalIng',
-                liUrl: 'profession/approvalIng/approvalIng',
-              },
-              {
-                imgIcon: './static/images/profession/pf-2-2.svg',
-                liTitle: '人工定价审批',
-                liId: '05',
-                liKey: 'creditPeoplePricing',
-                liNum: '',
                 liUrl: 'profession/approvalIng/approvalIng',
               },
               {
@@ -84,6 +75,14 @@
                 liTitle: '审批否决',
                 liId: '04',
                 liKey: 'creditVeto',
+                liNum: '',
+                liUrl: 'profession/approvalIng/approvalIng',
+              },
+              {
+                imgIcon: './static/images/profession/pf-2-2.svg',
+                liTitle: '人工定价审批',
+                liId: '05',
+                liKey: 'creditPeoplePricing',
                 liNum: '',
                 liUrl: 'profession/approvalIng/approvalIng',
               },
@@ -215,7 +214,6 @@
 
 <style lang='scss'>
   @import '~@styles/uni-nvue.css';
-  @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
   }

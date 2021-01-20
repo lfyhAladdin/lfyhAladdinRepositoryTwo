@@ -222,6 +222,13 @@
           }
         });
       },
+      showToastFun(e){
+        yu.showToast({
+          title: e,
+          icon: 'none',
+          duration: 3000
+        });
+      },
       // 提交
       submit(isJump){
         if(!this.preventResubmit){
@@ -236,7 +243,19 @@
             }
           });
           return;
-        }
+        };
+        if(this.personInfor.companyName == ""){
+          this.showToastFun(this.verifyCompanyName.tipText);
+          return;
+        };
+        if(this.personInfor.companyAddress == ""){
+          this.showToastFun(this.verifyCompanyAddress.tipText);
+          return;
+        };
+        if(this.personInfor.telephone == ""){
+          this.showToastFun(this.verifyTelephone.tipText);
+          return;
+        };
         this.preventResubmit = false;
         this.isJump = isJump;
         let personalInformation= this.personalInformation;
@@ -280,20 +299,12 @@
               });
             }
           }else{
-            yu.showToast({
-              title: resArr.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(resArr.returnDesc);
           }
         },(err)=>{
           this.preventResubmit = true;
           yu.hideLoading();
-          yu.showToast({
-            title: '3.7个人信息出现问题，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.7个人信息出现问题，请联系管理员');
         });
       },
       // 3.2接口 获取个人信息
@@ -319,19 +330,11 @@
               this.unitKindIdx=this.selectInfo(this.unitKindList,resData.unitKind);
               this.headShipIdx=this.selectInfo(this.headShipList,resData.headShip);
             }else{
-              yu.showToast({
-                title: resData.returnDesc,
-                icon: 'none',
-                duration: 3000
-              });
+              this.showToastFun(resData.returnDesc);
             }
           },(err)=>{
             yu.hideLoading();
-            yu.showToast({
-              title: '3.2个人信息出现问题，请联系管理员',
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun('3.2个人信息出现问题，请联系管理员');
           });
       },
       // 下拉框回显
@@ -359,7 +362,6 @@
 </script>
 
 <style lang='scss' scoped>
-  @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #f6f8f9;
     padding: 0 0 30rpx 0;

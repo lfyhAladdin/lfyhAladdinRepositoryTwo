@@ -413,7 +413,6 @@
 
 <style lang='scss'>
   @import '~@styles/uni-nvue.css';
-  @import '@/static/css/professionwf.less';
   .uni-container{
     padding: 0 0 30rpx 0;
     .contract-content{

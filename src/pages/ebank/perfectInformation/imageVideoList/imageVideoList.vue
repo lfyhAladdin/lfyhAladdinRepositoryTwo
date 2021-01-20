@@ -328,7 +328,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import '@/static/css/professionwf.less';
 uni-page-wrapper{
   background: #f6f8f9 !important;
   height: 100%;

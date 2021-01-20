@@ -168,6 +168,7 @@
 <style lang='scss'>
   @import './assets/styles/uni.css';
   @import '@styles/common.scss';
+  @import '@/static/css/professionwf.less';
   *{
     font-family: 'PingFangSC-Medium' !important;
   }

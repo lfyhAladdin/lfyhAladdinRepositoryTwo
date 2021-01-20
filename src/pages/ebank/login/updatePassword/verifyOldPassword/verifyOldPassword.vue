@@ -1,8 +1,8 @@
 <template>
   <view class="incoming">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title">{{identity}}</view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{identity}}</text>
     </view>
     <view class="customize-content-form">
       <view class="person-infor">

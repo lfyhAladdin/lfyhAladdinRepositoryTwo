@@ -608,7 +608,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #f6f8f9;
     padding: 0 0 30rpx 0;

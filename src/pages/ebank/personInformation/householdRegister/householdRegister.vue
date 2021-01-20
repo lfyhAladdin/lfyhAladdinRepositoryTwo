@@ -134,7 +134,7 @@
   </view>
 </template>
 <script>
-  import pageHead from '@/components/page-head.vue';
+  // import pageHead from '@/components/page-head.vue';
   import { mapGetters,mapActions,mapMutations } from 'vuex'
 
   export default {
@@ -309,22 +309,13 @@
           // if(type==1){
           if(ret && ret.payload && ret.payload.Name){
             if(this.iDCardNoVal !='' && this.iDCardNoVal != ret.payload.IDCardNo){
-              yu.showToast({
-                title: '不可修改人员信息，如需修改请先删除再进行新增！',
-                icon: 'none',
-                duration: 3000
-              });
+              this.showToastFun('不可修改人员信息，如需修改请先删除再进行新增！');
               return;
             }
             this.personInfor.name = ret.payload.Name;
             this.personInfor.idcard = ret.payload.IDCardNo;
             this.personInfor.sex = ret.payload.Gender;
             this.personInfor.ermanentAddress = ret.payload.Address; 
-            // let dateArr = ret.payload.Birthday.split(/[\u4e00-\u9fa5]/);
-            // let year = dateArr[0];
-            // let month = dateArr[1]*1>9?dateArr[1]:'0'+dateArr[1];
-            // let day = dateArr[2]*1>9?dateArr[2]:'0'+dateArr[2];
-            // this.personInfor.birthday = year + '-' + month + '-' + day;
             let year = ret.payload.IDCardNo.substring(6,10);
             let month = ret.payload.IDCardNo.substring(10,12);
             let day = ret.payload.IDCardNo.substring(12,14);
@@ -332,11 +323,7 @@
             foxsdk.io.convertLocalFileSystemURL(ret.payload.ImagePath, url => {
               this.IDFrontPath = url;
             },ret => {
-              yu.showToast({
-                title: 'OCR路径转换失败',
-                icon: 'none',
-                duration: 3000
-              });
+              this.showToastFun('OCR路径转换失败');
             });
             foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
               this.IDFrontBase64 = entry.payload.imageBase64;
@@ -347,11 +334,7 @@
             foxsdk.io.convertLocalFileSystemURL(ret.payload.ImagePath, url => {
               this.IDReversePath = url;
             },ret => {
-              yu.showToast({
-                title: 'OCR路径转换失败',
-                icon: 'none',
-                duration: 3000
-              });
+              this.showToastFun('OCR路径转换失败');
             });
             foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
               this.IDReverseBase64 = entry.payload.imageBase64;
@@ -412,22 +395,14 @@
               });
             }
           }else{
-            yu.showToast({
-              title: res.data.data.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(res.data.data.returnDesc);
           }
         
         },(err)=>{
           yu.hideLoading();
           console.log('*********存储')
           console.log(err);
-          yu.showToast({
-            title: '6.6影像出现问题，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('6.6影像出现问题，请联系管理员');
           setTimeout(()=>{
             this.pageJump('personInformation/personInformation')
           },3100);
@@ -467,22 +442,13 @@
             });
 
           }else{
-            yu.showToast({
-              title: resData.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(resData.returnDesc);
           }
         },(err)=>{
           yu.hideLoading();
           console.log('//////////下载')
           console.log(err);
-          yu.showToast({
-            title: '6.8影像出现问题，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
-          
+          this.showToastFun('6.8影像出现问题，请联系管理员');
         });
       },
       // 先6.7删除 再6.6新增 实现更新影像信息
@@ -503,21 +469,13 @@
             this.uploadbybacthid();
             this.deletelocalfileandfolder();
           }else{
-            yu.showToast({
-              title: res.data.data.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(res.data.data.returnDesc);
           }
         },(err)=>{
           yu.hideLoading();
           console.log('//////////删除')
           console.log(err);
-          yu.showToast({
-            title: '6.7影像出现问题，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('6.7影像出现问题，请联系管理员');
         });
       },
       //6.9 删除从影像平台下载的文件和文件夹
@@ -527,30 +485,18 @@
         this.interfaceRequest(posturl,{},"post",(res)=>{
           yu.hideLoading();
           if(res.data.data.returnCode == 'Faild'){
-            yu.showToast({
-              title: res.data.data.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(res.data.data.returnDesc);
           }
         },(err)=>{
           yu.hideLoading();
           console.log('//////////删除文件夹')
           console.log(err);
-          yu.showToast({
-            title: '6.9影像出现问题，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('6.9影像出现问题，请联系管理员');
         });
       },
       addName(){
         if(this.personInfor.nameUsedList.length >= 3){
-          yu.showToast({
-            title: '最多可填3个曾用名',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('最多可填3个曾用名');
           return;
         }
         this.personInfor.nameUsedList.push({name:'',isTipShow:false});
@@ -577,28 +523,40 @@
           return;
         }
         this.isJump = isJump;
+        
+        // if((this.IDFrontBase64=='' && this.IDReverseBase64!='') || (this.IDFrontBase64!='' && this.IDReverseBase64=='') || (this.IDFrontBase64=='' && this.IDReverseBase64 =='') ){
+        //   this.showToastFun('请上传完整的身份证信息');
+        //   return;
+        // };
+        if(this.personInfor.idcard == ''){
+          this.showToastFun('请上传完整的身份证信息');
+          return;
+        }
         if(this.relatedPerson!='' && this.relatedPersonIdx=='0'){
-          yu.showToast({
-            title: '请选择关联人',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('请选择关联人');
           return;
         };
-        if((this.IDFrontBase64=='' && this.IDReverseBase64!='') || (this.IDFrontBase64!='' && this.IDReverseBase64=='')){
-          yu.showToast({
-            title: '请上传完整的身份证信息',
-            icon: 'none',
-            duration: 3000
-          });
+        if(this.personInfor.name == ''){
+          this.showToastFun(this.verifyName.tipText);
           return;
-        };
+        }
+        if(this.personInfor.ermanentAddress == ""){
+          this.showToastFun("请输入户籍地址");
+          return;
+        }
         this.preventResubmit = false;
         if(JSON.stringify(this.personalInformation) != "{}"){
           this.updatePersonalData();
         }else{
           this.listUpdate();
         };
+      },
+      showToastFun(e){
+        yu.showToast({
+          title: e,
+          icon: 'none',
+          duration: 3000
+        });
       },
       // 3.12接口 关联人列表更新
       listUpdate(){
@@ -699,20 +657,12 @@
               this.uploadbybacthid();
             }
           }else{
-            yu.showToast({
-              title: resArr.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(resArr.returnDesc);
           }
         },(err)=>{
           this.preventResubmit = true;
           yu.hideLoading();
-          yu.showToast({
-            title: '3.12更新失败，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.12更新失败，请联系管理员');
         });
         
       },
@@ -773,20 +723,12 @@
               this.updatebyfilename();
             }
           }else{
-            yu.showToast({
-              title: resArr.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(resArr.returnDesc);
           }
         },(err)=>{
           this.preventResubmit = true;
           yu.hideLoading();
-          yu.showToast({
-            title: '3.7更新失败，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.7更新失败，请联系管理员');
         });
       },
       queryApplyInfo(e){
@@ -855,19 +797,11 @@
             }
             this.downloadbybatchid();
           }else{
-            yu.showToast({
-              title: resArr.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(resArr.returnDesc);
           }
         },(err)=>{
           yu.hideLoading();
-          yu.showToast({
-            title: '3.2更新失败，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.2更新失败，请联系管理员');
         });
       },
       getDate(type) {
@@ -906,7 +840,6 @@
 </script>
 
 <style lang='scss' scoped>
-  @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #f6f8f9;
     padding-top: 0;  

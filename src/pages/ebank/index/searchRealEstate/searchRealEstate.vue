@@ -1,13 +1,15 @@
 <template>
   <view class="search-box">
-    <view class="search-title">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="search">
-        <img class="img-slogo" src="@/static/images/firstroom/searchLogo.svg" />
-        <input class="search-input" placeholder="请输入搜索内容" readonly="readonly" type="string" v-model="searchword" @input="inputfun" />
-        <img v-show="ifShowClearInput" class="img-scancle" src="@/static/images/firstroom/searchCancle.svg"  @click="clearSearchInput()" />
+    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <view class="gencies-item">
+        <input class="uni-input" placeholder="请输入搜索内容" readonly="readonly" type="string" v-model="searchword" @input="inputfun"/>
+        <img src="@/static/images/firstroom/searchLogo.svg" :class="phoneSystem ? 'imgSearch imgSearch-ios' : 'imgSearch'">
+        <view :class="phoneSystem ? 'imgCross imgCross-ios' : 'imgCross'" v-show="ifShowClearInput" @click="clearSearchInput()">
+          <img src="@/static/images/firstroom/searchCancle.svg">
+        </view>
       </view>
-      <view class="search-submit" @click="searchFun"><text>搜索</text></view>
+      <text class="pf-text" @click="searchFun">搜索</text>
     </view>
     <view class="search-result" v-show="showSearchResult">
       <view class="search-one" v-for="(item,index) in resultSearchList" :key="index" @click="searchResult(item)" >

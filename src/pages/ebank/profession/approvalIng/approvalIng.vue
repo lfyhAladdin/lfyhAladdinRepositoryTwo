@@ -44,8 +44,8 @@
                 <text>{{item.address2}}</text> <!--楼盘名称/房屋位置-->
                 <text>{{item.addressVal2}}</text>
               </view>
-              <view v-if="item.loanAmount2">
-                <text>贷款金额</text> <!--贷款金额-->
+              <view>
+                <text>贷款金额</text>
                 <text>{{item.businessSum2}}</text>
               </view>
               <view>
@@ -102,10 +102,6 @@
             id: '01',
           },
           {
-            title: '人工定价审批',
-            id: '05',
-          },
-          {
             title: '授信审批中',
             id: '02',
           },
@@ -116,6 +112,10 @@
           {
             title: '审批否决',
             id: '04',
+          },
+          {
+            title: '人工定价审批',
+            id: '05',
           },
         ],  //页签标题
         tabArr: {},  //页签内容
@@ -327,19 +327,6 @@
         this.interfaceRequest('/api/creditprice/querypriceresult',data,"get",(res)=>{
           console.log(res)
           if(res.data.data && res.data.data.returnCode == 'Success'){
-            // yu.showModal({
-            //   title: '同步成功',
-            //   content: '点击确定，立即进行合同签订',
-            //   showCancel: true,
-            //   success: (res) => {
-            //     if (res.confirm) {
-            //       console.log('用户点击确定');
-            //       this.pullRefresh();
-            //     } else if (res.cancel) {
-            //       console.log('用户点击取消');
-            //     }
-            //   }
-            // });
             yu.showModal({
               content: res.data.data.returnDesc,
               showCancel: false,
@@ -400,7 +387,6 @@
               item.businessType2 = arr[key];
               item.address2 = this.housSwitch(arr[key],'楼盘名称','房屋位置');
               item.addressVal2 = this.housSwitch(arr[key],item.buildingName,item.buildingAdd);
-              item.loanAmount2 = this.housSwitch(arr[key],true,false);
             }
           }
         });
@@ -423,7 +409,6 @@
         }else{
           return nameB;
         }
-        // return hous.includes('一手') ? nameA : nameB
       },
       //筛选后，重置
       screenReset(){
@@ -495,7 +480,6 @@
         this.reachBottom[this.applyPhase] = true;
         this.status[this.applyPhase] = "more"
         this.numNo[this.applyPhase].beginNo = 1;
-        // this.numNo[this.applyPhase].totalNo = 15;
         if(this.applyPhase == "05"){
           this.querypriceapprapplyinfo();
         }else{
@@ -521,7 +505,6 @@
 </script>
 <style lang='scss'>
   @import '~@styles/uni-nvue.css';
-  @import '@/static/css/professionwf.less';
   .uni-container{
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;
