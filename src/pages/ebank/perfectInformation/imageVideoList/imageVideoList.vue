@@ -219,7 +219,7 @@ export default {
         var width = img.width;
         var height = img.height;
         // 按比例压缩2倍       //设置压缩比例，最后的值越大压缩越高
-        var rate = (width < height ? width / height : height / width) / 5;
+        var rate = (width < height ? width / height : height / width) / 10;
         canvas.width = width * rate;
         canvas.height = height * rate;           //绘制新图
         ctx.drawImage(img, 0, 0, width, height, 0, 0, width * rate, height * rate);                                               //转base64
