@@ -98,8 +98,14 @@
           'contractNo': this.contractNoVal,  //合同编号
           // 'contractNo': '2017111400000086',  //合同编号
           
-        }
+        };
+        yu.showLoading();
         this.interfaceRequest('/api/lend/addLendApplySuccess',data,"get",(res)=>{
+          yu.hideLoading();
+          if(res.data.data.returnCode == 'Failed'){
+            this.showToastFun(res.data.data.returnDesc);
+            return;
+          }
           console.log(res)
           yu.showModal({
             title: '申请成功',
@@ -120,8 +126,17 @@
               }
             }
           });
-        },function(err){
+        },(err)=>{
+          yu.hideLoading();
+          this.showToastFun('5.3放款申请失败，请联系管理员！');
           console.log(err)
+        });
+      },
+      showToastFun(e){
+        yu.showToast({
+          title: e,
+          icon: 'none',
+          duration: 3000
         });
       },
       //提交

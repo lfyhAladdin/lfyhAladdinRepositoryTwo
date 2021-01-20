@@ -63,7 +63,7 @@ export default {
       sendCodeBtnText: "发送验证码",
       count: 60,
       timer: "",
-      updatePasswordurl: "login/updatePassword/updatePassword?from=v"
+      // updatePasswordurl: "login/updatePassword/updatePassword?from=v"
     };
   },
   onLoad(option) {},
@@ -131,7 +131,7 @@ export default {
       this.$http
         .request({
           method: "GET",
-          url:this.loginRelatedPostUrl+"api/adminsmuser/checkinformation",
+          url:this.loginRelatedPostUrl+"api/nosession/adminsmuser/checkinformation",
           header: {
             "Content-Type": "application/json; charset=UTF-8",
             "Access-Control-Allow-Origin": "*"
@@ -145,7 +145,7 @@ export default {
             let result = res.data.data;
             if (result) {
               //原密码验证成功
-              _this.pageJump(_this.updatePasswordurl);
+              _this.pageJump('updatePasswordurl: "login/updatePassword/updatePassword?from=v&iphoneVal="'+_this.phoneFormdata.phoneNo);
             } else {
               yu.showToast({
                 icon: "none",

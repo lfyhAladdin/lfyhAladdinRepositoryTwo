@@ -60,7 +60,10 @@ export default {
     console.log(_this.userInfor);
     /* 获取当前用户登录信息 */
     _this.username = _this.userInfor.userName;
-    _this.logincode = _this.userInfor.loginCode;
+    // _this.logincode = _this.userInfor.loginCode;
+    _this.logincode = option.iphoneVal ? option.iphoneVal : _this.userInfor.loginCode;
+    console.log('修改密码');
+    console.log(_this.logincode)
     _this.userOrgId = _this.userInfor.orgId;
     if (_flag == "firstlogin") {
       if(this.hasOrginNum){
@@ -116,7 +119,7 @@ export default {
       this.$http
         .request({
           method: "GET",
-          url: this.loginRelatedPostUrl+"api/adminsmuser/updatepwd",
+          url: this.loginRelatedPostUrl+"api/nosession/adminsmuser/updatepwd",
           header: {
             "Content-Type": "application/json; charset=UTF-8",
             "Access-Control-Allow-Origin": "*"
