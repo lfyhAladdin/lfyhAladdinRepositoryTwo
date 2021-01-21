@@ -154,6 +154,7 @@ export default {
               upLoadDate: that.imgFirstUploadTime
             },
             businessType2: that.title,
+            businessType: businessType,
           };
           that.approvalIngListReplace(e);
           let datas = {
