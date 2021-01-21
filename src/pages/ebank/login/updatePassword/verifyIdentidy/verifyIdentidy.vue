@@ -145,7 +145,7 @@ export default {
             let result = res.data.data;
             if (result) {
               //原密码验证成功
-              _this.pageJump('updatePasswordurl: "login/updatePassword/updatePassword?from=v&iphoneVal="'+_this.phoneFormdata.phoneNo);
+              _this.pageJump("login/updatePassword/updatePassword?from=v&iphoneVal="+_this.phoneFormdata.phoneNo);
             } else {
               yu.showToast({
                 icon: "none",

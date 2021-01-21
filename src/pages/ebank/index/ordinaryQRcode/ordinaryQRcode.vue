@@ -64,6 +64,7 @@ export default {
       e.fromProductId="1140120";
     }
     e.businessType2 = e.fromProductTitle;
+    e.businessType = e.fromProductId;
     this.title=e.fromProductTitle;
     this.approvalIngListReplace(e);
   },

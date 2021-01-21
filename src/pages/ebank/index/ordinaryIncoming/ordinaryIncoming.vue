@@ -317,6 +317,8 @@ export default {
                   upLoadDate: imgFirstUploadTime
                 },
                 businessType2: this.title,
+                businessType: this.productId,
+                
               };
               this.approvalIngListReplace(e);
               let datas = {
@@ -436,6 +438,7 @@ export default {
               upLoadDate: this.imgFirstUploadTime
             },
             businessType2: this.title,
+            businessType: this.productId,
           };
           this.approvalIngListReplace(e);
           foxsdk.logger.info("img");
@@ -496,6 +499,7 @@ export default {
             imgPath_zheng_base64: this.imgPath_zheng_base64,
             fromProductTitle: this.title,
             businessType2: this.title,
+            businessType: this.productId,
           };
           this.approvalIngListReplace(e);
         } else {
@@ -522,6 +526,7 @@ export default {
             imgPath_fan_base64: this.imgPath_fan_base64,
             fromProductTitle: this.title,
             businessType2: this.title,
+            businessType: this.productId,
           };
           this.approvalIngListReplace(e);
         }
