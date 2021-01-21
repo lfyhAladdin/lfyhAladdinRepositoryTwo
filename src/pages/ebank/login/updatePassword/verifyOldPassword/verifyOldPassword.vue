@@ -34,15 +34,16 @@ export default {
       oldPassword: "",
       updatePasswordurl: "login/updatePassword/updatePassword?from=v",
       username:"",
-      logincode:"",
+      loginCode:"",
       userOrgId:"",
     };
   },
   onLoad(option) {
-    let _tis=this;
+    console.log(this.userInfor)
+    let _this=this;
     /* 获取当前用户登录信息 */
     _this.username = _this.userInfor.userName;
-    _this.logincode = _this.userInfor.loginCode;
+    _this.loginCode = _this.userInfor.loginCode;
     _this.userOrgId = _this.userInfor.orgId;
   },
   onShow() {},
@@ -67,10 +68,10 @@ export default {
         return ;
       }
       /* 获取当前用户登录信息 */
-      let logincode = _this.loginCode;
+      let loginCode = _this.loginCode;
       let mdpassword = _this.oldPassword;
       let data = {
-        loginCode: logincode,
+        loginCode: loginCode,
         oldPwd: mdpassword
       };
       this.$http

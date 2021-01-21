@@ -121,7 +121,7 @@ export default {
       });
       let userName = result.userName;
       let data = {
-        userName: userName,
+        userName: userName == undefined ? _this.person.username : userName,
         // userName: userName =='' ? _this.person.username : userName,
         certNo: _this.person.idcard,
         userMobilephone: _this.phoneFormdata.phoneNo,
@@ -250,8 +250,9 @@ uni-page-body:after {
   .customize-content-form {
     background: #f6f8f9 !important;
     width: 100%;
-    height: 100%;
-    padding-top: 170rpx;
+    // height: 100%;
+    // padding-top: 170rpx;
+    padding-top: 100rpx;
     .person-infor {
       margin-top: 24rpx;
       background: #ffffff;
