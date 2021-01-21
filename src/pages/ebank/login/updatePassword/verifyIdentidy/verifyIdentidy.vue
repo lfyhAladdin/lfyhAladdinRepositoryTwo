@@ -136,7 +136,7 @@ export default {
             "Content-Type": "application/json; charset=UTF-8",
             "Access-Control-Allow-Origin": "*"
           },
-          custom:{oauth:1},
+          custom:{oauth:0},
           data: data
         })
         .then(
