@@ -199,7 +199,7 @@ export default {
           let scenarioList=res.data.data.scenarioList;
           let completCheckList=res.data.data.completCheckList;
           //let isRefused=res.data.data.isRefused;
-          if(_this.isRefused == "2" && completCheckList.length == 0){
+          if(_this.isRefused == "2" && completCheckList.length == 0 && scenarioList.length == 0){
             //通过
             _this.ifCheckProgressing=false;
             _this.ifCheckPass=true;

@@ -97,7 +97,7 @@ export default {
     //点击发送短信按钮事件
     sendMessage() {
       uni.showModal({
-        title: "进件信息已发送给客户",
+        title: "本功能暂不支持，敬请期待",
         content: "是否要回到首页？",
         success: function(res) {
           if (res.confirm) {

@@ -19,7 +19,7 @@
           <view class="item before-upload" v-if="item.isIDCard">
             <img class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
             <img v-show="false" class="image-con">
-            <view class="image-con upload-image" :id="item.busiFileType" @click="upload($event)">
+            <view class="image-con upload-image" ref="uploadimg" :id="item.busiFileType" @click="upload">
             <img class="huiyuan_img" :src="idcard.image" mode="">
             </view>
           </view>
@@ -239,22 +239,11 @@ export default {
       uni.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['camera'], //从相册选择或拍照
+        sourceType: ['camera','album'], //拍照
         success: function (res) {
-           yu.showToast({
-            icon: "none",
-            title: "图片获取成功",
-            duration: 1500
-          });
           const tempFilePaths = res.tempFilePaths;
-          _self.convertImgToBase64(tempFilePaths[0], function (data) {
-            yu.showToast({
-              icon: "none",
-              title: "图片压缩成功",
-              duration: 1500
-            });
-            let base64code=data.split(';base64,')[1];
-
+         foxsdk.gallery.imageBase64(tempFilePaths[0], entry => {
+            let base64code = entry.payload.imageBase64;
             _self.uploadImagePost(base64code,_id);//调用上传图片方法
           });
           _self.iconcheck = 1;//点击后图片更改状态由0变成1
@@ -266,23 +255,24 @@ export default {
     },
     //url转化为base64
     convertImgToBase64(url, callback, outputFormat){
-      var canvas = document.createElement('CANVAS'),
-      ctx = canvas.getContext('2d'),
-      img = new Image;
-      img.crossOrigin = 'Anonymous';
+      let canvas = document.createElement('CANVAS');
+      let ctx = canvas.getContext('2d');
+      let img = new Image();
+      img.src = url;
+      img.setAttribute("crossOrigin",'Anonymous');
+      //img.crossOrigin = 'Anonymous';
       img.onload = function(){
-        var width = img.width;
-        var height = img.height;
+        let width = img.width;
+        let height = img.height;
         // 按比例压缩2倍       //设置压缩比例，最后的值越大压缩越高
-        var rate = (width < height ? width / height : height / width) / 20;
+        let rate = (width < height ? width / height : height / width) / 20;
         canvas.width = width * rate;
         canvas.height = height * rate;           //绘制新图
         ctx.drawImage(img, 0, 0, width, height, 0, 0, width * rate, height * rate);                                               //转base64
-        var dataURL = canvas.toDataURL(outputFormat || 'image/png');
+        let dataURL = canvas.toDataURL(outputFormat || 'image/jpg');
         callback.call(this, dataURL);   //回调函数传入base64的值
         canvas = null;
       };
-      img.src = url;
     },
     //上传图片图片页面效果处理
     uploadImageResult(type,base64,filename){
