@@ -333,7 +333,7 @@
                         if (this.personInfor.ermanentAddress == "") {
                             yu.showModal({
                                 title: "户籍地址不能为空！",
-                                content: "",
+                                content: "请输入户籍地址",
                                 showCancel: false,
                                 confirmText: "我知道了",
                                 success: res => {
@@ -348,8 +348,8 @@
                     } else {
                         // alert('暂存成功！')
                         yu.showModal({
-                            title: "暂存成功",
-                            content: "",
+                            title: "暂存状态",
+                            content: res.data.data.returnCode,
                             showCancel: false,
                             confirmText: "我知道了",
                             success: res => {

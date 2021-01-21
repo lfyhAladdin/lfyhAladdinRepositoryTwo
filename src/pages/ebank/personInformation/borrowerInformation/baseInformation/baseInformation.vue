@@ -321,7 +321,11 @@ export default {
         },
         function (err) {
           yu.hideLoading();
-          alert("报错了！！");
+          uni.showToast({
+          title: '失败，请重试！！',
+          icon: 'none',
+          duration: 2000
+      });
         }
       );
     },
@@ -519,15 +523,34 @@ export default {
                 "personInformation/borrowerInformation/workInformation/workInformation"
               );
             } else {
-              alert("暂存成功！");
+                yu.showModal({
+                      title: "暂存状态",
+                      content: res.data.data.returnCode,
+                      showCancel: false,
+                      confirmText: "我知道了",
+                      success: res => {
+                          if (res.confirm) {
+                              console.log("用户点击确定");
+                          }
+                      }
+                  });
             }
           } else {
-            alert("失败了！！");
+             uni.showToast({
+                  title: '失败了,请重试！！',
+                  icon: 'none',
+                  duration: 2000
+              });
           }
         },
         function (err) {
           yu.hideLoading();
-          alert("报错了！！");
+          uni.showToast({
+                  title: '失败了,请重试！！',
+                  icon: 'none',
+                  duration: 2000
+              });
+          
         }
       );
     },
@@ -578,12 +601,20 @@ export default {
               console.log(that.mulIndex);
             }
           } else {
-            alert("失败了！！");
+             uni.showToast({
+                  title: '失败了,请重试！！',
+                  icon: 'none',
+                  duration: 2000
+              });
           }
         },
         function (err) {
           yu.hideLoading();
-          alert("报错了！！");
+           uni.showToast({
+                  title: '失败了,请重试！！',
+                  icon: 'none',
+                  duration: 2000
+              });
         }
       );
     },

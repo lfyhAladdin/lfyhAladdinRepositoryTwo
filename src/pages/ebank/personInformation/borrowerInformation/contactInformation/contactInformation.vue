@@ -214,19 +214,37 @@
 									routerJumpWay: "pageJump",
 								}); //重新调'申请信息查询'接口
 							} else {
-								alert("暂存成功！");
+								 yu.showModal({
+									title: "暂存状态",
+									content: res.data.data.returnCode,
+									showCancel: false,
+									confirmText: "我知道了",
+									success: res => {
+										if (res.confirm) {
+											console.log("用户点击确定");
+										}
+									}
+								});
 								this.queryApplyInfoCommit({
 									'orderNo': this.orderNoVal,
 									'applyNo': this.applyNoVal,
 								}); //重新调'申请信息查询'接口
 							}
 						} else {
-							alert("失败了！！");
+							 uni.showToast({
+								title: '失败了,请重试！！',
+								icon: 'none',
+								duration: 2000
+							});
 						}
 					},
 					function(err) {
 						yu.hideLoading();
-						alert("报错了！！");
+						 uni.showToast({
+							title: '失败了,请重试！！',
+							icon: 'none',
+							duration: 2000
+						});
 					}
 				);
 			},
@@ -267,12 +285,20 @@
 								this.relationShipIdxList = [0, 0, 0];
 							}
 						} else {
-							alert("失败了！！");
+							 uni.showToast({
+								title: '失败了,请重试！！',
+								icon: 'none',
+								duration: 2000
+							});
 						}
 					},
 					function(err) {
 						yu.hideLoading();
-						alert("报错了！！");
+						 uni.showToast({
+							title: '失败了,请重试！！',
+							icon: 'none',
+							duration: 2000
+						});
 					}
 				);
 			},
