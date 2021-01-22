@@ -295,6 +295,7 @@ export default {
           console.error("用户信息储存异常");
         }
       });
+      
       //是否可以登录app  判断
       let ifLoginApp = userInfos.organList;
       if (ifLoginApp == null || ifLoginApp == [] || ifLoginApp == "") {
@@ -370,6 +371,20 @@ export default {
         })
         .then(
           res => {
+            //判断是否越权登录start
+            if(res.data.data.loginCode != this.pwdFormdata.account){
+              yu.showToast({
+                icon: "none",
+                title: "越权登录，请重新登录",
+                duration: 1500
+              });
+              yu.clearStorage();
+              setTimeout(() => {
+                this.pageJump("login/login");
+              }, 500);
+              return;
+            }
+            //判断是否越权登录start
             /* res机构返回结果   param 登陆成功返回结果 */
             this.loginSucceed(param, res);
           },
