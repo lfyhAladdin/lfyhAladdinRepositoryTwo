@@ -448,7 +448,8 @@
             'boolean': false,
             'checkOut': true,
           },
-        ]
+        ],
+        clrIdVal: '',  //押品编号
       }
     },
     onLoad() {
@@ -753,6 +754,7 @@
           };
           clrListObj =  [{
             'gcSerialNo': this.gcSerialNo,  //担保合同号
+            'clrId': this.clrIdVal,  //押品编号
             'clrTypeId': this.clrTypeIdVal,  //押品类型
             'clrName': this.clrNameVal,  //押品名称
             'province': this.provinceVal,  //所在省/直辖市

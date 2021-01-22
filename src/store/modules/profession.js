@@ -41,6 +41,9 @@ export default {
       state.approvalIngList = val;
     },
     numberPiP(state,data){
+      if(data == ''){
+        return;
+      };
       let str = data.str;
       let a = str.substring(0,str.length-1).split(";");
       let b = [];
@@ -117,7 +120,11 @@ export default {
       //订单数量查询
       $prototype.interfaceRequest('/api/orderListQuantityQuery/queryOrderListQuantity',data6,"post",(res)=>{
         console.log(res)
-          let obj = {
+        if(res.data.data.returnCode == 'Failed'){
+          context.commit("businessNumReplace", 0);
+          return;
+        }
+        let obj = {
           name : 'orderPending',
           number: res.data.data.number
         }
@@ -127,7 +134,11 @@ export default {
       });
       //授信申请各阶段数量统计
       $prototype.interfaceRequest('/api/credit/queryApplyNumber',data1,"get",(res)=>{
-        // console.log(res)
+        console.log(res)
+        if(res.data.data.returnCode == 'Failed'){
+          context.commit("numberPiP", '');
+          return;
+        };
         let data = {
           'str': res.data.data.applyNumber,
           'symbol': ':',
@@ -137,7 +148,7 @@ export default {
             '审批通过申请': 'creditPass',
             '已否决申请': 'creditVeto',
           }
-        }
+        };
         context.commit("numberPiP",data)
         
       },function(err){
@@ -146,6 +157,10 @@ export default {
       //定价审批申请数量查询
       $prototype.interfaceRequest('/api/creditprice/querypriceapprapplycount',data2,"get",(res)=>{
         console.log(res)
+        if(res.data.data.returnCode == 'Failed'){
+          context.commit("businessNumReplace", 0);
+          return;
+        };
         let obj = {
           name : 'creditPeoplePricing',
           number: res.data.data.number
@@ -157,6 +172,10 @@ export default {
       //放款申请各阶段数量查询
       $prototype.interfaceRequest('/api/lend/queryApplyPutoutNumber',data3,"get",(res)=>{
         console.log(res)
+        if(res.data.data.returnCode == 'Failed'){
+          context.commit("numberPiP", '');
+          return;
+        };
         let data = {
           'str': res.data.data.putoutNumber,
           'symbol': '：',
@@ -174,6 +193,10 @@ export default {
       //待放款业务数量查询
       $prototype.interfaceRequest('/api/lend/queryLendListQuantity',data4,"get",(res)=>{
         console.log(res)
+        if(res.data.data.returnCode == 'Failed'){
+          context.commit("businessNumReplace", 0);
+          return;
+        };
         let obj = {
           name : 'issuePending',
           number: res.data.data.number
@@ -186,6 +209,10 @@ export default {
       //业务合同数量查询
       $prototype.interfaceRequest('/api/contract/busConCountQuery',data5,"post",(res)=>{
         console.log(res)
+        if(res.data.data.returnCode == 'Failed'){
+          context.commit("numberPiP", '');
+          return;
+        };
           let data = {
           'str': res.data.data.contractNumber,
           'symbol': '：',

@@ -55,24 +55,28 @@ export default {
   onLoad: function(option) {
     let _flag = option.from;
     this.pageFrom = _flag;
-    let _this = this;
     this.hasOrginNum = option.hasOrginNum;
-    console.log(_this.userInfor);
+    console.log(this.userInfor);
     /* 获取当前用户登录信息 */
-    _this.username = _this.userInfor.userName;
-    // _this.logincode = _this.userInfor.loginCode;
-    _this.logincode = option.iphoneVal ? option.iphoneVal : _this.userInfor.loginCode;
+    this.username = this.userInfor.userName;
+    // this.logincode = this.userInfor.loginCode;
+    this.logincode = option.iphoneVal ? option.iphoneVal : this.userInfor.loginCode;
     console.log('修改密码');
-    console.log(_this.logincode)
-    _this.userOrgId = _this.userInfor.orgId;
+    console.log(this.logincode)
+    this.userOrgId = this.userInfor.orgId;
     if (_flag == "firstlogin") {
       if(this.hasOrginNum){
-        _this.updateSucessUrl = "/pages/ebank/index/index";
+        this.updateSucessUrl = "/pages/ebank/index/index";
       }else{
-        _this.updateSucessUrl = "mine/switchingMechanism/switchingMechanism";
+        this.updateSucessUrl = "mine/switchingMechanism/switchingMechanism";
       }
     } else {
-      _this.updateSucessUrl = "/pages/ebank/mine/mine";
+      if(JSON.stringify(this.userInfor) == "{}"){
+        this.updateSucessUrl = "login/login";
+      }else{
+        this.updateSucessUrl = "/pages/ebank/mine/mine";
+      }
+      
     }
   },
   onShow() {},
@@ -84,34 +88,33 @@ export default {
     },
     // 下一步
     nextStep() {
-      let _this = this;
       /* 判断提示 */
-      if (_this.newPasswordFirst==='') {
+      if (this.newPasswordFirst==='') {
         yu.showToast({
           icon: "none",
           title: "新密码不能为空！"
         });
         return ;
       }
-      if (_this.newPasswordSecond === '') {
+      if (this.newPasswordSecond === '') {
         yu.showToast({
           icon: "none",
           title: "再次输入不能为空！"
         });
         return ;
       }
-      if (_this.newPasswordFirst !== _this.newPasswordSecond) {
+      if (this.newPasswordFirst !== this.newPasswordSecond) {
         yu.showToast({
           icon: "none",
           title: "两次输入密码不一致！"
         });
-        _this.newPasswordSecond="";
+        this.newPasswordSecond="";
         return ;
       }
       /* 获取当前用户登录信息 */
       
-      let logincode = _this.logincode;
-      let mdpassword = _this.newPasswordFirst;
+      let logincode = this.logincode;
+      let mdpassword = this.newPasswordFirst;
       let data = {
         loginCode: logincode,
         userPassword: mdpassword
@@ -156,16 +159,19 @@ export default {
               sessionStorage.removeItem('userLoginPhone');
               //yu.clearStorage();
               setTimeout(() => {
-                let _this = this;
                 console.log(this)
-                if (_this.pageFrom == "firstlogin") {
-                  if(_this.hasOrginNum){
-                    yu.switchTab({url: _this.updateSucessUrl});
+                if (this.pageFrom == "firstlogin") {
+                  if(this.hasOrginNum){
+                    yu.switchTab({url: this.updateSucessUrl});
                   }else{
-                    _this.pageJump(_this.updateSucessUrl);
+                    this.pageJump(this.updateSucessUrl);
                   }
                 } else {
-                  yu.switchTab({ url: _this.updateSucessUrl });
+                  if(JSON.stringify(this.userInfor) == "{}"){
+                    this.pageJump(this.updateSucessUrl);
+                  }else{
+                    yu.switchTab({ url: this.updateSucessUrl });
+                  }
                 }
               }, 1500);
             }

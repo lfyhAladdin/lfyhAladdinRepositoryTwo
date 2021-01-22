@@ -63,7 +63,6 @@ export default {
       sendCodeBtnText: "发送验证码",
       count: 60,
       timer: "",
-      // updatePasswordurl: "login/updatePassword/updatePassword?from=v"
     };
   },
   onLoad(option) {},
@@ -81,30 +80,29 @@ export default {
     },
     // 下一步
     nextStep() {
-      let _this = this;
       /* 判断提示 */
-      if (_this.person.username==='') {
+      if (this.person.username==='') {
         yu.showToast({
           icon: "none",
           title: "姓名不能为空！"
         });
         return ;
       }
-      if (_this.person.idcard==='') {
+      if (this.person.idcard==='') {
         yu.showToast({
           icon: "none",
           title: "身份证号不能为空！"
         });
         return ;
       }
-      if (_this.phoneFormdata.phoneNo==='') {
+      if (this.phoneFormdata.phoneNo==='') {
         yu.showToast({
           icon: "none",
           title: "电话号码不能为空！"
         });
         return ;
       }
-      if (_this.phoneFormdata.verifyCode==='') {
+      if (this.phoneFormdata.verifyCode==='') {
         yu.showToast({
           icon: "none",
           title: "验证码不能为空！"
@@ -121,11 +119,11 @@ export default {
       });
       let userName = result.userName;
       let data = {
-        userName: userName == undefined ? _this.person.username : userName,
-        // userName: userName =='' ? _this.person.username : userName,
-        certNo: _this.person.idcard,
-        userMobilephone: _this.phoneFormdata.phoneNo,
-        vcode:_this.phoneFormdata.verifyCode
+        userName: userName == undefined ? this.person.username : userName,
+        // userName: userName =='' ? this.person.username : userName,
+        certNo: this.person.idcard,
+        userMobilephone: this.phoneFormdata.phoneNo,
+        vcode:this.phoneFormdata.verifyCode
       };
       yu.showLoading();
       this.$http
@@ -145,14 +143,14 @@ export default {
             let result = res.data.data;
             if (result) {
               //原密码验证成功
-              _this.pageJump("login/updatePassword/updatePassword?from=v&iphoneVal="+_this.phoneFormdata.phoneNo);
+              this.pageJump("login/updatePassword/updatePassword?from=v&iphoneVal="+ this.phoneFormdata.phoneNo);
             } else {
               yu.showToast({
                 icon: "none",
                 title: "身份信息填写错误，请重新输入",
                 duration: 2000
               });
-              _this.oldPassword = "";
+              this.oldPassword = "";
             }
           },
           err => {
@@ -162,7 +160,6 @@ export default {
     },
     // 发送验证码
     sendCode() {
-      let _this = this;
       if (this.phoneFormdata.phoneNo == "") {
         yu.showToast({
           icon: "none",
@@ -172,10 +169,10 @@ export default {
         return;
       }
       const reg = /^1[3-9][0-9]\d{8}$/;
-      if (reg.test(_this.phoneFormdata.phoneNo)) {
+      if (reg.test(this.phoneFormdata.phoneNo)) {
         
         let datas = {
-          mobiles: _this.phoneFormdata.phoneNo,
+          mobiles: this.phoneFormdata.phoneNo,
           jiaoyigy: "601101",
           jiaoyijg: "GD0456"
         };

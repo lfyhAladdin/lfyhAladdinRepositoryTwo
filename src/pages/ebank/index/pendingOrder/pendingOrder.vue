@@ -76,6 +76,7 @@ export default {
         contentnomore: '没有更多',  //noMore
       },
       reachBottom:true,//是否允许上拉加载
+      preventResubmit: true,  //防重复提交
     };
   },
   computed: {
@@ -114,7 +115,7 @@ export default {
   methods: {
     ...mapActions(["businessNumCommit"]),
     ...mapMutations(["approvalIngListReplace"]),
-      ...mapActions(['queryApplyInfoCommit']),
+    ...mapActions(['queryApplyInfoCommit']),
     // 调用拨号功能
     //返回上一页
     navigateBack() {
@@ -123,7 +124,20 @@ export default {
 
     //处理订单操作
     handleOrder(e, no, ty, cn) {
-      let that = this;
+      if(!this.preventResubmit){
+        yu.showModal({
+          content: '操作进行中，请稍等',
+          showCancel: false,
+          cancelText: "确定",
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定');
+            }
+          }
+        });
+        return;
+      }
+      this.preventResubmit = false;
       let orderId = no;
       let businessType = ty;
       let projectID = cn;
@@ -134,68 +148,77 @@ export default {
         projectID: projectID
       };
       let posturl = "/api/ordercreditapply/createcreditapply";
-      that.interfaceRequest(
+      this.interfaceRequest(
         posturl,
         orderData,
         "post",
-        function(res) {
+        (res) => {
+          this.preventResubmit = true;
           console.log("处理订单成功");
           console.log(res.data.data.applyNo);
+          if(res.data.data.returnCode == 'Faild'){
+            yu.showToast({
+              title: res.data.data.returnDesc,
+              icon: 'none',
+              duration: 3000
+            });
+            return;
+          }
           applyID=res.data.data.applyNo;
           //数量更新
           let e = {
             orderNo: "",
             serialNo: applyID,
-            fromProductTitle: that.title,
-            fromProductId: that.productId,
-            fromProductName: that.productName,
+            fromProductTitle: this.title,
+            fromProductId: this.productId,
+            fromProductName: this.productName,
             imageList: {
-              imageBatchNo: that.imgBatchNumber,
-              upLoadDate: that.imgFirstUploadTime
+              imageBatchNo: this.imgBatchNumber,
+              upLoadDate: this.imgFirstUploadTime
             },
-            businessType2: that.title,
+            businessType2: this.title,
             businessType: businessType,
           };
-          that.approvalIngListReplace(e);
+          this.approvalIngListReplace(e);
           let datas = {
-            userID: that.userInfor.loginCode, //客户经理编号
-            orgID: that.userInfor.orgId //客户经理所属机构编号
+            userID: this.userInfor.loginCode, //客户经理编号
+            orgID: this.userInfor.orgId //客户经理所属机构编号
           };
-          that.businessNumCommit(datas);
+          this.businessNumCommit(datas);
 
-          uni.showModal({
+          yu.showModal({
             title: "办理成功",
             content: "点击确定，立即完善该业务",
-            success: function(res) {
+            cancelText: '关闭',
+            success: (res) => {
               if (res.confirm) {
                 // that.getApplyInfor(orderId,applyID);
-                that.queryApplyInfoCommit({
+                this.queryApplyInfoCommit({
                   'orderNo': orderId, 
                   'applyNo': applyID,
                   'routerTrue': true,
                   'routerTo': '/pages/ebank/perfectInformation/perfectInformation',
                   'routerJumpWay': 'navigateTo'
                 }); //重新调'申请信息查询'接口
-                
-                // that.queryApplyInfoCommit({
-                //   orderNo: orderId,
-                //   applyNo: applyID
-                // });
-                // setTimeout(()=>{
-                //   yu.navigateTo({ url: '/pages/ebank/perfectInformation/perfectInformation' });
-                // },1500)
               } else if (res.cancel) {
                 console.log("用户点击取消");
-                that.ajaxJudge= true;
-                that.reachBottom = true;
-                that.status= "more"
-                that.beginNo = 1;
-                that.inquireOrderList();
+                this.ajaxJudge= true;
+                this.reachBottom = true;
+                this.status= "more"
+                this.beginNo = 1;
+                this.inquireOrderList();
               }
             }
           });
         },
-        function(err) {}
+        (err) => {
+          this.preventResubmit = true;
+          yu.showToast({
+            title: '2.3申请失败，请联系管理员！',
+            icon: 'none',
+            duration: 3000
+          });
+        }
       );
     },
     //获取申请信息
@@ -228,7 +251,7 @@ export default {
 
       userInfo.userId = that.userInfor.loginCode;
       userInfo.orgID = that.userInfor.orgId;
-
+      yu.showLoading();
       /**订单列表 ****start*****/
       let posturl = "/api/orderListQuery/queryOrderList";
       that.interfaceRequest(
@@ -236,6 +259,7 @@ export default {
         userInfo,
         "post",
         function(res) {
+          yu.hideLoading();
           let resArr = res.data.data.businessList;
           //无订单信息
           if(that.beginNo == 1 && resArr == null){
@@ -261,7 +285,9 @@ export default {
           that.dataProcessing(resArr);
           
         },
-        function(err) {}
+        function(err) {
+          yu.hideLoading();
+        }
       );
       /**订单列表 ****end*****/
     },
@@ -364,10 +390,7 @@ export default {
   }
 }
 
-uni-view {
-  line-height: 0;
-  font-size: 0;
-}
+
 .pending-order {
   background: #ffffff !important;
   width: 100%;
@@ -410,6 +433,10 @@ uni-view {
 }
 .orderlist {
   padding: 154rpx 30rpx 0 30rpx;
+  uni-view {
+    line-height: 0;
+    font-size: 0;
+  }
   .order {
     width: 658rpx;
     /**height: 512rpx; */
