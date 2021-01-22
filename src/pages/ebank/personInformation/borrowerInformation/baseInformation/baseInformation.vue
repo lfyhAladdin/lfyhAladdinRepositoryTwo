@@ -523,17 +523,11 @@ export default {
                 "personInformation/borrowerInformation/workInformation/workInformation"
               );
             } else {
-                yu.showModal({
-                      title: "暂存状态",
-                      content: res.data.data.returnCode,
-                      showCancel: false,
-                      confirmText: "我知道了",
-                      success: res => {
-                          if (res.confirm) {
-                              console.log("用户点击确定");
-                          }
-                      }
-                  });
+                yu.showToast({
+                  title: '暂存成功！',
+                  image: './static/images/perfectInformation/success.svg',
+                  duration: 2000
+                });
             }
           } else {
              uni.showToast({

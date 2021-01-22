@@ -248,6 +248,7 @@ export default {
         dictionaryName: "unitKind",
       };
       this.queryDictionaryList(pdata, function (res) {
+        console.log(res)
         let resData = res.data.data;
         for (let key in resData) {
           that.unitKindList.push({
@@ -366,7 +367,7 @@ export default {
               if (this.personInfor.companyName == "") {
                 yu.showModal({
                   title: "单位名称不能为空！",
-                  content: "",
+                  content: "请输入单位名称",
                   showCancel: false,
                   confirmText: "我知道了",
                   success: (res) => {
@@ -380,7 +381,7 @@ export default {
                if (this.personInfor.companyAddress == "") {
                 yu.showModal({
                   title: "单位地址不能为空！",
-                  content: "",
+                  content: "请输入单位地址",
                   showCancel: false,
                   confirmText: "我知道了",
                   success: (res) => {
@@ -394,7 +395,77 @@ export default {
                if (this.personInfor.telephone == "") {
                 yu.showModal({
                   title: "单位电话不能为空！",
-                  content: "",
+                  content: "请输入单位电话",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
+                    if (res.confirm) {
+                      console.log("用户点击确定");
+                    }
+                  },
+                });
+                return false;
+              }
+               if (this.workNatureList[this.workNatureIdx].value == "请选择") {
+                yu.showModal({
+                  title: "单位性质不能为空！",
+                  content: "请选择单位性质",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
+                    if (res.confirm) {
+                      console.log("用户点击确定");
+                    }
+                  },
+                });
+                return false;
+              }
+              if (this.unitKindList[this.unitKindIdx].value == "请选择") {
+                yu.showModal({
+                  title: "单位所属行业不能为空！",
+                  content: "请选择单位所属行业",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
+                    if (res.confirm) {
+                      console.log("用户点击确定");
+                    }
+                  },
+                });
+                return false;
+              }
+              if (this.occupationList[this.occupationIdx].value == "请选择") {
+                yu.showModal({
+                  title: "职业不能为空！",
+                  content: "请选择职业",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
+                    if (res.confirm) {
+                      console.log("用户点击确定");
+                    }
+                  },
+                });
+                return false;
+              }
+              if (this.headShipList[this.headShipIdx].value == "请选择") {
+                yu.showModal({
+                  title: "职务不能为空！",
+                  content: "请选择职务",
+                  showCancel: false,
+                  confirmText: "我知道了",
+                  success: (res) => {
+                    if (res.confirm) {
+                      console.log("用户点击确定");
+                    }
+                  },
+                });
+                return false;
+              }
+              if (this.positionList[this.positionIdx].value == "请选择") {
+                yu.showModal({
+                  title: "职称不能为空！",
+                  content: "请选择职称",
                   showCancel: false,
                   confirmText: "我知道了",
                   success: (res) => {
@@ -411,17 +482,11 @@ export default {
                 "personInformation/borrowerInformation/contactInformation/contactInformation"
               );
             } else {
-               yu.showModal({
-                      title: "暂存状态",
-                      content: res.data.data.returnCode,
-                      showCancel: false,
-                      confirmText: "我知道了",
-                      success: res => {
-                          if (res.confirm) {
-                              console.log("用户点击确定");
-                          }
-                      }
-                  });
+               yu.showToast({
+                  title: '暂存成功！',
+                  image: './static/images/perfectInformation/success.svg',
+                  duration: 2000
+                });
             }
           } else {
             yu.showModal({

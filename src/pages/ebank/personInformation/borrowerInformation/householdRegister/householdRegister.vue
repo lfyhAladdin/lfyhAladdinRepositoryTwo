@@ -67,7 +67,7 @@
           <view class="contract-li">
             <view>姓名</view>
             <view>
-              <input class="uni-input" placeholder="请输入" type="text" v-model.trim="personInfor.name" @focus="verifyName.isTipShow=false" @blur="checkName(personInfor.name)" disabled="true" />
+              <input class="uni-input houseName" style="columns: #666666;" placeholder="请输入" type="text" v-model.trim="personInfor.name" @focus="verifyName.isTipShow=false" @blur="checkName(personInfor.name)" disabled="true" />
             </view>
           </view>
           <view v-show="verifyName.isTipShow" class="contract-tips">{{verifyName.tipText}}</view>
@@ -136,10 +136,18 @@
   </view>
 </template>
 <script>
- import pageHead from '@/components/page-head.vue';
-    import {mapGetters,mapActions,mapMutations} from 'vuex'
+    import pageHead from '@/components/page-head.vue';
+    import {
+        mapGetters,
+        mapActions,
+        mapMutations
+    } from 'vuex'
+    import text from '../../../../component/text/text.vue';
 
     export default {
+        components: {
+            text
+        },
         data() {
             const currentDate = this.getDate({
                 format: true
@@ -193,7 +201,7 @@
                 isJump: true,
                 busiSerialNoVal: '', //业务流水号
                 busiStartDateVal: '', //业务日期
-                maturityDateyBoolean: true,  //长期false 日历框true
+                maturityDateyBoolean: true, //长期false 日历框true
             }
         },
         onLoad(option) {
@@ -204,7 +212,7 @@
             }
             this.orderNoVal = this.approvalIngList.orderNo;
             this.applyNoVal = this.approvalIngList.serialNo;
-            if(JSON.stringify(this.personalInformation) != "{}"){
+            if (JSON.stringify(this.personalInformation) != "{}") {
                 this.getPersonalData();
             }
         },
@@ -316,7 +324,7 @@
                 }
                 yu.showLoading();
                 let posturl = "/api/imagehandle/uploadbynoanddate";
-                that.interfaceRequest(posturl, data, "post",(res)=> {
+                that.interfaceRequest(posturl, data, "post", (res) => {
                     yu.hideLoading();
                     // alert('影像存储成功了');
                     console.log('*********存储')
@@ -347,16 +355,10 @@
                         that.pageJump('personInformation/borrowerInformation/baseInformation/baseInformation')
                     } else {
                         // alert('暂存成功！')
-                        yu.showModal({
-                            title: "暂存状态",
-                            content: res.data.data.returnCode,
-                            showCancel: false,
-                            confirmText: "我知道了",
-                            success: res => {
-                                if (res.confirm) {
-                                    console.log("用户点击确定");
-                                }
-                            }
+                        yu.showToast({
+                            title: '暂存成功！',
+                            image: './static/images/perfectInformation/success.svg',
+                            duration: 2000
                         });
                     }
                 }, function(err) {
@@ -449,18 +451,18 @@
                 let that = this;
                 let posturl = '/api/imagehandle/deletedownloadfileandfolder';
                 yu.showLoading();
-                this.interfaceRequest(posturl, {}, "post",(res)=> {
+                this.interfaceRequest(posturl, {}, "post", (res) => {
                     yu.hideLoading();
                     console.log(res)
-                    // alert('文件夹删除成功了');
+                        // alert('文件夹删除成功了');
                 }, function(err) {
-                     console.log(err)
+                    console.log(err)
                     yu.hideLoading();
                     // alert('文件夹删除报错了！！');
-                //     uni.showToast({
-                //     title: '删除从影像平台下载的文件失败!',
-                //     duration: 2000
-                // });
+                    //     uni.showToast({
+                    //     title: '删除从影像平台下载的文件失败!',
+                    //     duration: 2000
+                    // });
                     that.pageJump('personInformation/personInformation')
                     console.log('//////////删除文件夹')
                     console.log(err);
@@ -492,9 +494,9 @@
                 this.isJump = isJump;
                 this.updatePersonalData();
                 this.queryApplyInfoCommit({
-                            orderNo: this.orderNoVal,
-                            applyNo: this.applyNoVal
-                        }); //重新调'申请信息查询'接口，确保人员信息列表准确
+                    orderNo: this.orderNoVal,
+                    applyNo: this.applyNoVal
+                }); //重新调'申请信息查询'接口，确保人员信息列表准确
             },
             // 3.7接口 个人信息更新
             updatePersonalData() {
@@ -527,10 +529,10 @@
                     } else {
                         // alert('更新失败了！！')
                         yu.showToast({
-                        title:resArr.returnDesc,
-                        icon: 'none',
-                        duration: 5000
-                    });
+                            title: resArr.returnDesc,
+                            icon: 'none',
+                            duration: 5000
+                        });
                     }
                 }, function(err) {
                     yu.hideLoading();
@@ -567,9 +569,9 @@
                         }
                         that.personInfor.birthday = resData.bornDate.replace(/\//g, '-');
                         that.personInfor.ermanentAddress = resData.nativeAdd;
-                        console.log(resData.idexpiry,"6666666666666666666")
-                        if(resData.idexpiry!==""){
-                          that.personInfor.date = resData.idexpiry.replace(/\//g, '-');
+                        console.log(resData.idexpiry, "6666666666666666666")
+                        if (resData.idexpiry !== "") {
+                            that.personInfor.date = resData.idexpiry.replace(/\//g, '-');
                         }
                         var nameArr = resData.formerlyName.split(',');
                         that.personInfor.nameUsedList = [];
@@ -612,121 +614,119 @@
         mounted() {
 
         }
-    }; 
-
+    };
 </script>
 
 <style lang='scss' scoped>
-  .uni-container{
-    background-color: #f6f8f9;
-    padding-top: 0;  
-    padding-bottom: 30rpx;
-    .household-content{
-      padding-top: 270rpx;
-      .form-title{
-        height: 94rpx;
-        line-height: 94rpx;
-        text-align: center;
-        font-size: 32rpx;
-        color: #333333;
-        padding-left: 40rpx;
-        display: flex;
-        vertical-align: middle;
-        align-items: center;
-        .vLine{
-          width: 10rpx;
-          height: 34rpx;
-          background: #3B86F7;
-          border-radius: 4px;
-          margin-right: 17rpx;
-        }
-      }
-      .image-information{
-        padding: 0 40rpx;
-        // height: 421rpx;
-        background: #ffffff;
-        .title{
-          height: 45rpx;
-          line-height: 45rpx;
-          font-size: 32rpx;
-          color: #333333;
-          padding-top: 26rpx;
-        }
-        .idcard-box{
-          width: 310rpx;
-          height: 264rpx;
-          display: inline-block;
-          margin-top: 48rpx;
-          margin-bottom: 24rpx;
-          .idcard-positive{
-            width: 310rpx;
-            height: 210rpx;
-            background-size: 310rpx 210rpx;
-            position: relative;
-            
-          }
-          .idcard-negative{
-            width: 310rpx;
-            height: 210rpx;
-            position: relative;
-            background-size: 310rpx 210rpx;
-          }
-          .idcard-img{
-            width: 310rpx;
-            height: 210rpx;
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: 1;
-          }
-          .idcard-camera{
-            width: 90rpx;
-            height: 90rpx;
-            text-align: center;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            margin-left: -45rpx;
-            margin-top: -45rpx;
-            z-index: 2;
-            img{
-              width: 90rpx;
-              height: 90rpx;
+    .uni-container {
+        background-color: #f6f8f9;
+        padding-top: 0;
+        padding-bottom: 30rpx;
+        .household-content {
+            padding-top: 270rpx;
+            .form-title {
+                height: 94rpx;
+                line-height: 94rpx;
+                text-align: center;
+                font-size: 32rpx;
+                color: #333333;
+                padding-left: 40rpx;
+                display: flex;
+                vertical-align: middle;
+                align-items: center;
+                .vLine {
+                    width: 10rpx;
+                    height: 34rpx;
+                    background: #3B86F7;
+                    border-radius: 4px;
+                    margin-right: 17rpx;
+                }
             }
-          }
-          .idcard-infor{
-            height: 37rpx;
-            line-height: 37rpx;
-            text-align: center;
-            color: #333333;
-            font-size: 26rpx;
-            margin-top: 17rpx;
-          }
-        }
-        .idcard-box:last-child{
-          margin-left: 50rpx;
-        }
-        
-      }
-      .image-information:after{
-        display: block;
-        content: "";
-        clear: both;
-      }
-      .contract-ul{
-        .collateral-site{
-          .contract-li{
-            uni-view:last-of-type{
-              justify-content: flex-start;
-              margin-left: 0;
-              color: #333435;
+            .image-information {
+                padding: 0 40rpx;
+                // height: 421rpx;
+                background: #ffffff;
+                .title {
+                    height: 45rpx;
+                    line-height: 45rpx;
+                    font-size: 32rpx;
+                    color: #333333;
+                    padding-top: 26rpx;
+                }
+                .idcard-box {
+                    width: 310rpx;
+                    height: 264rpx;
+                    display: inline-block;
+                    margin-top: 48rpx;
+                    margin-bottom: 24rpx;
+                    .idcard-positive {
+                        width: 310rpx;
+                        height: 210rpx;
+                        background-size: 310rpx 210rpx;
+                        position: relative;
+                    }
+                    .idcard-negative {
+                        width: 310rpx;
+                        height: 210rpx;
+                        position: relative;
+                        background-size: 310rpx 210rpx;
+                    }
+                    .idcard-img {
+                        width: 310rpx;
+                        height: 210rpx;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        z-index: 1;
+                    }
+                    .idcard-camera {
+                        width: 90rpx;
+                        height: 90rpx;
+                        text-align: center;
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        margin-left: -45rpx;
+                        margin-top: -45rpx;
+                        z-index: 2;
+                        img {
+                            width: 90rpx;
+                            height: 90rpx;
+                        }
+                    }
+                    .idcard-infor {
+                        height: 37rpx;
+                        line-height: 37rpx;
+                        text-align: center;
+                        color: #333333;
+                        font-size: 26rpx;
+                        margin-top: 17rpx;
+                    }
+                }
+                .idcard-box:last-child {
+                    margin-left: 50rpx;
+                }
             }
-          }
+            .image-information:after {
+                display: block;
+                content: "";
+                clear: both;
+            }
+            .contract-ul {
+                .collateral-site {
+                    .contract-li {
+                        uni-view:last-of-type {
+                            justify-content: flex-start;
+                            margin-left: 0;
+                            color: #333435;
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
-  .marginT25{
-    margin-top: 25rpx;
-  }
+    
+    .marginT25 {
+        margin-top: 25rpx;
+    }
 </style>

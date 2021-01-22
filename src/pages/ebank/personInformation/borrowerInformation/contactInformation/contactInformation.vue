@@ -35,16 +35,16 @@
           <view class="contract-li">
             <view>姓名</view>
             <view>
-              <img v-if="item.customerName!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="customerConcatList[index].customerName=''" />
-						<input placeholder="请输入" type="text" v-model.trim="item.customerName" />
+				<input placeholder="请输入" type="text" v-model.trim="item.customerName" />
+				<img v-if="item.customerName!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="customerConcatList[index].customerName=''" />
             </view>
           </view>
         </view>
         <view class="contract-li">
           <view>手机号码</view>
           <view>
-            <img v-if="item.phoneNo!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="customerConcatList[index].phoneNo=''" />
-						<input placeholder="请输入" type="number" v-model.trim="item.phoneNo" />
+				<input placeholder="请输入" type="number" v-model.trim="item.phoneNo" />
+				<img v-if="item.phoneNo!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="customerConcatList[index].phoneNo=''" />
           </view>
         </view>
        
@@ -214,17 +214,11 @@
 									routerJumpWay: "pageJump",
 								}); //重新调'申请信息查询'接口
 							} else {
-								 yu.showModal({
-									title: "暂存状态",
-									content: res.data.data.returnCode,
-									showCancel: false,
-									confirmText: "我知道了",
-									success: res => {
-										if (res.confirm) {
-											console.log("用户点击确定");
-										}
-									}
-								});
+								yu.showToast({
+									title: '暂存成功！',
+									image: './static/images/perfectInformation/success.svg',
+									duration: 2000
+									});
 								this.queryApplyInfoCommit({
 									'orderNo': this.orderNoVal,
 									'applyNo': this.applyNoVal,
@@ -232,13 +226,14 @@
 							}
 						} else {
 							 uni.showToast({
-								title: '失败了,请重试！！',
+								title:res.data.data.returnDesc,
 								icon: 'none',
 								duration: 2000
 							});
 						}
 					},
 					function(err) {
+						console.log(222)
 						yu.hideLoading();
 						 uni.showToast({
 							title: '失败了,请重试！！',
@@ -322,7 +317,7 @@
 </script>
 
 <style lang='scss' scoped>
-  .uni-container{
+   .uni-container{
     background-color: #f6f8f9;
     padding-top: 0;  
     padding-bottom: 30rpx;
@@ -381,4 +376,5 @@
  .uni-input-placeholder{
    text-align: right;
  }
+ 
 </style>
