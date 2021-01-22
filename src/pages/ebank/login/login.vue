@@ -360,7 +360,7 @@ export default {
       };
       this.$http
         .request({
-          method: "GET",
+          method: "POST",
           url: this.loginRelatedPostUrl + "api/adminsmuser/logininf",
           header: {
             "Content-Type": "application/json; charset=UTF-8",

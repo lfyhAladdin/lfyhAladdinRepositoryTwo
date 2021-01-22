@@ -25,6 +25,7 @@ import { mapGetters } from "vuex";
 import pageHead from "@/components/page-head.vue";
 import updatePasswordVue from "../updatePassword.vue";
 import jsencrypt from "@/static/js/jsencrypt.min.js";
+const Base64 = require('js-base64').Base64;
 export default {
   data() {
     return {
@@ -69,14 +70,14 @@ export default {
       }
       /* 获取当前用户登录信息 */
       let loginCode = _this.loginCode;
-      let mdpassword = _this.oldPassword;
+      let mdpassword = Base64.encode(_this.oldPassword);
       let data = {
         loginCode: loginCode,
         oldPwd: mdpassword
       };
       this.$http
         .request({
-          method: "GET",
+          method: "post",
           url: this.loginRelatedPostUrl+"api/adminsmuser/checkpwd",
           header: {
             "Content-Type": "application/json; charset=UTF-8",

@@ -388,6 +388,7 @@
               //this.pageJump('personInformation/baseInformation/baseInformation?identity='+this.identity);
               this.queryApplyInfo();
             }else{
+              this.queryApplyInfoNo();
               yu.showToast({
                 title: '暂存成功！',
                 image: './static/images/perfectInformation/success.svg',
@@ -647,6 +648,7 @@
                 // this.pageJump('personInformation/baseInformation/baseInformation?identity='+this.identity);
                 this.queryApplyInfo();
               }else{
+                this.queryApplyInfoNo();
                 yu.showToast({
                   title: '暂存成功！',
                   image: './static/images/perfectInformation/success.svg',
@@ -713,6 +715,7 @@
                 // this.pageJump('personInformation/baseInformation/baseInformation?identity='+this.identity)
                 this.queryApplyInfo();
               }else{
+                this.queryApplyInfoNo();
                 yu.showToast({
                   title: '暂存成功！',
                   image: './static/images/perfectInformation/success.svg',
@@ -731,17 +734,19 @@
           this.showToastFun('3.7更新失败，请联系管理员');
         });
       },
-      queryApplyInfo(e){
-        // this.queryApplyInfoCommit({
-        //   'orderNo': this.orderNoVal,
-        //   'applyNo': this.applyNoVal,
-        // }); //重新调'申请信息查询'接口
+      queryApplyInfo(){
         this.queryApplyInfoCommit({
           "orderNo": this.orderNoVal, 
           "applyNo": this.applyNoVal,
           'routerTrue': true,
           'routerTo': 'personInformation/baseInformation/baseInformation?identity='+this.identity,
           'routerJumpWay': 'pageJump'
+        }); //重新调'申请信息查询'接口
+      },
+      queryApplyInfoNo(){
+        this.queryApplyInfoCommit({
+          'orderNo': this.orderNoVal,
+          'applyNo': this.applyNoVal,
         }); //重新调'申请信息查询'接口
       },
       // 3.2接口 获取个人信息

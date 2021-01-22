@@ -33,6 +33,7 @@
 import { mapGetters,mapActions } from "vuex";
 import pageHead from "@/components/page-head.vue";
 import jsencrypt from "@/static/js/jsencrypt.min.js";
+const Base64 = require('js-base64').Base64;
 export default {
   data() {
     return {
@@ -114,14 +115,14 @@ export default {
       /* 获取当前用户登录信息 */
       
       let logincode = this.logincode;
-      let mdpassword = this.newPasswordFirst;
+      let mdpassword = Base64.encode(this.newPasswordFirst);
       let data = {
         loginCode: logincode,
         userPassword: mdpassword
       };
       this.$http
         .request({
-          method: "GET",
+          method: "post",
           url: this.loginRelatedPostUrl+"api/nosession/adminsmuser/updatepwd",
           header: {
             "Content-Type": "application/json; charset=UTF-8",

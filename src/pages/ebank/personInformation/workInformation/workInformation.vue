@@ -292,6 +292,10 @@
                 'routerJumpWay': 'pageJump'
               }); //重新调'申请信息查询'接口
             }else{
+              this.queryApplyInfoCommit({
+                'orderNo': this.orderNoVal, 
+                'applyNo': this.applyNoVal,
+              }); //重新调'申请信息查询'接口
               yu.showToast({
                 title: '暂存成功！',
                 image: './static/images/perfectInformation/success.svg',
