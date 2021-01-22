@@ -133,6 +133,8 @@
 
         },
         onLoad() {
+            console.log(this.index)
+    
           console.log( this.adjustRateTypeIdArrKey)
             console.log(this.queryApplyInfoList, "信息1111111111111111");
             this.rateClassName = this.queryApplyInfoList.rateClass; //基准利率类型
@@ -205,6 +207,11 @@
               this.index=0;
             }else{
               this.index=1;
+            }
+             if(this.index==0){
+              this.rateAdjustCycIndex="1YAF";
+            }else{
+              this.rateAdjustCycIndex="1MAF";
             }
             if(this.baseRate!="" && this.FloatingValue!=""){
                this.floatInput(); 

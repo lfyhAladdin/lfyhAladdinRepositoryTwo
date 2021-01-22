@@ -529,8 +529,7 @@
 			}
 
 			.warrantor-input {
-				margin-right: 10rpx;
-				width: 66%;
+				width: 68%;
 			}
 
 			picker {
