@@ -128,7 +128,8 @@ export default {
       yu.showLoading();
       this.$http
         .request({
-          method: "post",
+          // method: "post",
+          method: "get",
           url:this.loginRelatedPostUrl+"api/nosession/adminsmuser/checkinformation",
           header: {
             "Content-Type": "application/json; charset=UTF-8",

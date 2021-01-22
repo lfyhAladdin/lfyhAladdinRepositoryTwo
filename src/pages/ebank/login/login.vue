@@ -360,7 +360,8 @@ export default {
       };
       this.$http
         .request({
-          method: "POST",
+          // method: "post",
+          method: "get",
           url: this.loginRelatedPostUrl + "api/adminsmuser/logininf",
           header: {
             "Content-Type": "application/json; charset=UTF-8",
@@ -371,6 +372,14 @@ export default {
         })
         .then(
           res => {
+            if(res.data.data.loginCode == null){
+               yu.showToast({
+                icon: "none",
+                title: "1.7登录出现问题，请联系管理员！",
+                duration: 1500
+              });
+              return;
+            }
             //判断是否越权登录start
             if(res.data.data.loginCode != this.pwdFormdata.account){
               yu.showToast({
