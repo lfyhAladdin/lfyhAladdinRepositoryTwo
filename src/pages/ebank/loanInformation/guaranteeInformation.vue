@@ -505,7 +505,7 @@
 
 			text:nth-of-type(2) {
 				color: #c7c9cd;
-				margin-left: 160rpx;
+				margin-left:20rpx;
 			}
 
 			input {
