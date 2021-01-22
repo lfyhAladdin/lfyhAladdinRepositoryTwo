@@ -182,6 +182,7 @@
     },
     onLoad(options) {
       console.log(options);
+      console.log(this.userInfor)
       this.userID = this.userInfor.loginCode;
       this.orgId =  this.userInfor.orgId;
       console.log(this.userInfor)

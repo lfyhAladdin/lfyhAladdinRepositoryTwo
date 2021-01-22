@@ -312,6 +312,8 @@ export default {
       } else if (ifLoginApp.length == 1) {
         //只有一个权限机构
         this.hasOrginNum = true;
+        userInfos.orgId = ifLoginApp[0].orgId;
+        this.userInforReplace(userInfos);
       }
       let firstLogin = userInfos.lastLoginTime;
       if (firstLogin == "" || firstLogin == null || firstLogin == undefined) {

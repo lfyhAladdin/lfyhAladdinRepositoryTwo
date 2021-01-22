@@ -24,6 +24,7 @@
 </template>
 <script>
   import {mapGetters, mapActions} from 'vuex';
+  const Base64 = require('js-base64').Base64;
   export default {
     data() {
       return {
@@ -199,6 +200,14 @@
       },
       //页面跳转
       proRouter(e){
+        // console.log(1111)
+        // console.log(Base64)
+        // let jiami = Base64.encode('12345678');
+        // let jiemi = Base64.decode(jiami);
+        // console.log(jiami)
+        // console.log(jiemi)
+        // console.log(2222)
+        // return;
         console.log(e.liUrl)
         if(e.liId == 'pendingOrder'){
           this.pageJump(e.liUrl)
