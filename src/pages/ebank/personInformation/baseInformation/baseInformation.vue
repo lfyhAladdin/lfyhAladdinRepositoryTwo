@@ -113,7 +113,6 @@
   </view>
 </template>
 <script>
-  import pageHead from '@/components/page-head.vue';
   import { mapGetters,mapActions } from 'vuex'
 
   export default {
@@ -265,18 +264,22 @@
       relationShipChange(e){
         this.relationShipIdx = e.target.value
       },
+      queryDictionaryListFun(resData,name){
+        if(JSON.stringify(this.resData) == "{}"){
+          return;
+        }
+        for(let key in resData){
+          this[name].push({
+            key:key,
+            value:resData[key]
+          });
+        }
+      },
       // 获取居住状况列表
       getFamilyStatusList(){
         let pdata={dictionaryName:"familyStatus"};
         this.queryDictionaryList(pdata,(res)=>{
-          let resData=res.data.data;
-          for(let key in resData){
-            console.log(key);
-              this.familyStatusList.push({
-                key:key,
-                value:resData[key]
-              });
-          }
+          this.queryDictionaryListFun(res.data.data, 'familyStatusList');
         });
       },
       // 获取省市区三级级联数据
@@ -308,52 +311,28 @@
       getEduexperienceList(){
         let pdata={dictionaryName:"eduexperience"};
         this.queryDictionaryList(pdata,(res)=>{
-          let resData=res.data.data;
-          for(let key in resData){
-              this.eduexperienceList.push({
-                key:key,
-                value:resData[key]
-              });
-          }
+          this.queryDictionaryListFun(res.data.data, 'eduexperienceList');
         });
       },
       // 获取最高学位列表
       getEdudegreeList(){
         let pdata={dictionaryName:"edudegree"};
         this.queryDictionaryList(pdata,(res)=>{
-          let resData=res.data.data;
-          for(let key in resData){
-              this.edudegreeList.push({
-                key:key,
-                value:resData[key]
-              });
-          }
+          this.queryDictionaryListFun(res.data.data, 'edudegreeList');
         });
       },
       // 获取婚姻状况列表
       getMarriageList(){
         let pdata={dictionaryName:"marriage"};
         this.queryDictionaryList(pdata,(res)=>{
-          let resData=res.data.data;
-          for(let key in resData){
-              this.marriageList.push({
-                key:key,
-                value:resData[key]
-              });
-          }
+          this.queryDictionaryListFun(res.data.data, 'marriageList');
         });
       },
       // 获取与借款人关系列表
       getRelationShipList(){
         let pdata={dictionaryName:"relationShip"};
         this.queryDictionaryList(pdata,(res)=>{
-          let resData=res.data.data;
-          for(let key in resData){
-              this.relationShipList.push({
-                key:key,
-                value:resData[key]
-              });
-          }
+          this.queryDictionaryListFun(res.data.data, 'relationShipList');
         });
       },
       showToastFun(e){
