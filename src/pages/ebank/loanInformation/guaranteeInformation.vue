@@ -520,7 +520,7 @@
                 height: 114rpx;
                 text-align: right;
                 margin-left: 30%;
-                padding-top: 30rpx;
+                padding-top: 28rpx;
                 font-size: 32rpx;
             }
             picker {

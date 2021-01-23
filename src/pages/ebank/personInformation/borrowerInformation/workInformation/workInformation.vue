@@ -364,7 +364,11 @@ export default {
           }); //重新调'申请信息查询'接口，确保人员信息列表准确
 
           if (res.data.data.returnCode == "Success") {
-              if (this.personInfor.companyName == "") {
+             
+            if (that.isJump) {
+             
+
+ if (this.personInfor.companyName == "") {
                 yu.showModal({
                   title: "单位名称不能为空！",
                   content: "请输入单位名称",
@@ -476,8 +480,6 @@ export default {
                 });
                 return false;
               }
-            if (that.isJump) {
-             
               that.pageJump(
                 "personInformation/borrowerInformation/contactInformation/contactInformation"
               );
