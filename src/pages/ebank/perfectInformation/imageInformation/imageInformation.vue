@@ -4,7 +4,7 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
-    <view class="uni-panel" v-for="(item, index) in list" :key="item.id">
+    <view :class='["uni-panel",index=="0" ? " uni-panel-first-child" : ""]' v-for="(item, index) in list" :key="item.id">
       <view class="uni-panel-h" :class="item.open ? 'uni-panel-h-on' : ''" @click="triggerCollapse(index)">
         <text class="uni-panel-line"></text>
         <text class="uni-panel-text">{{item.name}}</text>
@@ -204,6 +204,9 @@ uni-page-body {
       }
     }
   }
+}
+.uni-panel-first-child{
+  margin-top: 80rpx;
 }
 .information-box {
   background: #ffffff !important;
