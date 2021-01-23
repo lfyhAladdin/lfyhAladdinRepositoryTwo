@@ -35,7 +35,7 @@
           <view class="contract-li">
             <view>姓名</view>
             <view>
-				<input placeholder="请输入" type="text" v-model.trim="item.customerName" />
+				<input placeholder="请输入" type="text" v-model.trim="item.customerName" style="text-align: right"/>
 				<img v-if="item.customerName!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="customerConcatList[index].customerName=''" />
             </view>
           </view>
@@ -43,7 +43,7 @@
         <view class="contract-li">
           <view>手机号码</view>
           <view>
-				<input placeholder="请输入" type="number" v-model.trim="item.phoneNo" />
+				<input placeholder="请输入" type="number" v-model.trim="item.phoneNo" style="text-align: right"/>
 				<img v-if="item.phoneNo!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="customerConcatList[index].phoneNo=''" />
           </view>
         </view>
@@ -97,7 +97,7 @@
 					},
 				],
 				relationShipList: [{
-					key: 0,
+					key:"",
 					value: "请选择",
 				}, ],
 				relationShipIdxList: [],
@@ -205,7 +205,35 @@
 						if (resArr.returnCode == "Success") {
 							if (that.isJump) {
 								// that.pageJump('personInformation/personInformation')
-
+								// console.log(this.customerConcatList[this.index].customerName)
+                                // if(this.item.customerName==""){
+                                //     yu.showModal({
+								// 		title: "姓名不能为空",
+								// 		content: "请输入姓名！",
+								// 		showCancel: false,
+								// 		confirmText: "我知道了",
+								// 		success: (res) => {
+								// 			if (res.confirm) {
+								// 			console.log("用户点击确定");
+								// 			}
+								// 		},
+								// 		});
+                                //   return false;
+								// }
+								//  if(this.item.phoneNo==""){
+                                //     yu.showModal({
+								// 		title: "手机号码不能为空",
+								// 		content: "请输入手机号码！",
+								// 		showCancel: false,
+								// 		confirmText: "我知道了",
+								// 		success: (res) => {
+								// 			if (res.confirm) {
+								// 			console.log("用户点击确定");
+								// 			}
+								// 		},
+								// 		});
+                                //   return false;
+								// }
 								this.queryApplyInfoCommit({
 									orderNo: this.orderNoVal,
 									applyNo: this.applyNoVal,

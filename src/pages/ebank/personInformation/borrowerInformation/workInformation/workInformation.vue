@@ -73,7 +73,7 @@
           <view>职业</view>
           <view>
             <picker @change="occupationChange" :value="occupationIdx" :range-key="'value'" :range="occupationList">
-						<view class="uni-input">{{occupationList[occupationIdx].value}}</view>
+						{{occupationList[occupationIdx].value}}
 					</picker>
             <img src="@/static/images/firstroom/formChooseArrow.svg" />
           </view>
@@ -92,7 +92,7 @@
           <view>职称</view>
           <view>
             <picker @change="positionChange" :value="positionIdx" :range-key="'value'" :range="positionList">
-						<view class="uni-input">{{positionList[positionIdx].value}}</view>
+						{{positionList[positionIdx].value}}
 					</picker>
             <img src="@/static/images/firstroom/formChooseArrow.svg" />
           </view>

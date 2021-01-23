@@ -3,8 +3,9 @@
     <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
       <img src="@/static/images/profession/pf-back.svg" @tap="navigateBack">
       <text>合作商账号</text>
-       <text></text>
+       <view style="width:30rpx;"></view>
     </view>
+    
     <view class="pf-content mortgagor-content">
       <view class="guaranty-ul" v-for="(item,index) in accountList" :key="item.buildingNo">
         <view class="mortgagor-title">
@@ -53,23 +54,23 @@
                 accountList: [],
             }
         },
-         computed: {
-             ...mapGetters(["userInfor","queryApplyInfoList"]),
+        computed: {
+            ...mapGetters(["userInfor", "queryApplyInfoList"]),
         },
         created() {
-            
-           
+
+
         },
         onLoad() {
             console.log(this.userInfor);
-            this.orgId=this.userInfor.orgId;
+            this.orgId = this.userInfor.orgId;
             this.applicationNumber = this.queryApplyInfoList.applyNo; //申请编号
-             console.log(this.orgId)
+            console.log(this.orgId)
             console.log(this.applicationNumber)
             let data = {
-                orgId:this.orgId, //客户经理机构编号
+                orgId: this.orgId, //客户经理机构编号
                 filterCode: "", // 筛选字段
-                applyNo:this.applicationNumber,
+                applyNo: this.applicationNumber,
                 //  orgId:"", //客户经理机构编号
                 // filterCode: "", // 筛选字段
                 // applyNo:"",
@@ -90,8 +91,8 @@
             );
         },
         onShareAppMessage() {},
-        
-       
+
+
         methods: {
 
             //返回上一页
@@ -131,7 +132,7 @@
                 line-height: 32rpx;
                 font-size: 32rpx;
                 color: #333435;
-                .radio-checked{
+                .radio-checked {
                     float: right;
                 }
             }
@@ -161,22 +162,23 @@
             }
         }
     }
+    
     .project-number-text {
-			height: 40rpx;
-			line-height: 40rpx;
-			font-size: 24rpx;
-
-			.project-number-con {
-				color: #999999;
-				margin-right: 111rpx;
-			}
-		}
-        .account-funds{
-			font-size: 24rpx;
-            color: #333435;
-            .account-funds-con{
-                color: #999999;
-                margin-right: 111rpx;
-            }
+        height: 40rpx;
+        line-height: 40rpx;
+        font-size: 24rpx;
+        .project-number-con {
+            color: #999999;
+            margin-right: 111rpx;
         }
+    }
+    
+    .account-funds {
+        font-size: 24rpx;
+        color: #333435;
+        .account-funds-con {
+            color: #999999;
+            margin-right: 111rpx;
+        }
+    }
 </style>
