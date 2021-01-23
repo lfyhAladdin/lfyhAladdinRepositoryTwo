@@ -178,10 +178,10 @@
                     title: "合同已签署",
                     id: "02"
                 }], //页签标题
-                coverAll: false, //底部框
+                coverAll:false, //底部框
                 houseContractNo: "", //预售合同号
                 houseContractTwo: "", //确认预售合同号
-                twoHouseCollateral: false, //二手房押品底部弹框(补录押品信息)
+                twoHouseCollateral:false, //二手房押品底部弹框(补录押品信息)
                 tabArr: {}, //页签内容
                 applyPhase: "", //申请阶段
                 userID: "", //客户经理编号
@@ -910,14 +910,14 @@
                     "post",
                     res => {
                         console.log(res, "押品信息补录");
-                        this.messageData = res.data.message;
+                        this.messageData = res.data.data.returnCode;
                         setTimeout(() => {
                             this.isDisable = false;
                         }, 1000);
-                        if (this.messageData) {
+                        if (this.messageData=="FAILED") {
                             yu.showModal({
                                 title: "补录失败！",
-                                content: this.messageData,
+                                content: res.data.data.returnDesc,
                                 success: res => {
                                     this.$forceUpdate(); //强制页面刷新
 
@@ -931,7 +931,7 @@
                         } else {
                             yu.showModal({
                                 title: "补录完成",
-                                content: "已自动发起入库申请",
+                                content: "补录押品完成",
                                 success: res => {
                                     this.$forceUpdate(); //强制页面刷新
                                     this.beginNoData = 1; //起始笔数
@@ -1040,12 +1040,12 @@
                         }, 1000);
                         yu.hideLoading();
                         console.log(res.data.message);
-                        this.messageData = res.data.message;
+                        this.failedMessage = res.data.data.returnCode;
 
-                        if (this.messageData) {
+                        if (this.failedMessage=="FAILED") {
                             yu.showModal({
                                 title: "补录失败！",
-                                content: this.messageData,
+                                content:res.data.data.returnDesc,
                                 success: res => {
                                     this.$forceUpdate(); //强制页面刷新
 

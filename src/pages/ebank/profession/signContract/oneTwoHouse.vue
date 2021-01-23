@@ -127,7 +127,7 @@
 
             this.borrower = this.oneTwoHouseInfo.customerName; //借款人
             this.certId = this.oneTwoHouseInfo.certID; //身份证号
-            this.businessType = this.oneTwoHouseInfo.businessType; //业务品种
+            this.businessType = this.oneTwoHouseInfo.businessType2; //业务品种
             this.businessSum = this.oneTwoHouseInfo.businessSum; //审批金额
             this.occurDate = this.oneTwoHouseInfo.occurDate; //审批通过时间
         },

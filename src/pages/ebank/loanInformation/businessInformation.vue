@@ -255,7 +255,7 @@
                             }
                         }
                     );
-
+                    
                     that.applicationNumber = res.data.data.applyNo; //申请编号
                     that.outInRatio = res.data.data.outInRatio; //支出收入比
                     that.isAppLicant = res.data.data.isAppLicant; //是否有共同借款人
@@ -426,8 +426,10 @@
                 console.log(e)
                 let that = this;
                 console.log(this.childprodName);
+                
+                console.log(this.childProductNoIdClass[this.productIndex].key)
                 if (this.childprodName == "") {
-                    this.childprodName = "GR1AJ";
+                     this.childprodName=this.childProductNoIdClass[this.productIndex].key;
                 }
                 if (that.businessType == "个人一手住房贷款") {
                     that.businessTypeData = "1140010";

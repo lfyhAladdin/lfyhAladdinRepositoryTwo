@@ -172,8 +172,6 @@
 			}
 		}
         .account-funds{
-            height: 40rpx;
-			line-height: 40rpx;
 			font-size: 24rpx;
             color: #333435;
             .account-funds-con{

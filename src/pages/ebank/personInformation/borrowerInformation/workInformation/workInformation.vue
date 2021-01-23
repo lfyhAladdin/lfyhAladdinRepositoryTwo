@@ -45,7 +45,7 @@
           <view class="contract-li">
             <view>单位电话</view>
             <view>
-              <input class="uni-input" placeholder="请输入" type="number" maxlength="11" v-model.trim="personInfor.telephone" @focus="verifyTelephone.isTipShow=false" @blur="checkTelephone(personInfor.telephone)" />
+              <input class="uni-input" placeholder="请输入" type="number" maxlength="20" v-model.trim="personInfor.telephone" @focus="verifyTelephone.isTipShow=false" @blur="checkTelephone(personInfor.telephone)" />
               <img v-if="personInfor.telephone!=''" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.telephone=''" />
             </view>
           </view>
@@ -136,42 +136,42 @@ export default {
       },
       scaleJudgementList: [
         {
-          key: 0,
+          key:"",
           value: "请选择",
         },
       ],
       scaleJudgementIdx: 0,
       unitKindList: [
         {
-          key: 0,
+          key:"",
           value: "请选择",
         },
       ],
       unitKindIdx: 0,
       workNatureList: [
         {
-          key: 0,
+          key:"",
           value: "请选择",
         },
       ],
       workNatureIdx: 0,
       occupationList: [
         {
-          key: 0,
+          key:"",
           value: "请选择",
         },
       ],
       occupationIdx: 0,
       headShipList: [
         {
-          key: 0,
+          key:"",
           value: "请选择",
         },
       ],
       headShipIdx: 0,
       positionList: [
         {
-          key: 0,
+          key:"",
           value: "请选择",
         },
       ],
@@ -366,9 +366,7 @@ export default {
           if (res.data.data.returnCode == "Success") {
              
             if (that.isJump) {
-             
-
- if (this.personInfor.companyName == "") {
+               if (this.personInfor.companyName == "") {
                 yu.showModal({
                   title: "单位名称不能为空！",
                   content: "请输入单位名称",
