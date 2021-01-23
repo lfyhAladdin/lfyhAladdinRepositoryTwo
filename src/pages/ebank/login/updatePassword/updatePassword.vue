@@ -122,8 +122,8 @@ export default {
       };
       this.$http
         .request({
-          // method: "post",
-          method: "get",
+          method: "post",
+          // method: "get",
           url: this.loginRelatedPostUrl+"api/nosession/adminsmuser/updatepwd",
           header: {
             "Content-Type": "application/json; charset=UTF-8",
