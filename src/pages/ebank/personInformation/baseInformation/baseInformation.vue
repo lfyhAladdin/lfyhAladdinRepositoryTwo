@@ -357,13 +357,15 @@
           });
           return;
         }
-        if(this.personInfor.phone == ''){
-          this.showToastFun(this.verifyPhone.tipText)
-          return;
-        }
-        if(this.personInfor.yearIncome == ''){
-          this.showToastFun(this.verifyYearIncome.tipText)
-          return;
+        if(isJump){
+          if(this.personInfor.phone == ''){
+            this.showToastFun(this.verifyPhone.tipText)
+            return;
+          }
+          if(this.personInfor.yearIncome == ''){
+            this.showToastFun(this.verifyYearIncome.tipText)
+            return;
+          }
         }
         this.preventResubmit = false;
         this.isJump = isJump;

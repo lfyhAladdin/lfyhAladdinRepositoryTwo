@@ -243,17 +243,19 @@
           });
           return;
         };
-        if(this.personInfor.companyName == ""){
-          this.showToastFun(this.verifyCompanyName.tipText);
-          return;
-        };
-        if(this.personInfor.companyAddress == ""){
-          this.showToastFun(this.verifyCompanyAddress.tipText);
-          return;
-        };
-        if(this.personInfor.telephone == ""){
-          this.showToastFun(this.verifyTelephone.tipText);
-          return;
+        if(isJump){
+          if(this.personInfor.companyName == ""){
+            this.showToastFun(this.verifyCompanyName.tipText);
+            return;
+          };
+          if(this.personInfor.companyAddress == ""){
+            this.showToastFun(this.verifyCompanyAddress.tipText);
+            return;
+          };
+          if(this.personInfor.telephone == ""){
+            this.showToastFun(this.verifyTelephone.tipText);
+            return;
+          };
         };
         this.preventResubmit = false;
         this.isJump = isJump;

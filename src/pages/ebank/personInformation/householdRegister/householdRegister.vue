@@ -528,22 +528,25 @@
         //   this.showToastFun('请上传完整的身份证信息');
         //   return;
         // };
-        if(this.personInfor.idcard == ''){
-          this.showToastFun('请上传完整的身份证信息');
-          return;
+        if(isJump){
+          if(this.personInfor.idcard == ''){
+            this.showToastFun('请上传完整的身份证信息');
+            return;
+          }
+          if(this.relatedPerson!='' && this.relatedPersonIdx=='0'){
+            this.showToastFun('请选择关联人');
+            return;
+          };
+          if(this.personInfor.name == ''){
+            this.showToastFun(this.verifyName.tipText);
+            return;
+          }
+          if(this.personInfor.ermanentAddress == ""){
+            this.showToastFun("请输入户籍地址");
+            return;
+          }
         }
-        if(this.relatedPerson!='' && this.relatedPersonIdx=='0'){
-          this.showToastFun('请选择关联人');
-          return;
-        };
-        if(this.personInfor.name == ''){
-          this.showToastFun(this.verifyName.tipText);
-          return;
-        }
-        if(this.personInfor.ermanentAddress == ""){
-          this.showToastFun("请输入户籍地址");
-          return;
-        }
+        
         this.preventResubmit = false;
         if(JSON.stringify(this.personalInformation) != "{}"){
           this.updatePersonalData();
