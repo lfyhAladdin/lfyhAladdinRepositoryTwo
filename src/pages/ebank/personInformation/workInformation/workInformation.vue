@@ -44,7 +44,7 @@
           <view class="contract-li">
             <view>单位电话</view>
             <view>
-              <input class="uni-input" placeholder="请输入" type="number" v-model.trim="personInfor.telephone" @focus="verifyTelephone.isTipShow=false" @blur="checkTelephone(personInfor.telephone)" />
+              <input class="uni-input" placeholder="请输入" type="number" maxlength='20' v-model.trim="personInfor.telephone" @focus="verifyTelephone.isTipShow=false" @blur="checkTelephone(personInfor.telephone)" />
               <img v-if="personInfor.telephone!=''" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.telephone=''" />
             </view>
           </view>
@@ -86,7 +86,6 @@
   </view>
 </template>
 <script>
-  import pageHead from '@/components/page-head.vue';
   import { mapGetters,mapActions } from 'vuex'
 
   export default {
@@ -112,21 +111,21 @@
         },
         unitKindList: [
           {
-            key: 0,
+            key: '',
             value: '请选择'
           }
         ],
         unitKindIdx: 0,
         workNatureList: [
           {
-            key: 0,
+            key: '',
             value: '请选择'
           }
         ],
         workNatureIdx: 0,
         headShipList: [
           {
-            key: 0,
+            key: '',
             value: '请选择'
           }
         ],

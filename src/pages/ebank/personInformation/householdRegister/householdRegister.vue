@@ -134,7 +134,6 @@
   </view>
 </template>
 <script>
-  // import pageHead from '@/components/page-head.vue';
   import { mapGetters,mapActions,mapMutations } from 'vuex'
 
   export default {
@@ -152,7 +151,7 @@
         relatedPerson: '',
         relatedPersonList: [
           {
-            key: 0,
+            key: '',
             value: '请选择',
             certID: ''
           }

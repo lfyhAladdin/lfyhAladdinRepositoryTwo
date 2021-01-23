@@ -138,35 +138,35 @@
         },
         familyStatusList: [
           {
-            key: 0,
+            key: '',
             value: '请选择'
           }
         ],
         familyStatusIdx: 0,
         eduexperienceList: [
           {
-            key: 0,
+            key: '',
             value: '请选择'
           }
         ],
         eduexperienceIdx: 0,
         edudegreeList: [
           {
-            key: 0,
+            key: '',
             value: '请选择'
           }
         ],
         edudegreeIdx: 0,
         marriageList: [
           {
-            key: 0,
+            key: '',
             value: '请选择'
           }
         ],
         marriageIdx: 0,
         relationShipList: [
           {
-            key: 0,
+            key: '',
             value: '请选择'
           }
         ],
