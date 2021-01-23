@@ -346,11 +346,19 @@
             });
             return;
           };
-          yu.showToast({
-            title: res.data.data.returnDesc,
-            icon: 'none',
-            duration: 3000
-          });
+          if(e == 'delete'){
+            yu.showToast({
+              title: '删除成功！',
+              icon: 'none',
+              duration: 3000
+            });
+          }else{
+            yu.showToast({
+              title: res.data.data.returnDesc,
+              icon: 'none',
+              duration: 3000
+            });
+          }
           setTimeout(()=>{
             this.queryApplyInfoCommit({
               "orderNo": this.orderNoVal, 

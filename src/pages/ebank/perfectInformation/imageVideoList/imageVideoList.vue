@@ -10,7 +10,7 @@
         <view class="image-list">
           <view class="item after-upload" v-for="(imageOne,i) in item.downloadImageDtoList" :key="i">
             <img v-if="item.isIDCard" @click="delImage(imageOne.busiFileType,imageOne.originName)" class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
-            <img class="image-con" :src="imageOne.base64CodeUrl">
+            <img class="image-con" :src="imageOne.base64CodeUrl" @click="previewImg(imageOne.base64CodeUrl)">
           </view>
           <!--<view class="item after-upload">
             <img class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
@@ -162,6 +162,16 @@ export default {
   },
  
   methods: {
+    // 预览图片单张
+    previewImg(logourl) {
+      let _this = this;
+      let imgsArray = [];
+      imgsArray[0] = logourl
+      uni.previewImage({
+          current: 0,
+          urls: imgsArray
+      });
+    },
     //返回上一页
     navigateBack() {
       this.pageJump(this.imageInformation);
