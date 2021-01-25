@@ -247,9 +247,28 @@
                     "post",
                     res => {
                         console.log(res);
-                        yu.navigateTo({
+if(res.data.data.returnCode=="Failed"){
+                            yu.showModal({
+                                title: "失败",
+                                content:res.data.data.returnDesc,
+                                showCancel: false,
+                                confirmText: "我知道了",
+                                success: res => {
+                                    if (res.confirm) {
+                                        console.log("用户点击确定");
+                                    }
+                                }
+                            });
+                            return false; 
+}else{
+              yu.navigateTo({
                             url: 'oneTwoHouse',
                         });
+}
+
+
+
+                      
                         // this.getPaymentInfoQuery(res);
                     },
                     function(err) {

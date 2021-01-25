@@ -340,7 +340,7 @@ if(this.deductionNumber==""){
 
  yu.showModal({
           title: "该账号或者子账号序号录入错误",
-          content: "",
+          content: "请重新输入",
           showCancel: false,
           confirmText: "我知道了",
           success: res => {
