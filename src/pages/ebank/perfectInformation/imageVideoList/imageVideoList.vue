@@ -30,6 +30,7 @@
 </template>
 <script>
 import {mapGetters, mapMutations, mapActions} from 'vuex';
+import { pathToBase64, base64ToPath } from '@/static/js/imagetools.js';
 export default {
   data: function() {
     return {
@@ -165,12 +166,33 @@ export default {
     // 预览图片单张
     previewImg(logourl) {
       let _this = this;
-      let imgsArray = [];
+      /* let imgsArray = [];
       imgsArray[0] = logourl
       uni.previewImage({
           current: 0,
           urls: imgsArray
-      });
+      }); */
+      uni.showLoading({
+        title:"图片处理中..."
+      })
+      base64ToPath(logourl) //logoul为base64为图片流
+        .then(path => {
+        let imgsArray = [];
+        uni.hideLoading();
+        imgsArray[0] = path;
+        uni.previewImage({
+          current: 0, 
+          urls: imgsArray
+        });
+        })
+        .catch(error => {
+          yu.showToast({
+            icon: "none",
+            title: "图片预览失败",
+            duration: 1500
+          });
+          uni.hideLoading();
+        })
     },
     //返回上一页
     navigateBack() {
@@ -332,7 +354,7 @@ export default {
         data,
         "post",
         function(res) {
-           yu.showToast({
+          yu.showToast({
             icon: "none",
             title: "图片上传成功",
             duration: 1500
