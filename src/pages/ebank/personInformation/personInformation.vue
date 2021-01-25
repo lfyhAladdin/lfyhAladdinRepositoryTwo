@@ -27,110 +27,110 @@
       </view>
       <view class="pinformations">
         <!-- 借款人 -->
-          <view class="pinformation">
-            <view class="clearfix">
-              <view class="pinformation-left">
-                <text>{{borrower.fullName}}</text>
-                <view class="unmarried" v-if="borrower.marriage=='10'">未婚</view>
-                <view class="married" v-else-if="borrower.marriage=='20'">已婚</view>
-                <view class="unmarried" v-else-if="borrower.marriage=='30'">丧偶</view>
-                <view class="unmarried" v-else-if="borrower.marriage=='40'">离婚</view>
-              </view>
-              <view class="pinformation-right" @click="toComplete('借款人',borrower.customerCertType,borrower.customerCertID,borrower.fullName,'no')">
-                <text v-if="borrower.completeFlag=='1'">已完善</text>
-                <text class="not-completed" v-else-if="borrower.completeFlag=='2'">未完善</text>
-                <img src="@/static/images/firstroom/formChooseArrow.svg" />
-              </view>
+        <view class="pinformation">
+          <view class="clearfix">
+            <view class="pinformation-left">
+              <text>{{borrower.fullName}}</text>
+              <view class="unmarried" v-if="borrower.marriage=='10'">未婚</view>
+              <view class="married" v-else-if="borrower.marriage=='20'">已婚</view>
+              <view class="unmarried" v-else-if="borrower.marriage=='30'">丧偶</view>
+              <view class="unmarried" v-else-if="borrower.marriage=='40'">离婚</view>
             </view>
-            <view class="personIdentity">借款人</view>
-          </view>
-      
-      <uni-swipe-action>
-        <!-- 借款人配偶 -->
-        <uni-swipe-action-item v-for="(item,index) in otherCustomerList" :options="options" :key="index+'e'" @change="swipeChange" @click="swipeClick($event,'借款人配偶',item.certID)">
-          <view class="pinformation borderT">
-            <view class="clearfix">
-              <view class="pinformation-left">
-                <text>{{item.customerName}}</text>
-              </view>
-              <view class="pinformation-right" @click="toComplete('借款人配偶',item.certType,item.certID,item.customerName,'no')">
-                <text v-if="item.completeFlag=='1'">已完善</text>
-                <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
-                <img src="@/static/images/firstroom/formChooseArrow.svg" />
-              </view>
+            <view class="pinformation-right" @click="toComplete('借款人',borrower.customerCertType,borrower.customerCertID,borrower.fullName,'no')">
+              <text v-if="borrower.completeFlag=='1'">已完善</text>
+              <text class="not-completed" v-else-if="borrower.completeFlag=='2'">未完善</text>
+              <img src="@/static/images/firstroom/formChooseArrow.svg" />
             </view>
-            <view class="personIdentity">借款人配偶</view>
           </view>
-        </uni-swipe-action-item>
+          <view class="personIdentity">借款人</view>
+        </view>
         
-        <!-- 共借人及其配偶 -->
-        <uni-swipe-action-item v-for="(item,index) in sameList" :options="options" :key="index+'a'" @change="swipeChange" @click="swipeClick($event,item.pclass,item.certID)">
-          <view class="pinformation marginT30" v-if="item.pclass=='共借人'">
-            <view class="clearfix">
-              <view class="pinformation-left">
-                <text>{{item.customerName}}</text>
-                <view class="unmarried" v-if="item.marriage=='10'">未婚</view>
-                <view class="married" v-else-if="item.marriage=='20'">已婚</view>
-                <view class="unmarried" v-else-if="item.marriage=='30'">丧偶</view>
-                <view class="unmarried" v-else-if="item.marriage=='40'">离婚</view>
+        <uni-swipe-action>
+          <!-- 借款人配偶 -->
+          <uni-swipe-action-item v-for="(item,index) in otherCustomerList" :options="options" :key="index+'e'" @change="swipeChange" @click="swipeClick($event,'借款人配偶',item.certID)">
+            <view class="pinformation borderT">
+              <view class="clearfix">
+                <view class="pinformation-left">
+                  <text>{{item.customerName}}</text>
+                </view>
+                <view class="pinformation-right" @click="toComplete('借款人配偶',item.certType,item.certID,item.customerName,'no')">
+                  <text v-if="item.completeFlag=='1'">已完善</text>
+                  <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
+                  <img src="@/static/images/firstroom/formChooseArrow.svg" />
+                </view>
               </view>
-              <view class="pinformation-right" @click="toComplete('共借人',item.certType,item.certID,item.customerName,'no')">
-                <text v-if="item.completeFlag=='1'">已完善</text>
-                <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
-                <img src="@/static/images/firstroom/formChooseArrow.svg" />
-              </view>
+              <view class="personIdentity">借款人配偶</view>
             </view>
-            <view class="personIdentity">共借人</view>
-          </view>
-          <view class="pinformation borderT"  v-if="item.pclass=='共借人配偶'">
-            <view class="clearfix">
-              <view class="pinformation-left">
-                <text>{{item.customerName}}</text>
+          </uni-swipe-action-item>
+          
+          <!-- 共借人及其配偶 -->
+          <uni-swipe-action-item v-for="(item,index) in sameList" :options="options" :key="index+'a'" @change="swipeChange" @click="swipeClick($event,item.pclass,item.certID)">
+            <view class="pinformation marginT30" v-if="item.pclass=='共借人'">
+              <view class="clearfix">
+                <view class="pinformation-left">
+                  <text>{{item.customerName}}</text>
+                  <view class="unmarried" v-if="item.marriage=='10'">未婚</view>
+                  <view class="married" v-else-if="item.marriage=='20'">已婚</view>
+                  <view class="unmarried" v-else-if="item.marriage=='30'">丧偶</view>
+                  <view class="unmarried" v-else-if="item.marriage=='40'">离婚</view>
+                </view>
+                <view class="pinformation-right" @click="toComplete('共借人',item.certType,item.certID,item.customerName,'no')">
+                  <text v-if="item.completeFlag=='1'">已完善</text>
+                  <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
+                  <img src="@/static/images/firstroom/formChooseArrow.svg" />
+                </view>
               </view>
-              <view class="pinformation-right" @click="toComplete('共借人配偶',item.certType,item.certID,item.customerName,item.relCertID)">
-                <text v-if="item.completeFlag=='1'">已完善</text>
-                <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
-                <img src="@/static/images/firstroom/formChooseArrow.svg" />
-              </view>
+              <view class="personIdentity">共借人</view>
             </view>
-            <view class="personIdentity">共借人配偶</view>
-          </view>
-        </uni-swipe-action-item>
+            <view class="pinformation borderT"  v-if="item.pclass=='共借人配偶'">
+              <view class="clearfix">
+                <view class="pinformation-left">
+                  <text>{{item.customerName}}</text>
+                </view>
+                <view class="pinformation-right" @click="toComplete('共借人配偶',item.certType,item.certID,item.customerName,item.relCertID)">
+                  <text v-if="item.completeFlag=='1'">已完善</text>
+                  <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
+                  <img src="@/static/images/firstroom/formChooseArrow.svg" />
+                </view>
+              </view>
+              <view class="personIdentity">共借人配偶</view>
+            </view>
+          </uni-swipe-action-item>
 
-        <!-- 担保人及其配偶 -->
-			  <uni-swipe-action-item v-for="(item,index) in guarList" :options="options" :key="index+'b'" @change="swipeChange" @click="swipeClick($event,item.pclass,item.certID)">
-          <view class="pinformation marginT30" v-if="item.pclass=='担保人'">
-            <view class="clearfix">
-              <view class="pinformation-left">
-                <text>{{item.guarantorName}}</text>
-                <view class="unmarried" v-if="item.marriage=='10'">未婚</view>
-                <view class="married" v-else-if="item.marriage=='20'">已婚</view>
-                <view class="unmarried" v-else-if="item.marriage=='30'">丧偶</view>
-                <view class="unmarried" v-else-if="item.marriage=='40'">离婚</view>
+          <!-- 担保人及其配偶 -->
+          <uni-swipe-action-item v-for="(item,index) in guarList" :options="options" :key="index+'b'" @change="swipeChange" @click="swipeClick($event,item.pclass,item.certID)">
+            <view class="pinformation marginT30" v-if="item.pclass=='担保人'">
+              <view class="clearfix">
+                <view class="pinformation-left">
+                  <text>{{item.guarantorName}}</text>
+                  <view class="unmarried" v-if="item.marriage=='10'">未婚</view>
+                  <view class="married" v-else-if="item.marriage=='20'">已婚</view>
+                  <view class="unmarried" v-else-if="item.marriage=='30'">丧偶</view>
+                  <view class="unmarried" v-else-if="item.marriage=='40'">离婚</view>
+                </view>
+                <view class="pinformation-right" @click="toComplete('担保人',item.certType,item.certID,item.guarantorName,'no')">
+                  <text v-if="item.completeFlag=='1'">已完善</text>
+                  <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
+                  <img src="@/static/images/firstroom/formChooseArrow.svg" />
+                </view>
               </view>
-              <view class="pinformation-right" @click="toComplete('担保人',item.certType,item.certID,item.guarantorName,'no')">
-                <text v-if="item.completeFlag=='1'">已完善</text>
-                <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
-                <img src="@/static/images/firstroom/formChooseArrow.svg" />
-              </view>
+              <view class="personIdentity">担保人</view>
             </view>
-            <view class="personIdentity">担保人</view>
-          </view>
-          <view class="pinformation borderT" v-if="item.pclass=='担保人配偶'">
-            <view class="clearfix">
-              <view class="pinformation-left">
-                <text>{{item.customerName}}</text>
+            <view class="pinformation borderT" v-if="item.pclass=='担保人配偶'">
+              <view class="clearfix">
+                <view class="pinformation-left">
+                  <text>{{item.customerName}}</text>
+                </view>
+                <view class="pinformation-right" @click="toComplete('担保人配偶',item.certType,item.certID,item.customerName,item.relCertID)">
+                  <text v-if="item.completeFlag=='1'">已完善</text>
+                  <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
+                  <img src="@/static/images/firstroom/formChooseArrow.svg" />
+                </view>
               </view>
-              <view class="pinformation-right" @click="toComplete('担保人配偶',item.certType,item.certID,item.customerName,item.relCertID)">
-                <text v-if="item.completeFlag=='1'">已完善</text>
-                <text class="not-completed" v-else-if="item.completeFlag=='2'">未完善</text>
-                <img src="@/static/images/firstroom/formChooseArrow.svg" />
-              </view>
+              <view class="personIdentity">担保人配偶</view>
             </view>
-            <view class="personIdentity">担保人配偶</view>
-          </view>
-        </uni-swipe-action-item>
-		  </uni-swipe-action>
+          </uni-swipe-action-item>
+        </uni-swipe-action>
 
       </view>
     </view>
@@ -257,6 +257,7 @@ export default {
       this.borrower.marriage = resData.marriage;
       this.borrower.completeFlag = resData.completeFlag;
       this.otherCustomerList = resData.otherCustomerList;
+      alert(JSON.stringify(this.otherCustomerList))
       // 共借人信息，且如果共借人配偶有值，将共借人配偶信息添加到相应的共借人信息里
       this.sameApplyList = resData.sameApplyList;
       this.sameApplyRelList = resData.sameApplyRelList;

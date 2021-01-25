@@ -1,5 +1,5 @@
 <template>
-  <view class="uni-container">
+  <view :class="phoneSystem ?'uni-container' : 'uni-container contract-button-an'">
     <view :class="phoneSystem ?'pf-title pf-title-ios':'pf-title'">
       <text>业务</text>
     </view>
