@@ -566,7 +566,7 @@
         let sendArr=[];
         if(this.queryApplyInfoList != null){
           if(this.queryApplyInfoList[this.listName]){
-            sendArr=this.queryApplyInfoList[this.listName];
+            sendArr= this.queryApplyInfoList[this.listName].concant();
           };
         };
         let names=[];
@@ -662,7 +662,6 @@
             }
           }else{
             this.showToastFun(resArr.returnDesc);
-            alert(JSON.stringify(this.queryApplyInfoList.otherCustomerList))
           }
         },(err)=>{
           this.preventResubmit = true;

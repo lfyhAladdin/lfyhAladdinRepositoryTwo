@@ -256,21 +256,61 @@ export default {
       this.borrower.fullName = resData.fullName;
       this.borrower.marriage = resData.marriage;
       this.borrower.completeFlag = resData.completeFlag;
-      alert(JSON.stringify(resData.otherCustomerList))
       this.otherCustomerList = resData.otherCustomerList;
-      alert(JSON.stringify(this.otherCustomerList))
       // 共借人信息，且如果共借人配偶有值，将共借人配偶信息添加到相应的共借人信息里
       this.sameApplyList = resData.sameApplyList;
-      this.sameApplyRelList = resData.sameApplyRelList;
+      // this.sameApplyRelList = resData.sameApplyRelList;
+      let arr = [
+        {
+          bornDate: "1997/09/16",
+          certID: "440825199709163581",
+          certType: "Ind01",
+          completeFlag: "1",
+          customerName: "黎秀",
+          formerlyName: "",
+          gender: "2",
+          idexpiry: "2038/10/26",
+          marriage: "20",
+          nativeAdd: "广东省徐闻县个梵蒂冈复合弓复5弓和刚发货广发",
+          pclass: "共借人配偶",
+          relCertID: "130981198605064000",
+          relCertType: "Ind01",
+        },
+        {
+          bornDate: "1997/09/16",
+          certID: "440825199709163581",
+          certType: "Ind01",
+          completeFlag: "1",
+          customerName: "黎秀2",
+          formerlyName: "",
+          gender: "2",
+          idexpiry: "2038/10/26",
+          marriage: "20",
+          nativeAdd: "广东省徐闻县个梵蒂冈复合弓复5弓和刚发货广发",
+          pclass: "共借人配偶",
+          relCertID: "37020519530902705X",
+          relCertType: "Ind01",
+        }
+      ]
+      this.sameApplyRelList = arr;
       if(this.sameApplyList && this.sameApplyRelList){
         this.sameApplyList.forEach((item, index) => {
           item.pclass="共借人"
           this.sameApplyRelList.forEach((ite,idx) => {
             ite.pclass="共借人配偶"
-            if (item.certID === ite.relCertID) {
-              // item.spouse = ite
-              this.sameList.push(item);
-              this.sameList.push(ite);
+            if(this.sameApplyList.length == this.sameApplyRelList.length){
+              if (item.certID === ite.relCertID) {
+                this.sameList.push(item);
+                this.sameList.push(ite);
+              }
+            }else{
+              if (item.certID === ite.relCertID) {
+                // item.spouse = ite
+                this.sameList.push(item);
+                this.sameList.push(ite);
+              }else{
+                this.sameList.push(item);
+              }
             }
           });
         });
@@ -289,11 +329,20 @@ export default {
           item.pclass="担保人"
           this.guarantyRelList.forEach((ite,idx) => {
             ite.pclass="担保人配偶"
-            if (item.certID === ite.relCertID) {
-              // item.spouse = ite
-              this.guarList.push(item);
-              this.guarList.push(ite);
+            if(this.guarantorList.length == this.guarantyRelList.length){
+              if (item.certID === ite.relCertID) {
+                this.guarList.push(item);
+                this.guarList.push(ite);
+              }
+            }else{
+              if (item.certID === ite.relCertID) {
+                this.guarList.push(item);
+                this.guarList.push(ite);
+              }else{
+                this.guarList.push(item);
+              }
             }
+            
           });
         });
         console.log(this.guarList);
