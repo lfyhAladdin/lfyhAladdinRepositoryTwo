@@ -45,7 +45,7 @@
           <view class="contract-li">
             <view>单位电话</view>
             <view>
-              <input class="uni-input" placeholder="请输入" type="number" maxlength="20" v-model.trim="personInfor.telephone" @focus="verifyTelephone.isTipShow=false" @blur="checkTelephone(personInfor.telephone)" />
+              <input class="uni-input" placeholder="请输入" type="text" maxlength="20" v-model.trim="personInfor.telephone" @focus="verifyTelephone.isTipShow=false" @blur="checkTelephone(personInfor.telephone)" />
               <img v-if="personInfor.telephone!=''" src="@/static/images/firstroom/cleanUp.svg" @click="personInfor.telephone=''" />
             </view>
           </view>

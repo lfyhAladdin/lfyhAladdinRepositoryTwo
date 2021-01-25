@@ -729,4 +729,8 @@
     .marginT25 {
         margin-top: 25rpx;
     }
+    
+    .contract-button {
+        margin-bottom: 80rpx;
+    }
 </style>
