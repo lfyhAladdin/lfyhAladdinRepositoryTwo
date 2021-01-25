@@ -36,11 +36,11 @@
               <picker 
                 mode="multiSelector" 
                 :range="provincesList" 
-                :value="provincesIndex" 
+                :value="provincesIndex"
                 :range-key="'regionName'" 
                 @columnchange="provincesColumnchange"
                 @change="provincesChange">
-                {{provincesList[0][provincesIndex[0]].regionName}},{{provincesList[1][provincesIndex[1]].regionName}},{{provincesList[2][provincesIndex[2]].regionName}}
+                {{provinceZhi}},{{cityZhi}},{{areaZhi}}
               </picker>
               <img src="@/static/images/perfectInformation/formChooseArrow.svg">
             </view>
@@ -337,6 +337,9 @@
         provinceVal: '110000',
         cityVal: '110100',
         areaVal: '110101',
+        provinceZhi: '北京市',
+        cityZhi: '北京市',
+        areaZhi: '东城区',
         addressVal: '',
         addressFocus: false,
         clrTypeIdVal: '10100100100',
@@ -578,14 +581,6 @@
         console.log(this.provinceVal,this.cityVal,this.areaVal)
         this.provincesMate(this.provinceVal,this.cityVal,this.areaVal);
       },
-      //获取省市区三级级联数据
-      regionListAllQuery(){
-        let arr = this.provincesListData;
-        this.provincesList[0] = arr.map((v)=>{return this.provincesObj(v);});
-        this.provincesList[1] = arr[this.provincesIndex[0]].children.map((v)=>{return this.provincesObj(v);});
-        this.provincesList[2] = arr[this.provincesIndex[0]].children[this.provincesIndex[1]].children.map((v)=>{return this.provincesObj(v);});
-        // console.log(this.provincesListData);
-      },
       provincesObj(v){
         let obj = {
           'regionId': v.regionId,
@@ -594,23 +589,54 @@
         }
         return obj;
       },
+      //获取省市区三级级联数据
+      regionListAllQuery(){
+        let arr = this.provincesListData;
+        this.provincesList[0] = arr.map((v)=>{return this.provincesObj(v);});
+        if(this.areaZhi == this.provinceZhi){
+          this.provincesList[1] = [];
+          this.provincesList[2] = [];
+        }else{
+          this.provincesList[1] = arr[this.provincesIndex[0]].children.map((v)=>{return this.provincesObj(v);});
+          this.provincesList[2] = arr[this.provincesIndex[0]].children[this.provincesIndex[1]].children.map((v)=>{return this.provincesObj(v);});
+        }
+        // console.log(this.provincesListData);
+        // console.log(this.provincesList)
+        // console.log(this.provinceZhi,this.cityZhi,this.areaZhi)
+      },
       //地址三级联动
       provincesColumnchange(event){
         let e = event.detail;
         let arr = this.provincesListData;
-        // console.log(e)
+        // console.log(event)
         this.provincesIndex[e.column] = e.value;
         //省级不会变，不需要重新赋值
-        this.provincesList[1] = arr[this.provincesIndex[0]].children.map((v)=>{return this.provincesObj(v);});
-        this.provincesList[2] = arr[this.provincesIndex[0]].children[this.provincesIndex[1]].children.map((v)=>{return this.provincesObj(v);});
+        if(arr[this.provincesIndex[0]].children.length == 0){
+          this.provincesList[1] = [];
+          this.provincesList[2] = [];
+        }else{
+          this.provincesList[1] = arr[this.provincesIndex[0]].children.map((v)=>{return this.provincesObj(v);});
+          this.provincesList[2] = arr[this.provincesIndex[0]].children[this.provincesIndex[1]].children.map((v)=>{return this.provincesObj(v);});
+        }
       },
       provincesChange(e){
         // console.log(e)
         this.provincesIndex = e.target.value;
         this.provinceVal = this.provincesList[0][this.provincesIndex[0]].regionId;
-        this.cityVal = this.provincesList[1][this.provincesIndex[1]].regionId;
-        this.areaVal = this.provincesList[2][this.provincesIndex[2]].regionId;
-        console.log(this.provinceVal,this.cityVal,this.areaVal)
+        this.provinceZhi = this.provincesList[0][this.provincesIndex[0]].regionName;
+        if(this.provincesList[1].length == 0){
+          this.cityVal = this.provinceVal;
+          this.areaVal = this.provinceVal;
+          this.cityZhi = this.provinceZhi;
+          this.areaZhi = this.provinceZhi;
+        }else{
+          this.cityVal = this.provincesList[1][this.provincesIndex[1]].regionId;
+          this.areaVal = this.provincesList[2][this.provincesIndex[2]].regionId;
+          this.cityZhi = this.provincesList[1][this.provincesIndex[1]].regionName;
+          this.areaZhi = this.provincesList[2][this.provincesIndex[2]].regionName;
+        };
+        // console.log(this.provinceZhi,this.cityZhi,this.areaZhi)
+        // console.log(this.provinceVal,this.cityVal,this.areaVal)
         this.collateralInputListReplace({
           'key': 'provinceVal',
           'value': this.provinceVal,
@@ -629,19 +655,31 @@
         this.provincesListData.forEach((item,index)=>{
           if(item.regionId == province){
             this.provincesIndex[0] = index;
+            this.provinceZhi = item.regionName;
+            console.log(item)
+            if(item.children.length == 0){
+              this.provincesIndex[1] = 0;
+              this.provincesIndex[2] = 0;
+              this.cityZhi = this.provinceZhi;
+              this.areaZhi = this.provinceZhi;
+              return;
+            }
             item.children.forEach((item1,index1)=>{
               if(item1.regionId == city){
                 this.provincesIndex[1] = index1;
+                this.cityZhi = item1.regionName;
                 item1.children.forEach((item2,index2)=>{
                   if(item2.regionId == area){
                     this.provincesIndex[2] = index2;
+                    this.areaZhi = item2.regionName;
                   }
                 })
               }
             })
           }
         });
-        console.log(this.provincesIndex)
+        // console.log(this.provinceZhi,this.cityZhi,this.areaZhi)
+        // console.log(this.provincesIndex)
         this.regionListAllQuery();
       },
       //下拉选择框

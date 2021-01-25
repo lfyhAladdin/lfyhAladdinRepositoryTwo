@@ -53,10 +53,8 @@
           <view class="contract-li">
             <view>居住地址</view>
             <view class="colladdress">
-              <picker mode="multiSelector" @columnchange="changeNextCol" :value="mulIndex" :range="mulArr">
-                <view class="picker" v-if="isShow">
-                {{mulArr[0][mulIndex[0]]}}，{{mulArr[1][mulIndex[1]]}}，{{mulArr[2][mulIndex[2]]}}
-                </view>
+              <picker mode="multiSelector" @columnchange="changeNextCol" @change="provincesChange" :value="mulIndex" :range="mulArr">
+                {{provinceZhi}},{{cityZhi}},{{areaZhi}}
               </picker>
               <img src="@/static/images/firstroom/formChooseArrow.svg" />
             </view>
@@ -176,13 +174,15 @@
         mulArr:[],
         mulCodeArr:[],
         regionCode:'',
-        isShow: false,
         // 假设json为后端返回的数据
         json: [],
         orderNoVal: '',  //订单编号
         applyNoVal: '', //申请编号
         isJump: true,
         preventResubmit: true,  //防重复提交
+        provinceZhi: '河北省',
+        cityZhi: '廊坊市',
+        areaZhi: '安次区',
       }
     },
     computed: {
@@ -224,16 +224,33 @@
         // mulArr[1]的值是由 mulIndex[0]的值决定的
         this.mulArr.splice(1,1,this.json[this.mulIndex[0]].children.map(function(v){return v.regionName}));
         this.mulCodeArr.splice(1,1,this.json[this.mulIndex[0]].children.map(function(v){return v.regionId}));
-        // mulArr[2]的值是由 muIndex[1]的值决定的 
-        this.mulArr.splice(2,1,this.json[this.mulIndex[0]].children[this.mulIndex[1]].children.map(function(v){return v.regionName}));
-        this.mulCodeArr.splice(2,1,this.json[this.mulIndex[0]].children[this.mulIndex[1]].children.map(function(v){return v.regionId}));
-        // {{mulArr[0][mulIndex[0]]}}，{{mulArr[1][mulIndex[1]]}}，{{mulArr[2][mulIndex[2]]}}
-        console.log(this.mulArr[0][this.mulIndex[0]]+this.mulArr[1][this.mulIndex[1]]+this.mulArr[2][this.mulIndex[2]])
-        console.log(this.mulCodeArr[2][this.mulIndex[2]])
-        this.regionCode=this.mulCodeArr[2][this.mulIndex[2]];
-        console.log(this.mulIndex)
+        if(this.mulArr[1].length == 0){
+          this.mulArr[1] = [];
+          this.mulArr[2] = [];
+          this.mulCodeArr[1] = [];
+          this.mulCodeArr[2] = [];
+        }else{
+           // mulArr[2]的值是由 muIndex[1]的值决定的 
+          this.mulArr.splice(2,1,this.json[this.mulIndex[0]].children[this.mulIndex[1]].children.map(function(v){return v.regionName}));
+          this.mulCodeArr.splice(2,1,this.json[this.mulIndex[0]].children[this.mulIndex[1]].children.map(function(v){return v.regionId}));
+        }
+        // console.log(this.mulArr)
+        // console.log(this.mulCodeArr)
+        // console.log(this.mulIndex)
       },
-
+      provincesChange(e){
+        console.log(e)
+        this.mulIndex = e.target.value;
+        this.provinceZhi = this.mulArr[0][this.mulIndex[0]]; 
+        if(this.mulArr[1].length == 0){
+          this.cityZhi = this.provinceZhi;
+          this.areaZhi = this.provinceZhi;
+        }else{
+          this.cityZhi = this.mulArr[1][this.mulIndex[1]];
+          this.areaZhi = this.mulArr[2][this.mulIndex[2]];
+          this.regionCode=this.mulCodeArr[2][this.mulIndex[2]];
+        }
+      },
       //返回上一页
       navigateBack(){
         uni.showModal({
@@ -300,7 +317,9 @@
       　  this.mulCodeArr[1] = this.json[this.mulIndex[0]].children.map(function(v){return v.regionId});
           this.mulCodeArr[2] = this.json[this.mulIndex[0]].children[this.mulIndex[1]].children.map(function(v){return v.regionId});
           this.regionCode=this.mulCodeArr[2][this.mulIndex[2]];
-          this.isShow = true;
+          this.provinceZhi = this.mulArr[0][this.mulIndex[0]]; 
+          this.cityZhi = this.mulArr[1][this.mulIndex[1]];
+          this.areaZhi = this.mulArr[2][this.mulIndex[2]];
 
         },(err)=>{
           yu.hideLoading();
