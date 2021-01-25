@@ -2,7 +2,7 @@
   <view class="pending-order">
   <view class="customize-head">
       <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
+      <view class="ch-title"><text>{{HouseTitle}}</text></view>
     </view>
   
  <!--个人信息-start-->
@@ -68,7 +68,7 @@
     export default {
         data: function() {
             return {
-                title: "二手房",
+                title: "",
                 current: 0,
                 mode: 0,
                 applicationNumber: "",
@@ -89,6 +89,12 @@
         onLoad() {
             console.log(this.signContractList)
             console.log(this.current)
+            this.houseName = this.signContractList.businessType;
+             if (this.houseName == "1140010" || this.houseName == "1140110") {
+                this.HouseTitle = "一手房";
+            } else {
+                this.HouseTitle = "二手房";
+            }
             if(this.current==0){
               this.bankShow=false;
             }else{
