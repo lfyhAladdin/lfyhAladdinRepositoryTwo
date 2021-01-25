@@ -248,7 +248,7 @@
                 //     beginDate: "2022/01/08",
                 //     businessCurrency: "01",
                 //     businessSum: "300000",
-                //     businessType: "1140020",
+                //     businessType: "1140010",
                 //     certId: null,
                 //     contractNo: "2020090900000007",
                 //     customerName: "按揭一",
@@ -270,7 +270,7 @@
                 //     beginDate: "2022/01/08",
                 //     businessCurrency: "01",
                 //     businessSum: "300000",
-                //     businessType: "1140020",
+                //     businessType: "1140010",
                 //     certId: null,
                 //     contractNo: "2020090900000007",
                 //     customerName: "按揭一",
@@ -440,6 +440,7 @@
                 console.log(this.userID);
                 this.tabArr[this.applyPhase] = [];
                 let data = {
+                    businessType: this.businessType,
                     userId: this.userID,
                     applyPhase: "01",
                     beginNo: this.numNo[this.applyPhase].beginNo, //起始笔数
@@ -797,10 +798,7 @@
 
 
 
-                if (
-                    res.businessType == "1140020" ||
-                    res.businessType == "1140120"
-                ) {
+                if (res.businessType == "1140020" || res.businessType == "1140120") {
                     let data = {
                         orderNo: "",
                         contractNo: res.contractNo //合同编号
@@ -812,13 +810,13 @@
                         "post",
                         res => {
                             console.log(res);
-                            this.message = res.data.message;
+                            this.successMsg = res.data.data.returnDesc;
                             console.log(this.message);
                             this.preventResubmit = true;
-                            if (this.message) {
+                            if (res.data.data.returnCode=="Failed") {
                                 yu.showModal({
                                     title: "申请失败",
-                                    content: this.message,
+                                    content: this.successMsg,
                                     showCancel: false,
                                     confirmText: "我知道了",
                                     success: res => {
@@ -828,9 +826,9 @@
                                     }
                                 });
                             } else {
-                                this.successMsg = res.data.data.returnDesc;
+                                // this.successMsg = res.data.data.returnDesc;
                                 yu.showModal({
-                                    title: "申请成功",
+                                    title: "申请状态",
                                     content: this.successMsg,
                                     showCancel: false,
                                     confirmText: "我知道了",
@@ -854,10 +852,10 @@
                             console.log(err);
                         }
                     );
-                } else {
+                } else {  //一手房不用入库
                     yu.showModal({
                         title: "申请成功",
-                        content: "已自动发起入库申请",
+                        content: "已自动签署",
                         showCancel: false,
                         confirmText: "我知道了",
                         success: res => {
@@ -909,12 +907,12 @@
                     data,
                     "post",
                     res => {
-                        console.log(res, "押品信息补录");
+                        console.log(res, "押品信息补录一手房");
                         this.messageData = res.data.data.returnCode;
                         setTimeout(() => {
                             this.isDisable = false;
                         }, 1000);
-                        if (this.messageData=="FAILED") {
+                        if (this.messageData=="Failed") {
                             yu.showModal({
                                 title: "补录失败！",
                                 content: res.data.data.returnDesc,
@@ -1042,7 +1040,7 @@
                         console.log(res.data.message);
                         this.failedMessage = res.data.data.returnCode;
 
-                        if (this.failedMessage=="FAILED") {
+                        if (this.failedMessage=="Failed") {
                             yu.showModal({
                                 title: "补录失败！",
                                 content:res.data.data.returnDesc,

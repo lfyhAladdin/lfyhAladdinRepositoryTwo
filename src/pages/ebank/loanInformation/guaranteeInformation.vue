@@ -51,7 +51,7 @@
 			</view>
 			<view class="person-infor-one" v-show="customer" @click="pageJump(guaranteePartnerFirm)">
 				<text>合作商账号</text>
-				<text style="color:#333435">{{partnerAccountNum}}</text>
+				<text class="warrantorStyle">{{partnerAccountNum}}</text>
 				<img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
 			</view>
 
@@ -489,14 +489,12 @@
             border-bottom: 1rpx solid #e5e5e5;
             padding-left: 10rpx;
             position: relative;
+            display: flex;
+            justify-content: space-between;
             text {
-                float: left;
+                /* float: left; */
                 color: #333333;
                 font-size: 32rpx;
-            }
-            text:nth-of-type(2) {
-                color: #c7c9cd;
-                margin-left: 20rpx;
             }
             input {
                 width: 63%;
@@ -519,7 +517,6 @@
                 width: 68%;
                 height: 114rpx;
                 text-align: right;
-                margin-left: 30%;
                 padding-top: 28rpx;
                 font-size: 32rpx;
             }
@@ -547,6 +544,10 @@
                 right: 32rpx;
                 margin-top: -13rpx;
                 margin-right: -7.5rpx;
+            }
+            .warrantorStyle {
+                color: #333435;
+                margin-right: 50rpx;
             }
             .clear {
                 width: 38rpx;

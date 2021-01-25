@@ -1,11 +1,10 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
       <img src="@/static/images/profession/pf-back.svg" @tap="navigateBack">
       <text>合作商账号</text>
-       <view style="width:30rpx;"></view>
     </view>
-    
+
     <view class="pf-content mortgagor-content">
       <view class="guaranty-ul" v-for="(item,index) in accountList" :key="item.buildingNo">
         <view class="mortgagor-title">
@@ -122,7 +121,7 @@
     }
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
     @import '~@styles/uni-nvue.css';
     .uni-container {
         padding: 0 0 30rpx 0;
