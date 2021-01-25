@@ -517,8 +517,10 @@
                 width: 68%;
                 height: 114rpx;
                 text-align: right;
-                padding-top: 28rpx;
+                padding-top:28rpx;
                 font-size: 32rpx;
+                margin-right: 10rpx;
+                line-height: 40rpx;
             }
             picker {
                 float: right;

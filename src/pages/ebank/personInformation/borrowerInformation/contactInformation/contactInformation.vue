@@ -339,6 +339,7 @@
 					return 0;
 				}
 			},
+			
 		},
 		mounted() {},
 	};
@@ -382,9 +383,6 @@
 			width: 30rpx;
 		}
 	}
-
-
-
       .contract-ul{
         .collateral-site{
           .contract-li{
@@ -404,5 +402,7 @@
  .uni-input-placeholder{
    text-align: right;
  }
- 
+  .contract-button {
+        margin-bottom: 80rpx;
+    }
 </style>
