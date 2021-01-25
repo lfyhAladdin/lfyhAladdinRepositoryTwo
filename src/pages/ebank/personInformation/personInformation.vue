@@ -260,7 +260,6 @@ export default {
       // 共借人信息，且如果共借人配偶有值，将共借人配偶信息添加到相应的共借人信息里
       this.sameApplyList = resData.sameApplyList;
       this.sameApplyRelList = resData.sameApplyRelList;
-      this.sameApplyRelList = arr;
       if(this.sameApplyList && this.sameApplyRelList){
         this.sameApplyList.forEach((item, index) => {
           item.pclass="共借人"
