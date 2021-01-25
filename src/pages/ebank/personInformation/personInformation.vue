@@ -259,39 +259,7 @@ export default {
       this.otherCustomerList = resData.otherCustomerList;
       // 共借人信息，且如果共借人配偶有值，将共借人配偶信息添加到相应的共借人信息里
       this.sameApplyList = resData.sameApplyList;
-      // this.sameApplyRelList = resData.sameApplyRelList;
-      let arr = [
-        {
-          bornDate: "1997/09/16",
-          certID: "440825199709163581",
-          certType: "Ind01",
-          completeFlag: "1",
-          customerName: "黎秀",
-          formerlyName: "",
-          gender: "2",
-          idexpiry: "2038/10/26",
-          marriage: "20",
-          nativeAdd: "广东省徐闻县个梵蒂冈复合弓复5弓和刚发货广发",
-          pclass: "共借人配偶",
-          relCertID: "130981198605064000",
-          relCertType: "Ind01",
-        },
-        {
-          bornDate: "1997/09/16",
-          certID: "440825199709163581",
-          certType: "Ind01",
-          completeFlag: "1",
-          customerName: "黎秀2",
-          formerlyName: "",
-          gender: "2",
-          idexpiry: "2038/10/26",
-          marriage: "20",
-          nativeAdd: "广东省徐闻县个梵蒂冈复合弓复5弓和刚发货广发",
-          pclass: "共借人配偶",
-          relCertID: "37020519530902705X",
-          relCertType: "Ind01",
-        }
-      ]
+      this.sameApplyRelList = resData.sameApplyRelList;
       this.sameApplyRelList = arr;
       if(this.sameApplyList && this.sameApplyRelList){
         this.sameApplyList.forEach((item, index) => {
