@@ -147,6 +147,7 @@ export default {
         businessType: businessType,
         projectID: projectID
       };
+      
       let posturl = "/api/ordercreditapply/createcreditapply";
       this.interfaceRequest(
         posturl,
@@ -165,21 +166,25 @@ export default {
             return;
           }
           applyID=res.data.data.applyNo;
-          //数量更新
-          let e = {
-            orderNo: "",
-            serialNo: applyID,
-            fromProductTitle: this.title,
-            fromProductId: this.productId,
-            fromProductName: this.productName,
-            imageList: {
-              imageBatchNo: this.imgBatchNumber,
-              upLoadDate: this.imgFirstUploadTime
-            },
-            businessType2: this.title,
-            businessType: businessType,
-          };
-          this.approvalIngListReplace(e);
+          let pdata = {"dictionaryName":"businessType","key":businessType};
+          this.queryDictionaryValue(pdata, (res)=>{
+            //数量更新
+            let e = {
+              orderNo: "",
+              serialNo: applyID,
+              fromProductTitle: this.title,
+              fromProductId: this.productId,
+              fromProductName: this.productName,
+              imageList: {
+                imageBatchNo: this.imgBatchNumber,
+                upLoadDate: this.imgFirstUploadTime
+              },
+              businessType2: res.data.data,
+              businessType: businessType,
+            };
+            this.approvalIngListReplace(e);
+          });
+          
           let datas = {
             userID: this.userInfor.loginCode, //客户经理编号
             orgID: this.userInfor.orgId //客户经理所属机构编号

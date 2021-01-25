@@ -200,6 +200,7 @@ export default {
   onLoad() {
     console.log(888888888888);
     console.log(this.approvalIngList);
+    console.log(this.queryApplyInfoList);
     this.pageInfo()
   },
   methods: {
@@ -214,31 +215,31 @@ export default {
            yu.hideLoading();
     },
     // 左滑删除
-			swipeChange(e) {
-				console.log('返回：', e);
-			},
-      swipeClick(e, perInd, cid) {
-        let {
-					content
-				} = e
-        if (content.text === '删除') {
-					uni.showModal({
-						title: '提示',
-						content: '是否删除',
-						success: (res) => {
-							if (res.confirm) {
-                if(perInd=='担保人' || perInd=='共借人'){
-								  this.deleteP(perInd,cid);
-                }else if(perInd=='担保人配偶' || perInd=='共借人配偶' || perInd=='借款人配偶'){
-                  this.deleteSpouse(perInd,cid);
-                }
-							} else if (res.cancel) {
-								console.log('用户点击取消');
-							}
-						}
-					});
-				}
-      },
+    swipeChange(e) {
+      console.log('返回：', e);
+    },
+    swipeClick(e, perInd, cid) {
+      let {
+        content
+      } = e
+      if (content.text === '删除') {
+        uni.showModal({
+          title: '提示',
+          content: '是否删除',
+          success: (res) => {
+            if (res.confirm) {
+              if(perInd=='担保人' || perInd=='共借人'){
+                this.deleteP(perInd,cid);
+              }else if(perInd=='担保人配偶' || perInd=='共借人配偶' || perInd=='借款人配偶'){
+                this.deleteSpouse(perInd,cid);
+              }
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          }
+        });
+      }
+    },
     //返回上一页
     navigateBack(){
       // uni.navigateBack();
@@ -268,8 +269,6 @@ export default {
               // item.spouse = ite
               this.sameList.push(item);
               this.sameList.push(ite);
-            }else{
-              this.sameList.push(item);
             }
           });
         });
@@ -279,6 +278,7 @@ export default {
         });
         this.sameList=this.sameApplyList;
       }
+      console.log(this.sameList)
       // 担保人信息，且如果担保人配偶有值，将担保人配偶信息添加到相应的担保人信息里
       this.guarantorList = resData.guarantorList;
       this.guarantyRelList = resData.guarantyRelList;
@@ -291,8 +291,6 @@ export default {
               // item.spouse = ite
               this.guarList.push(item);
               this.guarList.push(ite);
-            }else{
-              this.guarList.push(item);
             }
           });
         });
