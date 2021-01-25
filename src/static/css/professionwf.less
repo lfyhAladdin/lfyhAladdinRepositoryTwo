@@ -387,9 +387,10 @@
   // padding: 0 65rpx;
   padding-left: 65rpx;
   padding-right: 65rpx;
-  padding-bottom: 0;
-  padding-bottom: constant(safe-area-inset-bottom);  
-  padding-bottom: env(safe-area-inset-bottom);  
+  // padding-bottom: 0;
+  // padding-bottom: constant(safe-area-inset-bottom);  
+  // padding-bottom: env(safe-area-inset-bottom);  
+  padding-bottom: var(--window-bottom);
   uni-button{
     border-radius: 50rpx;
     margin-top: 50rpx;
