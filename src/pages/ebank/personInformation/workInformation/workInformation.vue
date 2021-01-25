@@ -79,7 +79,7 @@
         </view>
       </view>
       <!--个人信息-end-->
-      <view class="contract-button">
+      <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
         <button type="primary" @click="submit(true)">提交</button>
       </view>
     </view>

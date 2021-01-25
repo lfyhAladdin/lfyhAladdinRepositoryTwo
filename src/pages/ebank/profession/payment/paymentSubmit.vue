@@ -36,10 +36,10 @@
         </view>
         <view class="center-buttom">
           <view v-if="submitIng">正在执行风险探测，请稍候… <br/>请勿退出此页面，否则风险探测会中止</view>
-          <view class="contract-button" v-if="submitSuccess">
+          <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'" v-if="submitSuccess">
             <button type="primary" @click="nextAjax">下一步</button>
           </view>
-          <view class="contract-button" v-if="submitError">
+          <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'" v-if="submitError">
             <button type="primary" @click="knowAjax">我知道了</button>
           </view>
         </view>

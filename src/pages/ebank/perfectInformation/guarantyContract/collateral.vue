@@ -246,7 +246,7 @@
           </view>
         </view>
       </view>
-      <view class="contract-button">
+      <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
         <button type="primary" @click="updateApplyInfo('save')">保存</button>
         <button type="primary" plain="true" @click="updateApplyInfo('delete')">删除</button>
       </view>

@@ -256,6 +256,7 @@ export default {
       this.borrower.fullName = resData.fullName;
       this.borrower.marriage = resData.marriage;
       this.borrower.completeFlag = resData.completeFlag;
+      alert(JSON.stringify(resData.otherCustomerList))
       this.otherCustomerList = resData.otherCustomerList;
       alert(JSON.stringify(this.otherCustomerList))
       // 共借人信息，且如果共借人配偶有值，将共借人配偶信息添加到相应的共借人信息里
