@@ -566,7 +566,7 @@
         let sendArr=[];
         if(this.queryApplyInfoList != null){
           if(this.queryApplyInfoList[this.listName]){
-            sendArr= this.queryApplyInfoList[this.listName].concant();
+            sendArr= this.queryApplyInfoList[this.listName].concat();
           };
         };
         let names=[];
