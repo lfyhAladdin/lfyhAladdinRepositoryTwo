@@ -264,11 +264,16 @@ export default {
         userInfo,
         "post",
         function(res) {
-          yu.hideLoading();
+          yu.hideLoading(); 
+          yu.stopPullDownRefresh();  //停止下拉刷新
           let resArr = res.data.data.businessList;
           //无订单信息
           if(that.beginNo == 1 && resArr == null){
             that.ifShowNoRecord = true;
+            this.status= 'noMore';
+            this.reachBottom= false;
+            this.orderlist = [];
+            return;
           }
           if(resArr != null){
             that.ifShowNoRecord = false;
@@ -300,12 +305,6 @@ export default {
     //对请求后的数据处理
       dataProcessing(resArr){
         console.log(resArr)
-        yu.stopPullDownRefresh();  //停止下拉刷新
-        if(this.ifShowNoRecord){
-          this.status= 'noMore';
-          this.reachBottom= false;
-          return;
-        }
         if(this.ajaxJudge){
           console.log(123)
           if(resArr.indexOf("null") == -1){
