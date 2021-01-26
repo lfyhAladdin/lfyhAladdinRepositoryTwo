@@ -591,8 +591,8 @@
                 console.log(this.checDownPayment)
                 if (this.checkReg === false) {
                     yu.showModal({
-                        title: "贷款金额只能输入到千万",
-                        content: "",
+                        title: "贷款金额只能输入到千万及保留两位小数",
+                        content: "请重新输入",
                         showCancel: false,
                         confirmText: "我知道了",
                         success: res => {
@@ -608,8 +608,8 @@
                 } else {
                     if (this.checDownPayment === false) {
                         yu.showModal({
-                            title: "首付款金额只能输入到千万",
-                            content: "",
+                            title: "首付款金额只能输入到千万及保留两位小数",
+                            content: "请重新输入",
                             showCancel: false,
                             confirmText: "我知道了",
                             success: res => {
