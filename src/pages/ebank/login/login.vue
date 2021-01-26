@@ -424,7 +424,8 @@ export default {
         let datas = {
           mobiles: _this.phoneFormdata.phoneNo,
           jiaoyigy: "601101",
-          jiaoyijg: "GD0456"
+          jiaoyijg: "GD0456",
+          mobileIp:_this.mobileIpother,
         };
         this.$http
           .request({
