@@ -82,10 +82,8 @@
 				</view>
 			</view>
 		</view>
-    <view>{{mobileIp}}@@@@@@@@@@@@@@@@@@@@@@{{mobileIpother}}</view>
 	</view>
 </template>
- <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script>
 import { createNamespacedHelpers, mapGetters, mapActions, mapMutations } from "vuex";
 const { mapState } = createNamespacedHelpers("oauth");
@@ -149,10 +147,7 @@ export default {
     if(userLoginPhone != '' && userLoginPhone != undefined){
       this.phoneFormdata.phoneNo=userLoginPhone;
     }
-    this.getUserIP((ip) => {
-      this.mobileIp = ip;
-    });
-    this.mobileIpother=returnCitySN["cip"];
+    this.getIPAdress();//获取IP
   },
   computed: {
     clickable: function() {
@@ -172,11 +167,6 @@ export default {
     // #endif
   },
   onLoad() {
-  },
-  mounted() {
-    this.getUserIP((ip) => {
-      this.mobileIp = ip;
-    });
   },
   methods: {
     ...mapActions(["businessNumCommit",'businessTypeListCommit']),
@@ -424,6 +414,11 @@ export default {
         });
         return;
       }
+      if(_this.mobileIpother == ''){
+        foxsdk.networkinfo.getIpAddress(ret => {
+          _this.mobileIpother=ret.payload.ipAddress;
+        });
+      }
       const reg = /^1[3-9][0-9]\d{8}$/;
       if (reg.test(_this.phoneFormdata.phoneNo)) {
         let datas = {
@@ -626,32 +621,12 @@ export default {
 
 
     /***获取手机IP地址  start */
-    getUserIP(onNewIP) {
-      let MyPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-      let pc = new MyPeerConnection({
-          iceServers: []
-        });
-      let noop = () => {
-        };
-      let localIPs = {};
-      let ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g;
-      let iterateIP = (ip) => {
-        if (!localIPs[ip]) onNewIP(ip);
-        localIPs[ip] = true;
-      };
-      pc.createDataChannel('');
-      pc.createOffer().then((sdp) => {
-        sdp.sdp.split('\n').forEach(function (line) {
-          if (line.indexOf('candidate') < 0) return;
-          line.match(ipRegex).forEach(iterateIP);
-        });
-        pc.setLocalDescription(sdp, noop, noop);
-      }).catch((reason) => {
+    getIPAdress(){
+      foxsdk.networkinfo.getIpAddress(ret => {
+        this.mobileIp=ret.payload;
+        console.log('networkinfo/getIpAddress===status: ' + ret.status + ',message: ' + ret.message + ',payload: ' + JSON.stringify(ret.payload));
+        this.mobileIpother=ret.payload.ipAddress;
       });
-      pc.onicecandidate = (ice) => {
-        if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-        ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-      };
     },
     /**获取移动端IP end */
   },
