@@ -207,11 +207,11 @@ export default {
                 }); //重新调'申请信息查询'接口
               } else if (res.cancel) {
                 console.log("用户点击取消");
+                this.inquireOrderList();
                 this.ajaxJudge= true;
                 this.reachBottom = true;
                 this.status= "more"
                 this.beginNo = 1;
-                this.inquireOrderList();
               }
             }
           });
@@ -274,7 +274,8 @@ export default {
             that.ifShowNoRecord = false;
             for (let i = 0; i < resArr.length; i++) {
               resArr[i].businessTypeId = resArr[i].businessType;
-              resArr[i].phoneNoF = filter.telFormat(resArr[i].phoneNo); //格式化手机号
+              // resArr[i].phoneNoF = filter.telFormat(resArr[i].phoneNo); //格式化手机号
+              resArr[i].phoneNoF = resArr[i].phoneNo; //格式化手机号
               resArr[i].businessSumF = filter.moneyUnit(
                 filter.moneyFormat(resArr[i].businessSum),
                 true
@@ -298,9 +299,13 @@ export default {
     },
     //对请求后的数据处理
       dataProcessing(resArr){
-        
         console.log(resArr)
         yu.stopPullDownRefresh();  //停止下拉刷新
+        if(this.ifShowNoRecord){
+          this.status= 'noMore';
+          this.reachBottom= false;
+          return;
+        }
         if(this.ajaxJudge){
           console.log(123)
           if(resArr.indexOf("null") == -1){

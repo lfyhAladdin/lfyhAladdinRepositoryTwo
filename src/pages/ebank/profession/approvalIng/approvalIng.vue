@@ -231,6 +231,13 @@
       searchpf(){
         this.switchDrawer = true;
       },
+      showToastFun(e){
+        yu.showToast({
+          title: e,
+          icon: 'none',
+          duration: 3000
+        });
+      },
       //授信申请各阶段列表信息
       queryApplyPhaseList(){
         let data = {
@@ -249,11 +256,7 @@
           let datas = res.data.data;
           this.dataProcessing(datas,datas.applyList);
         },(err)=>{
-          yu.showToast({
-            title: '3.9授信信息查询失败，请联系管理员！',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.9授信信息查询失败，请联系管理员！');
         });
       },
       //定价审批申请列表查询
@@ -272,13 +275,9 @@
           let datas = res.data.data;
           this.dataProcessing(datas,datas.applyResDtoList);
         },function(err){
-          yu.showToast({
-            title: '3.4定价审批信息查询失败，请联系管理员！',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.4定价审批信息查询失败，请联系管理员！');
         });
-      },
+      }, 
       //对请求后的数据处理
       dataProcessing(datas,dataList){
         yu.stopPullDownRefresh();  //停止下拉刷新
@@ -312,11 +311,7 @@
             }
           };
         }else{
-          yu.showToast({
-            title: datas.returnDesc,
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun(datas.returnDesc);
         }
       },
       //获取定价结果
@@ -340,18 +335,10 @@
               }
             });
           }else{
-            yu.showToast({
-              title: res.data.data.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(res.data.data.returnDesc);
           }
         },(err)=>{
-          yu.showToast({
-            title: '3.6定价结果异常，请联系管理员！',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.6定价结果异常，请联系管理员！');
         });
       },
       //关闭

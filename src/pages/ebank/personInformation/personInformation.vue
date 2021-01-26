@@ -260,27 +260,21 @@ export default {
       // 共借人信息，且如果共借人配偶有值，将共借人配偶信息添加到相应的共借人信息里
       this.sameApplyList = resData.sameApplyList;
       this.sameApplyRelList = resData.sameApplyRelList;
+      let sameArr = [];
       if(this.sameApplyList && this.sameApplyRelList){
         this.sameApplyList.forEach((item, index) => {
           item.pclass="共借人"
           this.sameApplyRelList.forEach((ite,idx) => {
             ite.pclass="共借人配偶"
-            if(this.sameApplyList.length == this.sameApplyRelList.length){
-              if (item.certID === ite.relCertID) {
-                this.sameList.push(item);
-                this.sameList.push(ite);
-              }
+            if (item.certID === ite.relCertID) {
+              sameArr.push(item);
+              sameArr.push(ite);
             }else{
-              if (item.certID === ite.relCertID) {
-                // item.spouse = ite
-                this.sameList.push(item);
-                this.sameList.push(ite);
-              }else{
-                this.sameList.push(item);
-              }
+              sameArr.push(item);
             }
           });
         });
+        this.sameList = this.unique(sameArr);
       }else if(this.sameApplyList && this.sameApplyRelList==null){
         this.sameApplyList.forEach((item, index) => {
           item.pclass="共借人"
@@ -291,27 +285,21 @@ export default {
       // 担保人信息，且如果担保人配偶有值，将担保人配偶信息添加到相应的担保人信息里
       this.guarantorList = resData.guarantorList;
       this.guarantyRelList = resData.guarantyRelList;
+      let guarArr = [];
       if(this.guarantorList && this.guarantyRelList){
         this.guarantorList.forEach((item, index) => {
           item.pclass="担保人"
           this.guarantyRelList.forEach((ite,idx) => {
             ite.pclass="担保人配偶"
-            if(this.guarantorList.length == this.guarantyRelList.length){
-              if (item.certID === ite.relCertID) {
-                this.guarList.push(item);
-                this.guarList.push(ite);
-              }
+            if (item.certID === ite.relCertID) {
+              guarArr.push(item);
+              guarArr.push(ite);
             }else{
-              if (item.certID === ite.relCertID) {
-                this.guarList.push(item);
-                this.guarList.push(ite);
-              }else{
-                this.guarList.push(item);
-              }
+              guarArr.push(item);
             }
-            
           });
         });
+        this.guarList = this.unique(guarArr);
         console.log(this.guarList);
       }else if(this.guarantorList && this.guarantyRelList==null){
         this.guarantorList.forEach((item, index) => {
@@ -319,6 +307,11 @@ export default {
         });
         this.guarList=this.guarantorList
       }
+    },
+    //数组去重
+    unique(arr) {
+      const res = new Map();
+      return arr.filter((a) => !res.has(a) && res.set(a, 1))
     },
     add(addType){
       this.personalInformationReplace({});
