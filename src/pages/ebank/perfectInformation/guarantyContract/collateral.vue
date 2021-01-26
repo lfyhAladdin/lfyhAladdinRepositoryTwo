@@ -103,7 +103,9 @@
         <view class="contract-li" v-if="distinguishOneTwo">
           <view class="beforeRed">房屋年限</view>
           <view>
-            <input class="uni-input"  
+            <input class="uni-input" 
+              type="number"
+              maxlength="2" 
               v-model="buyYearVal" 
               @focus="focusInput('buyYear')" 
               @blur="blurInput($event,'buyYear')"/>
@@ -781,11 +783,7 @@
             for(let i=0; i<requiredFieldArr.length; i++){
               if(requiredFieldArr[i].boolean && this[`${requiredFieldArr[i].key}Val`] == ''){
                 console.log(requiredFieldArr[i])
-                yu.showToast({
-                  title: requiredFieldArr[i].value+'为必输项，请输入后再提交',
-                  icon: 'none',
-                  duration: 3000
-                });
+                this.showToastFun(requiredFieldArr[i].value+'为必输项，请输入后再提交');
                 return;
               }
             }
@@ -859,19 +857,10 @@
           yu.hideLoading();
           this.preventResubmit = true;
           if(res.data.data.returnCode != 'Success'){
-            yu.showToast({
-              title: res.data.data.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(res.data.data.returnDesc);
             return;
           };
           if(e == 'TS'){
-            yu.showToast({
-              title: '暂存成功',
-              image: './static/images/perfectInformation/success.svg',
-              duration: 2000
-            });
             yu.showModal({
               title: "暂存成功",
               content: res.data.data.returnDesc,
@@ -888,11 +877,7 @@
               'applyNo': this.applyNoVal,
             }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
           }else{
-            yu.showToast({
-              title: res.data.data.returnDesc,
-              icon: 'none',
-              duration: 3000
-            });
+            this.showToastFun(res.data.data.returnDesc);
             setTimeout(()=>{
               this.queryApplyInfoCommit({
                 'orderNo': this.orderNoVal, 
@@ -907,11 +892,14 @@
           console.log(err)
           yu.hideLoading();
           this.preventResubmit = true;
-          yu.showToast({
-            title: '3.12更新失败，请联系管理员',
-            icon: 'none',
-            duration: 3000
-          });
+          this.showToastFun('3.12更新失败，请联系管理员')
+        });
+      },
+      showToastFun(e){
+        yu.showToast({
+          title: e,
+          icon: 'none',
+          duration: 3000
         });
       },
       //抵押人(质押人)
