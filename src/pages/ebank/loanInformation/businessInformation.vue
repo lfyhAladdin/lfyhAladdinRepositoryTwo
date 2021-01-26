@@ -8,7 +8,6 @@
       <view class="ch-title"><text>{{title}}</text></view>
       <view class="temporary-storage" @tap="submitform('TS')">暂存</view>
     </view>
-    
 
 <view class="image-content">
     <img style="height:26rpx;margin:0 auto;display:block;margin-top:63rpx" src="@/static/images/firstroom/longProgress01.svg" />
@@ -183,7 +182,7 @@
             console.log(applyDate.getDate())
             console.log(applyDate.getFullYear() + '/' + this.getMonth + '/' + applyDate.getDate());
             console.log(this.approvalIngList.occurDate)
-            if (this.approvalIngList.occurDate == "" || this.approvalIngList.occurDate ==undefined || this.approvalIngList.occurDate ==null) {
+            if (this.approvalIngList.occurDate == "" || this.approvalIngList.occurDate == undefined || this.approvalIngList.occurDate == null) {
                 this.applicationDate = applyDate.getFullYear() + '/' + this.getMonth + '/' + applyDate.getDate();
             } else {
                 this.applicationDate = this.approvalIngList.occurDate; //申请时间
@@ -207,7 +206,7 @@
                 that.houseNums = 1;
             }
             let data = {
-                orderNo:this.orderNoVal,
+                orderNo: this.orderNoVal,
                 applyNo: this.applyNoVal
             };
             let posturl = "/api/credit/queryApplyInfo";
@@ -255,7 +254,7 @@
                             }
                         }
                     );
-                    
+
                     that.applicationNumber = res.data.data.applyNo; //申请编号
                     that.outInRatio = res.data.data.outInRatio; //支出收入比
                     that.isAppLicant = res.data.data.isAppLicant; //是否有共同借款人
@@ -302,7 +301,7 @@
                     console.log(this.downPayment);
                     console.log(this.LoanAmount);
 
-                    this.loansAnd =Number(that.downPayment)+ Number(that.LoanAmount);
+                    this.loansAnd = Number(that.downPayment) + Number(that.LoanAmount);
                     console.log(this.loansAnd);
                     this.proportion = that.downPayment / this.loansAnd;
                     this.proportion = this.proportion * 100;
@@ -426,10 +425,10 @@
                 console.log(e)
                 let that = this;
                 console.log(this.childprodName);
-                
+
                 console.log(this.childProductNoIdClass[this.productIndex].key)
                 if (this.childprodName == "") {
-                     this.childprodName=this.childProductNoIdClass[this.productIndex].key;
+                    this.childprodName = this.childProductNoIdClass[this.productIndex].key;
                 }
                 if (that.businessType == "个人一手住房贷款") {
                     that.businessTypeData = "1140010";
@@ -437,7 +436,7 @@
                 if (that.businessType == "个人二手住房贷款") {
                     that.businessTypeData = "1140020";
                 }
-                
+
                 if (that.businessType == "个人二手商用房贷款") {
                     that.businessTypeData = "1140120";
                 }
@@ -463,7 +462,7 @@
                 console.log(this.businessSumNumber);
                 let formData = {
                     applyNo: that.applicationNumber,
-                    orderNo:this.orderNoVal,
+                    orderNo: this.orderNoVal,
                     listName: "basicInfo",
                     basicInfo: [{
                         businessLine: "",
@@ -493,15 +492,15 @@
                     "post",
                     (res) => {
                         that.queryApplyInfoCommit({
-                            orderNo:this.orderNoVal,
+                            orderNo: this.orderNoVal,
                             applyNo: that.applicationNumber
                         }); //重新调'申请信息查询'接口，确保担保合同信息列表准确
                         if (e == "TS") {
                             console.log(res)
-                            this.messageTs=res.data.data.returnDesc;
+                            this.messageTs = res.data.data.returnDesc;
                             yu.showModal({
                                 title: "暂存状态",
-                                content:this.messageTs,
+                                content: this.messageTs,
                                 showCancel: false,
                                 confirmText: "我知道了",
                                 success: res => {
@@ -557,7 +556,7 @@
                                 });
                                 return false;
                             }
-                             yu.showToast({
+                            yu.showToast({
                                 title: res.data.data.returnDesc,
                                 icon: 'none',
                                 duration: 3000
@@ -583,45 +582,45 @@
                 //首付款比例=首付款金额/（首付款金额+贷款金额）
                 // this.downPayment=Number(this.downPayment);
                 // this.LoanAmount=Number(this.LoanAmount);
-                console.log(this.downPayment,"首付款金额");
-                console.log(this.LoanAmount,"贷款金额");
-var regLoan=/^\d{1,8}(\.\d{1,2})?$/;
-// var regLoan=/^-?[1-9]+[0-9]*$/;
-this.checkReg=regLoan.test(this.LoanAmount);
-this.checDownPayment=regLoan.test(this.downPayment);
-console.log(this.checDownPayment)
-if(this.checkReg===false){
-     yu.showModal({
-            title: "贷款金额只能输入到千万",
-            content: "",
-            showCancel: false,
-            confirmText: "我知道了",
-            success: res => {
-                if (res.confirm) {
-                    console.log("用户点击确定");
+                console.log(this.downPayment, "首付款金额");
+                console.log(this.LoanAmount, "贷款金额");
+                var regLoan = /^\d{1,8}(\.\d{1,2})?$/;
+                // var regLoan=/^-?[1-9]+[0-9]*$/;
+                this.checkReg = regLoan.test(this.LoanAmount);
+                this.checDownPayment = regLoan.test(this.downPayment);
+                console.log(this.checDownPayment)
+                if (this.checkReg === false) {
+                    yu.showModal({
+                        title: "贷款金额只能输入到千万",
+                        content: "",
+                        showCancel: false,
+                        confirmText: "我知道了",
+                        success: res => {
+                            if (res.confirm) {
+                                console.log("用户点击确定");
+                            }
+                        }
+                    });
+                    this.LoanAmount = "";
                 }
-            }
-        });
-this.LoanAmount="";
-}
-if(this.downPayment==""){
- return false;
-}else{
-   if(this.checDownPayment===false){
-     yu.showModal({
-            title: "首付款金额只能输入到千万",
-            content: "",
-            showCancel: false,
-            confirmText: "我知道了",
-            success: res => {
-                if (res.confirm) {
-                    console.log("用户点击确定");
+                if (this.downPayment == "") {
+                    return false;
+                } else {
+                    if (this.checDownPayment === false) {
+                        yu.showModal({
+                            title: "首付款金额只能输入到千万",
+                            content: "",
+                            showCancel: false,
+                            confirmText: "我知道了",
+                            success: res => {
+                                if (res.confirm) {
+                                    console.log("用户点击确定");
+                                }
+                            }
+                        });
+                        this.downPayment = "";
+                    }
                 }
-            }
-        });
-this.downPayment="";
-} 
-}
 
 
 
@@ -708,7 +707,7 @@ this.downPayment="";
     }
     
     .customize-head {
-        padding: 116rpx 56rpx 16rpx 36rpx;
+        padding: 116rpx 40rpx 16rpx 36rpx;
         height: 50rpx;
         line-height: 50rpx;
         background: #ffffff;
@@ -734,6 +733,7 @@ this.downPayment="";
         }
         .temporary-storage {
             color: #3b86f7;
+            font-size: 32rpx;
         }
         .ch-share {
             width: 34rpx;

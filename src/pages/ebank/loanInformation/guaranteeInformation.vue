@@ -447,7 +447,7 @@
     }
     
     .customize-head {
-        padding: 100rpx 56rpx 16rpx 36rpx;
+        padding: 100rpx 40rpx 16rpx 36rpx;
         height: 50rpx;
         line-height: 50rpx;
         background: #ffffff;
@@ -473,6 +473,7 @@
         }
         .temporary-storage {
             color: #3b86f7;
+            font-size: 32rpx;
         }
         .image-content {
             margin-top: 65rpx;
