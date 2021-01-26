@@ -67,7 +67,7 @@
           <view class="contract-li">
             <view>姓名</view>
             <view>
-              <input class="uni-input houseName" style="columns: #666666;" placeholder="请输入" type="text" v-model.trim="personInfor.name" @focus="verifyName.isTipShow=false" @blur="checkName(personInfor.name)" disabled="true" />
+              <input class="uni-input houseName" style="color: #777777;" placeholder="请输入" type="text" v-model.trim="personInfor.name" @focus="verifyName.isTipShow=false" @blur="checkName(personInfor.name)" disabled="true" />
             </view>
           </view>
           <view v-show="verifyName.isTipShow" class="contract-tips">{{verifyName.tipText}}</view>
