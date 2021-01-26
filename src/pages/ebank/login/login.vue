@@ -82,9 +82,10 @@
 				</view>
 			</view>
 		</view>
-    <view>{{mobileIp}}</view>
+    <view>{{mobileIp}}@@@@@@@@@@@@@@@@@@@@@@{{mobileIpother}}</view>
 	</view>
 </template>
+ <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script>
 import { createNamespacedHelpers, mapGetters, mapActions, mapMutations } from "vuex";
 const { mapState } = createNamespacedHelpers("oauth");
@@ -132,6 +133,7 @@ export default {
       ifshowPasswordClear:false,//是否显示密码登陆中  账号清除功能
       ifshowPhoneClear:false,//是否显示手机号登陆中  手机号清除功能
       mobileIp:"",//手机IP地址
+      mobileIpother:"",//手机IP地址
     };
   },
   created(){
@@ -150,6 +152,7 @@ export default {
     this.getUserIP((ip) => {
       this.mobileIp = ip;
     });
+    this.mobileIpother=returnCitySN["cip"];
   },
   computed: {
     clickable: function() {
