@@ -204,12 +204,7 @@
     //下拉的生命周期
     onPullDownRefresh() {
       console.log('下拉刷新')
-      if(this.reachTop[this.applyPhase]){
-        this.reachTop[this.applyPhase] = false;
-        this.pullRefresh();
-      }else{
-        this.showToastFun('正在加载中，请稍后');
-      }
+      this.pullRefresh();
     },
     //页面滚动到底部的事件 -- 上拉加载
     onReachBottom(){
@@ -487,6 +482,11 @@
       },
       //下拉刷新
       pullRefresh(){
+        if(!this.reachTop[this.applyPhase]){
+          this.showToastFun('正在加载中，请稍后');
+          return;
+        }
+        this.reachTop[this.applyPhase] = false;
         this.ajaxJudge[this.applyPhase] = true;
         this.reachBottom[this.applyPhase] = true;
         this.status[this.applyPhase] = "more"

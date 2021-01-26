@@ -116,7 +116,8 @@
         {
             "path": "pages/ebank/index/pendingOrder/pendingOrder",
             "style": {
-                "navigationBarTitleText": "pendingOrder"
+                "navigationBarTitleText": "pendingOrder",
+                "enablePullDownRefresh": true
             }
         }, /**H5订单生成页面**/
         {
