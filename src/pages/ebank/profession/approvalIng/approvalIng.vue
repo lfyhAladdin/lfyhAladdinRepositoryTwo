@@ -172,6 +172,13 @@
           '04': true,
           '05': true,
         },  //是否允许上拉加载
+        reachTop:{
+          '01': true,
+          '02': true,
+          '03': true,
+          '04': true,
+          '05': true,
+        },  //是否允许下拉刷新
       };
     },
     watch:{
@@ -185,7 +192,6 @@
       console.log(this.userInfor)
       this.userID = this.userInfor.loginCode;
       this.orgId =  this.userInfor.orgId;
-      console.log(this.userInfor)
       this.applyPhase = options.applyPhase;
       if(this.applyPhase == "05"){
         this.querypriceapprapplyinfo();
@@ -198,7 +204,12 @@
     //下拉的生命周期
     onPullDownRefresh() {
       console.log('下拉刷新')
-      this.pullRefresh();
+      if(this.reachTop[this.applyPhase]){
+        this.reachTop[this.applyPhase] = false;
+        this.pullRefresh();
+      }else{
+        this.showToastFun('正在加载中，请稍后');
+      }
     },
     //页面滚动到底部的事件 -- 上拉加载
     onReachBottom(){
@@ -256,6 +267,7 @@
           let datas = res.data.data;
           this.dataProcessing(datas,datas.applyList);
         },(err)=>{
+          this.reachTop[this.applyPhase] = true;
           this.showToastFun('3.9授信信息查询失败，请联系管理员！');
         });
       },
@@ -274,13 +286,15 @@
           console.log(res)
           let datas = res.data.data;
           this.dataProcessing(datas,datas.applyResDtoList);
-        },function(err){
+        },(err)=>{
+          this.reachTop[this.applyPhase] = true;
           this.showToastFun('3.4定价审批信息查询失败，请联系管理员！');
         });
-      }, 
+      },
       //对请求后的数据处理
       dataProcessing(datas,dataList){
         yu.stopPullDownRefresh();  //停止下拉刷新
+        this.reachTop[this.applyPhase] = true;
         if(datas.returnCode == "Success"){
           if(this.ajaxJudge[this.applyPhase]){
             console.log(123)
@@ -443,6 +457,13 @@
           '04': true,
           '05': true,
         };
+        this.reachTop = {
+          '01': true,
+          '02': true,
+          '03': true,
+          '04': true,
+          '05': true,
+        };
       },
       //上拉加载
       GJGCRefreshFooter(){
@@ -456,10 +477,12 @@
               this.queryApplyPhaseList();
             }
           }else{
-            console.log("正在加载中，不允许上拉加载")
+            // console.log("正在加载中，不允许上拉加载")
+            this.showToastFun('正在加载中，请稍后');
           }
         }else{
-          console.log("没有更多数据，不允许上拉加载")
+          // console.log("没有更多数据，不允许上拉加载")
+          this.showToastFun('没有更多数据！');
         }
       },
       //下拉刷新

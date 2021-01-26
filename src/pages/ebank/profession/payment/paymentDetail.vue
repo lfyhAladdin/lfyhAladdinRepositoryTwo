@@ -93,11 +93,24 @@
       ...mapActions(["businessNumCommit"]),
       //放款申请
       addLendApplySuccess(){
+        yu.showModal({
+          title: '提示',
+          content: '请确认是否需要在信贷系统中打印电子合同，若需要请先打印合同再申请放款',
+          confirmText: '申请放款',
+          success:(res)=> {
+            if (res.confirm) {
+              this.addLendApplySuccessAjax();
+            }else{
+              console.log('用户点击取消');
+            }
+          }
+        });
+      },
+      addLendApplySuccessAjax(){
         let data = {
           'orderNo': this.orderNoVal,  //订单编号
           'contractNo': this.contractNoVal,  //合同编号
           // 'contractNo': '2017111400000086',  //合同编号
-          
         };
         yu.showLoading();
         this.interfaceRequest('/api/lend/addLendApplySuccess',data,"get",(res)=>{

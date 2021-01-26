@@ -270,9 +270,9 @@ export default {
           //无订单信息
           if(that.beginNo == 1 && resArr == null){
             that.ifShowNoRecord = true;
-            this.status= 'noMore';
-            this.reachBottom= false;
-            this.orderlist = [];
+            that.status= 'noMore';
+            that.reachBottom= false;
+            that.orderlist = [];
             return;
           }
           if(resArr != null){
