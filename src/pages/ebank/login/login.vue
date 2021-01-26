@@ -82,6 +82,7 @@
 				</view>
 			</view>
 		</view>
+    <view>{{mobileIp}}</view>
 	</view>
 </template>
 <script>
@@ -129,7 +130,8 @@ export default {
       examinationTypeArrayType: "+86",
       hasOrginNum: false,
       ifshowPasswordClear:false,//是否显示密码登陆中  账号清除功能
-      ifshowPhoneClear:false//是否显示手机号登陆中  手机号清除功能
+      ifshowPhoneClear:false,//是否显示手机号登陆中  手机号清除功能
+      mobileIp:"",//手机IP地址
     };
   },
   created(){
@@ -145,6 +147,9 @@ export default {
     if(userLoginPhone != '' && userLoginPhone != undefined){
       this.phoneFormdata.phoneNo=userLoginPhone;
     }
+    this.getUserIP((ip) => {
+      this.mobileIp = ip;
+    });
   },
   computed: {
     clickable: function() {
@@ -164,6 +169,11 @@ export default {
     // #endif
   },
   onLoad() {
+  },
+  mounted() {
+    this.getUserIP((ip) => {
+      this.mobileIp = ip;
+    });
   },
   methods: {
     ...mapActions(["businessNumCommit",'businessTypeListCommit']),
@@ -610,6 +620,37 @@ export default {
       foxsdk.cfcakeyboard.hide(id,ret => {});
     },  
     /* 密码键盘的相关操作  end */
+
+
+    /***获取手机IP地址  start */
+    getUserIP(onNewIP) {
+      let MyPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+      let pc = new MyPeerConnection({
+          iceServers: []
+        });
+      let noop = () => {
+        };
+      let localIPs = {};
+      let ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g;
+      let iterateIP = (ip) => {
+        if (!localIPs[ip]) onNewIP(ip);
+        localIPs[ip] = true;
+      };
+      pc.createDataChannel('');
+      pc.createOffer().then((sdp) => {
+        sdp.sdp.split('\n').forEach(function (line) {
+          if (line.indexOf('candidate') < 0) return;
+          line.match(ipRegex).forEach(iterateIP);
+        });
+        pc.setLocalDescription(sdp, noop, noop);
+      }).catch((reason) => {
+      });
+      pc.onicecandidate = (ice) => {
+        if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+        ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+      };
+    },
+    /**获取移动端IP end */
   },
   watch: {
     //watch()监听某个值（双向绑定）的变化，从而达到change事件监听的效果
