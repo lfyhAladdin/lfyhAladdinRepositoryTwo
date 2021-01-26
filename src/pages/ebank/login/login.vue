@@ -632,7 +632,6 @@ export default {
     getIPAdress(){
       foxsdk.networkinfo.getIpAddress(ret => {
         this.mobileIp=ret.payload;
-        console.log('networkinfo/getIpAddress===status: ' + ret.status + ',message: ' + ret.message + ',payload: ' + JSON.stringify(ret.payload));
         this.mobileIpother=ret.payload.ipAddress;
       });
     },
