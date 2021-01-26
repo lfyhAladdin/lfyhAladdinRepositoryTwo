@@ -67,7 +67,7 @@
             </view>
           </view>
         </view>
-        <view class="contract-button">
+        <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
           <button type="primary" @click="submitLendApply">确认提交</button>
         </view>
       </view>

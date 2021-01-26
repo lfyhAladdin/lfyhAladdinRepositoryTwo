@@ -127,6 +127,7 @@
           <view class="beforeRed">总楼层</view>
           <view>
             <input class="uni-input"  
+              type="number" 
               v-model="storeyHeighttVal" 
               @focus="focusInput('storeyHeightt')" 
               @blur="blurInput($event,'storeyHeightt')"/>
@@ -138,7 +139,8 @@
         <view class="contract-li">
           <view class="beforeRed">房屋所在楼层</view>
           <view>
-            <input class="uni-input"  
+            <input class="uni-input"   
+              type="number"
               v-model="realtyHeightVal" 
               @focus="focusInput('realtyHeight')"  
               @blur="blurInput($event,'realtyHeight')"/>
@@ -738,6 +740,14 @@
             });
           }
         };
+        if(name == 'floorArea'){
+          this.floorAreaVal = e.target.value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1');
+          console.log(this.floorAreaVal)
+        }
+        if(name == 'storeyHeightt' || name == 'realtyHeight'){
+          this[`${name}Val`] = e.target.value.replace(/[^\d]/g,'');
+        }
+        
       },
       focusInput(name){
         this[`${name}Focus`] = true;

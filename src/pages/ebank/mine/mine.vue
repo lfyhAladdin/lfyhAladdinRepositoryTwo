@@ -1,7 +1,8 @@
 <template>
   <view class="uni-container">
     <view :class="phoneSystem ?'pf-title pf-title-ios':'pf-title'">
-      <text>我的</text>
+      <!--<text>我的</text>-->
+      <text></text>
     </view>
     <view class="mine-title">
       <view class="mine-title-avatar"><img :src=useravatar /></view>
