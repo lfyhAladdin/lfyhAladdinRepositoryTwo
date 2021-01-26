@@ -425,7 +425,7 @@ export default {
           mobiles: _this.phoneFormdata.phoneNo,
           jiaoyigy: "601101",
           jiaoyijg: "GD0456",
-          mobileIp:_this.mobileIpother,
+          mobileIp: _this.mobileIpother,
         };
         this.$http
           .request({
@@ -440,13 +440,20 @@ export default {
           })
           .then(
             res => {
-              this.disabledSendCodeBtn = true;
-              this.disabledVerifyCode = false;
-              this.sendCodeBtnText = 60;
-              this.sendCodeType = "default";
-              this.countDown();
-              //console.log(res);
-              //this.selectORG(res);
+              let result=res.data;
+              if(result.code == 0){
+                this.disabledSendCodeBtn = true;
+                this.disabledVerifyCode = false;
+                this.sendCodeBtnText = 60;
+                this.sendCodeType = "default";
+                this.countDown();
+              }else{
+                let messagetips=result.message;
+                yu.showToast({
+                  icon: "none",
+                  title: messagetips
+                });
+              }
             },
             err => {}
           );
