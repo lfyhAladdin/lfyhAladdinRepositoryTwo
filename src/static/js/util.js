@@ -1,0 +1,14 @@
+// RSA公钥加密
+export function RSAencode (data) {
+  var publicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCpD3nK8+gnFcU3JqmhffiBcOvLYhkw9B7mF1VcL1ot7GXfODp3C3IzPPOOJTSqKjJOClyXTDJD2byZ4gOvn6OcjMFgaNlhDl9E72YCVa2bOkScBWHqbA47ZY9RIqIRazx6uIGBZhshue4j6qWyvw9mtvQ9W/FUtloDdGmnFMaOEwIDAQAB'
+  var encrypt = new JSEncrypt()
+  encrypt.setPublicKey(publicKey)
+  return encrypt.encrypt(data)
+}
+// RSA私钥解密
+export function RSAdecode (data) {
+  var privateKey = 'MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKkPecrz6CcVxTcmqaF9+IFw68tiGTD0HuYXVVwvWi3sZd84OncLcjM8844lNKoqMk4KXJdMMkPZvJniA6+fo5yMwWBo2WEOX0TvZgJVrZs6RJwFYepsDjtlj1EiohFrPHq4gYFmGyG57iPqpbK/D2a29D1b8VS2WgN0aacUxo4TAgMBAAECgYA4UiCH/VOk2brW0bmHRFkqfjz/h5HO3jUBAFr+mAPZ8rxJbgkEKbsE2NRm0XxHCEGz//2ypb7FHd+YAFSsCGnPrIzOn4b1hnKPcCe206iisKza3HjIcESV+hG/fPCOY/d19lPc6pJnbhxZWhnhnbSyvAKRv/2R4A86puWswTr5iQJBAO/N1nR70+4zMs4IGza+N3W3ORsjhE1MYXGMmJ7OrV6Ik6RFXCxAeloF6JgdFYfwXT5iTvxFCkQPL/1Hi39SWj0CQQC0en7wxUj2GbvSvxU4erHa5/tmTWWOhe6PBfNPQqkkHru7mtwu/h9+uVkoftamqTcfCxSahNYlmG2MBiWWLx6PAkB4rBk15rYgEM2JFlUzeAcKipgHCxlhmIUUkc6fY5ukjY/WQzz927h2IrEIEuKp1I/ne6sJkWh4FTht+Rm+iV91AkA0A7niGnnUs8X2DyxGgtYPiRxjd5r1YJRIlCZziXrF9jWU9CTRRlw9YZ3YlfW3Qr2oLMFbZz1wyGWKHZtnlVzxAkA0MUE2Fu4mez/WhCNMkAeXb4Xl+r60uyN2KUxW9S7bc/DXjdH0Zcacpz8699c1RkEFyZDh0xMhMgos0qdnINxu'
+  var decrypt = new JSEncrypt()
+  decrypt.setPrivateKey(privateKey)
+  return decrypt.decrypt(data)
+}
