@@ -10,6 +10,7 @@
             "path": "pages/ebank/index/index",
             "style": {
                 "navigationBarTitleText": "首页",
+                "enablePullDownRefresh": true,
                 "app-plus": {
                     "bounce": "vertical",
                     "titleNView": {
@@ -27,6 +28,7 @@
             "path": "pages/ebank/profession/profession",
             "style": {
                 "navigationBarTitleText": "业务",
+                "enablePullDownRefresh": true,
                 "app-plus": {
                     "titleNView": {
                         "buttons": [{

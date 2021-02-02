@@ -1,5 +1,5 @@
 import Vue from 'vue';
-let $prototype = Vue.prototype;
+let $Vue = Vue.prototype;
 export default {
     state: {
         hptInputList: {},
@@ -105,7 +105,7 @@ export default {
         queryDictionaryListObjCommit({ commit, state }, val) {
             let arr = state.queryDictionaryListArrloan;
             arr.forEach(item => {
-                $prototype.queryDictionaryList({
+                $Vue.queryDictionaryList({
                     "dictionaryName": item.dictionaryName
                 }, (res) => {
                     let obj = {

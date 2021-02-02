@@ -1,5 +1,5 @@
 import Vue from 'vue';
-let $prototype = Vue.prototype;
+let $Vue = Vue.prototype;
 export default {
   state: {
     queryApplyInfoList: {},  //3.1申请信息查询接口
@@ -114,7 +114,7 @@ export default {
       }else{
         obj = val;
       }
-      $prototype.interfaceRequest('/api/credit/queryApplyInfo',obj,"get",(res)=>{
+      $Vue.interfaceRequest('/api/credit/queryApplyInfo',obj,"get",(res)=>{
         console.log(res)
         if(res.data.data.returnCode == "Success"){
           context.commit("queryApplyInfoReplace",res.data.data)
@@ -126,7 +126,7 @@ export default {
               });
             }
             if(val.routerJumpWay == 'pageJump'){ 
-              $prototype.pageJump(val.routerTo);
+              $Vue.pageJump(val.routerTo);
             }
           }
         }else{
@@ -152,7 +152,7 @@ export default {
     queryDictionaryListObjCommit({commit,state},val){
       let arr = state.queryDictionaryListArr;
       arr.forEach(item=>{
-        $prototype.queryDictionaryList({
+        $Vue.queryDictionaryList({
           "dictionaryName": item.dictionaryName
         },(res)=>{
           let obj = {
@@ -164,7 +164,7 @@ export default {
       });
     },
     provincesListDataCommit(context,val){
-      $prototype.interfaceRequest('/api/region/regionListAllQuery',{},"post",(res)=>{
+      $Vue.interfaceRequest('/api/region/regionListAllQuery',{},"post",(res)=>{
         console.log(res)
         context.commit("provincesListDataReplace",res.data.data.regionAllList)
       },function(err){

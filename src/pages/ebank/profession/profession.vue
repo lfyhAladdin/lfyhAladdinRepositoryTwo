@@ -173,7 +173,7 @@
     onReady() {},
     onShareAppMessage() {},
     computed:{
-      ...mapGetters(['businessNum'])
+      ...mapGetters(['businessNum','userInfor'])
     },
     created(){
       let name = "姓名";
@@ -185,10 +185,23 @@
     activated(){
       this.commitFun();
     },
+    //下拉的生命周期
+    onPullDownRefresh() {
+      console.log('下拉刷新');
+      let datas = {
+        userID: this.userInfor.loginCode, //客户经理编号
+        orgID: this.userInfor.orgId //客户经理所属机构编号
+      };
+      this.businessNumCommit(datas);
+      setTimeout(()=>{
+        yu.stopPullDownRefresh();  //停止下拉刷新
+      },5000)
+    },
     methods: {
-      ...mapActions(['priceApproveFlagListCommit']),
+      ...mapActions(['priceApproveFlagListCommit','businessNumCommit']),
       //初始化时调用方法
       commitFun(){
+        yu.stopPullDownRefresh();  //停止下拉刷新
         let numObj = this.businessNum;
         this.ulList.forEach((val)=>{
           let a = val.ulLi;

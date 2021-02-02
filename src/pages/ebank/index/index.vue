@@ -30,7 +30,7 @@
   </view>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -106,9 +106,23 @@ export default {
       path: "/pages/tabBar/template/template"
     };
   },
+  //下拉的生命周期
+  onPullDownRefresh() {
+    console.log('下拉刷新');
+    let datas = {
+      userID: this.userInfor.loginCode, //客户经理编号
+      orgID: this.userInfor.orgId //客户经理所属机构编号
+    };
+    this.businessNumCommit(datas);
+    setTimeout(()=>{
+      yu.stopPullDownRefresh();  //停止下拉刷新
+    },5000)
+  },
   mounted() {},
   methods: {
+    ...mapActions(['businessNumCommit']),
     commitFun(){
+      yu.stopPullDownRefresh();  //停止下拉刷新
       this.username=this.userInfor.userName;
       this.featureslist[0].newsnumber = this.businessNum.orderPending; //订单数量
       this.featureslist[1].newsnumber = this.businessNum.creditSubmit; //申请待提交数量

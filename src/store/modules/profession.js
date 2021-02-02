@@ -1,5 +1,5 @@
 import Vue from 'vue';
-let $prototype = Vue.prototype;
+let $Vue = Vue.prototype;
 export default {
   state: {
     businessNum: {
@@ -118,7 +118,7 @@ export default {
       };
       console.log(val)
       //订单数量查询
-      $prototype.interfaceRequest('/api/orderListQuantityQuery/queryOrderListQuantity',data6,"post",(res)=>{
+      $Vue.interfaceRequest('/api/orderListQuantityQuery/queryOrderListQuantity',data6,"post",(res)=>{
         console.log(res)
         if(res.data.data.returnCode == 'Failed'){
           context.commit("businessNumReplace", 0);
@@ -133,7 +133,7 @@ export default {
         console.log(err)
       });
       //授信申请各阶段数量统计
-      $prototype.interfaceRequest('/api/credit/queryApplyNumber',data1,"get",(res)=>{
+      $Vue.interfaceRequest('/api/credit/queryApplyNumber',data1,"get",(res)=>{
         console.log(res)
         if(res.data.data.returnCode == 'Failed'){
           context.commit("numberPiP", '');
@@ -155,7 +155,7 @@ export default {
         console.log(err)
       });
       //定价审批申请数量查询
-      $prototype.interfaceRequest('/api/creditprice/querypriceapprapplycount',data2,"get",(res)=>{
+      $Vue.interfaceRequest('/api/creditprice/querypriceapprapplycount',data2,"get",(res)=>{
         console.log(res)
         if(res.data.data.returnCode == 'Failed'){
           context.commit("businessNumReplace", 0);
@@ -170,7 +170,7 @@ export default {
         console.log(err)
       });
       //放款申请各阶段数量查询
-      $prototype.interfaceRequest('/api/lend/queryApplyPutoutNumber',data3,"get",(res)=>{
+      $Vue.interfaceRequest('/api/lend/queryApplyPutoutNumber',data3,"get",(res)=>{
         console.log(res)
         if(res.data.data.returnCode == 'Failed'){
           context.commit("numberPiP", '');
@@ -191,7 +191,7 @@ export default {
         console.log(err)
       });
       //待放款业务数量查询
-      $prototype.interfaceRequest('/api/lend/queryLendListQuantity',data4,"get",(res)=>{
+      $Vue.interfaceRequest('/api/lend/queryLendListQuantity',data4,"get",(res)=>{
         console.log(res)
         if(res.data.data.returnCode == 'Failed'){
           context.commit("businessNumReplace", 0);
@@ -207,7 +207,7 @@ export default {
         console.log(err)
       });
       //业务合同数量查询
-      $prototype.interfaceRequest('/api/contract/busConCountQuery',data5,"post",(res)=>{
+      $Vue.interfaceRequest('/api/contract/busConCountQuery',data5,"post",(res)=>{
         console.log(res)
         if(res.data.data.returnCode == 'Failed'){
           context.commit("numberPiP", '');
@@ -228,7 +228,7 @@ export default {
       
     },
     businessTypeListCommit(context){
-      $prototype.interfaceRequest('/api/dictionary/queryDictionaryList',{
+      $Vue.interfaceRequest('/api/dictionary/queryDictionaryList',{
         "dictionaryName":"businessType"
       },"get",(res)=>{
         context.commit("businessTypeListReplace",res.data.data);
@@ -237,7 +237,7 @@ export default {
       });
     },
     priceApproveFlagListCommit(context){
-      $prototype.interfaceRequest('/api/dictionary/queryDictionaryList',{
+      $Vue.interfaceRequest('/api/dictionary/queryDictionaryList',{
         "dictionaryName":"priceApproveFlag"
       },"get",(res)=>{
         context.commit("priceApproveFlagListReplace",res.data.data);
