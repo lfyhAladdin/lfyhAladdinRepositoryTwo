@@ -13,7 +13,9 @@
               <view>{{liItem.liTitle}}</view>
             </view>
             <view class="pf-li-right">
-              <view :class="liItem.liNum > 0 ? 'pf-num' : ''">{{liItem.liNum > 0 ? liItem.liNum : ''}}</view>
+              <view v-if="liItem.liNum != 0 && liItem.liNum <= 99" class="pf-num">{{liItem.liNum}}</view>
+              <view v-else-if="liItem.liNum > 99" class="pf-num">...</view>
+              <view v-else></view>
               <img src="@/static/images/profession/pf-arrow.svg">
             </view>
           </view>
