@@ -156,13 +156,6 @@
                 "navigationBarTitleText": "repaymentInformation"
             }
         },
-        /**贷款申请信息——担保信息——核心项目编号**/
-        {
-            "path": "pages/ebank/loanInformation/guaranteeProjectNumber",
-            "style": {
-                "navigationBarTitleText": "guaranteeProjectNumber"
-            }
-        },
         /**贷款申请信息——担保信息——合作商账号**/
         {
             "path": "pages/ebank/loanInformation/guaranteePartnerFirm",
