@@ -49,7 +49,7 @@
               </view>
               <view>
                 <text>手机号码</text>
-                <text>{{item.phoneNo}}</text>
+                <text>{{item.phoneNo2}}</text>
               </view>
               <view>
                 <text>合同编号</text>
@@ -86,6 +86,7 @@
   import pfSearch from '../childModule/pfSearch.vue';
   import filter from '@/utils/filters';
   import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
+  import {RSAdecode} from '@/static/js/util.js'
   export default {
     components: {
       pfSearch,
@@ -299,7 +300,8 @@
         }
         let arr = this.businessTypeList2;  //业务品种
         e.forEach((item)=>{
-          item.certId2 = filter.cardIDNoHideFormat(item.certId);
+          item.certId2 = filter.cardIDNoHideFormat(RSAdecode(item.certId));
+          item.phoneNo2 = RSAdecode(item.phoneNo);
           item.businessSum2 = filter.moneyFormat(item.businessSum);
           for(let key in arr){
             if(item.businessType == key){

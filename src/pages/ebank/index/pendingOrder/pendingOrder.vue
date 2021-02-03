@@ -58,6 +58,7 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import filter from "@/utils/filters";
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
+import {RSAdecode} from '@/static/js/util.js'
 export default {
   components: {uniLoadMore},
   data: function() {
@@ -279,15 +280,9 @@ export default {
             that.ifShowNoRecord = false;
             for (let i = 0; i < resArr.length; i++) {
               resArr[i].businessTypeId = resArr[i].businessType;
-              // resArr[i].phoneNoF = filter.telFormat(resArr[i].phoneNo); //格式化手机号
-              resArr[i].phoneNoF = resArr[i].phoneNo; //格式化手机号
-              resArr[i].businessSumF = filter.moneyUnit(
-                filter.moneyFormat(resArr[i].businessSum),
-                true
-              ); //格式化金额
-              resArr[i].certIdHide = filter.cardIDNoHideFormat(
-                resArr[i].certId
-              ); //隐藏身份证中间位数
+              resArr[i].phoneNoF = RSAdecode(resArr[i].phoneNo); //格式化手机号
+              resArr[i].businessSumF = filter.moneyUnit(filter.moneyFormat(resArr[i].businessSum),true); //格式化金额
+              resArr[i].certIdHide = filter.cardIDNoHideFormat(RSAdecode(resArr[i].certId)); //隐藏身份证中间位数
               resArr[i].beginDateF = filter.dateFormat(resArr[i].beginDate); //格式化时间
               resArr[i].businessTypeName = that.businessTypeList[resArr[i].businessType];
               

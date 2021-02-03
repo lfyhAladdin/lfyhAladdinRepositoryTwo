@@ -259,7 +259,6 @@
 </template>
 
 <script>
-  import filter from '@/utils/filters';  //格式化金额、证件号等
   import {mapGetters, mapMutations, mapActions } from 'vuex';
   export default {
     components: {},
