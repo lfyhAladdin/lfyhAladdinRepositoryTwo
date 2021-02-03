@@ -86,8 +86,8 @@
   </view>
 </template>
 <script>
-  import { mapGetters,mapActions } from 'vuex'
-
+  import { mapGetters,mapActions } from 'vuex';
+  import {RSAencode, RSAdecode} from '@/static/js/util.js';
   export default {
     data() {
       return {
@@ -268,7 +268,7 @@
           customerName: personalInformation.customerName,
           workCorp: this.personInfor.companyName,
           workAdd: this.personInfor.companyAddress,
-          workTel: this.personInfor.telephone,
+          workTel: RSAencode(this.personInfor.telephone),
           workNature: this.workNatureList[this.workNatureIdx].key,
           unitKind: this.unitKindList[this.unitKindIdx].key,
           headShip: this.headShipList[this.headShipIdx].key,
@@ -330,7 +330,7 @@
             if(resData.returnCode=='Success'){
               this.personInfor.companyName=resData.workCorp;
               this.personInfor.companyAddress=resData.workAdd;
-              this.personInfor.telephone=resData.workTel;
+              this.personInfor.telephone= RSAdecode(resData.workTel);
               this.workNatureIdx=this.selectInfo(this.workNatureList,resData.workNature);
               this.unitKindIdx=this.selectInfo(this.unitKindList,resData.unitKind);
               this.headShipIdx=this.selectInfo(this.headShipList,resData.headShip);

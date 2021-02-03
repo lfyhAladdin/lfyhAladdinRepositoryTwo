@@ -26,7 +26,7 @@
 </template>
 <script>
   import {mapGetters, mapActions} from 'vuex';
-  import {RSAencode, RSAdecode} from '@/static/js/util.js'
+  import {RSAencode, RSAdecode} from '@/static/js/util.js';
   export default {
     data() {
       return {

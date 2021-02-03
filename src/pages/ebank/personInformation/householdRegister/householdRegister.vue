@@ -73,7 +73,7 @@
         <view class="contract-li">
           <view>身份证号</view>
           <view>
-            <text>{{personInfor.idcard}}</text>
+            <text>{{personInforIdcard}}</text>
           </view>
         </view>
         <view class="contract-li-tips" v-for="(item,index) in personInfor.nameUsedList" :key="index">
@@ -135,7 +135,7 @@
 </template>
 <script>
   import { mapGetters,mapActions,mapMutations } from 'vuex'
-
+  import {RSAencode, RSAdecode} from '@/static/js/util.js'
   export default {
     data() {
       const currentDate = this.getDate({
@@ -193,6 +193,7 @@
         iDCardNoVal: '',  //身份证号，用于区分人员为修改还是新建
         preventResubmit: true,  //防重复提交
         maturityDateyBoolean: true,  //长期false 日历框true
+        personInforIdcard: '',  //证件号码
       }
     },
     onLoad(option) {
@@ -312,7 +313,7 @@
               return;
             }
             this.personInfor.name = ret.payload.Name;
-            this.personInfor.idcard = ret.payload.IDCardNo;
+            this.personInfor.idcard = RSAencode(ret.payload.IDCardNo);
             this.personInfor.sex = ret.payload.Gender;
             this.personInfor.ermanentAddress = ret.payload.Address; 
             let year = ret.payload.IDCardNo.substring(6,10);
@@ -772,6 +773,7 @@
             this.isDisabled=true;
             this.personInfor.name=resData.customerName;
             this.personInfor.idcard=resData.certId;
+            this.personInforIdcard = RSAdecode(resData.certId);
             this.iDCardNoVal = resData.certId;
             if(resData.gender=='1'){
               this.personInfor.sex='男'

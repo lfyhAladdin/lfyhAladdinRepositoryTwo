@@ -111,8 +111,8 @@
   </view>
 </template>
 <script>
-  import { mapGetters,mapActions } from 'vuex'
-
+  import { mapGetters,mapActions } from 'vuex';
+  import {RSAencode, RSAdecode} from '@/static/js/util.js';
   export default {
     data() {
       return {
@@ -409,7 +409,7 @@
           certType: personalInformation.certType,
           certId: personalInformation.certId,
           customerName: personalInformation.customerName,
-          mobileTelephone: this.personInfor.phone,
+          mobileTelephone: RSAencode(this.personInfor.phone),
           yearIncome: this.personInfor.yearIncome,
           familyStatus: this.familyStatusList[this.familyStatusIdx].key,
           regionCode: this.regionCode,
@@ -477,7 +477,7 @@
             yu.hideLoading();
             let resData=res.data.data;
             if(resData.returnCode=='Success'){
-              this.personInfor.phone=resData.mobileTelephone;
+              this.personInfor.phone= RSAdecode(resData.mobileTelephone);
               this.personInfor.yearIncome=resData.yearIncome;
               this.personInfor.regionCode=resData.regionCode;
               this.personInfor.detailAddress=resData.familyAdd;
