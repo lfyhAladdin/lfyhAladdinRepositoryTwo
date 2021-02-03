@@ -465,6 +465,7 @@ export default {
           foxsdk.logger.info(ret.payload);
           this.personInfor.name = ret.payload.Name;
           localStorage.setItem("personnames", ret.payload.Name);
+          this.personInforIdcard = ret.payload.IDCardNo;
           this.personInfor.idcard = RSAencode(ret.payload.IDCardNo);
           localStorage.setItem("personidcards", ret.payload.IDCardNo);
           foxsdk.io.convertLocalFileSystemURL(
