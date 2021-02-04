@@ -77,6 +77,7 @@
 </template>
 <script>
  import pageHead from "@/components/page-head.vue";
+ import {RSAencode, RSAdecode} from '@/static/js/util.js';
 	import {
 		mapGetters,
 		mapActions
@@ -110,7 +111,7 @@
 		computed: {
 			...mapGetters(["approvalIngList", "userInfor", "personalInformation"]),
 		},
-		onLoad(option) {
+		onLoad() {
 			this.orderNoVal = this.approvalIngList.orderNo;
 			this.applyNoVal = this.approvalIngList.serialNo;
 			this.getRelationShipList();
@@ -181,7 +182,10 @@
 				this.isJump = isJump;
 				let that = this;
 				let personalInformation = this.personalInformation;
-				console.log(personalInformation);
+				this.customerConcatList.forEach((item, index) => {
+					item.phoneNo=RSAencode(item.phoneNo);
+					
+					});
 				let data = {
 					userId: this.userInfor.loginCode,
 					certType: personalInformation.certType,
@@ -299,6 +303,7 @@
 							if (resData.customerConcatList != null) {
 								that.customerConcatList = resData.customerConcatList;
 								that.customerConcatList.forEach((item, index) => {
+									item.phoneNo=RSAdecode(item.phoneNo);
 									that.relationShipIdxList.push(
 										that.selectInfo(that.relationShipList, item.relationShip)
 									);

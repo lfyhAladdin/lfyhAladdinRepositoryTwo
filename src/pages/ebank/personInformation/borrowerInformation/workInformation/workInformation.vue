@@ -109,7 +109,7 @@
 <script>
   import pageHead from "@/components/page-head.vue";
 import { mapGetters, mapActions } from "vuex";
-
+import {RSAencode, RSAdecode} from '@/static/js/util.js';
 export default {
   data() {
     return {
@@ -335,7 +335,7 @@ export default {
         customerName: personalInformation.customerName,
         workCorp: this.personInfor.companyName,
         workAdd: this.personInfor.companyAddress,
-        workTel: this.personInfor.telephone,
+        workTel:RSAencode(this.personInfor.telephone),
         workNature: this.workNatureList[this.workNatureIdx].key,
         unitKind: this.unitKindList[this.unitKindIdx].key,
         occupation: this.occupationList[this.occupationIdx].key,
@@ -535,7 +535,7 @@ export default {
           if (resData.returnCode == "Success") {
             that.personInfor.companyName = resData.workCorp;
             that.personInfor.companyAddress = resData.workAdd;
-            that.personInfor.telephone = resData.workTel;
+            that.personInfor.telephone = RSAdecode(resData.workTel);
             that.workNatureIdx = that.selectInfo(
               that.workNatureList,
               resData.workNature

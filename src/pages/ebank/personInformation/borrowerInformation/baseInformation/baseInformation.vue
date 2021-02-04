@@ -106,7 +106,7 @@
 <script>
   import pageHead from "@/components/page-head.vue";
 import { mapGetters, mapActions } from "vuex";
-
+import {RSAencode, RSAdecode} from '@/static/js/util.js';
 export default {
   data() {
     return {
@@ -374,7 +374,7 @@ export default {
         certType: personalInformation.certType,
         certId: personalInformation.certId,
         customerName: personalInformation.customerName,
-        mobileTelephone: this.personInfor.phone,
+        mobileTelephone:RSAencode(this.personInfor.phone),
         yearIncome: this.personInfor.yearIncome,
         familyStatus: this.familyStatusList[this.familyStatusIdx].key,
         regionCode: this.regionCode,
@@ -556,7 +556,7 @@ export default {
           yu.hideLoading();
           let resData = res.data.data;
           if (resData.returnCode == "Success") {
-            that.personInfor.phone = resData.mobileTelephone;
+            that.personInfor.phone= RSAdecode(resData.mobileTelephone);
             that.personInfor.yearIncome = resData.yearIncome;
             that.personInfor.regionCode = resData.regionCode;
             that.personInfor.detailAddress = resData.familyAdd;

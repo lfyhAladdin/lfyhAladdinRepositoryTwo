@@ -76,7 +76,7 @@
         <view class="contract-li">
           <view>身份证号</view>
           <view>
-            <text>{{personInfor.idcard}}</text>
+            <text>{{personInforIdcard}}</text>
           </view>
         </view>
         <view class="contract-li-tips" v-for="(item,index) in personInfor.nameUsedList" :key="index">
@@ -144,7 +144,7 @@
         mapMutations
     } from 'vuex'
     import text from '../../../../component/text/text.vue';
-
+    import {RSAencode, RSAdecode} from '@/static/js/util.js'
     export default {
         components: {
             text
@@ -203,8 +203,16 @@
                 busiSerialNoVal: '', //业务流水号
                 busiStartDateVal: '', //业务日期
                 maturityDateyBoolean: true, //长期false 日历框true
+                personInforIdcard: '',  //证件号码
             }
         },
+        created(){
+            // let name = "姓名";
+            // console.log(RSAencode(name))  //加密
+            // console.log(RSAdecode(RSAencode(name)))  //解密
+            // console.log(this.businessNum)
+            
+            },
         onLoad(option) {
             // 影像批次号
             if (this.queryApplyInfoList.imageList != null && this.queryApplyInfoList.imageList.length > 0) {
@@ -260,6 +268,7 @@
                     // if(type==1){
                     if (ret && ret.payload && ret.payload.Name) {
                         that.personInfor.name = ret.payload.Name;
+                        that.personInfor.idcard = RSAencode(ret.payload.IDCardNo);
                         that.personInfor.idcard = ret.payload.IDCardNo;
                         that.personInfor.sex = ret.payload.Gender;
                         let dateArr = ret.payload.Birthday.split(/[\u4e00-\u9fa5]/);
@@ -563,6 +572,7 @@
                         // that.busiStartDateVal = resData.imageUpLoadDate; //业务日期
                         that.personInfor.name = resData.customerName;
                         that.personInfor.idcard = resData.certId;
+                        that.personInforIdcard = RSAdecode(resData.certId);
                         if (resData.gender == '1') {
                             that.personInfor.sex = '男'
                         } else if (resData.gender == '2') {

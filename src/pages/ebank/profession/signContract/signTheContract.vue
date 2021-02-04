@@ -117,6 +117,13 @@
 						<text>权证号</text>
 						<input placeholder="请输入" type="text" class="iptcontract" v-model="warrantNumber" />
 					</view>
+                    <view class="contract-li">
+						<text>权证起始日期</text>
+						<picker mode="date" :value="startTime" :start="startDate" :end="endDate" @change="bindDateStart">
+							<view class="uni-input">{{startTime}}</view>
+						</picker>
+						<img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />
+					</view>
 					<view class="contract-li">
 						<text>权证到期日期</text>
 						<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
@@ -309,6 +316,7 @@
                 //     synFlag: null,
                 // }, ],
                 date: currentDate,
+                startTime:currentDate,
                 realEstateNo: "", //不动产证编号
                 warrantNumber: "", //权证号
                 certificateRegistration: "", //权证登记机关
@@ -334,6 +342,7 @@
             this.pfSearchBusiness = this.businessTypeList;
             this.newTime = this.date.replace(/-/g, "/");
             console.log(this.newTime);
+            this.startNewTime = this.date.replace(/-/g, "/");
             if (options.applyPhase == undefined) {
                 this.applyPhase = "01";
             } else {
@@ -1017,7 +1026,7 @@
                             rightCertName: "",
                             rightCertNo: this.warrantNumber, //权证号
                             rightCertType: "",
-                            rightBeginrDate: "",
+                            rightBeginrDate:this.startNewTime,
                             rightExprDate: this.newTime, //权证到期日期
                             rightRegInst: this.certificateRegistration, //权证登记机关
                             rightRegDate: "",
@@ -1123,6 +1132,13 @@
                     this.houseContractTwo = "";
                     return false;
                 }
+            },
+            //权证起始日期
+             bindDateStart: function(e) {
+                console.log(e);
+                this.startTime = e.target.value;
+                this.startNewTime = this.startTime.replace(/-/g, "/");
+                console.log(this.startNewTime);
             },
             bindDateChange: function(e) {
                 console.log(e);
