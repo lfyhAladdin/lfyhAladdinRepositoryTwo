@@ -775,7 +775,7 @@
             this.personInfor.name=resData.customerName;
             this.personInfor.idcard=resData.certId;
             this.personInforIdcard = RSAdecode(resData.certId);
-            this.iDCardNoVal = resData.certId;
+            this.iDCardNoVal = RSAdecode(resData.certId);
             if(resData.gender=='1'){
               this.personInfor.sex='男'
             }else if(resData.gender=='2'){
