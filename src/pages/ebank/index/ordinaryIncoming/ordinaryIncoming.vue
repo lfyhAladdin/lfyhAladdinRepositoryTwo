@@ -38,7 +38,7 @@
         <view class="contract-li">
           <view>身份证号</view>
           <view>
-            <text>{{personInfor.idcard}}</text>
+            <text>{{personInforIdcard}}</text>
           </view>
         </view>
       </view>
@@ -77,7 +77,7 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import globalMethod from "@/static/js/globalmethods";
+import {RSAencode, RSAdecode} from '@/static/js/util.js'
 export default {
   data() {
     return {
@@ -111,7 +111,8 @@ export default {
       idShotsPath: "",
       ocrresult: "",
       ifShowRealEstate: true,
-      preventResubmit: true //防重复提交
+      preventResubmit: true, //防重复提交
+      personInforIdcard: '',  //证件号码
     };
   },
   onLoad: function(options) {
@@ -133,6 +134,7 @@ export default {
     this.imgPath_zheng_base64 = localStorage.getItem("imgPath_zheng_base64");
     this.imgPath_fan = localStorage.getItem("imgPath_fan");
     this.imgPath_fan_base64 = localStorage.getItem("imgPath_fan_base64");
+    this.personInforIdcard = RSAdecode(this.personInfor.idcard);
     //}
     //获取身份证信息end
     /***获取用户ID，部门ID */
@@ -166,28 +168,18 @@ export default {
     /**获取搜索结果**/
     let opboolean = JSON.stringify(options) == "{}";
     if (!opboolean) {
-      this.buildingNo =
-        options.projectId === undefined ? "" : options.projectId; //楼盘ID
-      this.buildingName =
-        options.projectName === undefined ? "" : options.projectName; //楼盘名称
-      this.productId =
-        options.productId === undefined ? this.productId : options.productId; //
-      this.productIndex =
-        options.productIndex === undefined
-          ? this.productIndex
-          : options.productIndex; //
-      this.productName =
-        options.productName === undefined
-          ? this.productName
-          : options.productName;
+      this.buildingNo = options.projectId === undefined ? "" : options.projectId; //楼盘ID
+      this.buildingName = options.projectName === undefined ? "" : options.projectName; //楼盘名称
+      this.productId = options.productId === undefined ? this.productId : options.productId; //
+      this.productIndex = options.productIndex === undefined ? this.productIndex : options.productIndex; //
+      this.productName = options.productName === undefined ? this.productName : options.productName;
       this.personInfor.phone = options.phone === undefined ? "" : options.phone; //电话号
-      this.personInfor.name =
-        options.personName === undefined ? "" : options.personName; //用户名
-      this.personInfor.idcard =
-        options.personIDcard === undefined ? "" : options.personIDcard; //用户身份证号
+      this.personInfor.name = options.personName === undefined ? "" : options.personName; //用户名
+      this.personInfor.idcard = options.personIDcard === undefined ? "" : options.personIDcard; //用户身份证号
       if (this.buildingNo != "") {
         this.ifSearchResult = true;
       }
+      this.personInforIdcard = RSAdecode(this.personInfor.idcard);
     }
   },
   created() {
@@ -200,6 +192,7 @@ export default {
       this.imgPath_zheng_base64 = this.approvalIngList.imgPath_zheng_base64;
       this.imgPath_fan = this.approvalIngList.imgPath_fan;
       this.imgPath_fan_base64 = this.approvalIngList.imgPath_fan_base64;
+      this.personInforIdcard = RSAdecode(this.personInfor.idcard);
     }
     //获取身份证信息end
 
@@ -488,8 +481,9 @@ export default {
         if (ret && ret.payload && ret.payload.Name) {
           foxsdk.logger.info(ret.payload);
           this.personInfor.name = ret.payload.Name;
-          localStorage.setItem("personnames", ret.payload.Name);
-          this.personInfor.idcard = ret.payload.IDCardNo;
+          localStorage.setItem("personnames", ret.payload.Name); 
+          this.personInforIdcard = ret.payload.IDCardNo;
+          this.personInfor.idcard = RSAencode(ret.payload.IDCardNo);
           localStorage.setItem("personidcards", ret.payload.IDCardNo);
           foxsdk.io.convertLocalFileSystemURL(
             ret.payload.ImagePath,

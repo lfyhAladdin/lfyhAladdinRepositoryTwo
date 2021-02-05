@@ -153,7 +153,6 @@ export default {
     clickable: function() {
       return this.pwdFormdata.account && this.pwdFormdata.password;
     },
-
     phoneNoLoginClickable() {
       return this.phoneFormdata.phoneNo && this.phoneFormdata.verifyCode;
     },
@@ -171,7 +170,6 @@ export default {
   methods: {
     ...mapActions(["businessNumCommit",'businessTypeListCommit']),
     ...mapMutations(["userInfor",'userInforReplace']),
-
     // 获取local用户名和用户id
     async getLocalName() {
       let _this = this;
@@ -406,7 +404,7 @@ export default {
     // 发送验证码
     sendCode() {
       let _this = this;
-      if (this.pwdFormdata.phoneNo == "") {
+      if (this.phoneFormdata.phoneNo == "") {
         yu.showToast({
           icon: "none",
           title: "请输入手机号",
@@ -464,7 +462,6 @@ export default {
         });
       }
     },
-
     // 倒计时
     countDown() {
       this.timer = setInterval(() => {
@@ -477,7 +474,6 @@ export default {
         }
       }, 1000);
     },
-
     // 手机号 短信登录
     phoneNoLogin() {
       if (!this.phoneFormdata.verifyCode) {
@@ -541,7 +537,6 @@ export default {
       });
       // #endif
     },
-
     //忘记密码页面跳转
     forgetPassword() {
       let _this = this;
@@ -600,7 +595,6 @@ export default {
       let options={
         id:id,
         random:'NjI1MTcxMjEyMjE4ODk0Mw=='
-
       };
       foxsdk.cfcakeyboard.show(options, ret => {
         let text=ret.payload.text;
@@ -626,8 +620,6 @@ export default {
       foxsdk.cfcakeyboard.hide(id,ret => {});
     },  
     /* 密码键盘的相关操作  end */
-
-
     /***获取手机IP地址  start */
     getIPAdress(){
       foxsdk.networkinfo.getIpAddress(ret => {
@@ -665,6 +657,7 @@ export default {
     }
   }
 };
+</script>
 </script>
 <style lang="scss" scoped>
 
