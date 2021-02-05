@@ -26,7 +26,6 @@
 </template>
 <script>
   import {mapGetters, mapActions} from 'vuex';
-  import {RSAencode, RSAdecode} from '@/static/js/util.js';
   export default {
     data() {
       return {
@@ -178,10 +177,6 @@
       ...mapGetters(['businessNum','userInfor'])
     },
     created(){
-      let name = "姓名";
-      console.log(RSAencode(name))  //加密
-      console.log(RSAdecode(RSAencode(name)))  //解密
-      console.log(this.businessNum)
       this.commitFun();
     },
     activated(){

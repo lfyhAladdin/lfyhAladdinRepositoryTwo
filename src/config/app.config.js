@@ -21,9 +21,10 @@ export const appEnv = {
   appAssetsUrl: '', // 资源服务器地址(eg:广告)
   devMode: 'dev', // MOCK 外网挡板数据/ LOCAL 本地挡板数据/SIT/UAT/PRO
   touristMode: false, // 开放式,H5模式可以直接进入应用业务页面
-  pageNum: '' // 打开业务页面数量，根据测试情况配置
+  pageNum: '', // 打开业务页面数量，根据测试情况配置
+  appEnvironmentUrl: 'https://boltest2.lccb.com.cn:280', // 测试环境
+  // appEnvironmentUrl: 'https://ald.lccb.com.cn:280',  // 生产环境
 };
-
 // 根据不同的开发环境，配置不同的主机及静态资源
 switch (appEnv.devMode) {
   case 'PRO':
@@ -39,11 +40,12 @@ switch (appEnv.devMode) {
     appEnv.assetsUrl = 'http://your.github.io/assets/'; // WEB服务器静态资源路径
     break;
   case 'MOCK':
-    appEnv.host = 'https://boltest2.lccb.com.cn:280/chdcebankapp'; // 外网mock挡板测试环境
+    // appEnv.host = 'https://boltest2.lccb.com.cn:280/chdcebankapp'; // 外网mock挡板测试环境
+    appEnv.host = `${appEnv.appEnvironmentUrl}/chdcebankapp`; // 外网mock挡板测试环境
     appEnv.assetsUrl = 'http://localhost:9102/assets/'; // WEB服务器静态资源路径
     break;
   default:
-    appEnv.host = 'https://boltest2.lccb.com.cn:280/chdcebankapp';//http://114.255.138.160:18080/yump-mgw/10000002  http://2.0.0.4:8080/10000004本地挡板测试环境http://172.16.20.34:7070 http://219.143.38.252:18080/yump-mgw/10000004 http://192.168.251.163:18080/yump-mgw/10000004
+    appEnv.host = `${appEnv.appEnvironmentUrl}/chdcebankapp`;//http://114.255.138.160:18080/yump-mgw/10000002  http://2.0.0.4:8080/10000004本地挡板测试环境http://172.16.20.34:7070 http://219.143.38.252:18080/yump-mgw/10000004 http://192.168.251.163:18080/yump-mgw/10000004
     appEnv.assetsUrl = 'http://114.255.138.160:18080/yump-file/'; // WEB服务器静态资源路径,'http://219.143.38.252:18080/yump-file/';'http://172.16.20.31/'
     break;
 };

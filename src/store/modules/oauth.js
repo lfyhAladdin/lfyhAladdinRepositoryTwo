@@ -1,4 +1,4 @@
-import { backend } from '@/config/app.config';
+import { backend, appEnv } from '@/config/app.config';
 
 /**
  * @created by anonymous 2019-12-17
@@ -150,7 +150,8 @@ const actions = {
       // luch-request 发的请求部分手机自带浏览器请求失败
       uni.request({
         method: 'POST',
-        url: 'https://boltest2.lccb.com.cn:280/yusp-uaa/oauth/token',
+        // url: 'https://boltest2.lccb.com.cn:280/yusp-uaa/oauth/token',
+        url: `${appEnv.appEnvironmentUrl}/yusp-uaa/oauth/token`,
         header: { 
           'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
           'Authorization':'Basic d2ViX2FwcDo=',

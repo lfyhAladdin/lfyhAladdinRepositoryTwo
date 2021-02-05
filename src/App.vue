@@ -8,8 +8,7 @@
  -->
  
 <script>
-  import { createNamespacedHelpers } from 'vuex';
-  import $ from'@/static/js/jquery-1.8.3.min.js';
+  import { appEnv } from '@/config/app.config';
  	export default {
     //全局属性
     globalData: {
@@ -22,6 +21,7 @@
       hideTime: 0,
       showTime: 0,
       phoneSystem: true,  //ios true，安卓 false
+      environmentUrl: appEnv.appEnvironmentUrl,
     },
     onLaunch: function(query) {
       this.initApp();
