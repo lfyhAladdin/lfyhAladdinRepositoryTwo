@@ -76,7 +76,7 @@
         <view class="contract-li">
           <view>身份证号</view>
           <view>
-            <text>{{personInforIdcard}}</text>
+            <text>{{personInfor.idcard}}</text>
           </view>
         </view>
         <view class="contract-li-tips" v-for="(item,index) in personInfor.nameUsedList" :key="index">
@@ -144,7 +144,7 @@
         mapMutations
     } from 'vuex'
     import text from '../../../../component/text/text.vue';
-    import {RSAencode, RSAdecode} from '@/static/js/util.js'
+
     export default {
         components: {
             text
@@ -203,16 +203,8 @@
                 busiSerialNoVal: '', //业务流水号
                 busiStartDateVal: '', //业务日期
                 maturityDateyBoolean: true, //长期false 日历框true
-                personInforIdcard: '',  //证件号码
             }
         },
-        created(){
-            // let name = "姓名";
-            // console.log(RSAencode(name))  //加密
-            // console.log(RSAdecode(RSAencode(name)))  //解密
-            // console.log(this.businessNum)
-            
-            },
         onLoad(option) {
             // 影像批次号
             if (this.queryApplyInfoList.imageList != null && this.queryApplyInfoList.imageList.length > 0) {
@@ -268,7 +260,6 @@
                     // if(type==1){
                     if (ret && ret.payload && ret.payload.Name) {
                         that.personInfor.name = ret.payload.Name;
-                        that.personInfor.idcard = RSAencode(ret.payload.IDCardNo);
                         that.personInfor.idcard = ret.payload.IDCardNo;
                         that.personInfor.sex = ret.payload.Gender;
                         let dateArr = ret.payload.Birthday.split(/[\u4e00-\u9fa5]/);
@@ -283,8 +274,6 @@
                         });
                         foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
                             that.IDFrontBase64 = entry.payload.imageBase64;
-                            console.log('************');
-                            console.log(that.IDFrontBase64)
                         });
                     } else {
                         // let dateArr = ret.payload.TermofValidity.split(/[\u4e00-\u9fa5]/);
@@ -301,7 +290,6 @@
                         foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
                             that.IDReverseBase64 = entry.payload.imageBase64;
                         });
-
                         let dateString = ret.payload.TermofValidity;
                         let index = dateString.lastIndexOf("\-");
                         dateString = dateString.substring(index + 1, dateString.length);
@@ -313,88 +301,102 @@
             // 调6.6接口，将图片存储到影像平台
             uploadbybacthid() {
                 let that = this;
-                let data = {
-                    busiSerialNo: this.busiSerialNoVal, //业务流水号
-                    busiStartDate: this.busiStartDateVal, //业务日期
-                    // batchId: this.batchId,
-                    busiFileTypeList: ['2012060101'],
-                    filePartName: 'LS_SQZL_P',
-                    modelCode: 'LS_SQZL',
-                    uploadImageInVoList: [{
-                        base64Code: that.IDFrontBase64,
-                        frontBackFlag: '2',
-                        psnTp: that.psnTp,
-                        idNumber: that.personInfor.idcard
-                    }, {
-                        base64Code: that.IDReverseBase64,
-                        frontBackFlag: '1',
-                        psnTp: that.psnTp,
-                        idNumber: that.personInfor.idcard
-                    }, ]
-                }
-                yu.showLoading();
-                let posturl = "/api/imagehandle/uploadbynoanddate";
-                that.interfaceRequest(posturl, data, "post", (res) => {
-                    yu.hideLoading();
-                    // alert('影像存储成功了');
-                    console.log('*********存储')
-                    console.log(res.data.data);
-                    that.deletelocalfileandfolder();
-                    if (that.isJump) {
-                        let data = {
-                            certType: 'Ind01',
-                            certId: that.personInfor.idcard,
-                            customerName: that.personInfor.name
-                        }
-                        this.personalInformationReplace(data);
-                        console.log(this.personInfor.ermanentAddress)
-                        if (this.personInfor.ermanentAddress == "") {
-                            yu.showModal({
-                                title: "户籍地址不能为空！",
-                                content: "请输入户籍地址",
-                                showCancel: false,
-                                confirmText: "我知道了",
-                                success: res => {
-                                    if (res.confirm) {
-                                        console.log("用户点击确定");
-                                    }
-                                }
-                            });
-                            return false;
-                        }
-                        that.pageJump('personInformation/borrowerInformation/baseInformation/baseInformation')
-                    } else {
-                        // alert('暂存成功！')
-                        yu.showToast({
-                            title: '暂存成功！',
-                            image: './static/images/perfectInformation/success.svg',
-                            duration: 2000
-                        });
+                //压缩图片base64code大小  start
+                let zhengcode='';
+                let fancode='';
+                let zhengbase64='data:image/jpeg;base64,' + that.IDFrontBase64;
+                let fanbase64='data:image/jpeg;base64,' + that.IDReverseBase64;
+                that.compressImages(zhengbase64,1,function(data){
+                    zhengcode=data;
+                }); 
+                that.compressImages(fanbase64,1,function(res){
+                    fancode=res;
+                    
+                    let data = {
+                        busiSerialNo: that.busiSerialNoVal, //业务流水号
+                        busiStartDate: that.busiStartDateVal, //业务日期
+                        busiFileTypeList: ['2012060101'],
+                        filePartName: 'LS_SQZL_P',
+                        modelCode: 'LS_SQZL',
+                        uploadImageInVoList: [{
+                            base64Code: zhengcode,
+                            frontBackFlag: '2',
+                            psnTp: that.psnTp,
+                            idNumber: that.personInfor.idcard
+                        }, {
+                            base64Code: fancode,
+                            frontBackFlag: '1',
+                            psnTp: that.psnTp,
+                            idNumber: that.personInfor.idcard
+                        }, ]
                     }
-                }, function(err) {
-                    yu.hideLoading();
-                    // alert('存储报错了！！');
-                    console.log('*********存储')
-                    console.log(err);
-                    that.pageJump('personInformation/personInformation')
-                });
+                    console.log(data);
+                    yu.showLoading();
+                    let posturl = "/api/imagehandle/uploadbynoanddate";
+                    that.interfaceRequest(posturl, data, "post", (res) => {
+                        yu.hideLoading();
+                        // alert('影像存储成功了');
+                        console.log('*********存储')
+                        console.log(res.data.data);
+                        that.deletelocalfileandfolder();
+                        if (that.isJump) {
+                            let data = {
+                                certType: 'Ind01',
+                                certId: that.personInfor.idcard,
+                                customerName: that.personInfor.name
+                            }
+                            that.personalInformationReplace(data);
+                            console.log(that.personInfor.ermanentAddress)
+                            if (that.personInfor.ermanentAddress == "") {
+                                yu.showModal({
+                                    title: "户籍地址不能为空！",
+                                    content: "请输入户籍地址",
+                                    showCancel: false,
+                                    confirmText: "我知道了",
+                                    success: res => {
+                                        if (res.confirm) {
+                                            console.log("用户点击确定");
+                                        }
+                                    }
+                                });
+                                return false;
+                            }
+                            that.pageJump('personInformation/borrowerInformation/baseInformation/baseInformation')
+                        } else {
+                            // alert('暂存成功！')
+                            yu.showToast({
+                                title: '暂存成功！',
+                                image: './static/images/perfectInformation/success.svg',
+                                duration: 2000
+                            });
+                        }
+                    }, function(err) {
+                        yu.hideLoading();
+                        // alert('存储报错了！！');
+                        console.log('*********存储')
+                        console.log(err);
+                        that.pageJump('personInformation/personInformation')
+                    });
+                    }); 
+                //压缩图片base64code大小  end
+
             },
             // 6.8接口 下载影像信息
             downloadbybatchid() {
                 let that = this;
                 let data = {
-                    busiSerialNo: this.busiSerialNoVal, //业务流水号
-                    busiStartDate: this.busiStartDateVal, //业务日期
+                    busiSerialNo: that.busiSerialNoVal, //业务流水号
+                    busiStartDate: that.busiStartDateVal, //业务日期
                     // batchId: this.batchId,
                     busiFileTypeList: ['2012060101'],
                     filePartName: 'LS_SQZL_P',
                     modelCode: 'LS_SQZL',
-                    psnTp: this.psnTp,
-                    idNumber: this.personInfor.idcard
+                    psnTp: that.psnTp,
+                    idNumber: that.personInfor.idcard
                 }
                 let posturl = '/api/imagehandle/downloadbynoanddate';
                 yu.showLoading();
-                this.interfaceRequest(posturl, data, "post", function(res) {
+                that.interfaceRequest(posturl, data, "post", function(res) {
                     yu.hideLoading();
                     // alert('影像下载成功了');
                     let resData = res.data.data;
@@ -426,16 +428,16 @@
             updatebyfilename() {
                 let that = this;
                 let data = {
-                    busiSerialNo: this.busiSerialNoVal, //业务流水号
-                    busiStartDate: this.busiStartDateVal, //业务日期
+                    busiSerialNo: that.busiSerialNoVal, //业务流水号
+                    busiStartDate: that.busiStartDateVal, //业务日期
                     // batchId: this.batchId,
-                    fileNameList: [this.IDFrontName, this.IDReverseName],
+                    fileNameList: [that.IDFrontName, that.IDReverseName],
                     filePartName: 'LS_SQZL_P',
                     modelCode: 'LS_SQZL'
                 }
                 let posturl = '/api/imagehandle/deletebyfilename';
                 yu.showLoading();
-                this.interfaceRequest(posturl, data, "post", function(res) {
+                that.interfaceRequest(posturl, data, "post", function(res) {
                     yu.hideLoading();
                     // alert('影像删除成功了');
                     if (res.data.data.returnCode != 'Success') {
@@ -461,7 +463,7 @@
                 let that = this;
                 let posturl = '/api/imagehandle/deletedownloadfileandfolder';
                 yu.showLoading();
-                this.interfaceRequest(posturl, {}, "post", (res) => {
+                that.interfaceRequest(posturl, {}, "post", (res) => {
                     yu.hideLoading();
                     console.log(res)
                         // alert('文件夹删除成功了');
@@ -572,7 +574,6 @@
                         // that.busiStartDateVal = resData.imageUpLoadDate; //业务日期
                         that.personInfor.name = resData.customerName;
                         that.personInfor.idcard = resData.certId;
-                        that.personInforIdcard = RSAdecode(resData.certId);
                         if (resData.gender == '1') {
                             that.personInfor.sex = '男'
                         } else if (resData.gender == '2') {

@@ -314,7 +314,7 @@ export default {
             });
             return;
           }
-          that.loaninvestigation(that.applyNoVal);
+          /* that.loaninvestigation(that.applyNoVal); */
           let userID = that.userInfor.loginCode;
           let orgID=that.userInfor.orgId;
           let data = {
@@ -333,14 +333,14 @@ export default {
       /* 授信流程提交 end*/
     },
     //廊坊银行个人住房/商用房贷款调查表
-    loaninvestigation(applyNo){
+    /* loaninvestigation(applyNo){
       let _this=this;
       let data = {
         "orderNo": "", //订单编号
         "applyNo": applyNo, //申请编号
       };
       _this.interfaceRequest('/api/loaninvestigation/loaninvestigation',data,"GET",function(res){})
-    },
+    }, */
     nextStep() {
       //$(".credit-submit-frame").show();
       this.ifCreditSubmitFrame=true;
