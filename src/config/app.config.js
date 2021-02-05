@@ -40,7 +40,6 @@ switch (appEnv.devMode) {
     appEnv.assetsUrl = 'http://your.github.io/assets/'; // WEB服务器静态资源路径
     break;
   case 'MOCK':
-    // appEnv.host = 'https://boltest2.lccb.com.cn:280/chdcebankapp'; // 外网mock挡板测试环境
     appEnv.host = `${appEnv.appEnvironmentUrl}/chdcebankapp`; // 外网mock挡板测试环境
     appEnv.assetsUrl = 'http://localhost:9102/assets/'; // WEB服务器静态资源路径
     break;

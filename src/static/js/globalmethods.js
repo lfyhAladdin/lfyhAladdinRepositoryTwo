@@ -131,8 +131,6 @@ export default {
         }
       )
     };
-    // Vue.prototype.loginRelatedPostUrl="https://boltest2.lccb.com.cn:280/chdcinner/";
-    // Vue.prototype.loginPostUrl="https://boltest2.lccb.com.cn:280/yusp-uaa/";
     Vue.prototype.loginRelatedPostUrl= `${appEnv.appEnvironmentUrl}/chdcinner/`;
     Vue.prototype.loginPostUrl= `${appEnv.appEnvironmentUrl}/yusp-uaa/`;
 
