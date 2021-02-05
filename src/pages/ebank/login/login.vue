@@ -88,7 +88,7 @@
 import { createNamespacedHelpers, mapGetters, mapActions, mapMutations } from "vuex";
 const { mapState } = createNamespacedHelpers("oauth");
 import iosrepair from "@/utils/mixins/iosrepair.js";
-import jsencrypt from "@/static/js/jsencrypt.min.js";
+import {RSAencode} from '@/static/js/util.js';
 export default {
   components: {},
   mixins: [iosrepair],
@@ -359,7 +359,7 @@ export default {
     //选择机构
     selectORG(param,loginCodes) {
       let data = {
-        loginCode: loginCodes
+        loginCode: RSAencode(loginCodes)
       };
       this.$http
         .request({

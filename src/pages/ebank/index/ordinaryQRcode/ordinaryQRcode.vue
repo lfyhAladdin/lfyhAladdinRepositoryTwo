@@ -22,7 +22,6 @@
   </view>
 </template>
 <script>
-import pageHead from "@/components/page-head.vue";
 const qrCode = require("@/static/js/weapp-qrcode.js");
 import {mapGetters,mapMutations } from "vuex";
 export default {
@@ -84,7 +83,7 @@ export default {
     },
     // 二维码生成工具
     couponQrCodes() {
-        this.qrcodeUrl=`${environmentUrl}/view/order/orderRequest.html?bT=${this.approvalIngList.fromProductId}&lC=${this.userInfor.loginCode}&oI=${this.userInfor.orgId}`;
+        this.qrcodeUrl=`${this.environmentUrl}/view/order/orderRequest.html?bT=${this.approvalIngList.fromProductId}&lC=${this.userInfor.loginCode}&oI=${this.userInfor.orgId}`;
         this.$nextTick(function () {
         this.qrcodeWidth = this.$refs.qrcodeJS.$el.clientWidth + 'px';
         this.qrcodeHeight = this.$refs.qrcodeJS.$el.clientHeight + 'px';

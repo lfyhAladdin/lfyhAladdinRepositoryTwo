@@ -21,7 +21,6 @@
       hideTime: 0,
       showTime: 0,
       phoneSystem: true,  //ios true，安卓 false
-      environmentUrl: appEnv.appEnvironmentUrl,
     },
     onLaunch: function(query) {
       this.initApp();

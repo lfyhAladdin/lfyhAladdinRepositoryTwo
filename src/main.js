@@ -12,6 +12,7 @@ import install  from './utils/install';
 import formverify from './static/js/formverify';
 import globalMethod from './static/js/globalmethods';
 import svgProgressBar from './static/js/svg-progress-bar';
+import { appEnv } from '@/config/app.config';
 
 
 Vue.use(formverify);
@@ -85,7 +86,8 @@ if(uni.getSystemInfoSync().platform == 'ios'){
   Vue.prototype.phoneSystem = true;
 }else{
   Vue.prototype.phoneSystem = false;
-}
+};
+Vue.prototype.environmentUrl = appEnv.appEnvironmentUrl;
 // APP全局插件（组件、图标、过滤器、工具方法等）安装
 install(Vue);
 

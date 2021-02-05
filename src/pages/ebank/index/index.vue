@@ -31,6 +31,7 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
+import {RSAdecode} from '@/static/js/util.js';
 export default {
   data() {
     return {
@@ -123,7 +124,7 @@ export default {
     ...mapActions(['businessNumCommit']),
     commitFun(){
       yu.stopPullDownRefresh();  //停止下拉刷新
-      this.username=this.userInfor.userName;
+      this.username= RSAdecode(this.userInfor.userName);
       this.featureslist[0].newsnumber = this.businessNum.orderPending; //订单数量
       this.featureslist[1].newsnumber = this.businessNum.creditSubmit; //申请待提交数量
       this.featureslist[2].newsnumber = this.businessNum.creditPeoplePricing; //人工定价审批数量

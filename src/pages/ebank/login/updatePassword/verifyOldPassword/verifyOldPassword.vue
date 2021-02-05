@@ -22,10 +22,8 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import pageHead from "@/components/page-head.vue";
-import updatePasswordVue from "../updatePassword.vue";
-import jsencrypt from "@/static/js/jsencrypt.min.js";
 const Base64 = require('js-base64').Base64;
+import {RSAencode} from '@/static/js/util.js';
 export default {
   data() {
     return {
@@ -34,7 +32,6 @@ export default {
       see: true,
       oldPassword: "",
       updatePasswordurl: "login/updatePassword/updatePassword?from=v",
-      username:"",
       loginCode:"",
       userOrgId:"",
     };
@@ -43,7 +40,6 @@ export default {
     console.log(this.userInfor)
     let _this=this;
     /* 获取当前用户登录信息 */
-    _this.username = _this.userInfor.userName;
     _this.loginCode = _this.userInfor.loginCode;
     _this.userOrgId = _this.userInfor.orgId;
   },
@@ -72,7 +68,7 @@ export default {
       let loginCode = _this.loginCode;
       let mdpassword = Base64.encode(_this.oldPassword);
       let data = {
-        loginCode: loginCode,
+        loginCode: RSAencode(loginCode),
         oldPwd: mdpassword
       };
       this.$http

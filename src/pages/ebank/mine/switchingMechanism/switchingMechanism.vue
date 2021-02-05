@@ -18,6 +18,7 @@
 </template>
 <script>
 import { mapGetters,mapActions } from "vuex";
+import {RSAencode} from '@/static/js/util.js';
 export default {
   data() {
     return {
@@ -48,7 +49,7 @@ export default {
     changeMechanism(orgid) {
       let _this = this;
       let data = {
-        loginCode: _this.userInfor.loginCode,
+        loginCode: RSAencode(_this.userInfor.loginCode),
         orgId: orgid,
       };
       this.$http

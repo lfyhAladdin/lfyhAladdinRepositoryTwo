@@ -40,7 +40,7 @@
   </view>
 </template>
 <script>
-import pageHead from "@/components/page-head.vue";
+import {RSAencode} from '@/static/js/util.js';
 export default {
   data() {
     return {
@@ -121,8 +121,8 @@ export default {
       let data = {
         userName: userName == undefined ? this.person.username : userName,
         // userName: userName =='' ? this.person.username : userName,
-        certNo: this.person.idcard,
-        userMobilephone: this.phoneFormdata.phoneNo,
+        certNo: RSAencode(this.person.idcard),
+        userMobilephone: RSAencode(this.phoneFormdata.phoneNo),
         vcode:this.phoneFormdata.verifyCode
       };
       yu.showLoading();

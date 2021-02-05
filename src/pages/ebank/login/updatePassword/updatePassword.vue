@@ -30,13 +30,9 @@
   </view>
 </template>
 <script>
-    import {
-        mapGetters,
-        mapActions
-    } from "vuex";
-    import pageHead from "@/components/page-head.vue";
-    import jsencrypt from "@/static/js/jsencrypt.min.js";
+    import {mapGetters,} from "vuex";
     const Base64 = require('js-base64').Base64;
+    import {RSAencode} from '@/static/js/util.js';
     export default {
         data() {
             return {
@@ -48,7 +44,6 @@
                 updateSucessUrl: "",
                 pageFrom: "",
                 hasOrginNum: false,
-                username: "",
                 logincode: "",
                 userOrgId: "",
             };
@@ -62,8 +57,6 @@
             this.hasOrginNum = option.hasOrginNum;
             console.log(this.userInfor);
             /* 获取当前用户登录信息 */
-            this.username = this.userInfor.userName;
-            // this.logincode = this.userInfor.loginCode;
             this.logincode = option.iphoneVal ? option.iphoneVal : this.userInfor.loginCode;
             console.log('修改密码');
             console.log(this.logincode)
@@ -120,7 +113,7 @@
                 let logincode = this.logincode;
                 let mdpassword = Base64.encode(this.newPasswordFirst);
                 let data = {
-                    loginCode: logincode,
+                    loginCode: RSAencode(logincode),
                     userPassword: mdpassword
                 };
                 this.$http

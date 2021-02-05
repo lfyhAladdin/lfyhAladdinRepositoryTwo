@@ -25,8 +25,9 @@
   </view>
 </template>
 <script>
-import { mapGetters,mapActions } from "vuex";
+import { mapGetters} from "vuex";
 import uLink from "@/components/uLink.vue";
+import {RSAdecode} from '@/static/js/util.js'
 export default {
   components: {
     uLink
@@ -72,7 +73,7 @@ export default {
   methods: {
     commitFun(){
       /* 获取当前用户登录信息 */
-      this.username = this.userInfor.userName;
+      this.username = RSAdecode(this.userInfor.userName);
       this.logincode = this.userInfor.logincode;
       this.orginlist=this.userInfor.organList;
       this.userOrgId = this.userInfor.orgId;
