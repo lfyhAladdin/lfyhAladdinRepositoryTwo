@@ -76,7 +76,7 @@
         <view class="contract-li">
           <view>身份证号</view>
           <view>
-            <text>{{personInfor.idcard}}</text>
+            <text>{{borrowerIdcard}}</text>
           </view>
         </view>
         <view class="contract-li-tips" v-for="(item,index) in personInfor.nameUsedList" :key="index">
@@ -144,7 +144,7 @@
         mapMutations
     } from 'vuex'
     import text from '../../../../component/text/text.vue';
-
+    import {RSAencode, RSAdecode} from '@/static/js/util.js';
     export default {
         components: {
             text
@@ -203,6 +203,7 @@
                 busiSerialNoVal: '', //业务流水号
                 busiStartDateVal: '', //业务日期
                 maturityDateyBoolean: true, //长期false 日历框true
+                borrowerIdcard:"",
             }
         },
         onLoad(option) {
@@ -573,7 +574,8 @@
                         // that.busiSerialNoVal = resData.imageBatchNo; //业务流水号
                         // that.busiStartDateVal = resData.imageUpLoadDate; //业务日期
                         that.personInfor.name = resData.customerName;
-                        that.personInfor.idcard = resData.certId;
+                        that.personInfor.idcard =resData.certId;
+                        that.borrowerIdcard=RSAdecode(resData.certId);
                         if (resData.gender == '1') {
                             that.personInfor.sex = '男'
                         } else if (resData.gender == '2') {
