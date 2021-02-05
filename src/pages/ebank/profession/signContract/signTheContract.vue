@@ -86,12 +86,12 @@
 				<view class="contract-ul">
 					<view class="contract-li">
 						<text>房屋预售合同号</text>
-						<input placeholder="请输入" type="text" class="iptcontract" v-model="houseContractNo" />
+						<input placeholder="请输入" type="text" class="iptcontract" v-model="houseContractNo" oncopy="return false"/>
 
 					</view>
                     <view class="contract-li">
 						<text>确认房屋预售合同号</text>
-						<input placeholder="再次输入房屋预售合同号" type="text" class="iptcontract" v-model="houseContractTwo" @blur="confirmInput"/>
+						<input placeholder="再次输入房屋预售合同号" type="text" class="iptcontract" v-model="houseContractTwo" onpaste="return false" oncut="return false" @blur="confirmInput"/>
 
 					</view>
 				</view>
@@ -186,7 +186,7 @@
                     title: "合同已签署",
                     id: "02"
                 }], //页签标题
-                coverAll:false, //底部框
+                coverAll:false, //一手房押品底部框
                 houseContractNo: "", //预售合同号
                 houseContractTwo: "", //确认预售合同号
                 twoHouseCollateral:false, //二手房押品底部弹框(补录押品信息)
@@ -322,6 +322,7 @@
                 warrantNumber: "", //权证号
                 certificateRegistration: "", //权证登记机关
                 preventResubmit: true, //防重复提交
+
             };
         },
         watch: {},
@@ -1136,6 +1137,7 @@
                     return false;
                 }
             },
+           
             //权证起始日期
              bindDateStart: function(e) {
                 console.log(e);
