@@ -72,6 +72,7 @@
         appEnv
     } from "@/config/app.config";
     import filter from "@/utils/filters";
+    import {RSAencode, RSAdecode} from '@/static/js/util.js';
     import {
         mapGetters,
         mapMutations,
@@ -111,6 +112,7 @@
             };
         },
         onLoad(res) {
+            console.log(res)
             this.loanQuerydictList();
             console.log(this.loanQueryDictionaryListObj)
             console.log(this.vouchTypeIdArr[this.productIndex].value)
@@ -228,7 +230,7 @@
 
             getList(res) {
                 let that = this;
-                that.partnerAccountNum = this.queryApplyInfoList.thirdPartyAccounts; //合作商账号
+                that.partnerAccountNum =RSAdecode(this.queryApplyInfoList.thirdPartyAccounts); //合作商账号
 
             },
             loanQuerydictList() {
@@ -331,7 +333,7 @@
                         projectID: that.projectID,
                         projectName: that.projectName,
                         subcrEditAggreement: "",
-                        thirdPartyAccounts: this.partnerAccountNum,
+                        thirdPartyAccounts:RSAencode(this.partnerAccountNum),
                         thirdPartyBailAc: this.accountListCode == undefined ? this.queryApplyInfoList.thirdPartyBailAc : this.accountListCode
                             .thirdPartyBailAc,
                         thirdPartyBailAcCH: this.accountListCode == undefined ? this.queryApplyInfoList.thirdPartyBailAcCH : this.accountListCode

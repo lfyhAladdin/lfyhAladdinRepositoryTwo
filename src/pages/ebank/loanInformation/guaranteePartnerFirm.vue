@@ -41,6 +41,7 @@
 
 <script>
     import filter from '@/utils/filters'; //格式化金额、证件号等
+    import {RSAencode, RSAdecode} from '@/static/js/util.js';
     import {
         mapGetters,
         mapMutations
@@ -82,7 +83,14 @@
                     console.log(res);
                     console.log(res)
                     this.accountList = res.data.data.accountList;
-                    console.log(this.accountList);
+                    this.accountList.forEach((item) => {
+                      item.accountNo=RSAdecode(item.accountNo);
+                });
+
+
+
+
+
                 },
                 function(err) {
                     console.log(err);

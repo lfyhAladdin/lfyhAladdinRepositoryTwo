@@ -65,6 +65,7 @@
         mapGetters,
         mapMutations
     } from "vuex";
+    import {RSAencode, RSAdecode} from '@/static/js/util.js';//加密解密
     export default {
         data: function() {
             return {
@@ -150,14 +151,15 @@
                 if(this.otherAccountNoData==null){
                     this.collectionAccountNumber="";
                 }else{
-                  this.collectionAccountNumber=this.otherAccountNoData;
+                    console.log(this.otherAccountNoData)
+                  this.collectionAccountNumber=RSAdecode(this.otherAccountNoData);
                 }
-                this.subAccountNo=this.otherAccountChNoData;
+                this.subAccountNo=RSAdecode(this.otherAccountChNoData);
                
                  if(this.otherOpenBankData==null){
                    this.bankNo="";
                 }else{
-                    this.bankNo=this.otherOpenBankData;
+                    this.bankNo=RSAdecode(this.otherOpenBankData);
                 }
                 if(this.otherOpenBankNameData==null){
                    this.bankName="";
@@ -236,11 +238,11 @@
                     // ]
                         "contractNo":this.contractNo,
                         "contractAmt":this.contractAmt,
-                        "otherAccountChNo": this.subAccountNo, //收款账号子序号
+                        "otherAccountChNo":RSAencode(this.subAccountNo), //收款账号子序号
                         "otherAccountName": this.payeeName, //对方账户名称
-                        "otherAccountNo": this.collectionAccountNumber, //对方账号
+                        "otherAccountNo":RSAencode(this.collectionAccountNumber), //对方账号
                         "otherAccountType": this.otherAccountType, //对方账户种类  1 本行账户 2 他行账户
-                        "otherOpenBank":this.bankNo, //对方开户行号
+                        "otherOpenBank":RSAencode(this.bankNo), //对方开户行号
                         "otherOpenBankName":this.bankName, //对方开户行名称
                         "payeeType": this.payeeType, //受托支付方式  1 手工支付 3 立即支付
                        

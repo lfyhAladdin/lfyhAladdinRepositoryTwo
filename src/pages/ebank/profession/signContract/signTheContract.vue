@@ -160,6 +160,7 @@
     import pfSearch from "../childModule/pfSearch.vue";
     import filter from "@/utils/filters";
     import uniLoadMore from "@/components/uni-load-more/uni-load-more.vue";
+    import {RSAencode, RSAdecode} from '@/static/js/util.js';//加密解密
     export default {
         components: {
             pfSearch,
@@ -617,7 +618,7 @@
                 }
             },
 
-            //业务品种、定价结果匹配
+            //业务品种、签署状态匹配
             businessVarieties(e) {
                 console.log(e, "和0000000000");
 
@@ -638,6 +639,8 @@
                     if (item.status == "01") {
                         item.status = "待签署";
                     }
+                    item.certID=RSAdecode(item.certID);
+                    item.phoneNo=RSAdecode(item.phoneNo);
                     // if (item.businessType == "1140010") {
                     //     item.businessType = "个人一手住房贷款";
                     // }

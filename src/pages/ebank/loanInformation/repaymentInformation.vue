@@ -69,6 +69,7 @@
 import { appEnv } from "@/config/app.config";
 import filter from "@/utils/filters";
 import { mapGetters, mapMutations,mapActions } from "vuex";
+import {RSAencode, RSAdecode} from '@/static/js/util.js';
 export default {
   data: function() {
     return {
@@ -111,7 +112,7 @@ export default {
    
     console.log(this.queryApplyInfoList,"贷款申请信息");
     that.isMadePayPlan = this.queryApplyInfoList.isMadePayPlan; //定制还款计划 1是 2否
-    that.deductionNumber=this.queryApplyInfoList.payAcctChNo;//扣款账号子序号
+    that.deductionNumber=RSAdecode(this.queryApplyInfoList.payAcctChNo);//扣款账号子序号
     that.deduction=this.queryApplyInfoList.payAcctNo;//扣款账号
     // this.productIndex=this.queryApplyInfoList.corpusPayMethod;//还款方式
     // that.applyNo=this.queryApplyInfoList.applyNo;//申请编号
@@ -254,7 +255,7 @@ console.log(1)
         accountInfo: [
           {
             payAcctNo: this.deduction,
-            payAcctChNo: this.deductionNumber,
+            payAcctChNo:RSAencode(this.deductionNumber),
             isLoanToSave: '2'
           }
         ]
