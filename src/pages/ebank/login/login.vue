@@ -88,6 +88,7 @@
 import { createNamespacedHelpers, mapGetters, mapActions, mapMutations } from "vuex";
 const { mapState } = createNamespacedHelpers("oauth");
 import iosrepair from "@/utils/mixins/iosrepair.js";
+import jsencrypt from "@/static/js/jsencrypt.min.js";
 import {RSAencode} from '@/static/js/util.js';
 export default {
   components: {},
@@ -203,7 +204,7 @@ export default {
           : "./static/images/eyecolse.svg";
     },
     // 密码登录
-    pwdLogin(e) {
+    pwdLogin() {
       if (!this.pwdFormdata.account) {
         yu.showToast({
           icon: "none",
