@@ -254,7 +254,7 @@ console.log(1)
         ],
         accountInfo: [
           {
-            payAcctNo: this.deduction,
+            payAcctNo: RSAencode(this.deduction),
             payAcctChNo:RSAencode(this.deductionNumber),
             isLoanToSave: '2'
           }

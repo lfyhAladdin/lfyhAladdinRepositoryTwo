@@ -129,12 +129,15 @@ export default {
     //if(ordinary != null && ordinary != undefined){
     this.title = localStorage.getItem("pagetitles");
     this.personInfor.name = localStorage.getItem("personnames");
-    this.personInfor.idcard = localStorage.getItem("personidcards");
+    this.personInforIdcard = localStorage.getItem("personidcards");
+    this.personInfor.idcard = RSAencode(localStorage.getItem("personidcards"));
     this.imgPath_zheng = localStorage.getItem("imgPath_zheng");
     this.imgPath_zheng_base64 = localStorage.getItem("imgPath_zheng_base64");
     this.imgPath_fan = localStorage.getItem("imgPath_fan");
     this.imgPath_fan_base64 = localStorage.getItem("imgPath_fan_base64");
-    this.personInforIdcard = RSAdecode(this.personInfor.idcard);
+    console.log("身份证编码："+this.personInfor.idcard)
+    console.log(this.personInforIdcard)
+
     //}
     //获取身份证信息end
     /***获取用户ID，部门ID */
@@ -175,11 +178,11 @@ export default {
       this.productName = options.productName === undefined ? this.productName : options.productName;
       this.personInfor.phone = options.phone === undefined ? "" : options.phone; //电话号
       this.personInfor.name = options.personName === undefined ? "" : options.personName; //用户名
-      this.personInfor.idcard = options.personIDcard === undefined ? "" : options.personIDcard; //用户身份证号
+      this.personInforIdcard = options.personIDcard === undefined ? "" : options.personIDcard; //用户身份证号
+      this.personInfor.idcard = RSAencode(this.personInforIdcard)
       if (this.buildingNo != "") {
         this.ifSearchResult = true;
       }
-      this.personInforIdcard = RSAdecode(this.personInfor.idcard);
     }
   },
   created() {
@@ -247,7 +250,7 @@ export default {
         "&personName=" +
         this.personInfor.name +
         "&personIDcard=" +
-        this.personInfor.idcard +
+        this.personInforIdcard +
         "&from=" +
         this.fromProduct;
       let newurl = this.searchlist + urlstr;
@@ -285,7 +288,7 @@ export default {
         certType: "Ind01",
         certId: this.personInfor.idcard,
         customerName: this.personInfor.name,
-        mobileTelephone: this.personInfor.phone,
+        mobileTelephone: RSAencode(this.personInfor.phone),
         businessType: this.productId,
         imageList: imglist
       };
@@ -514,7 +517,7 @@ export default {
 
           let e = {
             personnames: ret.payload.Name,
-            personidcards: ret.payload.IDCardNo,
+            personidcards: this.personInfor.idcard,
             imgPath_zheng: this.imgPath_zheng,
             imgPath_zheng_base64: this.imgPath_zheng_base64,
             fromProductTitle: this.title,
