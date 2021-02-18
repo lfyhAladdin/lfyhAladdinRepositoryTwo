@@ -118,6 +118,7 @@
 			if (JSON.stringify(this.personalInformation) != "{}") {
 				this.getPersonalData();
 			}
+			
 		},
 		onShow() {},
 		onUnload() {},
@@ -246,6 +247,10 @@
 									routerJumpWay: "pageJump",
 								}); //重新调'申请信息查询'接口
 							} else {
+								this.customerConcatList.forEach((item, index) => {
+									item.phoneNo=RSAdecode(item.phoneNo);
+									
+								});
 								yu.showToast({
 									title: '暂存成功！',
 									image: './static/images/perfectInformation/success.svg',
