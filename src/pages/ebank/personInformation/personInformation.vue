@@ -689,11 +689,6 @@ export default {
 		height: auto;
 	}
 
-	view {
-		font-size: 14px;
-		line-height: inherit;
-	}
-
 	.example {
 		padding: 0 15px 15px;
 	}

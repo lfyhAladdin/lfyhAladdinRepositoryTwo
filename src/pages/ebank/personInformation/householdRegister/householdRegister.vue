@@ -313,6 +313,7 @@
               return;
             }
             this.personInfor.name = ret.payload.Name;
+            this.personInforIdcard = ret.payload.IDCardNo;
             this.personInfor.idcard = RSAencode(ret.payload.IDCardNo);
             this.personInfor.sex = ret.payload.Gender;
             this.personInfor.ermanentAddress = ret.payload.Address; 
