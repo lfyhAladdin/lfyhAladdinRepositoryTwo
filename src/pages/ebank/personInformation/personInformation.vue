@@ -154,6 +154,7 @@ import uniSection from '@/components/uni-section/uni-section.vue';
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
 import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue';
 import { mapGetters, mapMutations,mapActions } from 'vuex'
+import {RSAdecode} from '@/static/js/util.js'
 
 export default {
 	components: { uniSection, uniSwipeAction, uniSwipeActionItem },
@@ -266,7 +267,7 @@ export default {
           item.pclass="共借人"
           this.sameApplyRelList.forEach((ite,idx) => {
             ite.pclass="共借人配偶"
-            if (item.certID === ite.relCertID) {
+            if (RSAdecode(item.certID) === RSAdecode(ite.relCertID)) {
               sameArr.push(item);
               sameArr.push(ite);
             }else{
@@ -291,7 +292,7 @@ export default {
           item.pclass="担保人"
           this.guarantyRelList.forEach((ite,idx) => {
             ite.pclass="担保人配偶"
-            if (item.certID === ite.relCertID) {
+            if (RSAdecode(item.certID) === RSAdecode(ite.relCertID)) {
               guarArr.push(item);
               guarArr.push(ite);
             }else{
