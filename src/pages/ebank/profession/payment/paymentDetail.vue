@@ -12,7 +12,7 @@
         </view>
         <view class="contract-li">
           <view>身份证号</view>
-          <view>{{paymentList.certId}}</view>
+          <view>{{paymentList.certId2}}</view>
         </view>
         <view class="contract-li">
           <view>业务品种</view>
@@ -61,6 +61,7 @@
 <script>
   import {mapGetters,mapActions} from 'vuex';
   import filter from '@/utils/filters';
+  import {RSAdecode} from '@/static/js/util.js'
   export default {
     components: {},
     data() {
@@ -70,6 +71,7 @@
         orgId: '',
         orderNoVal: '',
         contractNoVal: '',
+        certId2: '',  //身份证号码
       };
     },
     watch:{},
@@ -88,6 +90,7 @@
 
       this.orderNoVal = this.paymentList.orderNo;
       this.contractNoVal = this.paymentList.contractNo;
+      this.certId2 = RSAdecode(this.certId);
     },
     methods: {
       ...mapActions(["businessNumCommit"]),
