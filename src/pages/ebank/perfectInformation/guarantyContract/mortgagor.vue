@@ -17,7 +17,7 @@
                 <radio :checked="item.radioCheck"/>
               </view>
             </view>
-            <view>证件号码 {{item.certID}}</view>
+            <view>证件号码 {{item.certID2}}</view>
           </view>
         </view>
         <!-- <view class="guaranty-li">
@@ -40,7 +40,8 @@
   
 <script>
   import filter from '@/utils/filters';  //格式化金额、证件号等
-   import { mapGetters, mapMutations } from 'vuex';
+  import { mapGetters, mapMutations } from 'vuex';
+  import {RSAdecode} from '@/static/js/util.js'
   export default {
     components: {},
     data() {
@@ -77,7 +78,11 @@
             val.radioCheck = false;
           });
           // this.viceMortgagorList = JSON.parse(JSON.stringify(guarantorListArr));
-          this.viceMortgagorList = guarantorListArr.concat();
+          let listArr = guarantorListArr.concat();
+          listArr.forEach(item=>{
+            item.certID2 = RSAdecode(item.certID);
+          })
+          this.viceMortgagorList = listArr;
         }
       },
       viceMortgagorCheck(item,index){
