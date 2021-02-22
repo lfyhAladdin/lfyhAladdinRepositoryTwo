@@ -422,7 +422,7 @@ export default {
       const reg = /^1[3-9][0-9]\d{8}$/;
       if (reg.test(_this.phoneFormdata.phoneNo)) {
         let datas = {
-          mobiles: _this.phoneFormdata.phoneNo,
+          mobiles: RSAencode(_this.phoneFormdata.phoneNo),
           jiaoyigy: "601101",
           jiaoyijg: "GD0456",
           mobileIp: _this.mobileIpother,
