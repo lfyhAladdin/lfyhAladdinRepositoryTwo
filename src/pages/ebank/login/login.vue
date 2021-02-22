@@ -222,10 +222,11 @@ export default {
       }
       sessionStorage.setItem('userLoginCode',this.pwdFormdata.account);
       /* localStorage.setItem('userLoginPassword',this.pwdFormdata.password); */
+      let accountJM = this.encodePassword(this.pwdFormdata.account);
       let mdpassword = this.encodePassword(this.pwdFormdata.password);
       //let mdpassword = this.pwdFormdata.password;
       let data = {
-        username: this.pwdFormdata.account,
+        username: accountJM,
         password: mdpassword,
         grant_type: "password",
         passwordType: "2",
@@ -484,8 +485,9 @@ export default {
         });
       } else {
         sessionStorage.setItem('userLoginPhone',this.phoneFormdata.phoneNo);
+        let aphoneNoJM = this.encodePassword(this.phoneFormdata.phoneNo);
         let data = {
-          username: this.phoneFormdata.phoneNo,
+          username: aphoneNoJM,
           vcode: this.phoneFormdata.verifyCode,
           grant_type: "password",
           passwordType: "2",
