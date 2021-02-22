@@ -812,9 +812,10 @@
             });
             console.log(22222222)
             console.log(this.relatedPersonList)
+            console.log(personalInformation)
             if(this.relatedPersonList.length>1){
               this.relatedPersonList.forEach((item, index) => {
-                if(item.certID==personalInformation.relCertID){
+                if(RSAdecode(item.certID) == RSAdecode(personalInformation.relCertID)){
                   this.relatedPersonIdx=item.key
                 }
               });
