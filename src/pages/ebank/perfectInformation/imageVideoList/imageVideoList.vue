@@ -130,12 +130,12 @@ export default {
   },
   created(){
     this.fromID=localStorage.getItem('imgFromID');
-    let nameArr=["房产证、他项权证","放款账户信息","借款抵押合同信息","其他资料","放款通知书", "放款凭证", "其他贷后资料"];
+    /* let nameArr=["房产证、他项权证","放款账户信息","借款抵押合同信息","其他资料","放款通知书", "放款凭证", "其他贷后资料"];
     let resindex = nameArr.indexOf(this.fromID);
     if(resindex != -1){
       this.filePartName="LS_FKZL_P";
       this.modelCode="LS_FKZL";
-    }
+    } */
     this.title=localStorage.getItem('imgFromID');
     this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
     //获取当前申请信息的图片批次号  start
