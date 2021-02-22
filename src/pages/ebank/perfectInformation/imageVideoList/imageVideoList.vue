@@ -117,6 +117,9 @@ export default {
       ],//二级菜单参数
       paramBusiFileTypeList:[],//影响信息参数
       busiFileType:[],//编号  数据字典查询结果
+
+      filePartName:'LS_SQZL_P',//放款审核 出账后  值：LS_FKZL_P
+      modelCode:'LS_SQZL',//放款审核 出账后  值：LS_FKZL
     };
   },
   computed:{
@@ -127,6 +130,12 @@ export default {
   },
   created(){
     this.fromID=localStorage.getItem('imgFromID');
+    let nameArr=["房产证、他项权证","放款账户信息","借款抵押合同信息","其他资料","放款通知书", "放款凭证", "其他贷后资料"];
+    let resindex = nameArr.indexOf(this.fromID);
+    if(resindex != -1){
+      this.filePartName="LS_FKZL_P";
+      this.modelCode="LS_FKZL";
+    }
     this.title=localStorage.getItem('imgFromID');
     this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
     //获取当前申请信息的图片批次号  start
@@ -157,7 +166,6 @@ export default {
         localStorage.removeItem("imgFromID");
       }
     }
-
     _this.getListName();//获取影像信息菜单  比对
     
   },
@@ -209,8 +217,8 @@ export default {
         "busiSerialNo": imageBatchNo,
         "busiStartDate":busiStartDate,
         "busiFileTypeList":_this.paramBusiFileTypeList,
-        "filePartName": "LS_SQZL_P",
-        "modelCode": "LS_SQZL"
+        "filePartName": _this.filePartName,
+        "modelCode": _this.modelCode
       };
       _this.interfaceRequest(
         posturl,
@@ -339,8 +347,8 @@ export default {
         "busiSerialNo": _this.imageBatchNo,
         "busiStartDate": _this.imageUpLoadDate,
         "busiFileTypeList": busiFileTypeList,
-        "filePartName": "LS_SQZL_P",
-        "modelCode": "LS_SQZL",
+        "filePartName": _this.filePartName,
+        "modelCode": _this.modelCode,
         "uploadImageInVoList": [
           {
             "base64Code": base64Code,
@@ -382,8 +390,8 @@ export default {
         "busiSerialNo": _this.imageBatchNo,
         "busiStartDate": _this.imageUpLoadDate,
         "fileNameList": busiFileTypeList,
-        "filePartName": "LS_SQZL_P",
-        "modelCode": "LS_SQZL",
+        "filePartName": _this.filePartName,
+        "modelCode": _this.modelCode,
       };
        _this.interfaceRequest(
         postUrl,
