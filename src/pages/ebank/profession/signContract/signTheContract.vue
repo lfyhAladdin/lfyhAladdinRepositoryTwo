@@ -86,7 +86,7 @@
 				<view class="contract-ul">
 					<view class="contract-li">
 						<text>房屋预售合同号</text>
-						<input placeholder="请输入" type="text" id="houseContractID" class="iptcontract" v-model="houseContractNo" oncopy="return false"/>
+					<input placeholder="请输入" type="text" id="houseContractID" class="iptcontract" v-model="houseContractNo" oncopy="return false"/>
 
 					</view>
                     <view class="contract-li">
@@ -186,7 +186,7 @@
                     title: "合同已签署",
                     id: "02"
                 }], //页签标题
-                coverAll:false, //一手房押品底部框
+                coverAll:true, //一手房押品底部框
                 houseContractNo: "", //预售合同号
                 houseContractTwo: "", //确认预售合同号
                 twoHouseCollateral:false, //二手房押品底部弹框(补录押品信息)
@@ -392,6 +392,9 @@
                 houseNoID.addEventListener('contextmenu', function(e){
                     e.preventDefault();
 	 });
+            document.οncοntextmenu=new Function("event.returnValue=false"); 
+            document.onselectstart=new Function("event.returnValue=false"); 
+
             },
             //页签切换
             tabClick(e) {
@@ -1180,6 +1183,22 @@
 <style lang='scss'>
     @import "~@styles/uni-nvue.css";
    
+*{   
+    -webkit-touch-callout:none;  /*系统默认菜单被禁用*/   
+    -webkit-user-select:none; /*webkit浏览器*/   
+    -khtml-user-select:none; /*早期浏览器*/   
+    -moz-user-select:none;/*火狐*/   
+    -ms-user-select:none; /*IE10*/   
+    user-select:none;   
+} 
+
+
+    input, textarea{
+
+             -webkit-user-select:auto; /*webkit浏览器*/
+
+    }
+
     .uni-container {
         background-color: #ffffff;
         padding: 0 0 30rpx 0;
