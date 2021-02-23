@@ -135,7 +135,9 @@ export default {
     Vue.prototype.loginPostUrl= `${appEnv.appEnvironmentUrl}/yusp-uaa/`;
 
 
-
+    /**
+     * 图片压缩方法
+     */
     Vue.prototype.compressImages = function (file, type, callback) {
       let base64code = '';
       let quality = 0.1;//压缩比例
@@ -218,6 +220,46 @@ export default {
             // 不管是成功失败，都会执行
           });
       }
+    }
+    /**
+     * 埋点行为
+     * 参数：
+     * behaviorCode	行为码值（ald0001客户登录，ald0002客户退出，ald0003进件成功【节点提交】）
+     * applyNo		申请编号（添加进件成功传参）
+     * behaviorCode	行为码值（ald0001客户登录，ald0002客户退出，ald0003进件成功）
+     * businessSum	申请金额（添加进件成功传参）
+     * orgId		机构id
+     * userId		用户id
+     * userName	用户名
+     */
+    Vue.prototype.buryingBehavior=function(applyNo,behaviorCode,businessSum,orgId,userId,userName){
+      let data={
+        applyNo:applyNo,
+        behaviorCode:behaviorCode,
+        businessSum:businessSum,
+        orgId:orgId,
+        userId:userId,
+        userName:userName
+      }
+      this.$http.request({
+        url: appEnv.host + '/api/aldappcustomerbehavior/create',
+        header: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'custom-header': 'demo',
+          'Access-Control-Allow-Origin': '*'
+        },
+        method: 'post',
+        custom:{oauth:1},
+        changeOrigin: true,
+        data: data
+      }).then(
+        res => {
+          console.log('成功:'+res);
+        },
+        err => {
+          console.log('失败:'+err);
+        }
+      )
     }
   }
 

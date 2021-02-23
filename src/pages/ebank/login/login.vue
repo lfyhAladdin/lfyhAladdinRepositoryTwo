@@ -313,6 +313,7 @@ export default {
         yu.clearStorage();
         return;
       } else if (ifLoginApp.length == 1) {
+        this.buryingBehavior('','ald0001','',userInfos.orgId,userInfos.loginCode,userInfos.userName);
         //只有一个权限机构
         this.hasOrginNum = true;
         userInfos.orgId = ifLoginApp[0].orgId;

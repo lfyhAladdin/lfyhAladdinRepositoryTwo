@@ -314,6 +314,8 @@ export default {
             });
             return;
           }
+          let databusinessSum=that.queryApplyInfoList.businessSum;
+          that.buryingBehavior(that.applyNoVal,'ald0003',databusinessSum,that.userInfor.orgId,that.userInfor.loginCode,that.userInfor.userName);
           /* that.loaninvestigation(that.applyNoVal); */
           let userID = that.userInfor.loginCode;
           let orgID=that.userInfor.orgId;

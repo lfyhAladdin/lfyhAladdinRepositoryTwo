@@ -90,6 +90,7 @@ export default {
         content: "确定要退出登录",
         success: function(result) {
           if (result.confirm) {
+            _this.buryingBehavior('','ald0002','',_this.userOrgId,_this.userInfor.loginCode,_this.username);
             _this.$http
             .request({
               method: "post",
