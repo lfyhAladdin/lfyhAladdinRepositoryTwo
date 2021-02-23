@@ -222,11 +222,10 @@ export default {
       }
       sessionStorage.setItem('userLoginCode',this.pwdFormdata.account);
       /* localStorage.setItem('userLoginPassword',this.pwdFormdata.password); */
-      let accountJM = this.encodePassword(this.pwdFormdata.account);
       let mdpassword = this.encodePassword(this.pwdFormdata.password);
       //let mdpassword = this.pwdFormdata.password;
       let data = {
-        username: accountJM,
+        username: this.pwdFormdata.account,
         password: mdpassword,
         grant_type: "password",
         passwordType: "2",
