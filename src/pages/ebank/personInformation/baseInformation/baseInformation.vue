@@ -256,9 +256,9 @@
         uni.showModal({
           title: '确定返回吗？',
           content: '数据还未提交，点确定后编辑过的内容将不保存！',
-          success: function (res) {
+          success: (res) => {
             if (res.confirm) {
-              uni.navigateBack();
+              this.pageJump('personInformation/householdRegister/householdRegister?identity='+this.identity);
             } else if (res.cancel) {
               console.log('用户点击取消');
             }

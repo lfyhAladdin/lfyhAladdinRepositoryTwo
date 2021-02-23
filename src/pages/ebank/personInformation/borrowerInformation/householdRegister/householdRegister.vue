@@ -302,84 +302,71 @@
             // 调6.6接口，将图片存储到影像平台
             uploadbybacthid() {
                 let that = this;
-                //压缩图片base64code大小  start
-                let zhengcode='';
-                let fancode='';
-                let zhengbase64='data:image/jpeg;base64,' + that.IDFrontBase64;
-                let fanbase64='data:image/jpeg;base64,' + that.IDReverseBase64;
-                that.compressImages(zhengbase64,1,function(data){
-                    zhengcode=data;
-                }); 
-                that.compressImages(fanbase64,1,function(res){
-                    fancode=res;
-                    
-                    let data = {
-                        busiSerialNo: that.busiSerialNoVal, //业务流水号
-                        busiStartDate: that.busiStartDateVal, //业务日期
-                        busiFileTypeList: ['2012060101'],
-                        filePartName: 'LS_SQZL_P',
-                        modelCode: 'LS_SQZL',
-                        uploadImageInVoList: [{
-                            base64Code: zhengcode,
-                            frontBackFlag: '2',
-                            psnTp: that.psnTp,
-                            idNumber: that.personInfor.idcard
-                        }, {
-                            base64Code: fancode,
-                            frontBackFlag: '1',
-                            psnTp: that.psnTp,
-                            idNumber: that.personInfor.idcard
-                        }, ]
-                    }
-                    console.log(data);
-                    yu.showLoading();
-                    let posturl = "/api/imagehandle/uploadbynoanddate";
-                    that.interfaceRequest(posturl, data, "post", (res) => {
-                        yu.hideLoading();
-                        // alert('影像存储成功了');
-                        console.log('*********存储')
-                        console.log(res.data.data);
-                        that.deletelocalfileandfolder();
-                        if (that.isJump) {
-                            let data = {
-                                certType: 'Ind01',
-                                certId: that.personInfor.idcard,
-                                customerName: that.personInfor.name
-                            }
-                            that.personalInformationReplace(data);
-                            console.log(that.personInfor.ermanentAddress)
-                            if (that.personInfor.ermanentAddress == "") {
-                                yu.showModal({
-                                    title: "户籍地址不能为空！",
-                                    content: "请输入户籍地址",
-                                    showCancel: false,
-                                    confirmText: "我知道了",
-                                    success: res => {
-                                        if (res.confirm) {
-                                            console.log("用户点击确定");
-                                        }
-                                    }
-                                });
-                                return false;
-                            }
-                            that.pageJump('personInformation/borrowerInformation/baseInformation/baseInformation')
-                        } else {
-                            // alert('暂存成功！')
-                            yu.showToast({
-                                title: '暂存成功！',
-                                image: './static/images/perfectInformation/success.svg',
-                                duration: 2000
-                            });
+                let data = {
+                    busiSerialNo: that.busiSerialNoVal, //业务流水号
+                    busiStartDate: that.busiStartDateVal, //业务日期
+                    busiFileTypeList: ['2012060101'],
+                    filePartName: 'LS_SQZL_P',
+                    modelCode: 'LS_SQZL',
+                    uploadImageInVoList: [{
+                        base64Code: that.IDFrontBase64,
+                        frontBackFlag: '2',
+                        psnTp: that.psnTp,
+                        idNumber: that.personInfor.idcard
+                    }, {
+                        base64Code: that.IDReverseBase64,
+                        frontBackFlag: '1',
+                        psnTp: that.psnTp,
+                        idNumber: that.personInfor.idcard
+                    }, ]
+                }
+                console.log(data);
+                yu.showLoading();
+                let posturl = "/api/imagehandle/uploadbynoanddate";
+                that.interfaceRequest(posturl, data, "post", (res) => {
+                    yu.hideLoading();
+                    // alert('影像存储成功了');
+                    console.log('*********存储')
+                    console.log(res.data.data);
+                    that.deletelocalfileandfolder();
+                    if (that.isJump) {
+                        let data = {
+                            certType: 'Ind01',
+                            certId: that.personInfor.idcard,
+                            customerName: that.personInfor.name
                         }
-                    }, function(err) {
-                        yu.hideLoading();
-                        // alert('存储报错了！！');
-                        console.log('*********存储')
-                        console.log(err);
-                        that.pageJump('personInformation/personInformation')
-                    });
-                    }); 
-                //压缩图片base64code大小  end
+                        that.personalInformationReplace(data);
+                        console.log(that.personInfor.ermanentAddress)
+                        if (that.personInfor.ermanentAddress == "") {
+                            yu.showModal({
+                                title: "户籍地址不能为空！",
+                                content: "请输入户籍地址",
+                                showCancel: false,
+                                confirmText: "我知道了",
+                                success: res => {
+                                    if (res.confirm) {
+                                        console.log("用户点击确定");
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                        that.pageJump('personInformation/borrowerInformation/baseInformation/baseInformation')
+                    } else {
+                        // alert('暂存成功！')
+                        yu.showToast({
+                            title: '暂存成功！',
+                            image: './static/images/perfectInformation/success.svg',
+                            duration: 2000
+                        });
+                    }
+                }, function(err) {
+                    yu.hideLoading();
+                    // alert('存储报错了！！');
+                    console.log('*********存储')
+                    console.log(err);
+                    that.pageJump('personInformation/personInformation')
+                });
 
             },
             // 6.8接口 下载影像信息

@@ -228,7 +228,8 @@ export default {
       },
     //返回上一页
     navigateBack() {
-      uni.navigateBack();
+      // uni.navigateBack();
+      this.pageJump('personInformation/borrowerInformation/householdRegister/householdRegister')
     },
     //下拉列表
     familyStatusChange: function (e) {

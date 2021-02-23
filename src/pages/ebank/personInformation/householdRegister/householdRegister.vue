@@ -231,12 +231,12 @@
               certID: item.certID
             });
           });
-        break;
+          break;
         case '担保人':
           this.listName='guarantorList';
           this.psnTp='5';
         break;
-        case '担保人配偶':
+          case '担保人配偶':
           this.listName='guarantyRelList';
           this.psnTp='6';
           this.relatedPerson='担保人'
@@ -248,7 +248,7 @@
               certID: item.certID
             });
           });
-        break;
+          break;
         default:
           console.log('出错了！');
           break;
@@ -326,9 +326,15 @@
             },ret => {
               this.showToastFun('OCR路径转换失败');
             });
+            
             foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
-              this.IDFrontBase64 = entry.payload.imageBase64;
+              //压缩图片base64code大小  start
+              this.compressImages('data:image/jpeg;base64,'+ entry.payload.imageBase64 ,1,function(data){
+                this.IDFrontBase64=data;
+              });
+            //压缩图片base64code大小  end
             });
+
           }else{
             foxsdk.io.convertLocalFileSystemURL(ret.payload.ImagePath, url => {
               this.IDReversePath = url;
@@ -336,7 +342,11 @@
               this.showToastFun('OCR路径转换失败');
             });
             foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
-              this.IDReverseBase64 = entry.payload.imageBase64;
+              //压缩图片base64code大小  start
+              this.compressImages('data:image/jpeg;base64,'+ entry.payload.imageBase64 ,1,function(data){
+                this.IDReverseBase64=data;
+              });
+            //压缩图片base64code大小  end
             });
             let dateStringIndex = ret.payload.TermOfValidity.lastIndexOf("\-");
             let dateString = ret.payload.TermOfValidity;
@@ -356,74 +366,62 @@
       uploadbybacthid(){
         console.log(1111111);
         let _this=this;
-        //压缩图片base64code大小  start
-        let zhengcode='';
-        let fancode='';
-        let zhengbase64='data:image/jpeg;base64,' + _this.IDFrontBase64;
-        let fanbase64='data:image/jpeg;base64,' + _this.IDReverseBase64;
-        _this.compressImages(zhengbase64,1,function(data){
-          zhengcode=data;
-        }); 
-        _this.compressImages(fanbase64,1,function(res){
-          fancode=res;
-          let data={
-            busiSerialNo: _this.busiSerialNoVal,  //业务流水号
-            busiStartDate: _this.busiStartDateVal,  //业务日期
-            // batchId: this.batchId,
-            busiFileTypeList: ['2012060101'],
-            filePartName: 'LS_SQZL_P',
-            modelCode: 'LS_SQZL',
-            uploadImageInVoList: [
-              {
-                base64Code: zhengcode,
-                frontBackFlag: '2',
-                psnTp: _this.psnTp,
-                idNumber: _this.personInfor.idcard
-              },
-              {
-                base64Code: fancode,
-                frontBackFlag: '1',
-                psnTp: _this.psnTp,
-                idNumber: _this.personInfor.idcard
-              },
-            ]
-          }
-          console.log(data);
-          yu.showLoading();
-          let posturl="/api/imagehandle/uploadbynoanddate";
-          _this.interfaceRequest(posturl,data,"post",(res)=>{
-            yu.hideLoading();
-            console.log('*********存储')
-            console.log(res.data.data);
-            if(res.data.data.returnCode == 'Success'){
-              if(_this.isJump){
-                //this.pageJump('personInformation/baseInformation/baseInformation?identity='+this.identity);
-                _this.queryApplyInfo();
-              }else{
-                _this.queryApplyInfoNo();
-                yu.showToast({
-                  title: '暂存成功！',
-                  image: './static/images/perfectInformation/success.svg',
-                  duration: 2000
-                });
-              }
-            }else{
-              _this.showToastFun(res.data.data.returnDesc);
-            }
-          
-          },(err)=>{
-            yu.hideLoading();
-            console.log('*********存储')
-            console.log(err);
-            _this.showToastFun('6.6影像出现问题，请联系管理员');
-            setTimeout(()=>{
-              _this.pageJump('personInformation/personInformation')
-            },3100);
-            
-          });
-        }); 
-        //压缩图片base64code大小  end
         
+        let data={
+          busiSerialNo: _this.busiSerialNoVal,  //业务流水号
+          busiStartDate: _this.busiStartDateVal,  //业务日期
+          // batchId: this.batchId,
+          busiFileTypeList: ['2012060101'],
+          filePartName: 'LS_SQZL_P',
+          modelCode: 'LS_SQZL',
+          uploadImageInVoList: [
+            {
+              base64Code: this.IDFrontBase64,
+              frontBackFlag: '2',
+              psnTp: _this.psnTp,
+              idNumber: _this.personInfor.idcard
+            },
+            {
+              base64Code: this.IDReverseBase64,
+              frontBackFlag: '1',
+              psnTp: _this.psnTp,
+              idNumber: _this.personInfor.idcard
+            },
+          ]
+        }
+        console.log(data);
+        yu.showLoading();
+        let posturl="/api/imagehandle/uploadbynoanddate";
+        _this.interfaceRequest(posturl,data,"post",(res)=>{
+          yu.hideLoading();
+          console.log('*********存储')
+          console.log(res.data.data);
+          if(res.data.data.returnCode == 'Success'){
+            if(_this.isJump){
+              //this.pageJump('personInformation/baseInformation/baseInformation?identity='+this.identity);
+              _this.queryApplyInfo();
+            }else{
+              _this.queryApplyInfoNo();
+              yu.showToast({
+                title: '暂存成功！',
+                image: './static/images/perfectInformation/success.svg',
+                duration: 2000
+              });
+            }
+          }else{
+            _this.showToastFun(res.data.data.returnDesc);
+          }
+        
+        },(err)=>{
+          yu.hideLoading();
+          console.log('*********存储')
+          console.log(err);
+          _this.showToastFun('6.6影像出现问题，请联系管理员');
+          setTimeout(()=>{
+            _this.pageJump('personInformation/personInformation')
+          },3100);
+          
+        });
       },
       // 6.8接口 下载影像信息
       downloadbybatchid(){
