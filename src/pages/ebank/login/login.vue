@@ -89,7 +89,7 @@ import { createNamespacedHelpers, mapGetters, mapActions, mapMutations } from "v
 const { mapState } = createNamespacedHelpers("oauth");
 import iosrepair from "@/utils/mixins/iosrepair.js";
 import jsencrypt from "@/static/js/jsencrypt.min.js";
-import {RSAencode} from '@/static/js/util.js';
+import {RSAencode,RSAdecode} from '@/static/js/util.js';
 export default {
   components: {},
   mixins: [iosrepair],
@@ -313,7 +313,7 @@ export default {
         yu.clearStorage();
         return;
       } else if (ifLoginApp.length == 1) {
-        this.buryingBehavior('','ald0001','',userInfos.orgId,userInfos.loginCode,userInfos.userName);
+        this.buryingBehavior('','ald0001','',userInfos.orgId,userInfos.loginCode,RSAdecode(userInfos.userName));
         //只有一个权限机构
         this.hasOrginNum = true;
         userInfos.orgId = ifLoginApp[0].orgId;
