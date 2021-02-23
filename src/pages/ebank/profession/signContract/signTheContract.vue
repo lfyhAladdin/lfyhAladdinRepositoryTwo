@@ -86,12 +86,12 @@
 				<view class="contract-ul">
 					<view class="contract-li">
 						<text>房屋预售合同号</text>
-						<input placeholder="请输入" type="text" class="iptcontract" v-model="houseContractNo" oncopy="return false"/>
+						<input placeholder="请输入" type="text" id="houseContractID" class="iptcontract" v-model="houseContractNo" oncopy="return false"/>
 
 					</view>
                     <view class="contract-li">
 						<text>确认房屋预售合同号</text>
-						<input placeholder="再次输入房屋预售合同号" type="text" class="iptcontract" v-model="houseContractTwo" onpaste="return false" oncut="return false" @blur="confirmInput"/>
+						<input placeholder="再次输入房屋预售合同号" type="text" id="houseContractID" class="iptcontract" v-model="houseContractTwo" onpaste="return false" oncut="return false" @blur="confirmInput"/>
 
 					</view>
 				</view>
@@ -382,11 +382,17 @@
             this.GJGCRefreshFooter();
         },
         created() {
-            console.log(this.businessTypeList, 1711111111111111111111);
+            this.house();
         },
         methods: {
             ...mapMutations(["approvalIngListReplace", "signContractReplace"]),
             ...mapActions(["businessNumCommit"]),
+            house(){
+                let houseNoID=document.getElementById('houseContractID');   
+                houseNoID.addEventListener('contextmenu', function(e){
+                    e.preventDefault();
+	 });
+            },
             //页签切换
             tabClick(e) {
                 console.log(e);
@@ -1166,11 +1172,14 @@
                 day = day > 9 ? day : "0" + day;
                 return `${year}-${month}-${day}`;
             }
+            
         }
     };
+    
 </script>
 <style lang='scss'>
     @import "~@styles/uni-nvue.css";
+   
     .uni-container {
         background-color: #ffffff;
         padding: 0 0 30rpx 0;
@@ -1286,7 +1295,10 @@
                     }
                     .iptcontract {
                         text-align: right;
+                       
+
                     }
+
                     picker{
                         width: 60%;
                     }
@@ -1310,4 +1322,5 @@
             height: 1000rpx;
         }
     }
+
 </style>
