@@ -329,8 +329,8 @@
             
             foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
               //压缩图片base64code大小  start
-              this.compressImages('data:image/jpeg;base64,'+ entry.payload.imageBase64 ,1,function(data){
-                this.IDFrontBase64=data;
+              this.compressImages('data:image/jpeg;base64,'+ entry.payload.imageBase64 ,1,(data)=>{
+                this.IDFrontBase64 = data;
               });
             //压缩图片base64code大小  end
             });
@@ -343,8 +343,8 @@
             });
             foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
               //压缩图片base64code大小  start
-              this.compressImages('data:image/jpeg;base64,'+ entry.payload.imageBase64 ,1,function(data){
-                this.IDReverseBase64=data;
+              this.compressImages('data:image/jpeg;base64,'+ entry.payload.imageBase64 ,1,(data)=>{
+                this.IDReverseBase64 = data;
               });
             //压缩图片base64code大小  end
             });
@@ -365,11 +365,9 @@
       // 调6.6接口，将图片存储到影像平台
       uploadbybacthid(){
         console.log(1111111);
-        let _this=this;
-        
         let data={
-          busiSerialNo: _this.busiSerialNoVal,  //业务流水号
-          busiStartDate: _this.busiStartDateVal,  //业务日期
+          busiSerialNo: this.busiSerialNoVal,  //业务流水号
+          busiStartDate: this.busiStartDateVal,  //业务日期
           // batchId: this.batchId,
           busiFileTypeList: ['2012060101'],
           filePartName: 'LS_SQZL_P',
@@ -378,30 +376,30 @@
             {
               base64Code: this.IDFrontBase64,
               frontBackFlag: '2',
-              psnTp: _this.psnTp,
-              idNumber: _this.personInfor.idcard
+              psnTp: this.psnTp,
+              idNumber: this.personInfor.idcard
             },
             {
               base64Code: this.IDReverseBase64,
               frontBackFlag: '1',
-              psnTp: _this.psnTp,
-              idNumber: _this.personInfor.idcard
+              psnTp: this.psnTp,
+              idNumber: this.personInfor.idcard
             },
           ]
         }
         console.log(data);
         yu.showLoading();
         let posturl="/api/imagehandle/uploadbynoanddate";
-        _this.interfaceRequest(posturl,data,"post",(res)=>{
+        this.interfaceRequest(posturl,data,"post",(res)=>{
           yu.hideLoading();
           console.log('*********存储')
           console.log(res.data.data);
           if(res.data.data.returnCode == 'Success'){
-            if(_this.isJump){
+            if(this.isJump){
               //this.pageJump('personInformation/baseInformation/baseInformation?identity='+this.identity);
-              _this.queryApplyInfo();
+              this.queryApplyInfo();
             }else{
-              _this.queryApplyInfoNo();
+              this.queryApplyInfoNo();
               yu.showToast({
                 title: '暂存成功！',
                 image: './static/images/perfectInformation/success.svg',
@@ -409,16 +407,16 @@
               });
             }
           }else{
-            _this.showToastFun(res.data.data.returnDesc);
+            this.showToastFun(res.data.data.returnDesc);
           }
         
         },(err)=>{
           yu.hideLoading();
           console.log('*********存储')
           console.log(err);
-          _this.showToastFun('6.6影像出现问题，请联系管理员');
+          this.showToastFun('6.6影像出现问题，请联系管理员');
           setTimeout(()=>{
-            _this.pageJump('personInformation/personInformation')
+            this.pageJump('personInformation/personInformation')
           },3100);
           
         });
@@ -542,6 +540,7 @@
         //   this.showToastFun('请上传完整的身份证信息');
         //   return;
         // };
+        console.log(this.IDFrontBase64)
         if(isJump){
           if(this.personInfor.idcard == ''){
             this.showToastFun('请上传完整的身份证信息');
@@ -659,10 +658,15 @@
               }
               this.personalInformationReplace(dataVal);
             }
-            if(this.IDFrontBase64=='' && this.IDReverseBase64==''){
-              if(this.isJump){
-                // this.pageJump('personInformation/baseInformation/baseInformation?identity='+this.identity);
-                this.queryApplyInfo();
+            if(this.isJump){
+              if(this.IDFrontBase64 !='' && this.IDReverseBase64 !=''){
+                this.uploadbybacthid();
+              }else{
+                this.showToastFun('身份证信息获取失败，请重试');
+              }
+            }else{
+              if(this.IDFrontBase64 !='' && this.IDReverseBase64 !=''){
+                this.uploadbybacthid();
               }else{
                 this.queryApplyInfoNo();
                 yu.showToast({
@@ -671,8 +675,7 @@
                   duration: 2000
                 });
               }
-            }else if(this.IDFrontBase64!='' && this.IDReverseBase64!=''){
-              this.uploadbybacthid();
+              
             }
           }else{
             this.showToastFun(resArr.returnDesc);
@@ -726,10 +729,15 @@
               }
               this.personalInformationReplace(dataVal);
             }
-            if(this.IDFrontBase64=='' && this.IDReverseBase64==''){
-              if(this.isJump){
-                // this.pageJump('personInformation/baseInformation/baseInformation?identity='+this.identity)
-                this.queryApplyInfo();
+            if(this.isJump){
+              if(this.IDFrontBase64!='' && this.IDReverseBase64!=''){
+                this.updatebyfilename();
+              }else{
+                this.showToastFun('身份证信息获取失败，请重试');
+              }
+            }else{
+              if(this.IDFrontBase64!='' && this.IDReverseBase64!=''){
+                this.updatebyfilename();
               }else{
                 this.queryApplyInfoNo();
                 yu.showToast({
@@ -738,8 +746,6 @@
                   duration: 2000
                 });
               }
-            }else if(this.IDFrontBase64!='' && this.IDReverseBase64!=''){
-              this.updatebyfilename();
             }
           }else{
             this.showToastFun(resArr.returnDesc);

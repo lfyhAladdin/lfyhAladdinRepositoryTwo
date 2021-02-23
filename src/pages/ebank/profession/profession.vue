@@ -1,9 +1,9 @@
 <template>
-  <view :class="phoneSystem ?'uni-container' : 'uni-container contract-button-an'">
+  <view class="professBox">
     <view :class="phoneSystem ?'pf-title pf-title-ios':'pf-title'">
       <text>业务</text>
     </view>
-    <view class="pf-content">
+    <view :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="pf-module" v-for="item in ulList" :key="item.ulId">
         <view class="pf-ulTitle">{{item.ulTitle}}</view>
         <view class="pf-ul">
@@ -229,11 +229,13 @@
 
 <style lang='scss'>
   @import '~@styles/uni-nvue.css';
-  .uni-container{
+  .professBox{
     background-color: #FFFFFF;
+    padding: 0 30rpx;
   }
-  .pf-content{
-    padding-top: 50rpx;
+  .pf-content,
+  .pf-content-ios{
+    // padding-top: 50rpx;
     .pf-module{
       margin: 26rpx 0;
       .pf-ulTitle{
@@ -287,6 +289,9 @@
           border-bottom: 0;
         }
       }
+    }
+    .pf-module:last-of-type{
+      margin: 26rpx 0 0;
     }
   }
 </style>

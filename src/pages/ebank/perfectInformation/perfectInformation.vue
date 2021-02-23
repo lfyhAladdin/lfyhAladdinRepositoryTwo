@@ -5,7 +5,7 @@
       <text>{{title}}</text>
       <img src="@/static/images/firstroom/share.svg" @click="showShareFunction" class="ch-share">
     </view>
-    <view class="pf-content information-content">
+    <view :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="pinformations">
         <view class="pinformation-one">
           <view class="pinformation"  @click="goDetailPage(personInformation,false)">

@@ -97,7 +97,15 @@
 }
   //间隔头部标题
 .pf-content{
-  padding-top: 70rpx;
+  // padding-top: 70rpx;
+  padding-top: calc(var(--window-top) + 30rpx);
+  padding-bottom: calc(var(--window-bottom) + 30rpx);
+}
+.pf-content-ios{
+  padding-top: calc(constant(safe-area-inset-top) + 30rpx);
+  padding-top: calc(env(safe-area-inset-top) + 30rpx);
+  padding-bottom: calc(constant(safe-area-inset-bottom) + 20rpx);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 20rpx);
 }
 //头部两个固定定位时
 .pf-poifixed{

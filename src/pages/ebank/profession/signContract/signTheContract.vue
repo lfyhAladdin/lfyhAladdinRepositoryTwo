@@ -186,7 +186,7 @@
                     title: "合同已签署",
                     id: "02"
                 }], //页签标题
-                coverAll:true, //一手房押品底部框
+                coverAll:false, //一手房押品底部框
                 houseContractNo: "", //预售合同号
                 houseContractTwo: "", //确认预售合同号
                 twoHouseCollateral:false, //二手房押品底部弹框(补录押品信息)

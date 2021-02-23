@@ -73,6 +73,9 @@ export default {
           console.log(res)
           if(res.data.data.returnCode == "Failed"){
             this.showToastFun(res.data.data.returnDesc);
+            setTimeout(()=>{
+              this.backpf();
+            },3000)
             return;
           }
           this.dataObj = res.data.data;

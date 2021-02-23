@@ -26,7 +26,7 @@
         </scroll-view>
       </view>
     </view>
-    <view class="pf-content appro-content"> 
+    <view :class="phoneSystem ?'appro-content-ios':'appro-content'"> 
       <!--tab页签内容-->
       <view class="tab-ul">
         <view class="tab-li" v-for="item in tabArr[applyPhase]" :key="item.serialNo" @click="toPerfectInformation(item)">
@@ -521,11 +521,17 @@
   .uni-container{
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;
-    .appro-content{
-      padding-top: 200rpx;
+    .appro-content,
+    .appro-content-ios{
+      // padding-top: 200rpx;
+      padding-top: calc(var(--window-top) + 130rpx);
       .tab-ul{
         padding: 24rpx 30rpx;
       }
+    }
+    .appro-content-ios{
+      padding-top: calc(constant(safe-area-inset-top) + 130rpx);
+      padding-top: calc(env(safe-area-inset-top) + 130rpx);
     }
     //不出现滚动条
     ::-webkit-scrollbar {
