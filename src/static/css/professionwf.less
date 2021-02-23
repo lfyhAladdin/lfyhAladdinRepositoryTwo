@@ -12,7 +12,8 @@
   right: 0;
   background: #fff;
   // padding: 50rpx 0 20rpx 0;
-  padding-top: 70rpx;
+  // padding-top: 70rpx;
+  padding-top: var(--window-top);
   padding-bottom: 20rpx;
   z-index: 9999;
   overflow: hidden;
@@ -25,7 +26,7 @@
   img{
     width: 20rpx;
     position: absolute;
-    top: 50rpx;
+    top: var(--window-top);
     left: 0;
     bottom: 30rpx;
     padding: 20rpx 30rpx;
@@ -397,5 +398,6 @@
   }
 }
 .contract-button-an{
-  padding-bottom: 70rpx !important;
+  // padding-bottom: 70rpx !important;
+  padding-bottom: var(--window-bottom) !important;
 }
