@@ -18,7 +18,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view class="pf-content household-content">
+    <view :class="phoneSystem ?'pf-content-ios household-content-ios':'pf-content household-content'">
       <!--影像信息-start-->
       <view class="form-title">
         <view class="vLine"></view>影像信息
@@ -239,7 +239,19 @@
             ...mapMutations(["personalInformationReplace"]),
             //返回上一页
             navigateBack() {
-                uni.navigateBack();
+                // uni.navigateBack();
+                yu.showModal({
+                    title: '确定返回吗？',
+                    content: '数据还未提交，点确定后编辑过的内容将不保存！',
+                    success: (res)=> {
+                        if (res.confirm) {
+                        // uni.navigateBack();
+                        this.pageJump('personInformation/personInformation')
+                        } else if (res.cancel) {
+                        console.log('用户点击取消');
+                        }
+                    }
+                });
             },
             //下拉列表
             bindDateChange: function(e) {
@@ -631,8 +643,9 @@
         background-color: #f6f8f9;
         padding-top: 0;
         padding-bottom: 30rpx;
-        .household-content {
-            padding-top: 270rpx;
+        .household-content,
+        .household-content-ios {
+            padding-top: calc(var(--window-top) + 160rpx);
             .form-title {
                 height: 94rpx;
                 line-height: 94rpx;
@@ -732,6 +745,10 @@
                     }
                 }
             }
+        }
+        .household-content-ios{
+            padding-top: calc(constant(safe-area-inset-top) + 160rpx);
+            padding-top: calc(env(safe-area-inset-top) + 160rpx);
         }
     }
     

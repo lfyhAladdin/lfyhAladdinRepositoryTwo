@@ -4,7 +4,7 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{identity}}</text>
     </view>
-    <view class="customize-content-form">
+    <view class="customize-content-form" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="person-infor">
         <view class="person-infor-one">
           <text>姓名</text>
@@ -250,7 +250,7 @@ uni-page-body:after {
     width: 100%;
     // height: 100%;
     // padding-top: 170rpx;
-    padding-top: 100rpx;
+    // padding-top: 100rpx;
     .person-infor {
       margin-top: 24rpx;
       background: #ffffff;

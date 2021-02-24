@@ -5,7 +5,7 @@
       <text>押品信息</text>
       <text class="pf-text" @click="updateApplyInfo('TS')">暂存</text>
     </view>
-    <view class="pf-content collateral-content">
+    <view class="collateral-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="contract-ul">
         <view class="contract-li">
           <view class="beforeRed">押品类型</view>

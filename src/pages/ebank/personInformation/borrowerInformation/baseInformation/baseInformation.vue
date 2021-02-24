@@ -18,7 +18,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view class="pf-content baseIn-content">
+    <view :class="phoneSystem ?'pf-content-ios baseIn-content-ios':'pf-content baseIn-content'">
       <!--个人信息-start-->
       <view class="contract-ul marginT25">
         <view class="contract-li-tips">
@@ -628,9 +628,13 @@ export default {
   .uni-container{
     background-color: #f6f8f9;
     padding: 0 0 30rpx 0;
-    .baseIn-content{
-      padding-top: 270rpx;
-    
+    .baseIn-content,
+    .baseIn-content-ios{
+      padding-top: calc(var(--window-top) + 160rpx);
+    }
+    .baseIn-content-ios{
+      padding-top: calc(constant(safe-area-inset-top) + 160rpx);
+      padding-top: calc(env(safe-area-inset-top) + 160rpx);
     }
   }
   .marginT25{

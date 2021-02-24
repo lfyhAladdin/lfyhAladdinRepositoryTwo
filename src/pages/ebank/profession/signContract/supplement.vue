@@ -1,12 +1,12 @@
 <template>
   <view class="pending-order">
-  <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{HouseTitle}}</text></view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{HouseTitle}}</text>
     </view>
   
  <!--个人信息-start-->
-      <view class="person-infor">
+      <view class="person-infor" :class="phoneSystem ?'pf-content-ios':'pf-content'">
         <view class="person-infor-one">
           <text class="required">对方账户种类</text>
           <button class="mini-btn" :class="{'active' : 0 == current}" @click="accountType(0)" type="default" size="mini">行内</button>
@@ -42,17 +42,14 @@
           <img v-if="bankName!=''" class="cleanUp" src="@/static/images/firstroom/cleanUp.svg" @click="bankName=''" />
           <input placeholder="请输入" type="text" class="loan-amount" v-model="bankName"/>
         </view>
-     
+        <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+            <button type="primary" @click="submitform()">保存</button>
+        </view>
 
       </view>
      
 
       <!--个人信息-end-->
-     <view class="next-step" @tap="submitform()">
-        <view class="cbutton">
-          <text>保存</text>
-        </view>
-      </view>
 
   </view>
 </template>
@@ -318,46 +315,6 @@ if(res.data.data.returnCode=="Failed"){
         background: #ffffff !important;
         width: 100%;
         height: 100%;
-    }
-    
-    .customize-head {
-        padding: 116rpx 56rpx 16rpx 36rpx;
-        height: 50rpx;
-        line-height: 50rpx;
-        background: #ffffff;
-        display: flex;
-        vertical-align: middle;
-        align-items: center;
-        position: relative;
-        .ch-img {
-            width: 20rpx;
-            height: 36rpx;
-            img {
-                width: 20rpx;
-                height: 36rpx;
-            }
-        }
-        .ch-title {
-            font-size: 36rpx;
-            height: 50rpx;
-            line-height: 50rpx;
-            margin: 0 auto;
-            text-align: center;
-            color: #333333;
-        }
-        .ch-share {
-            width: 34rpx;
-            height: 34rpx;
-            position: absolute;
-            top: 50%;
-            right: 36rpx;
-            margin-top: -17rpx;
-            margin-right: -17rpx;
-            img {
-                width: 34rpx;
-                height: 34rpx;
-            }
-        }
     }
     
     .person-infor {

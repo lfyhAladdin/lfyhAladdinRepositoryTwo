@@ -9,7 +9,7 @@
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
-    <view class="pf-content contract-content">
+    <view class="contract-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="contract-title">
         <text class="contract-title-text"></text>
         <text>担保合同信息</text>
@@ -424,7 +424,7 @@
   .uni-container{
     padding: 0 0 30rpx 0;
     .contract-content{
-      padding-top: 130rpx;
+      // padding-top: 130rpx;
       .contract-title{
         padding: 30rpx 40rpx;
         line-height: 32rpx;

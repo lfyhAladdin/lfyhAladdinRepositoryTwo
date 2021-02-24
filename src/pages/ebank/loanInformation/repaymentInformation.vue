@@ -406,7 +406,7 @@ ul li {
 }
 .person-infor,
 .person-infor-ios {
-  padding-top: calc(var(--window-top) + 100rpx);
+  padding-top: calc(var(--window-top) + 120rpx);
   background: #ffffff;
   padding-left: 30rpx;
   .person-infor-one {
@@ -492,8 +492,8 @@ ul li {
   }
 }
 .person-infor-ios{
-    padding-top: calc(constant(safe-area-inset-top) + 100rpx);
-    padding-top: calc(env(safe-area-inset-top) + 100rpx);
+    padding-top: calc(constant(safe-area-inset-top) + 120rpx);
+    padding-top: calc(env(safe-area-inset-top) + 120rpx);
 }
 
 .active {

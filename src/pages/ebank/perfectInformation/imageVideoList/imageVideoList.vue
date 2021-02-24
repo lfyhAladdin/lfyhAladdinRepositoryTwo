@@ -4,7 +4,7 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
-    <view class="pf-content image-list-con">
+    <view class="image-list-con" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="image-information" v-for="(item,index) in imagelists" :key="index">
         <view class="title" v-if="item.busiFileTypeName != 'undefined'" ><text class="title-line"></text><text>{{item.busiFileTypeName}}</text></view>
         <view class="image-list">
@@ -446,7 +446,7 @@ uni-page-body{
   height: 100%;
 }
 .image-list-con{
-  margin-top: 135rpx;
+  // margin-top: 135rpx;
   background: #f6f8f9 !important;
   .image-information {
     background: #f6f8f9;

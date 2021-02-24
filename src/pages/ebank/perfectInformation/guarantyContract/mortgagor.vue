@@ -5,7 +5,7 @@
       <text>选择抵押人</text>
       <text class="pf-text" @click="backContract">确定</text>
     </view>
-    <view class="pf-content mortgagor-content">
+    <view class="mortgagor-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="guaranty-ul">
         <view class="mortgagor-title">其他担保人</view>
         <view class="guaranty-li" v-for="(item,index) in viceMortgagorList" :key="item.certId">

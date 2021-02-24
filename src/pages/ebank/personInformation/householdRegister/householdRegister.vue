@@ -17,7 +17,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view class="pf-content household-content">
+    <view :class="phoneSystem ?'pf-content-ios household-content-ios':'pf-content household-content'">
       <!--影像信息-start-->
       <view class="form-title">
         <view class="vLine"></view>影像信息
@@ -873,8 +873,9 @@
     background-color: #f6f8f9;
     padding-top: 0;  
     padding-bottom: 30rpx;
-    .household-content{
-      padding-top: 270rpx;
+    .household-content,
+    .household-content-ios{
+      padding-top: calc(var(--window-top) + 160rpx);
       .form-title{
         height: 94rpx;
         line-height: 94rpx;
@@ -976,6 +977,10 @@
           }
         }
       }
+    }
+    .household-content-ios{
+      padding-top: calc(constant(safe-area-inset-top) + 160rpx);
+      padding-top: calc(env(safe-area-inset-top) + 160rpx);
     }
   }
   .marginT25{

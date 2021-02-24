@@ -4,7 +4,7 @@
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
-    <view class="pf-content guaranty-content">
+    <view class="guaranty-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="guaranty-add" @click="addContract()">
         <img src="@/static/images/perfectInformation/add.svg">
         <text>新增担保合同</text>
@@ -105,7 +105,9 @@
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;
     .guaranty-content{
-      padding: 120rpx 30rpx 0;
+      // padding: 120rpx 30rpx 0;
+      padding-left: 30rpx;
+      padding-right: 30rpx;
       .guaranty-add{  
         background: #FFFFFF;
         box-shadow: 0 0 28rpx 0 rgba(0, 0, 0, 0.11);

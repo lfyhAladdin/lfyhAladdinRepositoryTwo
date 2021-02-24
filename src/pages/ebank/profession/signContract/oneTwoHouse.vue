@@ -1,12 +1,12 @@
 <template>
   <view class="pending-order">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{HouseTitle}}</text></view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{HouseTitle}}</text>
     </view>
 
  <!--个人信息-start-->
-      <view class="person-infor">
+      <view class="person-infor" :class="phoneSystem ?'pf-content-ios':'pf-content'">
        
         <view class="person-infor-one">
           <text>借款人</text>
@@ -28,9 +28,6 @@
           <text>审批通过时间</text>
          <input placeholder="审批通过时间" type="text" disabled="disabled" v-model="occurDate" />
         </view>
-      </view>
-     
-
         <view class="pf-ul" @click="getSupplement" v-show="payInfo">
           <view class="pf-li">
             <view class="pf-li-left">
@@ -43,6 +40,11 @@
             </view>
           </view>
         </view>
+         <!--个人信息-end-->
+        <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+            <button type="primary" @click="submitform()">提交</button>
+        </view>
+      </view>
         <!-- <view class="pf-ul" v-show="supplementInfo" @click="getImgInfo">
           <view class="pf-li">
             <view class="pf-li-left">
@@ -55,20 +57,6 @@
             </view>
           </view>
         </view> -->
-
-
-
-      <!--个人信息-end-->
-      <view class="" @tap="submitform()">    
-        <view class="cbutton">
-          <text>提交</text>
-        </view>
-      </view>
-
-
-
-
-
   </view>
 </template>
 <script>
@@ -271,36 +259,10 @@
         width: 100%;
         height: 100%;
     }
-    
-    .customize-head {
-        padding: 51rpx 56rpx 16rpx 36rpx;
-        height: 50rpx;
-        line-height: 50rpx;
-        background: #ffffff;
-        display: flex;
-        vertical-align: middle;
-        align-items: center;
-        position: relative;
-        .ch-img {
-            width: 20rpx;
-            height: 36rpx;
-            img {
-                width: 20rpx;
-                height: 36rpx;
-            }
-        }
-        .ch-title {
-            font-size: 36rpx;
-            height: 50rpx;
-            line-height: 50rpx;
-            margin: 0 auto;
-            text-align: center;
-            color: #333333;
-        }
-    }
+
     
     .person-infor {
-        margin-top: 24rpx;
+        // margin-top: 24rpx;
         background: #ffffff;
         padding-left: 30rpx;
         .person-infor-one {
@@ -341,27 +303,6 @@
                 margin-right: -7.5rpx;
             }
         }
-    }
-    
-    .cbutton {
-        width: 620rpx;
-        padding: 0;
-        margin: 41rpx auto 190rpx auto;
-        font-size: 36rpx;
-        color: #edf6fe;
-        height: 100rpx;
-        line-height: 100rpx;
-        border-radius: 50rpx;
-        background: #3b86f7;
-        border: 0rpx;
-        text-align: center;
-        box-shadow: 0rpx 10rpx 23rpx 0rpx rgba(#3b86f7, 0.4);
-    }
-    
-    .cbutton:after {
-        display: block;
-        content: "";
-        clear: both;
     }
     
     .pf-ul {

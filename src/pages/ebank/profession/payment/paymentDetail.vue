@@ -4,7 +4,7 @@
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>发放支付</text>
     </view>
-    <view class="pf-content">
+    <view :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="contract-ul">
         <view class="contract-li">
           <view>借款人</view>

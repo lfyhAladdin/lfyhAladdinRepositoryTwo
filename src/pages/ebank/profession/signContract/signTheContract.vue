@@ -18,9 +18,7 @@
                 </view>
             </view>
         </view>
-		<view class="pf-content appro-content">
-
-
+		<view :class="phoneSystem ?'pf-content-ios appro-content-ios':'pf-content appro-content'"> 
 			<!--tab页签内容-->
 			<view class="tab-ul">
 				<view class="tab-li" v-for="item in tabArr[applyPhase]" :key="item.applyNo">
@@ -1202,11 +1200,16 @@
     .uni-container {
         background-color: #ffffff;
         padding: 0 0 30rpx 0;
-        .appro-content {
-            padding-top: 228rpx;
+        .appro-content,
+        .appro-content-ios {
+            padding-top: calc(var(--window-top) + 130rpx);
             .tab-ul {
                 padding: 24rpx 30rpx;
             }
+        }
+        .appro-content-ios{
+            padding-top: calc(constant(safe-area-inset-top) + 130rpx);
+            padding-top: calc(env(safe-area-inset-top) + 130rpx);
         }
         .pf-poifixed {
             .appro-fix {

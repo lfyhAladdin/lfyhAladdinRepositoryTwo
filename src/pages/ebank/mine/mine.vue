@@ -1,10 +1,10 @@
 <template>
   <view class="uni-container">
     <view :class="phoneSystem ?'pf-title pf-title-ios':'pf-title'">
-      <!--<text>我的</text>-->
-      <text></text>
+      <text>我的</text>
+      <!--<text></text>-->
     </view>
-    <view class="mine-title">
+    <view class="mine-title" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="mine-title-avatar"><img :src=useravatar /></view>
       <view class="mine-title-content">
         <view class="mineName"><text class="user-name">{{username}}</text><text class="user-position">{{position}}</text></view>
@@ -161,7 +161,7 @@ uni-page-body {
     color: #ffffff;
   }
   .mine-title {
-    padding-top: 74rpx;
+    // padding-top: 74rpx;
     padding-left: 47rpx;
     margin-bottom: 57rpx;
     .mine-title-avatar {

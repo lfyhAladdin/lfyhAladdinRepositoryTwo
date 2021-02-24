@@ -17,7 +17,7 @@
       </view>
       <text class="pf-text" @click="genciesSearch">搜索</text>
     </view>
-    <view class="pf-content gencies-content">
+    <view class="gencies-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="gencies-ul">
         <view class="gencies-li" v-for="item in genciesList" :key="item.orgID" @click="toCollateral(item)">
           <view>{{item.orgName}}</view>

@@ -4,7 +4,7 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{identity}}</text>
     </view>
-    <view class="customize-content-form">
+    <view class="customize-content-form" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="person-infor">
         <view class="person-infor-one">
           <text>新登陆密码</text>
@@ -217,7 +217,7 @@
             background: #f6f8f9 !important;
             width: 100%;
             height: 100%;
-            padding-top: 130rpx;
+            // padding-top: 130rpx;
             .person-infor {
                 margin-top: 24rpx;
                 background: #ffffff;
