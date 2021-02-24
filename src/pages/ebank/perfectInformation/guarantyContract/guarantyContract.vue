@@ -4,7 +4,7 @@
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
-    <view class="guaranty-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view :class="phoneSystem ?'pf-content-ios guaranty-content-ios':'pf-content guaranty-content'">
       <view class="guaranty-add" @click="addContract()">
         <img src="@/static/images/perfectInformation/add.svg">
         <text>新增担保合同</text>
@@ -104,8 +104,10 @@
   .uni-container{
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;
-    .guaranty-content{
+    .guaranty-content,
+    .guaranty-content-ios{
       // padding: 120rpx 30rpx 0;
+      padding-top: calc(var(--window-top) + 40rpx);
       padding-left: 30rpx;
       padding-right: 30rpx;
       .guaranty-add{  
@@ -126,6 +128,10 @@
           color: #333435;
         }
       }
+    }
+    .guaranty-content-ios{
+      padding-top: calc(constant(safe-area-inset-top) + 40rpx);
+      padding-top: calc(env(safe-area-inset-top) + 40rpx);
     }
   }
 

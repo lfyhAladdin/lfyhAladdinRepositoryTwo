@@ -9,7 +9,7 @@
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
-    <view class="contract-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view :class="phoneSystem ?'pf-content-ios contract-content-ios':'pf-content contract-content'">
       <view class="contract-title">
         <text class="contract-title-text"></text>
         <text>担保合同信息</text>
@@ -423,7 +423,9 @@
   @import '~@styles/uni-nvue.css';
   .uni-container{
     padding: 0 0 30rpx 0;
-    .contract-content{
+    .contract-content,
+    .contract-content-ios{
+      padding-top: calc(var(--window-top) + 40rpx);
       // padding-top: 130rpx;
       .contract-title{
         padding: 30rpx 40rpx;
@@ -467,6 +469,10 @@
         margin-top: 30rpx;
         padding: 0 30rpx;
       }
+    }
+    .contract-content-ios{
+      padding-top: calc(constant(safe-area-inset-top) + 40rpx);
+      padding-top: calc(env(safe-area-inset-top) + 40rpx);
     }
   }
 </style>

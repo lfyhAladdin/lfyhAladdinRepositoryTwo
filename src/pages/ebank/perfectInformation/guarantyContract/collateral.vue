@@ -5,7 +5,7 @@
       <text>押品信息</text>
       <text class="pf-text" @click="updateApplyInfo('TS')">暂存</text>
     </view>
-    <view class="collateral-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view :class="phoneSystem ?'pf-content-ios collateral-content-ios':'pf-content collateral-content'">
       <view class="contract-ul">
         <view class="contract-li">
           <view class="beforeRed">押品类型</view>
@@ -967,7 +967,9 @@
   .uni-container{
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;
-    .collateral-content{
+    .collateral-content,
+    .collateral-content-ios{
+      padding-top: calc(var(--window-top) + 40rpx);
       .contract-li{
         .imgCross{
           img{
@@ -1008,6 +1010,10 @@
         
       }
 
+    }
+    .collateral-content-ios{
+      padding-top: calc(constant(safe-area-inset-top) + 40rpx);
+      padding-top: calc(env(safe-area-inset-top) + 40rpx);
     }
   }
 </style>

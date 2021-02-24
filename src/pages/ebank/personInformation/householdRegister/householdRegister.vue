@@ -110,21 +110,36 @@
             <textarea placeholder="请输入户籍地址" placeholder-style="color:#c7c9cd" v-model.trim="personInfor.ermanentAddress" auto-height fixed="true"/>
           </view>
         </view>
-        <view class="contract-li" v-if="maturityDateyBoolean">
+        <view class="contract-li">
+          <view>长期有效</view>
+          <view class="contractRadio">
+            <radio-group @change="radioChange">
+              <label v-for="(item, index) in cardList" :key="item.value">
+                <view>
+                    <radio :value="item.value" :checked="index === cardcurrent" />
+                </view>
+                <view>{{item.name}}</view>
+              </label>
+            </radio-group>
+          </view>
+        </view>
+        <view class="contract-li">
           <view>证件到期日</view>
           <view>
-            <picker mode="date" :value="personInfor.date" :start="startDate" :end="endDate" @change="bindDateChange">
+            <picker mode="date" :value="personInfor.date" :disabled="maturityDateyBoolean" :start="startDate" :end="endDate" @change="bindDateChange">
               {{personInfor.date}}
             </picker>
             <img src="@/static/images/firstroom/formChooseArrow.svg" />
           </view>
         </view>
-         <view class="contract-li" v-if="!maturityDateyBoolean">
+        <!--<view class="contract-li" v-if="!maturityDateyBoolean">
           <view>证件到期日</view>
           <view>
             <text>长期</text>
           </view>
-        </view>
+        </view>-->
+        
+        
       </view>
       <!--个人信息-end-->
       <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
@@ -192,8 +207,19 @@
         busiStartDateVal: '', //业务日期
         iDCardNoVal: '',  //身份证号，用于区分人员为修改还是新建
         preventResubmit: true,  //防重复提交
-        maturityDateyBoolean: true,  //长期false 日历框true
+        maturityDateyBoolean: false,  //true不可选false可选
         personInforIdcard: '',  //证件号码
+        cardList: [
+          {
+            value: 'true',
+            name: '是'
+          },
+          {
+            value: 'false',
+            name: '否'
+          },
+        ], //身份证是否为长期
+        cardcurrent: 1
       }
     },
     onLoad(option) {
@@ -352,10 +378,12 @@
             let dateString = ret.payload.TermOfValidity;
             dateString = dateString.substring(dateStringIndex+1, dateString.length);
             if(dateString.length > 2){
-              this.maturityDateyBoolean = true;
+              this.maturityDateyBoolean = false;
+              this.cardcurrent = 1;
               this.personInfor.date = dateString.replace(/\./g,"-");
             }else{
-              this.maturityDateyBoolean = false;
+              this.maturityDateyBoolean = true;
+              this.cardcurrent = 0;
             }
             
             
@@ -589,7 +617,7 @@
           });
         };
         let idexpiryVal = '';
-        if(this.maturityDateyBoolean){
+        if(!this.maturityDateyBoolean){
           idexpiryVal = this.personInfor.date.replace(/-/g,'/');
         }else{
           idexpiryVal = "9999/12/31";
@@ -695,7 +723,7 @@
           names.push(item.name)
         });
         let idexpiryVal = '';
-        if(this.maturityDateyBoolean){
+        if(!this.maturityDateyBoolean){
           idexpiryVal = this.personInfor.date.replace(/-/g,'/');
         }else{
           idexpiryVal = "9999/12/31";
@@ -803,10 +831,12 @@
             this.personInfor.ermanentAddress=resData.nativeAdd;
             let dataString = resData.idexpiry.substring(0,4);
             if(dataString == '9999'){
-              this.maturityDateyBoolean = false;
-            }else{
               this.maturityDateyBoolean = true;
+              this.cardcurrent = 0;
+            }else{
+              this.maturityDateyBoolean = false;
               this.personInfor.date=resData.idexpiry.replace(/\//g,'-');
+              this.cardcurrent = 1;
             }
             
             var nameArr=resData.formerlyName.split(',');
@@ -857,7 +887,21 @@
           }
         });
         return selIdx
-      }
+      },
+      //长期有效选择
+      radioChange(evt) {
+        if(evt.target.value == 'false'){
+          this.maturityDateyBoolean = false;
+        }else{
+          this.maturityDateyBoolean = true;
+        }
+        for (let i = 0; i < this.cardList.length; i++) {
+          if (this.cardList[i].value === evt.target.value) {
+            this.cardcurrent = i;
+            break;
+          }
+        }
+      },
     },
     mounted(){
         
