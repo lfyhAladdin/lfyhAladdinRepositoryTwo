@@ -1523,7 +1523,11 @@
     "globalStyle": {
         "navigationBarTextStyle": "black",
         "navigationBarBackgroundColor": "#fff",
-        "backgroundColor": "#fafafa"
+        "backgroundColor": "#fafafa",
+        "scrollIndicator":"none", // 不显示滚动条 
+        "app-plus":{
+            "scrollIndicator":"none" //全局 在APP页面都不显示滚动条
+        }
     },
     "condition": { //模式配置，仅开发期间生效
         "current": 0, //当前激活的模式(list 的索引项)

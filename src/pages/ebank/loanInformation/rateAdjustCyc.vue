@@ -1,12 +1,12 @@
 <template>
   <view class="pending-order">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
+    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+      <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+      <text>{{title}}</text>
     </view>
 
 
-<view class="rateAdjustCyc-infor">
+<view :class="phoneSystem ?'pf-content-ios':'pf-content'" class="rateAdjustCyc-infor">
 
    <view class="rateAdjustCyc-title">
  <text class="rateAdjustCyc-text">1MN20</text>

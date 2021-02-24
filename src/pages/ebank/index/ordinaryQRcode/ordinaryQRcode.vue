@@ -4,7 +4,7 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
-    <view class="customize-content-qrcode">
+    <view :class="phoneSystem ?'pf-content-ios customize-content-qrcode':'pf-content customize-content-qrcode'">
       <view class="qrcode-box">
         <view class="qrcode" id="qrcodeJS" ref="qrcodeJS">
           <view class="qrcode-code">
@@ -131,17 +131,17 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-uni-page-wrapper {
-  height: 100% !important;
-}
+// uni-page-wrapper {
+//   height: 100% !important;
+// }
 uni-page-wrapper:after {
   display: block;
   content: "";
   clear: both;
 }
-uni-page-body {
-  height: 100% !important;
-}
+// uni-page-body {
+//   height: 100% !important;
+// }
 uni-page-body:after {
   display: block;
   content: "";
@@ -150,12 +150,12 @@ uni-page-body:after {
 .incoming {
   background: #f6f8f9 !important;
   width: 100%;
-  height: 100%;
+  // height: 100%;
   .customize-content-qrcode {
-    margin-top: 152rpx;
+    // margin-top: 152rpx;
     background: #f6f8f9 !important;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     .qrcode-box {
       width: 690rpx;
       height: 690rpx;

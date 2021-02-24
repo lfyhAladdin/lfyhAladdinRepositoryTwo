@@ -4,7 +4,7 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
-    <view class="customize-content-form">
+    <view :class="phoneSystem ? 'pf-content-ios customize-content-form':'pf-content customize-content-form'">
       <!--影像信息-start-->
       <view class="image-information">
         <view class="title" >影像信息</view>
@@ -505,14 +505,6 @@ export default {
               "imgPath_zheng_base64",
               entry.payload.imageBase64
             );
-
-            /* let base64code = entry.payload.imageBase64;
-            let base64='data:image/jpeg;base64,' + base64code;
-            this.compressImages(base64,1,function(data){
-              this.imgPath_zheng_base64=data;
-              foxsdk.logger.info(this.imgPath_zheng_base64);
-              localStorage.setItem( "imgPath_zheng_base64",data);
-            }); */
           });
 
           let e = {
@@ -542,20 +534,7 @@ export default {
               "imgPath_fan_base64",
               entry.payload.imageBase64
             );
-            /* let base64code = entry.payload.imageBase64;
-            let base64='data:image/jpeg;base64,' + base64code;
-            this.compressImages(base64,1,function(data){
-              foxsdk.logger.info('##############################');
-              foxsdk.logger.info(data);
-              foxsdk.logger.info('################################');
-              this.imgPath_fan_base64=data;
-              localStorage.setItem( "imgPath_fan_base64",data);
-            }); */
           });
-         /*  this.compressImages(ret.payload.ImagePath,1,function(data){
-            this.imgPath_fan_base64 = data;
-            localStorage.setItem( "imgPath_fan_base64",data);
-          }); */
           let e = {
             imgPath_fan: this.imgPath_fan,
             imgPath_fan_base64: this.imgPath_fan_base64,
@@ -573,17 +552,17 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-uni-page-wrapper {
-  height: 100% !important;
-}
+// uni-page-wrapper {
+//   height: 100% !important;
+// }
 uni-page-wrapper:after {
   display: block;
   content: "";
   clear: both;
 }
-uni-page-body {
-  height: 100% !important;
-}
+// uni-page-body {
+//   height: 100% !important;
+// }
 uni-page-body:after {
   display: block;
   content: "";
@@ -592,12 +571,12 @@ uni-page-body:after {
 .incoming {
   background: #f6f8f9 !important;
   width: 100%;
-  height: 100%;
+  // height: 100%;
   .customize-content-form {
     background: #f6f8f9 !important;
     width: 100%;
-    height: 100%;
-    margin-top: 154rpx;
+    // height: 100%;
+    // margin-top: 154rpx;
     .image-information {
       padding: 0 40rpx;
       height: 421rpx;
@@ -756,7 +735,8 @@ uni-page-body:after {
 .cbutton {
   width: 620rpx;
   padding: 0;
-  margin: 41rpx auto 190rpx auto;
+  // margin: 41rpx auto 190rpx auto;
+  margin: 41rpx auto 0 auto;
   font-size: 36rpx;
   color: #edf6fe;
   height: 100rpx;

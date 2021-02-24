@@ -1,20 +1,20 @@
 <template>
-  <view class="pending-order">
-    <view class="customize-head">
-      <view class="ch-img" @tap="navigateBack"><img src="@/static/images/firstroom/backArrow.svg" /></view>
-      <view class="ch-title"><text>{{title}}</text></view>
-      <view class="temporary-storage"  @tap="submitform('TS')">暂存</view>
+<view class="pending-order">
+    <view class="pf-poifixed">
+        <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+            <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
+            <text>{{title}}</text>
+            <text class="pf-text" @click="submitform('TS')">暂存</text>
+        </view>
+        <view class="image-content">
+            <img style="height:26rpx;margin:0 auto;display:block;margin-top:20rpx" src="@/static/images/firstroom/longProgress03.svg" />
+            <ul class="loaninfo"><li>业务信息</li><li>担保信息</li><li>利率信息</li><li>还款信息</li></ul>
+        </view>
     </view>
-    
-
-<view class="image-content">
-    <img style="height:26rpx;margin:0 auto;display:block;margin-top:63rpx" src="@/static/images/firstroom/longProgress03.svg" />
-    <ul class="loaninfo"><li>业务信息</li><li>担保信息</li><li>利率信息</li><li>还款信息</li></ul>
-</view>
 
 
  <!--个人信息-start-->
-      <view class="person-infor">
+      <view :class="phoneSystem ?'pf-content-ios person-infor-ios':'pf-content person-infor'">
        
         
         <view class="person-infor-one">
@@ -72,16 +72,14 @@
           <text>执行年利率(%)</text>
           <input placeholder="执行年利率" type="number"  v-model="businessRate" disabled="false"/>
         </view>
+         
 
-      </view>
-     
-
-      <!--个人信息-end-->
-      <view class="" @tap="submitform('save')">
-        <view class="cbutton">
-          <text>下一步</text>
+        <!--个人信息-end-->
+        <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+            <button type="primary" @click="submitform('save')">下一步</button>
         </view>
       </view>
+    
 
   </view>
 </template>
@@ -454,44 +452,13 @@ console.log(this.businessRate);
         background: #ffffff !important;
         width: 100%;
         height: 100%;
-    }
-    
-    .customize-head {
-        padding: 100rpx 40rpx 16rpx 36rpx;
-        height: 50rpx;
-        line-height: 50rpx;
-        background: #ffffff;
-        display: flex;
-        vertical-align: middle;
-        align-items: center;
-        position: relative;
-        .ch-img {
-            width: 20rpx;
-            height: 36rpx;
-            img {
-                width: 20rpx;
-                height: 36rpx;
-            }
-        }
-        .ch-title {
-            font-size: 36rpx;
-            height: 50rpx;
-            line-height: 50rpx;
-            margin: 0 auto;
-            text-align: center;
-            color: #333333;
-        }
-        .temporary-storage {
-            color: #3b86f7;
-            font-size: 32rpx;
-        }
-        .image-content {
-            margin-top: 65rpx;
+        .pf-poifixed{
+            background-color: #ffffff;
         }
     }
-    
-    .person-infor {
-        margin-top: 24rpx;
+    .person-infor,
+    .person-infor-ios {
+        padding-top: calc(var(--window-top) + 100rpx);
         background: #ffffff;
         padding-left: 30rpx;
         .person-infor-one {
@@ -597,28 +564,10 @@ console.log(this.businessRate);
             }
         }
     }
-    
-    .cbutton {
-        width: 620rpx;
-        padding: 0;
-        margin: 41rpx auto 190rpx auto;
-        font-size: 36rpx;
-        color: #edf6fe;
-        height: 100rpx;
-        line-height: 100rpx;
-        border-radius: 50rpx;
-        background: #3b86f7;
-        border: 0rpx;
-        text-align: center;
-        box-shadow: 0rpx 10rpx 23rpx 0rpx rgba(#3b86f7, 0.4);
+    .person-infor-ios{
+        padding-top: calc(constant(safe-area-inset-top) + 100rpx);
+        padding-top: calc(env(safe-area-inset-top) + 100rpx);
     }
-    
-    .cbutton:after {
-        display: block;
-        content: "";
-        clear: both;
-    }
-    
     .active {
         background-color: #edf4ff;
         color: #3b86f7;

@@ -4,7 +4,7 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
-    <view class="orderlist">
+    <view class="orderlist" :class="phoneSystem ?'pf-content-ios':'pf-content'">
       <view class="order" v-for="(orderOne,index) in orderlist" :key="index">
         <view class="order-title">
           <text class="text-left">{{orderOne.businessTypeName}}</text><text class="text-right">待确认</text>
@@ -436,7 +436,9 @@ export default {
   }
 }
 .orderlist {
-  padding: 154rpx 30rpx 0 30rpx;
+  // padding: 154rpx 30rpx 0 30rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
   uni-view {
     line-height: 0;
     font-size: 0;

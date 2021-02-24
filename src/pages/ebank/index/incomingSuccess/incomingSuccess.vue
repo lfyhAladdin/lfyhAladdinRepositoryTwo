@@ -130,17 +130,17 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-uni-page-wrapper {
-  height: 100% !important;
-}
+// uni-page-wrapper {
+//   height: 100% !important;
+// }
 uni-page-wrapper:after {
   display: block;
   content: "";
   clear: both;
 }
-uni-page-body {
-  height: 100% !important;
-}
+// uni-page-body {
+//   height: 100% !important;
+// }
 uni-page-body:after {
   display: block;
   content: "";
@@ -149,47 +149,11 @@ uni-page-body:after {
 .incoming {
   background: #f6f8f9 !important;
   width: 100%;
-  height: 100%;
-  .customize-head {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 100%;
-    padding: 62rpx 36rpx 18rpx 0;
-    height: 50rpx;
-    line-height: 50rpx;
-    background: #ffffff;
-    display: flex;
-    vertical-align: middle;
-    align-items: center;
-    border-bottom: 1rpx solid #e5e5e5;
-    .ch-img {
-      position: absolute;
-      left: 0;
-      top: 69rpx;
-      width: 20rpx;
-      height: 36rpx;
-      margin-left: 36rpx;
-      img {
-        width: 20rpx;
-        height: 36rpx;
-      }
-    }
-    .ch-title {
-      font-size: 36rpx;
-      height: 50rpx;
-      line-height: 50rpx;
-      margin: 0 auto;
-      text-align: center;
-      color: #333333;
-    }
-  }
   .customize-content-qrcode {
     background: #f6f8f9 !important;
     width: 100%;
-    height: 100%;
-    margin-top: 156rpx;
+    // height: 100%;
+    // margin-top: 156rpx;
     .qrcode-box {
       width: 690rpx;
       background: #ffffff;

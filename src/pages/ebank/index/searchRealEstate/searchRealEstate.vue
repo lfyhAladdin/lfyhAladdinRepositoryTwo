@@ -4,14 +4,16 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <view class="gencies-item">
         <input class="uni-input" placeholder="请输入搜索内容" readonly="readonly" type="string" v-model="searchword" @input="inputfun"/>
-        <img src="@/static/images/firstroom/searchLogo.svg" :class="phoneSystem ? 'imgSearch imgSearch-ios' : 'imgSearch'">
-        <view :class="phoneSystem ? 'imgCross imgCross-ios' : 'imgCross'" v-show="ifShowClearInput" @click="clearSearchInput()">
+        <img src="@/static/images/firstroom/searchLogo.svg" class="imgSearch">
+        <!--<img src="@/static/images/firstroom/searchLogo.svg" :class="phoneSystem ? 'imgSearch imgSearch-ios' : 'imgSearch'">
+        <view :class="phoneSystem ? 'imgCross imgCross-ios' : 'imgCross'" v-show="ifShowClearInput" @click="clearSearchInput()">-->
+        <view class="imgCross" v-show="ifShowClearInput" @click="clearSearchInput()">
           <img src="@/static/images/firstroom/searchCancle.svg">
         </view>
       </view>
       <text class="pf-text" @click="searchFun">搜索</text>
     </view>
-    <view class="search-result" v-show="showSearchResult">
+    <view :class="phoneSystem ?'pf-content-ios':'pf-content'" class="search-result" v-show="showSearchResult">
       <view class="search-one" v-for="(item,index) in resultSearchList" :key="index" @click="searchResult(item)" >
         <view class="search-name"  v-html="item.BuildingName"></view>
         <view class="search-address">{{item.locationC}}</view>
@@ -251,7 +253,7 @@ uni-page-body::after {
     clear: both;
   }
   .search-result {
-    padding-top: 130rpx;
+    // padding-top: 130rpx;
     padding-left: 30rpx;
     .search-one {
       padding-left: 10rpx;
