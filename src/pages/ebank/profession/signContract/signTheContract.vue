@@ -184,7 +184,7 @@
                     title: "合同已签署",
                     id: "02"
                 }], //页签标题
-                coverAll:false, //一手房押品底部框
+                coverAll:true, //一手房押品底部框
                 houseContractNo: "", //预售合同号
                 houseContractTwo: "", //确认预售合同号
                 twoHouseCollateral:false, //二手房押品底部弹框(补录押品信息)
@@ -380,20 +380,26 @@
             this.GJGCRefreshFooter();
         },
         created() {
-            this.house();
+           
+    document.oncontextmenu = new Function("event.returnValue=false");
+    document.onselectstart = new Function("event.returnValue=false");
+
+     document.oncontextmenu = function (e) {
+        e.preventDefault();
+    };
+    document.onselectstart = function (e) {
+        e.preventDefault();
+    };
+ 
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+
         },
         methods: {
             ...mapMutations(["approvalIngListReplace", "signContractReplace"]),
             ...mapActions(["businessNumCommit"]),
-            house(){
-                let houseNoID=document.getElementById('houseContractID');   
-                houseNoID.addEventListener('contextmenu', function(e){
-                    e.preventDefault();
-	 });
-            document.οncοntextmenu=new Function("event.returnValue=false"); 
-            document.onselectstart=new Function("event.returnValue=false"); 
-
-            },
+    
             //页签切换
             tabClick(e) {
                 console.log(e);
