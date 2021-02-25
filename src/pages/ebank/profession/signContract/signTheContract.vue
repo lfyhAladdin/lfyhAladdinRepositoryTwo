@@ -420,6 +420,7 @@ export default {
     this.GJGCRefreshFooter();
   },
   created() {
+      //app禁止复制粘贴
     document.oncontextmenu = new Function("event.returnValue=false");
     document.onselectstart = new Function("event.returnValue=false");
 
@@ -1224,7 +1225,7 @@ export default {
 </script>
 <style lang='scss'>
 @import "~@styles/uni-nvue.css";
-
+//ios 禁止复制粘贴
 * {
   -webkit-touch-callout: none; /*系统默认菜单被禁用*/
   -webkit-user-select: none; /*webkit浏览器*/

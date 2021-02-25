@@ -221,7 +221,7 @@
             getList(res) {
                 let that = this;
                 that.partnerAccountNum =RSAdecode(this.queryApplyInfoList.thirdPartyAccounts); //合作商账号
-
+                console.log(that.partnerAccountNum);
             },
             loanQuerydictList() {
                 let obj2 = this.loanQueryDictionaryListObj; //给各个下拉框赋值
@@ -313,7 +313,11 @@
                     //  console.log(that.projectID)
                 console.log(this.partnerAccountNum);
                 console.log(this.accountListCode);
-
+                console.log(this.partnerAccountNum);
+                if(this.customer === false){
+                    this.partnerAccountNumNull="";
+                    console.log(this.partnerAccountNumNull);
+                }
                 let formData = {
                     applyNo: that.applicationNumber,
                     orderNo: "",
@@ -323,7 +327,7 @@
                         projectID: that.projectID,
                         projectName: that.projectName,
                         subcrEditAggreement: "",
-                        thirdPartyAccounts:RSAencode(this.partnerAccountNum),
+                        thirdPartyAccounts:this.customer === false? this.partnerAccountNumNull:RSAencode(this.partnerAccountNum),
                         thirdPartyBailAc: this.accountListCode == undefined ? this.queryApplyInfoList.thirdPartyBailAc : this.accountListCode
                             .thirdPartyBailAc,
                         thirdPartyBailAcCH: this.accountListCode == undefined ? this.queryApplyInfoList.thirdPartyBailAcCH : this.accountListCode
@@ -397,10 +401,12 @@
                                 icon: 'none',
                                 duration: 3000
                             });
-
-                            setTimeout(() => {
+                            if(res.data.data.returnCode=="Success"){
+                               setTimeout(() => {
                                 that.pageJump('loanInformation/interestRate');
                             }, 1000)
+                            }
+                            
                         }
 
 
