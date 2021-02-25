@@ -109,7 +109,7 @@ export default {
     console.log(this.queryApplyInfoList,"贷款申请信息");
     that.isMadePayPlan = this.queryApplyInfoList.isMadePayPlan; //定制还款计划 1是 2否
     that.deductionNumber=RSAdecode(this.queryApplyInfoList.payAcctChNo);//扣款账号子序号
-    that.deduction=this.queryApplyInfoList.payAcctNo;//扣款账号
+    that.deduction=RSAdecode(this.queryApplyInfoList.payAcctNo);//扣款账号
     // this.productIndex=this.queryApplyInfoList.corpusPayMethod;//还款方式
     // that.applyNo=this.queryApplyInfoList.applyNo;//申请编号
     this.businessTypeData=this.queryApplyInfoList.businessType;
