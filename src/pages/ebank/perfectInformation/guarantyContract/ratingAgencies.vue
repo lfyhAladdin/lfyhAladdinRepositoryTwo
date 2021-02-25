@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+    <view class="pf-title pf-titleThree">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <view class="gencies-item">
         <input class="uni-input" 
@@ -10,14 +10,14 @@
           v-model="valInput" 
           @focus="focusInput" 
           @blur="blurInput"/>
-        <img src="@/static/images/perfectInformation/search.svg" :class="phoneSystem ? 'imgSearch imgSearch-ios' : 'imgSearch'">
-        <view :class="phoneSystem ? 'imgCross imgCross-ios' : 'imgCross'" v-show="imgCross" @click="imgCrossClick">
+        <img src="@/static/images/perfectInformation/search.svg" class="imgSearch">
+        <view class="imgCross" v-show="imgCross" @click="imgCrossClick">
           <img src="@/static/images/perfectInformation/cross.svg">
         </view>
       </view>
       <text class="pf-text" @click="genciesSearch">搜索</text>
     </view>
-    <view class="gencies-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view class="pf-content gencies-content">
       <view class="gencies-ul">
         <view class="gencies-li" v-for="item in genciesList" :key="item.orgID" @click="toCollateral(item)">
           <view>{{item.orgName}}</view>

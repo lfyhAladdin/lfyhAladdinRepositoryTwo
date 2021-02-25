@@ -1,12 +1,12 @@
 <template>
   <view class="pending-order">
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{HouseTitle}}</text>
     </view>
 
  <!--个人信息-start-->
-      <view class="person-infor" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+      <view class="pf-content person-infor">
        
         <view class="person-infor-one">
           <text>借款人</text>
@@ -41,7 +41,7 @@
           </view>
         </view>
          <!--个人信息-end-->
-        <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+        <view class="contract-button">
             <button type="primary" @click="submitform()">提交</button>
         </view>
       </view>

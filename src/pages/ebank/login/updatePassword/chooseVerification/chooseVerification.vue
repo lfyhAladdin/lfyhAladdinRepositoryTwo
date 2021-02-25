@@ -1,10 +1,10 @@
 <template>
   <view class="incoming">
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{identity}}</text>
     </view>
-    <view class="customize-content-form" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view class="pf-content customize-content-form">
       <view class="person-infor">
         <view class="person-infor-one" @click="pageJump(verifyOldPassword)">
           <img class="choose-arrow" src="@/static/images/firstroom/formChooseArrow.svg" />

@@ -1,7 +1,7 @@
 <template>
   <view class="uni-container">
     <view class="pf-poifixed">
-      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+      <view class="pf-title pf-titleThree">
         <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
         <text>{{identity}}信息</text>
         <text class="pf-text" @click="nextStep(false)">暂存</text>
@@ -17,7 +17,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view :class="phoneSystem ?'pf-content-ios baseIn-content-ios':'pf-content baseIn-content'">
+    <view class="pf-content pf-content160">
       <!--个人信息-start-->
       <view class="contract-ul marginT25">
         <view class="contract-li-tips">
@@ -525,15 +525,6 @@
   .uni-container{
     background-color: #f6f8f9;
     padding: 0 0 30rpx 0;
-    .baseIn-content,
-    .baseIn-content-ios{
-      // padding-top: 270rpx;
-      padding-top: calc(var(--window-top) + 120rpx);
-    }
-    .baseIn-content-ios{
-      padding-top: calc(constant(safe-area-inset-top) + 120rpx);
-      padding-top: calc(env(safe-area-inset-top) + 120rpx);
-    }
   }
   .marginT25{
     margin-top: 25rpx;

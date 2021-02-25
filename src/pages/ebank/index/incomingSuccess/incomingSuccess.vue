@@ -1,6 +1,6 @@
 <template>
   <view class="incoming">
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>

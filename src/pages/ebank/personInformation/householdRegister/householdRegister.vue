@@ -1,7 +1,7 @@
 <template>
   <view class="uni-container">
     <view class="pf-poifixed">
-      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+      <view class="pf-title pf-titleThree">
         <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
         <text>{{identity}}信息</text>
         <text class="pf-text" @click="nextStep(false)">暂存</text>
@@ -17,7 +17,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view :class="phoneSystem ?'pf-content-ios household-content-ios':'pf-content household-content'">
+    <view class="pf-content pf-content160 household-content">
       <!--影像信息-start-->
       <view class="form-title">
         <view class="vLine"></view>影像信息
@@ -110,7 +110,7 @@
             <textarea placeholder="请输入户籍地址" placeholder-style="color:#c7c9cd" v-model.trim="personInfor.ermanentAddress" auto-height fixed="true"/>
           </view>
         </view>
-        <view class="contract-li">
+        <view class="contract-li" v-if="radioGroup">
           <view>长期有效</view>
           <view class="contractRadio">
             <radio-group @change="radioChange">
@@ -142,7 +142,7 @@
         
       </view>
       <!--个人信息-end-->
-      <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+      <view class="contract-button">
         <button type="primary" @click="nextStep(true)">下一步</button>
       </view>
     </view>
@@ -208,6 +208,7 @@
         iDCardNoVal: '',  //身份证号，用于区分人员为修改还是新建
         preventResubmit: true,  //防重复提交
         maturityDateyBoolean: false,  //true不可选false可选
+        radioGroup: false,  //true显示，false不显示
         personInforIdcard: '',  //证件号码
         cardList: [
           {
@@ -372,17 +373,19 @@
               this.compressImages('data:image/jpeg;base64,'+ entry.payload.imageBase64 ,1,(data)=>{
                 this.IDReverseBase64 = data;
               });
-            //压缩图片base64code大小  end
+              //压缩图片base64code大小  end
             });
             let dateStringIndex = ret.payload.TermOfValidity.lastIndexOf("\-");
             let dateString = ret.payload.TermOfValidity;
             dateString = dateString.substring(dateStringIndex+1, dateString.length);
             if(dateString.length > 2){
               this.maturityDateyBoolean = false;
+              this.radioGroup = false;
               this.cardcurrent = 1;
               this.personInfor.date = dateString.replace(/\./g,"-");
             }else{
               this.maturityDateyBoolean = true;
+              this.radioGroup = true;
               this.cardcurrent = 0;
             }
             
@@ -832,9 +835,11 @@
             let dataString = resData.idexpiry.substring(0,4);
             if(dataString == '9999'){
               this.maturityDateyBoolean = true;
+              this.radioGroup = true;
               this.cardcurrent = 0;
             }else{
               this.maturityDateyBoolean = false;
+              this.radioGroup = false;
               this.personInfor.date=resData.idexpiry.replace(/\//g,'-');
               this.cardcurrent = 1;
             }
@@ -917,9 +922,7 @@
     background-color: #f6f8f9;
     padding-top: 0;  
     padding-bottom: 30rpx;
-    .household-content,
-    .household-content-ios{
-      padding-top: calc(var(--window-top) + 160rpx);
+    .household-content{
       .form-title{
         height: 94rpx;
         line-height: 94rpx;
@@ -1021,10 +1024,6 @@
           }
         }
       }
-    }
-    .household-content-ios{
-      padding-top: calc(constant(safe-area-inset-top) + 160rpx);
-      padding-top: calc(env(safe-area-inset-top) + 160rpx);
     }
   }
   .marginT25{

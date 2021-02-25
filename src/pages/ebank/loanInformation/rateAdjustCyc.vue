@@ -1,12 +1,12 @@
 <template>
   <view class="pending-order">
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
 
 
-<view :class="phoneSystem ?'pf-content-ios':'pf-content'" class="rateAdjustCyc-infor">
+<view class="pf-content rateAdjustCyc-infor">
 
    <view class="rateAdjustCyc-title">
  <text class="rateAdjustCyc-text">1MN20</text>

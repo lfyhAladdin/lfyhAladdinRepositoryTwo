@@ -20,7 +20,6 @@
       immergeBottom: 0,
       hideTime: 0,
       showTime: 0,
-      phoneSystem: true,  //ios true，安卓 false
     },
     onLaunch: function(query) {
       this.initApp();
@@ -100,44 +99,19 @@
             let styleElem = document.createElement('style');
             // uni-page-body 的高度 = 屏幕高度 - 沉浸式状态栏高度 - header的高度
             styleElem.innerHTML =
-              `#device-status{height:` +
-              top +
-              `px;}
-                                    #device-bottom{height:` +
-              bottom +
-              `px;}
-                                    uni-tabbar, uni-tabbar .uni-tabbar{bottom:` +
-              bottom +
-              `px;}
-                                    uni-app{height:` +
-              (screenHeight - top) +
-              `px}
-                                    uni-page-body{height:` +
-              (screenHeight - top - bottom - 44) +
-              `px;position:relative;}
-                                    uni-page-body>uni-view{padding-bottom:` +
-              bottom +
-              `px;}
-                                    #__vconsole .vc-panel, 
-                                    .position-bottom{bottom:` +
-              bottom +
-              `px!important;}
-                                    .position-top{top:` +
-              top +
-              `px!important;}
-                                    .immerge-mt{margin-top:-` +
-              top +
-              `px!important;}
-                                    .immerge-pt{padding-top:` +
-              top +
-              `px!important;}
-                                    .immerge-tab-mb{padding-bottom:` +
-              (bottom + 50 + (15 * screenWidth) / 375) +
-              `px!important;}
-                                    .main-menu{top:` +
-              (top + 44 + (40 * screenWidth) / 375) +
-              `px!important;}
-                                    `;
+              `#device-status{height:` + top + `px;}
+              #device-bottom{height:` + bottom + `px;}
+              uni-tabbar, uni-tabbar .uni-tabbar{bottom:` + bottom + `px;}
+              uni-app{height:` + (screenHeight - top) + `px}
+              uni-page-body{height:` + (screenHeight - top - bottom - 44) + `px;position:relative;}
+              uni-page-body>uni-view{padding-bottom:` + bottom + `px;}
+              #__vconsole .vc-panel,
+              .position-bottom{bottom:` + bottom + `px!important;}
+              .position-top{top:` + top + `px!important;}
+              .immerge-mt{margin-top:-` + top + `px!important;}
+              .immerge-pt{padding-top:` + top + `px!important;}
+              .immerge-tab-mb{padding-bottom:` + (bottom + 50 + (15 * screenWidth) / 375) + `px!important;}
+              .main-menu{top:` + (top + 44 + (40 * screenWidth) / 375) + `px!important;}`;
             document.body.appendChild(styleElem);
           } else {
             console.log('获取系统信息失败');
@@ -167,7 +141,6 @@
 <style lang='scss'>
   @import './assets/styles/uni.css';
   @import '@styles/common.scss';
-  @import '@/static/css/professionwf.less';
   *{
     font-family: 'PingFangSC-Medium' !important;
   }

@@ -1,9 +1,9 @@
 <template>
   <view class="professBox">
-    <view :class="phoneSystem ?'pf-title pf-title-ios':'pf-title'">
+    <view class="pf-title">
       <text>业务</text>
     </view>
-    <view :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view class="pf-content">
       <view class="pf-module" v-for="item in ulList" :key="item.ulId">
         <view class="pf-ulTitle">{{item.ulTitle}}</view>
         <view class="pf-ul">

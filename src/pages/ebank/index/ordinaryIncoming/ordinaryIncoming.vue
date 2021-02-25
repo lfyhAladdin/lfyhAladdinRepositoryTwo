@@ -1,10 +1,10 @@
 <template>
   <view class="incoming">
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
-    <view :class="phoneSystem ? 'pf-content-ios customize-content-form':'pf-content customize-content-form'">
+    <view class="pf-content customize-content-form">
       <!--影像信息-start-->
       <view class="image-information">
         <view class="title" >影像信息</view>

@@ -384,24 +384,35 @@ export default {
               return;
             }
             //判断是否越权登录start
-            if(res.data.data.loginCode != this.pwdFormdata.account){
-              yu.showToast({
-                icon: "none",
-                title: "越权登录，请重新登录",
-                duration: 1500
-              });
-              yu.clearStorage();
-              setTimeout(() => {
-                this.pageJump("login/login");
-              }, 500);
-              return;
+            if(this.showSmsLogin){
+              if(RSAdecode(res.data.data.phoneNumber) != this.phoneFormdata.phoneNo){
+                this.yueQuanFun();
+                return;
+              }
+            }else{
+              if(res.data.data.loginCode != this.pwdFormdata.account){
+                this.yueQuanFun();
+                return;
+              }
             }
-            //判断是否越权登录start
+            //判断是否越权登录end
             /* res机构返回结果   param 登陆成功返回结果 */
             this.loginSucceed(param, res);
           },
           err => {}
         );
+    },
+    //越权登录
+    yueQuanFun(){
+      yu.showToast({
+        icon: "none",
+        title: "越权登录，请重新登录",
+        duration: 1500
+      });
+      yu.clearStorage();
+      setTimeout(() => {
+        this.pageJump("login/login");
+      }, 1500);
     },
     // 发送验证码
     sendCode() {

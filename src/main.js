@@ -80,12 +80,13 @@ Vue.prototype.setStatusFontColor =(fontColor)=>{
 Vue.config.productionTip = false;
 Vue.prototype._i18n = i18n;
 App.mpType = 'app';
-
 //phoneSystem ios true，安卓 false
 if(uni.getSystemInfoSync().platform == 'ios'){
-  Vue.prototype.phoneSystem = true;
+  // Vue.prototype.phoneSystem = true;
+  require('./static/css/professionwfIOS.scss');
 }else{
-  Vue.prototype.phoneSystem = false;
+  // Vue.prototype.phoneSystem = false;
+  require('./static/css/professionwfAn.scss');
 };
 Vue.prototype.environmentUrl = appEnv.appEnvironmentUrl;
 // APP全局插件（组件、图标、过滤器、工具方法等）安装
