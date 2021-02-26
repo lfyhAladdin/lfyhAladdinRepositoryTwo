@@ -36,7 +36,7 @@ export default {
     return {
       title: "影像信息",
       serialNo: "", //申请编号
-      imageInformation: "perfectInformation/imageInformation/imageInformation", //影像信息跳转
+      imageInformations: "perfectInformation/imageInformation/imageInformation", //影像信息跳转
       iconcheck:0, //是否上传
       imageBatchNo:'',//图片版本批次号
       imageUpLoadDate:'',//图片上传时间
@@ -116,19 +116,20 @@ export default {
         },
       ],//二级菜单参数
       paramBusiFileTypeList:[],//影响信息参数
-      busiFileType:[],//编号  数据字典查询结果
+      //busiFileTypeListRes:[],//编号  数据字典查询结果
 
       filePartName:'LS_SQZL_P',//放款审核 出账后  值：LS_FKZL_P
       modelCode:'LS_SQZL',//放款审核 出账后  值：LS_FKZL
     };
   },
   computed:{
-    ...mapGetters(['approvalIngList','queryApplyInfoList'])
+    ...mapGetters(['imageInformation','queryApplyInfoList','busiFileTypeListRes'])
   },
   onLoad: function(options) {
     this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
   },
   created(){
+    //let _this=this;
     this.fromID=localStorage.getItem('imgFromID');
     /* let nameArr=["房产证、他项权证","放款账户信息","借款抵押合同信息","其他资料","放款通知书", "放款凭证", "其他贷后资料"];
     let resindex = nameArr.indexOf(this.fromID);
@@ -139,7 +140,7 @@ export default {
     this.title=localStorage.getItem('imgFromID');
     this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
     //获取当前申请信息的图片批次号  start
-    let _this=this;
+    /* let _this=this;
     let data={
       orderNo:'',
       applyNo:_this.serialNo,
@@ -156,17 +157,39 @@ export default {
         _this.getImagesList(result.imageList[0].imageBatchNo,result.imageList[0].imageUpLoadDate);
       },
       function(err) {}
-    );
+    ); */
     //获取当前申请信息的图片批次号  end
 
-    let btlist=_this.allBusiFileTypeList;
+    /* let btlist=_this.allBusiFileTypeList;
     for(let i=0 ; i<btlist.length ;i++){
       if(btlist[i].name.indexOf(_this.fromID) != -1 ){
         _this.paramBusiFileTypeList=btlist[i].param;
         localStorage.removeItem("imgFromID");
       }
+    } */
+    let itemlist=[];
+    let arr=this.imageInformation;
+    for(let i=0; i< arr.length ; i++){
+      if(this.fromID == arr[i].name){
+        itemlist=arr[i].list;
+      }
     }
-    _this.getListName();//获取影像信息菜单  比对
+   for(let i=0;i<itemlist.length ; i++){
+      let param=itemlist[i].busiFileType;
+      itemlist[i].busiFileTypeName=this.getBusiFileTypeName(this.busiFileTypeListRes[param]);
+      if(param == "2012060101" || param == "2012060603" || param == "2012060501"){
+        itemlist[i].isIDCard=false;
+      }else{
+        itemlist[i].isIDCard=true;
+      }
+      for(let j=0;j < itemlist[i].downloadImageDtoList.length; j++){
+        itemlist[i].downloadImageDtoList[j].base64CodeUrl='data:image/jpg;base64,' +itemlist[i].downloadImageDtoList[j].base64Code;
+      }
+    }
+     
+    this.imagelists=itemlist;
+    //_this.uploadImageResult('type','base64','base64url');
+    //console.log(itemlist);
     
   },
  
@@ -206,9 +229,11 @@ export default {
     },
     //返回上一页
     navigateBack() {
-      this.pageJump(this.imageInformation);
+      //this.pageJump(this.imageInformations);
+      yu.navigateBack();
+      console.log(this.imagelists);
     },
-    //获取下载当前申请的影像信息
+    //获取当前申请的影像信息
     getImagesList(imageBatchNo,busiStartDate){
       //获取图片信息 start
       let _this=this;
@@ -235,13 +260,11 @@ export default {
             }else{
               itemlist[i].isIDCard=true;
             }
-            console.log(_this.busiFileType[param]);
             for(let j=0;j < itemlist[i].downloadImageDtoList.length; j++){
               itemlist[i].downloadImageDtoList[j].base64CodeUrl='data:image/jpg;base64,' +itemlist[i].downloadImageDtoList[j].base64Code;
             }
           }
           _this.imagelists=itemlist;
-          console.log(_this.imagelists);
           _this.uploadImageResult('type','base64','base64url');
         },
         function(err) {}
@@ -263,7 +286,7 @@ export default {
         "GET",
         function(res) {
           let result=res.data.data;
-          _this.busiFileType=result;
+          _this.busiFileTypeListRes=result;
         },
         function(err) {}
       );
@@ -335,6 +358,13 @@ export default {
       for(let i=0;i<_this.imagelists.length; i++){
         if(_this.imagelists[i].busiFileType === type){
           _this.imagelists[i].downloadImageDtoList=_this.imagelists[i].downloadImageDtoList.concat(param);
+        }
+      }
+
+      let allimagelist=_this.imageInformation;
+      for(let j=0; j<allimagelist.length ;j++){
+        if(type.indexOf(allimagelist[j].id) != -1){
+          allimagelist[j].list=_this.imagelists;
         }
       }
     },
@@ -418,6 +448,13 @@ export default {
           if(_this.imagelists[i].downloadImageDtoList[j].originName === filename){
             _this.imagelists[i].downloadImageDtoList.splice(j,1);
           }
+        }
+      }
+
+      let allimagelist=_this.imageInformation;
+      for(let j=0; j<allimagelist.length ;j++){
+        if(type.indexOf(allimagelist[j].id) != -1){
+          allimagelist[j].list=_this.imagelists;
         }
       }
     },

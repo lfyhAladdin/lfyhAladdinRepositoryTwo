@@ -31,7 +31,7 @@ domModule.addRule("fontFace", {
   src: "url('/common/uni.ttf')"
 });
 // #endif
-import { mapGetters} from "vuex";
+import {mapGetters, mapMutations, mapActions} from 'vuex';
 import uLink from "@/components/uLink.vue";
 export default {
   components: {
@@ -44,6 +44,11 @@ export default {
     return {
       title: "影像信息",
       serialNo: "", //申请编号
+      imageBatchNo:'',//图片版本批次号
+      imageUpLoadDate:'',//图片上传时间
+      imagelists:[],
+      filePartName:'LS_SQZL_P',//放款审核 出账后  值：LS_FKZL_P
+      modelCode:'LS_SQZL',//放款审核 出账后  值：LS_FKZL
       list: [
         {
           id: "view",
@@ -76,19 +81,98 @@ export default {
           pages: ["放款通知书", "放款凭证", "其他贷后资料"]
         } */
       ],
-
+      paramBusiFileTypeList:[
+        "2012060101","2012060102","2012060103","2012060104",
+        "2012060201","2012060202","2012060203",
+        "2012060301","2012060302","2012060303","2012060304","2012060305",
+        "2012060401","2012060402","2012060403",
+        "2012060501","2012060502","2012060503",
+        "2012060601","2012060602","2012060603","2012060604"
+      ],//影像信息参数（全部）
       navigateFlag: false
     };
   },
+  computed:{
+    ...mapGetters(['queryApplyInfoList','imageInformation'])
+  },
+  created(){
+    this.getListName();//获取影像信息菜单  比对
+    this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
+    //获取当前申请信息的图片批次号  start
+    //let _this=this;
+    this.imageBatchNo=this.queryApplyInfoList.imageList[0].imageBatchNo;
+    this.imageUpLoadDate=this.queryApplyInfoList.imageList[0].imageUpLoadDate;
+    this.getImagesList(this.queryApplyInfoList.imageList[0].imageBatchNo,this.queryApplyInfoList.imageList[0].imageUpLoadDate);
+    //获取当前申请信息的图片批次号  end
+    
+  },
   onLoad: function(options) {
-    this.serialNo = options.serialNo; //申请编号获取
+    //this.serialNo = options.serialNo; //申请编号获取
   },
   methods: {
+    ...mapMutations(['imageInformationReplace','busiFileTypeListResReplace']),
     //返回上一页
     navigateBack() {
       this.pageJump("perfectInformation/perfectInformation");
     },
-
+    //数据字典查询 
+    getListName(){
+      let _this=this;
+      let posturl="/api/dictionary/queryDictionaryList";
+      let param={"dictionaryName": "busiFileType"};
+      _this.interfaceRequest(
+        posturl,
+        param,
+        "GET",
+        function(res) {
+          _this.busiFileTypeListResReplace(res.data.data);
+        },
+        function(err) {}
+      );
+    },
+    //获取下载当前申请的影像信息
+    getImagesList(imageBatchNo,busiStartDate){
+      yu.showLoading();
+      //获取图片信息 start
+      let _this=this;
+      let posturl="/api/imagehandle/downloadbynoanddate";
+      let param={
+        "busiSerialNo": imageBatchNo,
+        "busiStartDate":busiStartDate,
+        "busiFileTypeList":_this.paramBusiFileTypeList,
+        "filePartName": _this.filePartName,
+        "modelCode": _this.modelCode
+      };
+      _this.interfaceRequest(
+        posturl,
+        param,
+        "post",
+        function(res) {
+          console.log(res);
+          yu.hideLoading();
+          if(res.data.code == 500){
+            yu.showToast({
+              icon: "none",
+              title: res.data.data.returnDesc,
+              duration: 1500
+            });
+          }else{
+            _this.imageInformationReplace(res.data.data.downloadImageOutVoList);
+            console.log(_this.imageInformation);
+          }
+          
+        },
+        function(err) {
+          console.log(err);
+           
+        }
+      );
+      //获取图片信息 end
+    },
+    //base64路径拼接
+    base64URL(param){
+      return 'data:image/jpg;base64,' + param;
+    },
     //页面跳转
     changePage(url) {
       this.pageJump(url);
