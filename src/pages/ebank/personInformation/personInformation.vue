@@ -4,7 +4,7 @@
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
-    <view class="container">
+    <view class="pf-content container">
       <view class="uni-flex uni-row operationList">
         <view class="flex-item" @click="add(1)">
           <view class="topPart">
@@ -470,7 +470,7 @@ export default {
 .container{
   box-sizing: border-box;
   height: 100%;
-  padding-top: 130rpx;
+  // padding-top: 130rpx;
   overflow-y: auto;
 }
 .operationList{

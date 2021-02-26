@@ -77,12 +77,34 @@
     }
   }
 }
-  //间隔头部标题
+//间隔头部标题
+// .pf-content{
+//   padding-top: calc(constant(safe-area-inset-top) + 20rpx);
+//   padding-top: calc(env(safe-area-inset-top) + 20rpx);
+//   padding-bottom: calc(constant(safe-area-inset-bottom) + 10rpx);
+//   padding-bottom: calc(env(safe-area-inset-bottom) + 10rpx);
+// }
+// .pf-content40{
+//   padding-top: calc(constant(safe-area-inset-top) + 40rpx);
+//   padding-top: calc(env(safe-area-inset-top) + 40rpx);
+// }
+// .pf-content120{
+//   padding-top: calc(constant(safe-area-inset-top) + 120rpx);
+//   padding-top: calc(env(safe-area-inset-top) + 120rpx);
+// }
+// .pf-content130{
+//   padding-top: calc(constant(safe-area-inset-top) + 130rpx);
+//   padding-top: calc(env(safe-area-inset-top) + 130rpx);
+// }
+// .pf-content160{
+//   padding-top: calc(constant(safe-area-inset-top) + 160rpx);
+//   padding-top: calc(env(safe-area-inset-top) + 160rpx);
+// }
 .pf-content{
-  padding-top: calc(constant(safe-area-inset-top) + 20rpx);
-  padding-top: calc(env(safe-area-inset-top) + 20rpx);
-  padding-bottom: calc(constant(safe-area-inset-bottom) + 10rpx);
-  padding-bottom: calc(env(safe-area-inset-bottom) + 10rpx);
+  padding-top: calc(constant(safe-area-inset-top) + 30rpx);
+  padding-top: calc(env(safe-area-inset-top) + 30rpx);
+  padding-bottom: calc(constant(safe-area-inset-bottom) + 20rpx);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 20rpx);
 }
 .pf-content40{
   padding-top: calc(constant(safe-area-inset-top) + 40rpx);
@@ -97,9 +119,57 @@
   padding-top: calc(env(safe-area-inset-top) + 130rpx);
 }
 .pf-content160{
-  padding-top: calc(constant(safe-area-inset-top) + 160rpx);
-  padding-top: calc(env(safe-area-inset-top) + 160rpx);
+  padding-top: calc(constant(safe-area-inset-top) + 180rpx);
+  padding-top: calc(env(safe-area-inset-top) + 180rpx);
 }
+
+// 兼容iphoneX 
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+  .pf-title{
+    background-color: rgb(255, 0, 200);
+  }
+  .pf-content{
+    padding-top: calc(constant(safe-area-inset-top) + 10rpx);
+    padding-top: calc(env(safe-area-inset-top) + 10rpx);
+    padding-bottom: calc(constant(safe-area-inset-bottom));
+    padding-bottom: calc(env(safe-area-inset-bottom));
+  }
+  .pf-content130{
+    padding-top: calc(constant(safe-area-inset-top) + 120rpx);
+    padding-top: calc(env(safe-area-inset-top) + 120rpx);
+  }
+  .pf-content160{
+    padding-top: calc(constant(safe-area-inset-top) + 160rpx);
+    padding-top: calc(env(safe-area-inset-top) + 160rpx);
+  }
+}
+
+// // 兼容iphone4/4s 
+// @media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){
+//   .pf-title{
+//     background-color: red;
+//   }
+// } 
+// // 兼容iphone5
+// @media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){
+//   .pf-title{
+//     background-color: rgb(0, 255, 21);
+//   }
+// } 
+// // 兼容iphone6，iphone7，iphone8s 
+// @media (device-height:667px) and (-webkit-min-device-pixel-ratio:2){
+//   .pf-title{
+//     background-color: rgb(0, 174, 255);
+//   }
+// }
+
+// // 兼容iphone6 Plus,iphone7 Plus,iphone8 Plus 
+// @media (device-height:736px) and (-webkit-min-device-pixel-ratio:2){
+//   .pf-title{
+//     background-color: rgb(76, 0, 255);
+//   }
+// } 
+
 //头部两个固定定位时
 .pf-poifixed{
   position: fixed;
