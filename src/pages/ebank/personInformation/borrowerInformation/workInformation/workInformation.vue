@@ -18,7 +18,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view class="pf-content pf-content160">
+    <view class="pf-content pf-content200">
       <!--个人信息-start-->
       <view class="contract-ul marginT25">
         <view class="contract-li-tips">

@@ -17,7 +17,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view class="pf-content pf-content160 household-content">
+    <view class="pf-content pf-content200 household-content">
       <!--影像信息-start-->
       <view class="form-title">
         <view class="vLine"></view>影像信息
@@ -920,8 +920,7 @@
 <style lang='scss' scoped>
   .uni-container{
     background-color: #f6f8f9;
-    padding-top: 0;  
-    padding-bottom: 30rpx;
+    padding-top: 0;
     .household-content{
       .form-title{
         height: 94rpx;

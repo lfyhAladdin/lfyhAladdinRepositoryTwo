@@ -18,7 +18,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-	<view class="pf-content pf-content160 household-content" :key="timer">
+	<view class="pf-content pf-content200 household-content" :key="timer">
      
       <!--个人信息-start-->
 	 <view v-for="(item,index) in customerConcatList" :key="index+'a'">

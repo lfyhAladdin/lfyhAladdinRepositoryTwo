@@ -18,7 +18,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view class="pf-content pf-content160 household-content">
+    <view class="pf-content pf-content200 household-content">
       <!--影像信息-start-->
       <view class="form-title">
         <view class="vLine"></view>影像信息
