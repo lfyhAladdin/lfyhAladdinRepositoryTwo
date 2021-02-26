@@ -113,21 +113,34 @@
             <textarea placeholder="请输入户籍地址" placeholder-style="color:#c7c9cd" v-model.trim="personInfor.ermanentAddress" auto-height fixed="true"/>
           </view>
         </view>
-        <view class="contract-li" v-if="maturityDateyBoolean">
+        <view class="contract-li" v-if="radioGroup">
+            <view>长期有效</view>
+            <view class="contractRadio">
+              <radio-group @change="radioChange">
+                <label v-for="(item, index) in cardList" :key="item.value">
+                  <view>
+                      <radio :value="item.value" :checked="index === cardcurrent" />
+                  </view>
+                  <view>{{item.name}}</view>
+                </label>
+              </radio-group>
+            </view>
+          </view>
+        <view class="contract-li">
           <view>证件到期日</view>
           <view>
-            <picker mode="date" :value="personInfor.date" :start="startDate" :end="endDate" @change="bindDateChange">
+            <picker mode="date" :value="personInfor.date" :disabled="maturityDateyBoolean" :start="startDate" :end="endDate" @change="bindDateChange">
               {{personInfor.date}}
             </picker>
             <img src="@/static/images/firstroom/formChooseArrow.svg" />
           </view>
         </view>
-         <view class="contract-li" v-if="!maturityDateyBoolean">
-          <view>证件到期日</view>
-          <view>
-            <text>长期</text>
-          </view>
-        </view>
+        <!-- //  <view class="contract-li" v-if="!maturityDateyBoolean">
+        //   <view>证件到期日</view>
+        //   <view>
+        //     <text>长期</text>
+        //   </view>
+        // </view> -->
       </view>
       <!--个人信息-end-->
       <view class="contract-button">
@@ -144,7 +157,10 @@
         mapMutations
     } from 'vuex'
     import text from '../../../../component/text/text.vue';
-    import {RSAencode, RSAdecode} from '@/static/js/util.js';
+    import {
+        RSAencode,
+        RSAdecode
+    } from '@/static/js/util.js';
     export default {
         components: {
             text
@@ -202,8 +218,17 @@
                 isJump: true,
                 busiSerialNoVal: '', //业务流水号
                 busiStartDateVal: '', //业务日期
-                maturityDateyBoolean: true, //长期false 日历框true
-                borrowerIdcard:"",
+                maturityDateyBoolean: false, //长期false 日历框true   //true不可选false可选
+                borrowerIdcard: "",
+                radioGroup: false, //true显示，false不显示
+                cardList: [{
+                    value: 'true',
+                    name: '是'
+                }, {
+                    value: 'false',
+                    name: '否'
+                }, ], //身份证是否为长期
+                cardcurrent: 1
             }
         },
         onLoad(option) {
@@ -243,12 +268,12 @@
                 yu.showModal({
                     title: '确定返回吗？',
                     content: '数据还未提交，点确定后编辑过的内容将不保存！',
-                    success: (res)=> {
+                    success: (res) => {
                         if (res.confirm) {
-                        // uni.navigateBack();
-                        this.pageJump('personInformation/personInformation')
+                            // uni.navigateBack();
+                            this.pageJump('personInformation/personInformation')
                         } else if (res.cancel) {
-                        console.log('用户点击取消');
+                            console.log('用户点击取消');
                         }
                     }
                 });
@@ -303,10 +328,26 @@
                         foxsdk.gallery.imageBase64(ret.payload.ImagePath, entry => {
                             that.IDReverseBase64 = entry.payload.imageBase64;
                         });
-                        let dateString = ret.payload.TermofValidity;
-                        let index = dateString.lastIndexOf("\-");
-                        dateString = dateString.substring(index + 1, dateString.length);
-                        that.personInfor.date = dateString.replace(/\./g, '-');
+                        // let dateString = ret.payload.TermofValidity;
+                        // let index = dateString.lastIndexOf("\-");
+                        // dateString = dateString.substring(index + 1, dateString.length);
+                        // that.personInfor.date = dateString.replace(/\./g, '-');
+
+
+                        let dateStringIndex = ret.payload.TermOfValidity.lastIndexOf("\-");
+                        let dateString = ret.payload.TermOfValidity;
+                        dateString = dateString.substring(dateStringIndex + 1, dateString.length);
+                        if (dateString.length > 2) {
+                            this.maturityDateyBoolean = false;
+                            this.radioGroup = false;
+                            this.cardcurrent = 1;
+                            this.personInfor.date = dateString.replace(/\./g, "-");
+                        } else {
+                            this.maturityDateyBoolean = true;
+                            this.radioGroup = true;
+                            this.cardcurrent = 0;
+                        }
+
 
                     }
                 });
@@ -573,8 +614,8 @@
                         // that.busiSerialNoVal = resData.imageBatchNo; //业务流水号
                         // that.busiStartDateVal = resData.imageUpLoadDate; //业务日期
                         that.personInfor.name = resData.customerName;
-                        that.personInfor.idcard =resData.certId;
-                        that.borrowerIdcard=RSAdecode(resData.certId);
+                        that.personInfor.idcard = resData.certId;
+                        that.borrowerIdcard = RSAdecode(resData.certId);
                         if (resData.gender == '1') {
                             that.personInfor.sex = '男'
                         } else if (resData.gender == '2') {
@@ -587,10 +628,14 @@
                             that.personInfor.date = resData.idexpiry.replace(/\//g, '-');
                             let dataString = resData.idexpiry.substring(0, 4);
                             if (dataString == '9999') {
-                                that.maturityDateyBoolean = false;
-                            } else {
                                 that.maturityDateyBoolean = true;
+                                that.radioGroup = true;
+                                that.cardcurrent = 0;
+                            } else {
+                                that.maturityDateyBoolean = false;
                                 that.personInfor.date = resData.idexpiry.replace(/\//g, '-');
+                                that.radioGroup = false;
+                                that.cardcurrent = 1;
                             }
                         }
 
@@ -630,7 +675,21 @@
                 month = month > 9 ? month : '0' + month;
                 day = day > 9 ? day : '0' + day;
                 return `${year}-${month}-${day}`;
-            }
+            },
+            //长期有效选择
+            radioChange(evt) {
+                if (evt.target.value == 'false') {
+                    this.maturityDateyBoolean = false;
+                } else {
+                    this.maturityDateyBoolean = true;
+                }
+                for (let i = 0; i < this.cardList.length; i++) {
+                    if (this.cardList[i].value === evt.target.value) {
+                        this.cardcurrent = i;
+                        break;
+                    }
+                }
+            },
         },
         mounted() {
 

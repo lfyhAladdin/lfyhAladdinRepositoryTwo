@@ -479,6 +479,13 @@ export default {
     searchpf() {
       this.switchDrawer = true;
     },
+    showToastFun(e){
+        yu.showToast({
+          title: e,
+          icon: 'none',
+          duration: 3000
+        });
+      },
     //业务品种转换
     businessList() {
       let obj = JSON.parse(JSON.stringify(this.businessTypeList));
@@ -763,9 +770,11 @@ export default {
           }
         } else {
           console.log("正在加载中，不允许上拉加载");
+          this.showToastFun('正在加载中！');
         }
       } else {
         console.log("没有更多数据，不允许上拉加载");
+        this.showToastFun('没有更多数据！');
       }
     },
     //下拉刷新
