@@ -10,32 +10,23 @@
   top: 0;
   left: 0;
   right: 0;
-  background: #fff;
-  // padding: 50rpx 0 20rpx 0;
-  // padding-top: 70rpx;
-  padding-top: var(--window-top);
+  // background: #E89F73;
+  background: #FFFFFF;
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
   padding-bottom: 20rpx;
   z-index: 9999;
   overflow: hidden;
-}
-.pf-title-ios{
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
 }
 .pf-titleTwo{
   img{
     width: 20rpx;
     position: absolute;
-    top: var(--window-top);
+    top: constant(safe-area-inset-top);
+    top: env(safe-area-inset-top);
     left: 0;
     bottom: 30rpx;
     padding: 20rpx 30rpx;
-  }
-}
-.pf-titleTwo-ios{
-  img{  
-    top: constant(safe-area-inset-top);
-    top: env(safe-area-inset-top);
   }
 }
 .pf-titleThree{
@@ -73,10 +64,6 @@
       left: 14rpx;
       padding: 0;
     }
-    // .imgSearch-ios{
-    //   top: constant(safe-area-inset-top);
-    //   top: env(safe-area-inset-top);
-    // }
     .imgCross{
       height: 60rpx;
       position: absolute;
@@ -89,24 +76,32 @@
         margin-right: 0;
       }
     }
-    // .imgCross-ios{
-    //   top: constant(safe-area-inset-top);
-    //   top: env(safe-area-inset-top);
-    // }
   }
 }
-  //间隔头部标题
+//间隔头部标题
 .pf-content{
-  // padding-top: 70rpx;
-  padding-top: calc(var(--window-top) + 20rpx);
-  padding-bottom: calc(var(--window-bottom) + 50rpx);
+  padding-top: calc(constant(safe-area-inset-top) + 30rpx);
+  padding-top: calc(env(safe-area-inset-top) + 30rpx);
+  padding-bottom: calc(constant(safe-area-inset-bottom) + 20rpx);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 20rpx);
 }
-.pf-content-ios{
-  padding-top: calc(constant(safe-area-inset-top) + 20rpx);
-  padding-top: calc(env(safe-area-inset-top) + 20rpx);
-  padding-bottom: calc(constant(safe-area-inset-bottom) + 10rpx);
-  padding-bottom: calc(env(safe-area-inset-bottom) + 10rpx);
+.pf-content40{
+  padding-top: calc(constant(safe-area-inset-top) + 50rpx);
+  padding-top: calc(env(safe-area-inset-top) + 50rpx);
 }
+.pf-content120{
+  padding-top: calc(constant(safe-area-inset-top) + 130rpx);
+  padding-top: calc(env(safe-area-inset-top) + 130rpx);
+}
+.pf-content130{
+  padding-top: calc(constant(safe-area-inset-top) + 130rpx);
+  padding-top: calc(env(safe-area-inset-top) + 130rpx);
+}
+.pf-content200{
+  padding-top: calc(constant(safe-area-inset-top) + 200rpx);
+  padding-top: calc(env(safe-area-inset-top) + 200rpx);
+}
+
 //头部两个固定定位时
 .pf-poifixed{
   position: fixed;
@@ -414,24 +409,92 @@
 
 //保存、删除按钮
 .contract-button{
-  // padding: 0 65rpx;
   padding-left: 65rpx;
   padding-right: 65rpx;
-  padding-bottom: constant(safe-area-inset-bottom);  
-  padding-bottom: env(safe-area-inset-bottom);
-  // padding-bottom: var(--window-bottom);
   uni-button{
     border-radius: 50rpx;
     margin-top: 50rpx;
     box-shadow: 0 10rpx 23rpx 0 rgba(59, 134, 247, 0.4);
   }
 }
-.contract-button-an{
-  // padding-bottom: 70rpx !important;
-  padding-bottom: var(--window-bottom) !important;
-}
 
 //不出现滚动条
 ::-webkit-scrollbar {
   display: none;
+}
+
+// 兼容iphoneX ,xs
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+  .pf-content{
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pf-content40{
+    padding-top: calc(constant(safe-area-inset-top) + 10rpx);
+    padding-top: calc(env(safe-area-inset-top) + 10rpx);
+  }
+  .pf-content120{
+    padding-top: calc(constant(safe-area-inset-top) + 110rpx);
+    padding-top: calc(env(safe-area-inset-top) + 110rpx);
+  }
+  .pf-content130{
+    padding-top: calc(constant(safe-area-inset-top) + 100rpx);
+    padding-top: calc(env(safe-area-inset-top) + 100rpx);
+  }
+  .pf-content200{
+    padding-top: calc(constant(safe-area-inset-top) + 160rpx);
+    padding-top: calc(env(safe-area-inset-top) + 160rpx);
+  }
+}
+ // xr
+ @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) {
+  .pf-content{
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pf-content40{
+    padding-top: calc(constant(safe-area-inset-top) + 10rpx);
+    padding-top: calc(env(safe-area-inset-top) + 10rpx);
+  }
+  .pf-content120{
+    padding-top: calc(constant(safe-area-inset-top) + 110rpx);
+    padding-top: calc(env(safe-area-inset-top) + 110rpx);
+  }
+  .pf-content130{
+    padding-top: calc(constant(safe-area-inset-top) + 100rpx);
+    padding-top: calc(env(safe-area-inset-top) + 100rpx);
+  }
+  .pf-content200{
+    padding-top: calc(constant(safe-area-inset-top) + 160rpx);
+    padding-top: calc(env(safe-area-inset-top) + 160rpx);
+  }
+}
+ // xs max
+ @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+  .pf-content{
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pf-content40{
+    padding-top: calc(constant(safe-area-inset-top) + 10rpx);
+    padding-top: calc(env(safe-area-inset-top) + 10rpx);
+  }
+  .pf-content120{
+    padding-top: calc(constant(safe-area-inset-top) + 110rpx);
+    padding-top: calc(env(safe-area-inset-top) + 110rpx);
+  }
+  .pf-content130{
+    padding-top: calc(constant(safe-area-inset-top) + 100rpx);
+    padding-top: calc(env(safe-area-inset-top) + 100rpx);
+  }
+  .pf-content200{
+    padding-top: calc(constant(safe-area-inset-top) + 160rpx);
+    padding-top: calc(env(safe-area-inset-top) + 160rpx);
+  }
 }

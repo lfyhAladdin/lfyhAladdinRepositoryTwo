@@ -1,7 +1,7 @@
 <template>
   <view class="uni-container">
     <view class="pf-poifixed">
-      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+      <view class="pf-title pf-titleThree">
         <img src="@/static/images/profession/pf-back.svg" @click="backpf">
         <text>授信业务</text>
         <img src="@/static/images/profession/pf-screening.svg" class="pf-imgRig" @click="searchpf">
@@ -26,7 +26,7 @@
         </scroll-view>
       </view>
     </view>
-    <view :class="phoneSystem ?'pf-content-ios appro-content-ios':'pf-content appro-content'"> 
+    <view class="pf-content pf-content130 appro-content"> 
       <!--tab页签内容-->
       <view class="tab-ul">
         <view class="tab-li" v-for="item in tabArr[applyPhase]" :key="item.serialNo" @click="toPerfectInformation(item)">
@@ -521,16 +521,10 @@
   .uni-container{
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;
-    .appro-content,
-    .appro-content-ios{
-      padding-top: calc(var(--window-top) + 130rpx);
+    .appro-content{
       .tab-ul{
         padding: 24rpx 30rpx;
       }
-    }
-    .appro-content-ios{
-      padding-top: calc(constant(safe-area-inset-top) + 130rpx);
-      padding-top: calc(env(safe-area-inset-top) + 130rpx);
     }
   }
 

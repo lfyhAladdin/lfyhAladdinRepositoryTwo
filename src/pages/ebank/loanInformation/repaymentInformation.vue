@@ -1,7 +1,7 @@
 <template>
   <view class="pending-order">
     <view class="pf-poifixed">
-        <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+        <view class="pf-title pf-titleThree">
             <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
             <text>{{title}}</text>
             <text class="pf-text" @click="submitform('TS')">暂存</text>
@@ -12,7 +12,7 @@
         </view>
     </view>
       <!--个人信息-start-->
-      <view :class="phoneSystem ?'pf-content-ios person-infor-ios':'pf-content person-infor'">
+      <view class="pf-content pf-content120 person-infor">
        
         <view class="account-information">
          <text class="account-title"></text>
@@ -55,7 +55,7 @@
         </view> -->
         
         <!--个人信息-end-->
-        <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+        <view class="contract-button">
           <button type="primary" @click="submitform('save')">下一步</button>
         </view>
       </view>
@@ -109,7 +109,7 @@ export default {
     console.log(this.queryApplyInfoList,"贷款申请信息");
     that.isMadePayPlan = this.queryApplyInfoList.isMadePayPlan; //定制还款计划 1是 2否
     that.deductionNumber=RSAdecode(this.queryApplyInfoList.payAcctChNo);//扣款账号子序号
-    that.deduction=this.queryApplyInfoList.payAcctNo;//扣款账号
+    that.deduction=RSAdecode(this.queryApplyInfoList.payAcctNo);//扣款账号
     // this.productIndex=this.queryApplyInfoList.corpusPayMethod;//还款方式
     // that.applyNo=this.queryApplyInfoList.applyNo;//申请编号
     this.businessTypeData=this.queryApplyInfoList.businessType;
@@ -404,9 +404,7 @@ ul li {
     background-color: #ffffff;
   }
 }
-.person-infor,
-.person-infor-ios {
-  padding-top: calc(var(--window-top) + 120rpx);
+.person-infor{
   background: #ffffff;
   padding-left: 30rpx;
   .person-infor-one {
@@ -490,10 +488,6 @@ ul li {
       margin-right: 20rpx;
     }
   }
-}
-.person-infor-ios{
-    padding-top: calc(constant(safe-area-inset-top) + 120rpx);
-    padding-top: calc(env(safe-area-inset-top) + 120rpx);
 }
 
 .active {

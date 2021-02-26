@@ -1,6 +1,6 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/creditsubmit/wBackArrow.svg" @click="backpf">
       <text>提交中</text>
     </view>
@@ -36,10 +36,10 @@
         </view>
         <view class="center-buttom">
           <view v-if="submitIng">正在执行风险探测，请稍候… <br/>请勿退出此页面，否则风险探测会中止</view>
-          <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'" v-if="submitSuccess">
+          <view class="contract-button" v-if="submitSuccess">
             <button type="primary" @click="nextAjax">下一步</button>
           </view>
-          <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'" v-if="submitError">
+          <view class="contract-button" v-if="submitError">
             <button type="primary" @click="knowAjax">我知道了</button>
           </view>
         </view>
@@ -67,7 +67,7 @@
             </view>
           </view>
         </view>
-        <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+        <view class="contract-button">
           <button type="primary" @click="submitLendApply">确认提交</button>
         </view>
       </view>

@@ -1,11 +1,11 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+    <view class="pf-title pf-titleThree">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>押品信息</text>
       <text class="pf-text" @click="updateApplyInfo('TS')">暂存</text>
     </view>
-    <view :class="phoneSystem ?'pf-content-ios collateral-content-ios':'pf-content collateral-content'">
+    <view class="pf-content pf-content40 collateral-content">
       <view class="contract-ul">
         <view class="contract-li">
           <view class="beforeRed">押品类型</view>
@@ -250,7 +250,7 @@
           </view>
         </view>
       </view>
-      <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+      <view class="contract-button">
         <button type="primary" @click="updateApplyInfo('save')">保存</button>
         <button type="primary" plain="true" @click="updateApplyInfo('delete')">删除</button>
       </view>
@@ -967,9 +967,7 @@
   .uni-container{
     background-color: #FFFFFF;
     padding: 0 0 30rpx 0;
-    .collateral-content,
-    .collateral-content-ios{
-      padding-top: calc(var(--window-top) + 40rpx);
+    .collateral-content{
       .contract-li{
         .imgCross{
           img{
@@ -1010,10 +1008,6 @@
         
       }
 
-    }
-    .collateral-content-ios{
-      padding-top: calc(constant(safe-area-inset-top) + 40rpx);
-      padding-top: calc(env(safe-area-inset-top) + 40rpx);
     }
   }
 </style>

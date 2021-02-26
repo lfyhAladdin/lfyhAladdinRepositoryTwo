@@ -1,10 +1,10 @@
 <template>
   <view class="pending-order">
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
     </view>
-    <view class="orderlist" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view class="pf-content orderlist">
       <view class="order" v-for="(orderOne,index) in orderlist" :key="index">
         <view class="order-title">
           <text class="text-left">{{orderOne.businessTypeName}}</text><text class="text-right">待确认</text>

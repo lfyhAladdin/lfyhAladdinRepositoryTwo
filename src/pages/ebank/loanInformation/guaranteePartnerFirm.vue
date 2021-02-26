@@ -1,11 +1,11 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/profession/pf-back.svg" @tap="navigateBack">
       <text>合作商账号</text>
     </view>
     
-    <view :class="phoneSystem ?'pf-content-ios':'pf-content'" class="mortgagor-content">
+    <view class="pf-content mortgagor-content">
       <view class="guaranty-ul" v-for="(item,index) in accountList" :key="item.buildingNo">
         <view class="mortgagor-title">
         <text>合作商账号：</text>

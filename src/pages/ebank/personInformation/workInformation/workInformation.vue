@@ -1,7 +1,7 @@
 <template>
   <view class="uni-container">
     <view class="pf-poifixed">
-      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+      <view class="pf-title pf-titleThree">
         <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
         <text>{{identity}}信息</text>
         <text class="pf-text" @click="submit(false)">暂存</text>
@@ -17,7 +17,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-    <view :class="phoneSystem ?'pf-content-ios work-content-ios':'pf-content work-content'">
+    <view class="pf-content pf-content200">
       <!--个人信息-start-->
       <view class="contract-ul marginT25">
         <view class="contract-li-tips">
@@ -79,7 +79,7 @@
         </view>
       </view>
       <!--个人信息-end-->
-      <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+      <view class="contract-button">
         <button type="primary" @click="submit(true)">提交</button>
       </view>
     </view>
@@ -370,14 +370,6 @@
   .uni-container{
     background-color: #f6f8f9;
     padding: 0 0 30rpx 0;
-    .work-content,
-    .work-content-ios{
-      padding-top: calc(var(--window-top) + 160rpx);
-    }
-    .work-content-ios{
-      padding-top: calc(constant(safe-area-inset-top) + 160rpx);
-      padding-top: calc(env(safe-area-inset-top) + 160rpx);
-    }
   }
   .marginT25{
     margin-top: 25rpx;

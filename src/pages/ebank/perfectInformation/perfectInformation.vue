@@ -1,11 +1,11 @@
 <template>
   <view class="information-box">
-    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+    <view class="pf-title pf-titleThree">
       <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
       <text>{{title}}</text>
       <img src="@/static/images/firstroom/share.svg" @click="showShareFunction" class="ch-share">
     </view>
-    <view :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view class="pf-content">
       <view class="pinformations">
         <view class="pinformation-one">
           <view class="pinformation"  @click="goDetailPage(personInformation,false)">

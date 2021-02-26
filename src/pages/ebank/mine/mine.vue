@@ -1,10 +1,10 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ?'pf-title pf-title-ios':'pf-title'">
+    <view class="pf-title">
       <text>我的</text>
       <!--<text></text>-->
     </view>
-    <view class="mine-title" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view class="pf-content mine-title">
       <view class="mine-title-avatar"><img :src=useravatar /></view>
       <view class="mine-title-content">
         <view class="mineName"><text class="user-name">{{username}}</text><text class="user-position">{{position}}</text></view>

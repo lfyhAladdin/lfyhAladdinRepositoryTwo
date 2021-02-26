@@ -5,11 +5,11 @@
       <text>担保合同</text>
       <text class="pf-text" @click="updateApplyInfo('TS')">暂存</text>
     </view> -->
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>担保合同</text>
     </view>
-    <view :class="phoneSystem ?'pf-content-ios contract-content-ios':'pf-content contract-content'">
+    <view class="pf-content pf-content40 contract-content">
       <view class="contract-title">
         <text class="contract-title-text"></text>
         <text>担保合同信息</text>
@@ -98,7 +98,7 @@
           <img src="@/static/images/perfectInformation/formChooseArrow.svg" class="guaranty-liImg">
         </view>
       </view>
-      <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+      <view class="contract-button">
         <button type="primary" @click="updateApplyInfo('save')">保存</button>
         <button type="primary" plain="true" @click="updateApplyInfo('delete')">删除</button>
       </view>
@@ -423,10 +423,7 @@
   @import '~@styles/uni-nvue.css';
   .uni-container{
     padding: 0 0 30rpx 0;
-    .contract-content,
-    .contract-content-ios{
-      padding-top: calc(var(--window-top) + 40rpx);
-      // padding-top: 130rpx;
+    .contract-content{
       .contract-title{
         padding: 30rpx 40rpx;
         line-height: 32rpx;
@@ -469,10 +466,6 @@
         margin-top: 30rpx;
         padding: 0 30rpx;
       }
-    }
-    .contract-content-ios{
-      padding-top: calc(constant(safe-area-inset-top) + 40rpx);
-      padding-top: calc(env(safe-area-inset-top) + 40rpx);
     }
   }
 </style>

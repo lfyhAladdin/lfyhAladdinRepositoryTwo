@@ -1,7 +1,7 @@
 <template>
 <view class="pending-order">
     <view class="pf-poifixed">
-        <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+        <view class="pf-title pf-titleThree">
             <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
             <text>{{title}}</text>
             <text class="pf-text" @click="submitform('TS')">暂存</text>
@@ -14,7 +14,7 @@
 
 
  <!--个人信息-start-->
-      <view :class="phoneSystem ?'pf-content-ios person-infor-ios':'pf-content person-infor'">
+      <view class="pf-content pf-content120 person-infor">
        
         
         <view class="person-infor-one">
@@ -75,7 +75,7 @@
          
 
         <!--个人信息-end-->
-        <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+        <view class="contract-button">
             <button type="primary" @click="submitform('save')">下一步</button>
         </view>
       </view>
@@ -456,9 +456,7 @@ console.log(this.businessRate);
             background-color: #ffffff;
         }
     }
-    .person-infor,
-    .person-infor-ios {
-        padding-top: calc(var(--window-top) + 120rpx);
+    .person-infor{
         background: #ffffff;
         padding-left: 30rpx;
         .person-infor-one {
@@ -563,10 +561,6 @@ console.log(this.businessRate);
                 padding-top: 30rpx;
             }
         }
-    }
-    .person-infor-ios{
-        padding-top: calc(constant(safe-area-inset-top) + 120rpx);
-        padding-top: calc(env(safe-area-inset-top) + 120rpx);
     }
     .active {
         background-color: #edf4ff;

@@ -1,11 +1,11 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+    <view class="pf-title pf-titleThree">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>选择抵押人</text>
       <text class="pf-text" @click="backContract">确定</text>
     </view>
-    <view class="mortgagor-content" :class="phoneSystem ?'pf-content-ios':'pf-content'">
+    <view class="pf-content mortgagor-content">
       <view class="guaranty-ul">
         <view class="mortgagor-title">其他担保人</view>
         <view class="guaranty-li" v-for="(item,index) in viceMortgagorList" :key="item.certId">

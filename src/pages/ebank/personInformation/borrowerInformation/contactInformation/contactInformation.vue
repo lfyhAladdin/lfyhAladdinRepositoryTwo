@@ -1,7 +1,7 @@
 <template>
   <view class="uni-container">
     <view class="pf-poifixed">
-      <view :class="phoneSystem ?'pf-title pf-title-ios pf-titleThree':'pf-title pf-titleThree'">
+      <view class="pf-title pf-titleThree">
         <img src="@/static/images/firstroom/backArrow.svg" @click="navigateBack">
         <text>借款人信息</text>
         <text class="pf-text" @click="submit(false)">暂存</text>
@@ -18,7 +18,7 @@
       </view>
       <!--信息完善进度条-end-->
     </view>
-	<view :class="phoneSystem ?'pf-content-ios household-content-ios':'pf-content household-content'" :key="timer">
+	<view class="pf-content pf-content200 household-content" :key="timer">
      
       <!--个人信息-start-->
 	 <view v-for="(item,index) in customerConcatList" :key="index+'a'">
@@ -69,7 +69,7 @@
 	  
     
       <!--个人信息-end-->
-      <view :class="phoneSystem ? 'contract-button':'contract-button contract-button-an'">
+      <view class="contract-button">
         <button type="primary" @click="submit(true)">提交</button>
       </view>
     </view>
@@ -360,9 +360,7 @@
     background-color: #f6f8f9;
     padding-top: 0;  
     padding-bottom: 30rpx;
-    .household-content,
-	.household-content-ios{
-      padding-top: calc(var(--window-top) + 160rpx);
+    .household-content{
      
 .form-title {
 		height: 94rpx;
@@ -405,10 +403,6 @@
         }
       }
     }
-	.household-content-ios{
-		padding-top: calc(constant(safe-area-inset-top) + 160rpx);
-      	padding-top: calc(env(safe-area-inset-top) + 160rpx);
-	}
   }
   .marginT25{
     margin-top: 25rpx;

@@ -1,10 +1,10 @@
 <template>
   <view class="uni-container">
-    <view :class="phoneSystem ? 'pf-title pf-title-ios pf-titleTwo pf-titleTwo-ios':'pf-title pf-titleTwo'">
+    <view class="pf-title pf-titleTwo">
       <img src="@/static/images/profession/pf-back.svg" @click="backpf">
       <text>征信信息</text>
     </view>
-    <view class="appro-content" :class="phoneSystem ?'pf-content-ios':'pf-content'"> 
+    <view class="pf-content appro-content"> 
       <!--tab页签内容-->
       <view class="tab-ul">
         <view class="tab-li">
