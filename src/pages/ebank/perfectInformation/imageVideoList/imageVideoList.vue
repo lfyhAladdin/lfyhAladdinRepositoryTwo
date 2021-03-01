@@ -345,6 +345,9 @@ export default {
     },
     //上传图片图片页面效果处理
     uploadImageResult(type,base64,filename){
+      alert(type);
+      alert(base64);
+      alert(filename);
       let _this=this;
       let base64url='data:image/jpeg;base64,' + base64;
       let param={
@@ -356,13 +359,15 @@ export default {
         "originName":filename
       };
       for(let i=0;i<_this.imagelists.length; i++){
-        if(_this.imagelists[i].busiFileType === type){
+        alert(this.imagelists[i].busiFileType == type)
+        if(_this.imagelists[i].busiFileType == type){
           _this.imagelists[i].downloadImageDtoList=_this.imagelists[i].downloadImageDtoList.concat(param);
         }
       }
 
       let allimagelist=_this.imageInformation;
       for(let j=0; j<allimagelist.length ;j++){
+        alert(type.indexOf(allimagelist[j].id));
         if(type.indexOf(allimagelist[j].id) != -1){
           allimagelist[j].list=_this.imagelists;
         }
