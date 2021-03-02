@@ -89,143 +89,101 @@ export default {
   },
   actions: {
     businessNumCommit(context,val){
-      let data1 = {
+      let data = {
         userID: val.userID, //客户经理编号
         orgID: val.orgID, //客户经理所属机构编号
-        applyPhase: "01,02,03,04" //申请阶段
-      };
-      let data2 = {
-        userID: val.userID, //客户经理编号
-        orgID: val.orgID //客户经理所属机构编号
-      };
-      let data3 = {
-        userId: val.userID, //客户经理编号
-        orgID: val.orgID, //客户经理所属机构编号
-        putoutStatusCode: "01,02,03,04" //申请阶段
-      };
-      let data4 = {
-        userID: val.userID, //客户经理编号
-        orgID: val.orgID //客户经理所属机构编号
-      };
-      let data5 = {
-        userId: val.userID, //客户经理编号
-        orgId: val.orgID, //客户经理所属机构编号
-        applyPhase: "01,02" //合同阶段
-      };
-      let data6 = {
-        userID: val.userID, //客户经理编号
-        orgID: val.orgID //客户经理所属机构编号
-      };
-      console.log(val)
-      //订单数量查询
-      $Vue.interfaceRequest('/api/orderListQuantityQuery/queryOrderListQuantity',data6,"post",(res)=>{
+        applyPhase: "01,02,03,04", //申请阶段(授信申请)
+        applyPhase2: "01,02", //申请阶段(合同)
+        putoutStatusCode: "01,02,03,04" //申请阶段(放款申请)
+      }
+      // 1.授信申请各阶段数量统计查询
+      // 2.放款申请各阶段数量查询
+      // 3.待放款业务数量查询
+      // 4.业务合同数量查询
+      // 5.定价审批申请列表数量查询
+      // 6.订单列表数量查询
+      $Vue.interfaceRequest('/api/queryHomePageCount/query',data,"get",(res)=>{
         console.log(res)
-        if(res.data.data.returnCode == 'Failed'){
-          context.commit("businessNumReplace", 0);
+        if(res.data.code != 200){
           return;
         }
-        let obj = {
-          name : 'orderPending',
-          number: res.data.data.number
-        }
-        context.commit("businessNumReplace",obj);
+        let arrList = res.data.data.homePageCountDtoList;
+        arrList.forEach(item=>{
+          if(item.flag == '1'){
+            if(item.returnCode == 'Failed'){
+              context.commit("numberPiP", '');
+              return;
+            }
+            context.commit("numberPiP", {
+              'str': item.applyNumber,
+              'symbol': ':',
+              'obj': {
+                '待处理申请': 'creditSubmit',
+                '审批中申请': 'creditOngoing',
+                '审批通过申请': 'creditPass',
+                '已否决申请': 'creditVeto',
+              }
+            });
+          }else if(item.flag == '2'){
+            if(item.returnCode == 'Failed'){
+              context.commit("numberPiP", '');
+              return;
+            }
+            context.commit("numberPiP", {
+              'str': item.applyNumber,
+              'symbol': '：',
+              'obj': {
+                '待处理': 'issueSubmit',
+                '审批中': 'issueOngoing',
+                '审批通过': 'issuePass',
+                '审批否决': 'issueVeto',
+              }
+            });
+          }else if(item.flag == '3'){
+            if(item.returnCode == 'Failed'){
+              context.commit("businessNumReplace", 0);
+              return;
+            }
+            context.commit("businessNumReplace", {
+              name : 'issuePending',
+              number: item.applyNumber
+            });
+          }else if(item.flag == '4'){
+            if(item.returnCode == 'Failed'){
+              context.commit("numberPiP", '');
+              return;
+            }
+            context.commit("numberPiP", {
+              'str': item.applyNumber,
+              'symbol': '：',
+              'obj': {
+                '待生效合同': 'contractSigned',
+                '已生效合同': 'contractSgd',
+              }
+            });
+          }else if(item.flag == '5'){
+            if(item.returnCode == 'Failed'){
+              context.commit("businessNumReplace", 0);
+              return;
+            }
+            context.commit("businessNumReplace", {
+              name : 'creditPeoplePricing',
+              number: item.applyNumber
+            });
+          }else{
+            if(item.returnCode == 'Failed'){
+              context.commit("businessNumReplace", 0);
+              return;
+            }
+            context.commit("businessNumReplace", {
+              name : 'orderPending',
+              number: item.applyNumber
+            });
+          } 
+        })
       },function(err){
         console.log(err)
-      });
-      //授信申请各阶段数量统计
-      $Vue.interfaceRequest('/api/credit/queryApplyNumber',data1,"get",(res)=>{
-        console.log(res)
-        if(res.data.data.returnCode == 'Failed'){
-          context.commit("numberPiP", '');
-          return;
-        };
-        let data = {
-          'str': res.data.data.applyNumber,
-          'symbol': ':',
-          'obj': {
-            '待处理申请': 'creditSubmit',
-            '审批中申请': 'creditOngoing',
-            '审批通过申请': 'creditPass',
-            '已否决申请': 'creditVeto',
-          }
-        };
-        context.commit("numberPiP",data)
-        
-      },function(err){
-        console.log(err)
-      });
-      //定价审批申请数量查询
-      $Vue.interfaceRequest('/api/creditprice/querypriceapprapplycount',data2,"get",(res)=>{
-        console.log(res)
-        if(res.data.data.returnCode == 'Failed'){
-          context.commit("businessNumReplace", 0);
-          return;
-        };
-        let obj = {
-          name : 'creditPeoplePricing',
-          number: res.data.data.number
-        }
-        context.commit("businessNumReplace",obj);
-      },function(err){
-        console.log(err)
-      });
-      //放款申请各阶段数量查询
-      $Vue.interfaceRequest('/api/lend/queryApplyPutoutNumber',data3,"get",(res)=>{
-        console.log(res)
-        if(res.data.data.returnCode == 'Failed'){
-          context.commit("numberPiP", '');
-          return;
-        };
-        let data = {
-          'str': res.data.data.putoutNumber,
-          'symbol': '：',
-          'obj': {
-            '待处理': 'issueSubmit',
-            '审批中': 'issueOngoing',
-            '审批通过': 'issuePass',
-            '审批否决': 'issueVeto',
-          }
-        }
-        context.commit("numberPiP",data)
-      },function(err){
-        console.log(err)
-      });
-      //待放款业务数量查询
-      $Vue.interfaceRequest('/api/lend/queryLendListQuantity',data4,"get",(res)=>{
-        console.log(res)
-        if(res.data.data.returnCode == 'Failed'){
-          context.commit("businessNumReplace", 0);
-          return;
-        };
-        let obj = {
-          name : 'issuePending',
-          number: res.data.data.number
-        }
-        context.commit("businessNumReplace",obj);
-        
-      },function(err){
-        console.log(err)
-      });
-      //业务合同数量查询
-      $Vue.interfaceRequest('/api/contract/busConCountQuery',data5,"post",(res)=>{
-        console.log(res)
-        if(res.data.data.returnCode == 'Failed'){
-          context.commit("numberPiP", '');
-          return;
-        };
-          let data = {
-          'str': res.data.data.contractNumber,
-          'symbol': '：',
-          'obj': {
-            '待生效合同': 'contractSigned',
-            '已生效合同': 'contractSgd',
-          }
-        }
-        context.commit("numberPiP",data)
-      },function(err){
-        console.log(err)
-      });
-      
+      }); 
     },
     businessTypeListCommit(context){
       $Vue.interfaceRequest('/api/dictionary/queryDictionaryList',{

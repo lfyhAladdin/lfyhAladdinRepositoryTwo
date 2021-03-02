@@ -149,22 +149,6 @@
                 liNum: '',
                 liUrl: 'profession/payment/payment',
               },
-              // {
-              //   imgIcon: './static/images/profession/pf-4-4.svg',
-              //   liTitle: '审批通过',
-              //   liId: '03',
-              //   liKey: 'issuePass',
-              //   liNum: '',
-              //   liUrl: 'profession/payment/payment',
-              // },
-              // {
-              //   imgIcon: './static/images/profession/pf-4-5.svg',
-              //   liTitle: '审批否决',
-              //   liId: '04',
-              //   liKey: 'issueVeto',
-              //   liNum: '',
-              //   liUrl: 'profession/payment/payment',
-              // },
             ]
           },
         ], //业务列表
@@ -233,8 +217,7 @@
     background-color: #FFFFFF;
     padding: 0 30rpx;
   }
-  .pf-content,
-  .pf-content-ios{
+  .pf-content{
     // padding-top: 50rpx;
     .pf-module{
       margin: 26rpx 0;
