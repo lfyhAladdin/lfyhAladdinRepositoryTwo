@@ -12,10 +12,6 @@
             <img v-if="item.isIDCard" @click="delImage(imageOne.busiFileType,imageOne.originName)" class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
             <img class="image-con" :src="imageOne.base64CodeUrl">
           </view>
-          <!--<view class="item after-upload">
-            <img class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
-            <img class="image-con">
-          </view>-->
           <view class="item before-upload" v-if="item.isIDCard">
             <img class="image-del" src="@/static/images/perfectInformation/imageDel.svg">
             <img v-show="false" class="image-con">
@@ -48,73 +44,6 @@ export default {
       },
       imagelists:[],
       fromID:"",//影像信息二级菜单
-      allBusiFileTypeList:[
-        {
-          id:"0",
-          name:"身份证明资料",
-          param:["2012060101","2012060102","2012060103","2012060104"]
-        },
-        {
-          id:"1",
-          name:"收入证明资料",
-          param:["2012060201","2012060202","2012060203"]
-        },
-        {
-          id:"2",
-          name:"用途证明资料",
-          param:["2012060301","2012060302","2012060303","2012060304","2012060305"]
-        },
-        {
-          id:"3",
-          name:"抵押房产资料",
-          param:["2012060401","2012060402","2012060403"]
-        },
-        {
-          id:"4",
-          name:"征信相关资料",
-          param:["2012060501","2012060502","2012060503"]
-        },
-        {
-          id:"5",
-          name:"系统生成表格",
-          param:["2012060601","2012060602","2012060603","2012060604"]
-        },
-        {
-          id:"6",
-          name:"房产证、他项权证",
-          param:["20120701"]
-        },
-        {
-          id:"7",
-          name:"放款账户信息",
-          param:["2012070201","2012070202"]
-        },
-        {
-          id:"8",
-          name:"借款抵押合同信息",
-          param:["20120703"]
-        },
-        {
-          id:"9",
-          name:"其他资料",
-          param:["20120704"]
-        },
-        {
-          id:"10",
-          name:"放款通知书",
-          param:["20120801"]
-        },
-        {
-          id:"11",
-          name:"放款凭证",
-          param:["2012080201"]
-        },
-        {
-          id:"12",
-          name:"其他贷后资料",
-          param:["20120803"]
-        },
-      ],//二级菜单参数
       paramBusiFileTypeList:[],//影响信息参数
       //busiFileTypeListRes:[],//编号  数据字典查询结果
 
@@ -125,50 +54,18 @@ export default {
   computed:{
     ...mapGetters(['imageInformation','queryApplyInfoList','busiFileTypeListRes'])
   },
-  onLoad: function(options) {
-    this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
+  onLoad(options) {
+    // this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
   },
   created(){
-    //let _this=this;
     this.fromID=localStorage.getItem('imgFromID');
-    /* let nameArr=["房产证、他项权证","放款账户信息","借款抵押合同信息","其他资料","放款通知书", "放款凭证", "其他贷后资料"];
-    let resindex = nameArr.indexOf(this.fromID);
-    if(resindex != -1){
-      this.filePartName="LS_FKZL_P";
-      this.modelCode="LS_FKZL";
-    } */
     this.title=localStorage.getItem('imgFromID');
     this.serialNo = this.queryApplyInfoList.applyNo; //申请编号
-    //获取当前申请信息的图片批次号  start
-    /* let _this=this;
-    let data={
-      orderNo:'',
-      applyNo:_this.serialNo,
-    };
-    yu.showLoading();
-    this.interfaceRequest(
-      '/api/credit/queryApplyInfo',
-      data,
-      "get",
-      function(res) {
-        let result=res.data.data;
-        _this.imageBatchNo=result.imageList[0].imageBatchNo;
-        _this.imageUpLoadDate=result.imageList[0].imageUpLoadDate;
-        _this.getImagesList(result.imageList[0].imageBatchNo,result.imageList[0].imageUpLoadDate);
-      },
-      function(err) {}
-    ); */
-    //获取当前申请信息的图片批次号  end
-
-    /* let btlist=_this.allBusiFileTypeList;
-    for(let i=0 ; i<btlist.length ;i++){
-      if(btlist[i].name.indexOf(_this.fromID) != -1 ){
-        _this.paramBusiFileTypeList=btlist[i].param;
-        localStorage.removeItem("imgFromID");
-      }
-    } */
+    this.imageBatchNo = this.queryApplyInfoList.imageList[0].imageBatchNo;
+    this.imageUpLoadDate = this.queryApplyInfoList.imageList[0].imageUpLoadDate;
     let itemlist=[];
     let arr=this.imageInformation;
+    console.log(arr)
     for(let i=0; i< arr.length ; i++){
       if(this.fromID == arr[i].name){
         itemlist=arr[i].list;
@@ -177,7 +74,7 @@ export default {
    for(let i=0;i<itemlist.length ; i++){
       let param=itemlist[i].busiFileType;
       itemlist[i].busiFileTypeName=this.getBusiFileTypeName(this.busiFileTypeListRes[param]);
-      if(param == "2012060101" || param == "2012060603" || param == "2012060501"){
+      if(param == "2012060101" || param == "2012060603" || param == "2012060501"){ //身份证、授权图片、客户须知图片不可删除
         itemlist[i].isIDCard=false;
       }else{
         itemlist[i].isIDCard=true;
@@ -188,8 +85,7 @@ export default {
     }
      
     this.imagelists=itemlist;
-    //_this.uploadImageResult('type','base64','base64url');
-    //console.log(itemlist);
+    console.log(this.imagelists)
     
   },
  
@@ -203,73 +99,12 @@ export default {
           current: 0,
           urls: imgsArray
       });
-      /* uni.showLoading({
-        title:"图片处理中..."
-      })
-      base64ToPath(logourl) //logoul为base64为图片流
-        .then(path => {
-          console.log(logourl);
-          console.log(path);
-        let imgsArray = [];
-        uni.hideLoading();
-        imgsArray[0] = path;
-        uni.previewImage({
-          current: 0, 
-          urls: imgsArray
-        });
-        })
-        .catch(error => {
-          yu.showToast({
-            icon: "none",
-            title: "图片预览失败",
-            duration: 1500
-          });
-          uni.hideLoading();
-        }) */
     },
     //返回上一页
     navigateBack() {
       //this.pageJump(this.imageInformations);
       yu.navigateBack();
       console.log(this.imagelists);
-    },
-    //获取当前申请的影像信息
-    getImagesList(imageBatchNo,busiStartDate){
-      //获取图片信息 start
-      let _this=this;
-      let posturl="/api/imagehandle/downloadbynoanddate";
-      let param={
-        "busiSerialNo": imageBatchNo,
-        "busiStartDate":busiStartDate,
-        "busiFileTypeList":_this.paramBusiFileTypeList,
-        "filePartName": _this.filePartName,
-        "modelCode": _this.modelCode
-      };
-      _this.interfaceRequest(
-        posturl,
-        param,
-        "post",
-        function(res) {
-          let itemlist=res.data.data.downloadImageOutVoList;
-          yu.hideLoading();
-          for(let i=0;i<itemlist.length ; i++){
-            let param=itemlist[i].busiFileType;
-            itemlist[i].busiFileTypeName=_this.getBusiFileTypeName(_this.busiFileType[param]);
-            if(param == "2012060101"){
-              itemlist[i].isIDCard=false;
-            }else{
-              itemlist[i].isIDCard=true;
-            }
-            for(let j=0;j < itemlist[i].downloadImageDtoList.length; j++){
-              itemlist[i].downloadImageDtoList[j].base64CodeUrl='data:image/jpg;base64,' +itemlist[i].downloadImageDtoList[j].base64Code;
-            }
-          }
-          _this.imagelists=itemlist;
-          _this.uploadImageResult('type','base64','base64url');
-        },
-        function(err) {}
-      );
-      //获取图片信息 end
     },
     //base64路径拼接
     base64URL(param){
@@ -299,25 +134,23 @@ export default {
     /*******上传图片  start */
     //上传图片
     upload(e){
-      let _id=e.target.id;
-      let _self = this;
       uni.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ['camera','album'], //拍照
-        success: function (res) {
+        success: (res) => {
           const tempFilePaths = res.tempFilePaths;
           
           foxsdk.gallery.imageBase64(tempFilePaths[0], entry => {
             let base64code = entry.payload.imageBase64;
             let base64='data:image/jpeg;base64,' + base64code;
-            _self.compressImages(base64,1,function(data){
-              _self.uploadImagePost(data,_id);//调用上传图片方法
+            this.compressImages(base64,1,(data)=>{
+              this.uploadImagePost(data, e.target.id);//调用上传图片方法
             });
           });
-          _self.iconcheck = 1;//点击后图片更改状态由0变成1
+          this.iconcheck = 1;//点击后图片更改状态由0变成1
         },
-        error : function(e){
+        error: (e)=>{
           console.log(e);
         }
       });
@@ -345,10 +178,6 @@ export default {
     },
     //上传图片图片页面效果处理
     uploadImageResult(type,base64,filename){
-      alert(type);
-      alert(base64);
-      alert(filename);
-      let _this=this;
       let base64url='data:image/jpeg;base64,' + base64;
       let param={
         "base64Code":base64,
@@ -358,32 +187,23 @@ export default {
         "psnTp":0,
         "originName":filename
       };
-      for(let i=0;i<_this.imagelists.length; i++){
-        alert(this.imagelists[i].busiFileType == type)
-        if(_this.imagelists[i].busiFileType == type){
-          _this.imagelists[i].downloadImageDtoList=_this.imagelists[i].downloadImageDtoList.concat(param);
+      for(let i=0;i<this.imagelists.length; i++){
+        if(this.imagelists[i].busiFileType == type){
+          this.imagelists[i].downloadImageDtoList.push(param);
         }
       }
-
-      let allimagelist=_this.imageInformation;
-      for(let j=0; j<allimagelist.length ;j++){
-        alert(type.indexOf(allimagelist[j].id));
-        if(type.indexOf(allimagelist[j].id) != -1){
-          allimagelist[j].list=_this.imagelists;
-        }
-      }
+      return this.imagelists;
     },
     //上传图片接口
     uploadImagePost(base64Code,bt){
-      let _this=this;
       let postUrl='/api/imagehandle/uploadbynoanddate';
       let busiFileTypeList=[bt];
       let data={
-        "busiSerialNo": _this.imageBatchNo,
-        "busiStartDate": _this.imageUpLoadDate,
+        "busiSerialNo": this.imageBatchNo,
+        "busiStartDate": this.imageUpLoadDate,
         "busiFileTypeList": busiFileTypeList,
-        "filePartName": _this.filePartName,
-        "modelCode": _this.modelCode,
+        "filePartName": this.filePartName,
+        "modelCode": this.modelCode,
         "uploadImageInVoList": [
           {
             "base64Code": base64Code,
@@ -393,26 +213,28 @@ export default {
           }
         ]
       };
-       yu.showToast({
+      yu.showToast({
         icon: "none",
         title: "图片开始上传",
-        duration: 1500
+        duration: 1000
       });
-       _this.interfaceRequest(
-        postUrl,
-        data,
-        "post",
-        function(res) {
+      this.interfaceRequest(postUrl, data, "post", (res) => {
+        if(res.data.data.returnCode == 'Faild'){
           yu.showToast({
             icon: "none",
-            title: "图片上传成功",
-            duration: 1500
+            title: res.data.data.returnDesc,
+            duration: 3000
           });
-          let filename=res.data.data.uploadImageOutVoList[0].fileName;
-          _this.uploadImageResult(bt,base64Code,filename);
-        },
-        function(err) {}
-      );
+          return;
+        }
+        yu.showToast({
+          icon: "none",
+          title: "图片上传成功",
+          duration: 3000
+        });
+        let filename = res.data.data.uploadImageOutVoList[0].fileName;
+        this.uploadImageResult(bt,base64Code,filename);
+      },(err) => {});
     },
     /*******上传图片  end */
     /*******删除图片  start */
