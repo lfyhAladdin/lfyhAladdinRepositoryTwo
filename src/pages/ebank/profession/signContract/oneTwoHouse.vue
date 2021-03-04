@@ -139,7 +139,17 @@
 
 			/**表单提交接口 **start****/
 			submitform() {
-				let createdata = {
+				yu.showModal({
+					title: "确定提交？",
+					content: "点击确认，完成合同签署过程",
+					confirmText: "确认",
+					success: res => {
+						if (res.confirm) {
+							console.log("用户点击确定");
+                            
+
+                            
+                let createdata = {
 					applyNo: this.oneTwoHouseInfo.applyNo, //申请编号（必输）
 					contractNo: this.contractNo, //合同编号,
 					status: "4", //3-合同待生效 4-合同已生效
@@ -155,14 +165,6 @@
 						console.log(err);
 					}
 				);
-
-				yu.showModal({
-					title: "确定提交？",
-					content: "点击确认，完成合同签署过程",
-					confirmText: "确认",
-					success: res => {
-						if (res.confirm) {
-							console.log("用户点击确定");
 
 							let data = {
 								contractNo: this.contractNo,
