@@ -410,11 +410,28 @@
       toPaymentDetail(e){
         console.log(e)
         if(this.applyPhase == '05' || this.applyPhase == '01'){
+          if(this.applyPhase == '05'){ 
+            //添加贷款流程信息状态
+            this.interfaceRequest('/api/aldapploanprocessinfo/create',{
+              applyNo: e.orderNo,
+              contractNo: e.contractNo,
+              status: '5' //状态（1-申请待提交 2-申请已提交 3-合同待生效 4-合同已生效 5-放款待发起 6-放款待提交 7-放款已提交）
+            },"post",res => {},err => {});
+          }else{
+            //添加贷款流程信息状态
+            this.interfaceRequest('/api/aldapploanprocessinfo/create',{
+              applyNo: e.orderNo,
+              contractNo: e.contractNo,
+              putoutNo: e.putoutNo,
+              status: '6' //状态（1-申请待提交 2-申请已提交 3-合同待生效 4-合同已生效 5-放款待发起 6-放款待提交 7-放款已提交）
+            },"post",res => {},err => {});
+          }
           this.paymentListReplace(e);
           yu.navigateTo({
             url: 'paymentDetail?applyPhase=' + this.applyPhase,
           });
         }
+        
       },
       //返回
       backpf(){

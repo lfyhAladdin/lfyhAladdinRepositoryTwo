@@ -318,6 +318,11 @@ export default {
           let databusinessSum=that.queryApplyInfoList.businessSum;
           that.buryingBehavior(that.applyNoVal,'ald0003',databusinessSum,that.userInfor.orgId,that.userInfor.loginCode,RSAdecode(that.userInfor.userName));
           /* that.loaninvestigation(that.applyNoVal); */
+          //添加贷款流程信息状态
+          that.interfaceRequest('/api/aldapploanprocessinfo/create',{
+            applyNo: that.applyNoVal,
+            status: '2' //状态（1-申请待提交 2-申请已提交 3-合同待生效 4-合同已生效 5-放款待发起 6-放款待提交 7-放款已提交）
+          },"post",res => {},err => {});
           let userID = that.userInfor.loginCode;
           let orgID=that.userInfor.orgId;
           let data = {

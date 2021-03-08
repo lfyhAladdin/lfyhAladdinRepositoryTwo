@@ -305,6 +305,11 @@ export default {
           this.preventResubmit = true;
           if (res.data.data.returnCode == "Success") {
             let result = res.data.data.applyNo;
+            //添加贷款流程信息状态
+            this.interfaceRequest('/api/aldapploanprocessinfo/create',{
+              applyNo: result,
+              status: '1' //状态（1-申请待提交 2-申请已提交 3-合同待生效 4-合同已生效 5-放款待发起 6-放款待提交 7-放款已提交）
+            },"post",res => {},err => {});
             if (result != null) {
               let e = {
                 orderNo: "",

@@ -117,7 +117,11 @@ export default {
       $Vue.interfaceRequest('/api/credit/queryApplyInfo',obj,"get",(res)=>{
         console.log(res)
         if(res.data.data.returnCode == "Success"){
-          context.commit("queryApplyInfoReplace",res.data.data)
+          context.commit("queryApplyInfoReplace",res.data.data);
+          let createDatas = res.data.data;
+          createDatas.status = '1'; //状态（1-申请待提交 2-申请已提交 3-合同待生效 4-合同已生效 5-放款待发起 6-放款待提交 7-放款已提交）
+          //更新贷款流程信息状态
+          $Vue.interfaceRequest('/api/aldapploanprocessinfo/update',createDatas,"post",res => {},err => {});
           if(val.routerTrue){
             yu.hideLoading();
             if(val.routerJumpWay == 'navigateTo'){ 
